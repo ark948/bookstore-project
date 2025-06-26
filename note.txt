@@ -29,4 +29,23 @@ Postgresql or MySQL database and backup (extra points if backups are automated)
     (upate AUTH_USER_MODEL in settings.py, otherwise errors will be raised)
     (login with both otp and password must be allowed (provide choice to user)) (later...)
 5. running migrations (after creating custom user model with phone number)
-6. adding tailwindcss (with flowbite or daisyui)
+6. adding tailwindcss (with flowbite or daisyui later)
+    process help:
+    - create a static folder next to manage.py
+    - inside it add a src folder, then inside src folder, add a style.css (or you can name it input.css)
+    - add STATICFILES_DIRS = [ BASE_DIR / "static" ] to settings.py
+    - one level above manage.py, run the following command (node and npm are required):
+    (use node -v and npm -v to check if they are installed)
+    > npm install tailwindcss @tailwindcss/cli
+    - add @import "tailwindcss"; to static/src/style.css
+    - add watch:css script to package.json:
+        "scripts": {
+            "watch:css": "npx @tailwindcss/cli -i ./backend/static/src/input.css -o ./backend/static/dist/output.css --watch"
+        }
+    - notice the input css file and the output css file (this command will give us a compiled css file)
+    - add {% load static %} and <link rel="stylesheet" href="{% static 'dist/output.css' %}"> to head tag of _base.html template
+    - with terminal on the same level as package.json run the watch:css command:
+    > npm run watch:css
+    - and with another terminal on same level as manage.py, run the django dev server
+    (add some test tailwind clasess to one of the elements in index.html)
+    - you should be able to see the result.
