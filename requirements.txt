@@ -2,6 +2,7 @@ asgiref==3.8.1
 certifi==2025.6.15
 charset-normalizer==3.4.2
 Django==5.2.3
+django-htmx==1.23.1
 idna==3.10
 requests==2.32.4
 sqlparse==0.5.3

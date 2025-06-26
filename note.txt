@@ -54,4 +54,22 @@ Postgresql or MySQL database and backup (extra points if backups are automated)
 admin
 admin@site.com
 123
+8. adding htmx
+django-htmx package can be used + the regular way of downloading a copy of htmx.js
+    1. > pip install django-htmx
+    2. add "django_htmx" to installed_apps
+    3. add "django_htmx.middleware.HtmxMiddleware", to middlewares
+    4. download htmx.min.js from official source, put it in static/js folder
+    5. in _base.html, add to the head tag: <script src="{% static 'js/htmx.min.js' %}" defer></script>
+    6. Optionally update the body tag to capture CSRF token
+    (this process must be updated for production)
 
+stuff to add:
+(i keep these things here so that i don't forget them)
+django-debug-toolbar
+django-browser-reload
+htmx
+daisyui or flowbite
+pytest
+django-pytest
+authentication with htmx and modals

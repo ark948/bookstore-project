@@ -11,8 +11,9 @@
         {% block title %}
         {% endblock title %}
     </title>
+    <script src="{% static 'js/htmx.min.js' %}" defer></script>
 </head>
-<body>
+<body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
     <div id="sidebar">
         
     </div>
