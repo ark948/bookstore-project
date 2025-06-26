@@ -2,23 +2,29 @@ Project description:
 
 Create a simple e-commerce website for a booksotre.
 Must include:
-    user registration (email verification is not required, only for special cases, such as reminder when a book is available)
-    payment gateway
-    shopping cart
-    reviews and comments or rating
-    admin panel (adding new books and managing users)
-    contact form for users
-    book request for users
-    invoice exporting
-    order tracking
-    internationalization (only en and fa)
+    - user registration (email verification is not required, only for special cases, such as reminder when a book is available)
+    - login with phone number and OTP
+    - payment gateway
+    - shopping cart
+    - reviews and comments or rating
+    - admin panel (adding new books and managing users)
+    - contact form for users
+    - book request for users
+    - invoice exporting
+    - order tracking
+    - internationalization (only en and fa)
 
     NOTE: Language must be farsi first
 
 Add docker, nginx, gunicorn
-Database and backup (extra points if backups are automated)
+Postgresql or MySQL database and backup (extra points if backups are automated)
 
 
 1. setup
 2. added home app, and updated templates dir, added base and home index.html
 3. added accounts app
+4. custom user model 
+    (do it before migrations) 
+    (login with phone number OTP is REQUIRED, mock if necessary)
+    (upate AUTH_USER_MODEL in settings.py, otherwise errors will be raised )
+5. running migrations (after creating custom user model with phone number)
