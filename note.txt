@@ -1,0 +1,17 @@
+Project description:
+
+Create a simple e-commerce website for a booksotre.
+Must include:
+    user registration (email verification is not required, only for special cases, such as reminder when a book is available)
+    payment gateway
+    shopping cart
+    reviews and comments or rating
+    admin panel (adding new books and managing users)
+    contact form for users
+    book request for users
+    invoice exporting
+    order tracking
+    internationalization (only en and fa)
+
+Add docker, nginx, gunicorn
+Database and backup (extra points if backups are automated)
