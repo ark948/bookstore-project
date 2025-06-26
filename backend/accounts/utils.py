@@ -1,7 +1,4 @@
 import random
 
-def generateOtp():
-    otp = ""
-    for i in range(6):
-        otp += str(random.randint(1, 9))
-    return otp
+def generate_otp():
+    return random.randint(100_000, 999_999)
