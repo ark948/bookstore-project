@@ -25,6 +25,6 @@ Postgresql or MySQL database and backup (extra points if backups are automated)
 3. added accounts app
 4. custom user model 
     (do it before migrations) 
-    (login with phone number OTP is REQUIRED, mock if necessary)
-    (upate AUTH_USER_MODEL in settings.py, otherwise errors will be raised )
+    (login with phone number OTP is REQUIRED, mock SMS provider if necessary)
+    (upate AUTH_USER_MODEL in settings.py, otherwise errors will be raised)
 5. running migrations (after creating custom user model with phone number)
