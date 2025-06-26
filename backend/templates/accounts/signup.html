@@ -2,8 +2,9 @@
 
 {% block content %}
     <h4 class="underline decoration-sky-500">
-        صفحه اصلی
-
-        <a href="{% url 'accounts:signup' %}">ثبت نام</a>
+        ثبت نام
     </h4>
+    <div class="container">
+        {{ form.as_p }}
+    </div>
 {% endblock content %}

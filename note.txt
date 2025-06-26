@@ -63,6 +63,10 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     5. in _base.html, add to the head tag: <script src="{% static 'js/htmx.min.js' %}" defer></script>
     6. Optionally update the body tag to capture CSRF token
     (this process must be updated for production)
+9. adding singup:
+    1. add a simple signup form to forms.py file in accounts app
+
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
