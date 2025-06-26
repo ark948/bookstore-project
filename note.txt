@@ -21,3 +21,4 @@ Database and backup (extra points if backups are automated)
 
 1. setup
 2. added home app, and updated templates dir, added base and home index.html
+3. added accounts app
