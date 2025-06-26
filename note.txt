@@ -15,3 +15,6 @@ Must include:
 
 Add docker, nginx, gunicorn
 Database and backup (extra points if backups are automated)
+
+
+1. setup
