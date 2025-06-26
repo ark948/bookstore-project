@@ -49,3 +49,9 @@ Postgresql or MySQL database and backup (extra points if backups are automated)
     - and with another terminal on same level as manage.py, run the django dev server
     (add some test tailwind clasess to one of the elements in index.html)
     - you should be able to see the result.
+    (deploying to production comes later)
+7. adding custom user to admin panel and adding a superuser
+admin
+admin@site.com
+123
+
