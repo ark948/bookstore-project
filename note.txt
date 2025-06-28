@@ -67,8 +67,19 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     1. add a simple signup form to forms.py file in accounts app
 
 10. adding flowbite
-    > pip install django-compressor
-    
+    > pip install django-compressor, add 'compressor', to installed_apps (skipped)
+    1. configure the compressor inside settings.py (skipped)
+    (it appears that these instructions may be for production or another way of installing tailwind, which i had my own, so skipping for now)
+    2. install Flowbite as a dependency using NPM
+    > npm install flowbite --save
+    3. import the default theme variables from Flowbite inside your main input.css CSS file:
+    @import "flowbite/src/themes/default"; (add this to input.css)
+    3. Import the Flowbite plugin file in your CSS:
+    @plugin "flowbite/plugin";
+    4. Configure the source files of Flowbite in your CSS:
+    @source "../../node_modules/flowbite";
+    5. add flowbite js file to base template (at the end of the body tag):
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 
 stuff to add:
