@@ -1,10 +1,17 @@
 {% extends "_base.html" %}
+{% load widget_tweaks %}
 
 {% block content %}
     <h4 class="underline decoration-sky-500">
         ثبت نام
     </h4>
     <div class="container">
-        {{ form.as_div }}
+        <form class="m-2">
+            <div class="form-control m-4">
+                {{ form.email|add_label_class:"label font-bold text-black mb-2" }}
+                {% render_field form.email class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %}
+                <button type="submit">Confirm</button>
+            </div>
+        </form>
     </div>
 {% endblock content %}

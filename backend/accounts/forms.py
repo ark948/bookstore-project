@@ -6,12 +6,11 @@ from .models import CustomUser
 
 # this takes username and email
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(
+    email = forms.EmailField(label='آدرس ایمیل',
         required=True,
         widget=forms.EmailInput(attrs={
             'type': 'email',
             'id': 'email',
-            'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
         })
     )
 
