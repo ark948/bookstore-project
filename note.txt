@@ -66,6 +66,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 9. adding singup:
     1. add a simple signup form to forms.py file in accounts app
 
+10. adding flowbite
+    > pip install django-compressor
+    
 
 
 stuff to add:
