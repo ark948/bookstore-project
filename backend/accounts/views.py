@@ -20,6 +20,9 @@ def signup(request):
         if form.is_valid():
             form.save()
             return redirect(reverse('home:index'))
+        else:
+            # return form containing errors
+            return render(request, 'accounts/signup.html', {"form": form})
     form = RegistrationForm()
     return render(request, 'accounts/signup.html', {"form": form})
 
