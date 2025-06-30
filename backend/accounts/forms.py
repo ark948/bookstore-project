@@ -6,6 +6,13 @@ from .models import CustomUser
 
 # this takes username and email
 class RegistrationForm(UserCreationForm):
+    phone = forms.CharField(
+        required=True,
+        widget=forms.NumberInput(attrs={
+            'type': 'tel',
+            'id': 'phone'
+        })
+    )
     email = forms.EmailField(label='آدرس ایمیل',
         required=True,
         widget=forms.EmailInput(attrs={

@@ -9,6 +9,15 @@
         <form class="m-4" method="post" action="{% url 'accounts:signup' %}">
             {% csrf_token %}
                 <div class="m-4">
+                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">شماره همراه:</label>
+                    {% render_field form.phone class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="09112223344" autocomplete='email' %}
+                    {% if form.email.errors %}
+                        <label class="label text-error">
+                            {{ form.phone.errors }}
+                        </label>
+                    {% endif %}
+                </div>
+                <div class="m-4">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ایمیل:</label>
                     {% render_field form.email class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="alikarimi51@gmail.com" autocomplete='email' %}
                     {% if form.email.errors %}
