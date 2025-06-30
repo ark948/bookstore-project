@@ -93,6 +93,15 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 12. The visual on signup form looks ok (definitly not enough for production) but for now, we'll move onto functionality.
     1. signup functionality is ok, needs cleaning, form validation, feedbacks and...
 
+13. adding tests
+    (we will be needing pytest, pytest-django, and factory-boy)
+    pytest-django
+    > pip install pytest-django
+    1. add pytest.ini to backend folder, next to manage.py
+    2. next, we need to use factory-boy to generate some dummy data to test with,
+    add factories.py to accounts
+    
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar
