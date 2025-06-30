@@ -14,10 +14,18 @@ class RegistrationForm(UserCreationForm):
         })
     )
 
+    password1 = forms.CharField(label='رمزعبور',
+        widget=forms.PasswordInput(attrs={
+            'type': 'password',
+            'id': 'password',
+        })
+    )
+
     class Meta:
         model = CustomUser
         fields = [
-            'username',
+            'first_name',
+            'last_name',
             'email',
             'password1',
             'password2'

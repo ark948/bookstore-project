@@ -29,7 +29,7 @@ Postgresql or MySQL database and backup (extra points if backups are automated)
     (upate AUTH_USER_MODEL in settings.py, otherwise errors will be raised)
     (login with both otp and password must be allowed (provide choice to user)) (later...)
 5. running migrations (after creating custom user model with phone number)
-6. adding tailwindcss (with flowbite or daisyui later)
+6. adding tailwindcss (with flowbite or daisyui later) (using tailwindcss cli is the only way to go)
     process help:
     - create a static folder next to manage.py
     - inside it add a src folder, then inside src folder, add a style.css (or you can name it input.css)
@@ -82,7 +82,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 11. Problem: Modifying html attributes of forms in forms.py leads to messy code,
-    let's use django-widget-tweaks to modify them in html files
+    let's use django-widget-tweaks to modify them in html files,
+    ALSO, flowbite is not working
     Adding django-widget-tweaks
     > pip install django-widget-tweaks
     1. add 'widget_tweaks', to installed_apps

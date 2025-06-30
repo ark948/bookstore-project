@@ -1,8 +1,7 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'dist/output.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}
@@ -11,6 +10,7 @@
         {% block title %}
         {% endblock title %}
     </title>
+    <link rel="stylesheet" href="{% static 'dist/output.css' %}">
     <script src="{% static 'js/htmx.min.js' %}" defer></script>
 </head>
 <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
