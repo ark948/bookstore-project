@@ -130,7 +130,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     3. make and run migrations
     4. add model to admin
     5. add forms
-    VERY IMPORTANT: Make sure to check if groups and permissions are ok for users in admin panel.
+    VERY IMPORTANT: Make sure to check if groups and permissions are ok for users in admin panel (in both user view, and new user window).
     
     New superuser:
     admin@site.com

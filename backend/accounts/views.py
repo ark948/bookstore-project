@@ -3,11 +3,6 @@ from django.urls import reverse
 
 # Create your views here.
 
-from .forms import (
-    RegistrationForm,
-    CustomUserCreationForm
-)
-
 # signup
 # login
 # logout
@@ -15,16 +10,7 @@ from .forms import (
 # profile
 
 def signup(request):
-    if request.method == "POST":
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('home:index'))
-        else:
-            # return form containing errors
-            return render(request, 'accounts/signup.html', {"form": form})
-    form = RegistrationForm()
-    return render(request, 'accounts/signup.html', {"form": form})
+    pass
 
 def login():
     pass
