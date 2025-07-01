@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 
@@ -60,6 +61,8 @@ def logout_view(request: HttpRequest):
     return redirect(reverse("home:index"))
 
 
-@login_required
+# @login_required
 def protected_view(request: HttpRequest):
+    if request.user.is_authenticated == False:
+        return HttpResponseForbidden()
     return render(request, 'accounts/private.html')

@@ -135,3 +135,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+LOGIN_URL = 'accounts:login'
+LOGOUT_URL = 'accounts:logout'
