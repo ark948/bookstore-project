@@ -1,5 +1,7 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout
+from django.views.decorators.http import require_http_methods
 from django.contrib.auth.forms import AuthenticationForm
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
@@ -47,5 +49,9 @@ def login(request: HttpRequest):
     form = EmailLoginForm()
     return render(request, 'accounts/forms/login.html', {'form': form})
 
-def logout():
-    pass
+
+@require_http_methods(['POST'])
+def logout_view(request: HttpRequest):
+    if request.user.is_anonymous:
+        return redirect(reverse("home:index"))
+    logout(request)
