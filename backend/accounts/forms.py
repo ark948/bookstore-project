@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 from .models import CustomUser
 
+
 class CustomUserSignUpForm(UserCreationForm):
     email = forms.EmailField(
         required=True,
@@ -32,3 +33,11 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = ("email",)
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    email = forms.EmailField(widget=forms.TextInput(attrs={
+            'autofocus': True,
+            'type': 'email',
+        })
+    )

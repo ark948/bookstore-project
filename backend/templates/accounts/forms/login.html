@@ -1,0 +1,41 @@
+{% extends "_base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <h4 class="underline decoration-sky-500">
+        احراز هویت
+    </h4>
+    <div class="flex flex-col items-center">
+        <form class="m-4" method="post" action="{% url 'accounts:login' %}">
+            {% csrf_token %}
+                <div class="m-4">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ایمیل:</label>
+                    {% render_field form.email class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="alikarimi51@gmail.com" autocomplete='email' %}
+                </div>
+                <div class="m-4">
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">رمزعبور:</label>
+                    {% render_field form.password class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••••••" autocomplete='password' %}
+                </div>
+                <div class="m-4">
+                    <button 
+                        type="submit" 
+                        class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        ورود
+                    </button>
+                </div>
+
+                <div class="m-4">
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+        </form>
+    </div>
+{% endblock content %}

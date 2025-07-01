@@ -134,6 +134,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     6. check admin panel for everything about custom user
     7. nex comes signup functionality. add backends.py to accounts
     (but first, let's check if current forms are able to sign users up without specifying a custom authentication backend)
+    8. the default authentication form (from django.contrib.auth.forms) will not display the eamil form
+    (i tried to modify it, but it is showing errors that is beyond me, "user is inactive")
+    9. it appears that there is no other way that specifying a cusotm authentication backend
     
     New superuser:
     admin@site.com

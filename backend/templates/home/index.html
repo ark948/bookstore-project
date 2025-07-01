@@ -3,7 +3,13 @@
 {% block content %}
     <h4 class="underline decoration-sky-500">
         صفحه اصلی
-
-        <a href="{% url 'accounts:signup' %}">ثبت نام</a>
     </h4>
+
+    <p>
+        <a href="{% url 'accounts:signup' %}">ثبت نام</a>
+    </p>
+
+    <p>
+        <a href="{% url 'accounts:login' %}">ورود</a>
+    </p>
 {% endblock content %}
