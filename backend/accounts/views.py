@@ -61,7 +61,7 @@ def logout_view(request: HttpRequest):
     return redirect(reverse("home:index"))
 
 
-# @login_required
+# @login_required -> this will redirect user to login page
 def protected_view(request: HttpRequest):
     if request.user.is_authenticated == False:
         return HttpResponseForbidden()
