@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import AuthenticationForm
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -21,10 +22,11 @@ def signup(request: HttpRequest):
             form.save()
             return render(request, 'accounts/messages/signup_success.html')
     form = CustomUserSignUpForm()
-    return render(request, 'accounts/signup.html', {'form': form})
+    return render(request, 'accounts/forms/signup.html', {'form': form})
 
-def login():
-    pass
+def login(request: HttpRequest):
+    form = AuthenticationForm()
+    return render(request, 'accounts/login.html', {'form': form})
 
 def logout():
     pass

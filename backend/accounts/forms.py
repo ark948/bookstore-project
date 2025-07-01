@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm
 
 from .models import CustomUser
 
 class CustomUserSignUpForm(UserCreationForm):
-
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(attrs={
@@ -21,7 +21,6 @@ class CustomUserSignUpForm(UserCreationForm):
 
 
 class CustomUserChangeForm(UserChangeForm):
-
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(attrs={
