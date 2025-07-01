@@ -12,10 +12,18 @@ def test_accounts_signup(client: Client):
     response = client.get(reverse("accounts:signup"))
 
     assert response.status_code == 200
-    assertTemplateUsed(response, "accounts/signup.html")
+    assertTemplateUsed(response, "accounts/forms/signup.html")
+
+
+# this is just to check if factory fixture was created successfully
+@pytest.mark.django_db
+def test_user_factory(user):
+    print(user.email)
 
 
 @pytest.mark.django_db
-def test_user_factory(user):
-    print("SHIT")
-    print(user)
+def test_accounts_signup_redirect_if_logged_in(client: Client, user):
+    client.force_login(user)
+
+    response = client.get(reverse("accounts:signup"))
+    assert response.status_code == 302
