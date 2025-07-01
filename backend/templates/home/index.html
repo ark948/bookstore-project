@@ -4,12 +4,26 @@
     <h4 class="underline decoration-sky-500">
         صفحه اصلی
     </h4>
+    {% if user.is_authenticated %}
 
-    <p>
-        <a href="{% url 'accounts:signup' %}">ثبت نام</a>
-    </p>
+        <p>
+            <form action="{% url 'accounts:logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                    خروج
+                </button>
+            </form>
+        </p>
 
-    <p>
-        <a href="{% url 'accounts:login' %}">ورود</a>
-    </p>
+    {% else %}
+
+        <p>
+            <a href="{% url 'accounts:signup' %}">ثبت نام</a>
+        </p>
+
+        <p>
+            <a href="{% url 'accounts:login' %}">ورود</a>
+        </p>
+
+    {% endif %}
 {% endblock content %}

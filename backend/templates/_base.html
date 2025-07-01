@@ -14,10 +14,12 @@
     <script src="{% static 'js/htmx.min.js' %}" defer></script>
 </head>
 <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
-    <div id="sidebar">
-        
-    </div>
     <div class="m-12">
+        <div id="navbar">
+            {% if user.is_authenticated %}
+                <p>کاربر فعلی {{ user.email }}</p>
+            {% endif %}
+        </div>
         {% block content %}
         {% endblock content %}
     </div>

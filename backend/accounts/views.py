@@ -55,3 +55,4 @@ def logout_view(request: HttpRequest):
     if request.user.is_anonymous:
         return redirect(reverse("home:index"))
     logout(request)
+    return redirect(reverse("home:index"))
