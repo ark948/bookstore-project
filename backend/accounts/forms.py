@@ -4,15 +4,18 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
 
 
-# this takes username and email
+# SHOULD NOT BE USED
 class RegistrationForm(UserCreationForm):
     phone = forms.CharField(
-        required=True,
+        required=False,
         widget=forms.NumberInput(attrs={
             'type': 'tel',
             'id': 'phone'
         })
     )
+
+    username = forms.CharField(label="نام کاربری", required=False)
+
     email = forms.EmailField(label='آدرس ایمیل',
         required=False,
         widget=forms.EmailInput(attrs={

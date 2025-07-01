@@ -23,7 +23,7 @@ Postgresql or MySQL database and backup (extra points if backups are automated)
 1. setup
 2. added home app, and updated templates dir, added base and home index.html
 3. added accounts app
-4. custom user model 
+4. custom user model  (IMPORTANT, this had some issues, refer to #14)
     (do it before migrations) 
     (login with phone number OTP is REQUIRED, mock SMS provider if necessary)
     (upate AUTH_USER_MODEL in settings.py, otherwise errors will be raised)
@@ -103,9 +103,38 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     add factories.py to accounts
 
 14. PROBLEM: Signing up users, unique constraint failed for username
+
+    different approaches:
+    - Email and Username (not popular anymore)
+    - Email Only (ok)
+    - Phone Number Only (ok and better)
+    - Email or Phone Number (best)
+
     applied migrations, need to test (still has problems)
     (authentication must be done with either email or phone_number, since this is a bookstore project, email should optional)
+
+    Alright, after some research... I think i may have figured it out.
+    first AbstractUser is is like a more pre-made model, it already has some fields + authentication mechanism ans some default constraints.
+    we can use this if we just want to add some functionality on top of it.
+    email only authentication can be achieved by this model, BUT (IMPORTANT) keep in mind that adding email = EmailField(unique=True)...
+    to cusotm user model is not enough, username = None must also be added.
+    AbstractBaseUser has no fields or default constraints, and makes much less assumptions about our project. it only has authentication mechanism.
+    We can use this if want a more customized project. But we must add all of the fields ourselves, such as first_name and last_name.
+
+    - I will add both of them here, BUT (IMPORTANT) only set AbstractUser as AUTH_USER_MODEL. (the other one will be just for demonstration purposes)
+    (actually this cannot be allowed so i commented it out)
+    - And later we will use attempt to utilize Django AllAuth package
+
+    1. after adding custom user model
+    2. add custom user manager
+    3. make and run migrations
+    4. add model to admin
+    5. add forms
+    VERY IMPORTANT: Make sure to check if groups and permissions are ok for users in admin panel.
     
+    New superuser:
+    admin@site.com
+    123
 
 stuff to add:
 (i keep these things here so that i don't forget them)

@@ -10,10 +10,19 @@
             {% csrf_token %}
                 <div class="m-4">
                     <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">شماره همراه:</label>
-                    {% render_field form.phone class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="09112223344" autocomplete='email' %}
-                    {% if form.email.errors %}
+                    {% render_field form.phone class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="09112223344" autocomplete='phone' %}
+                    {% if form.phone.errors %}
                         <label class="label text-error">
                             {{ form.phone.errors }}
+                        </label>
+                    {% endif %}
+                </div>
+                <div class="m-4">
+                    <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">نام کاربری:</label>
+                    {% render_field form.username class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="sample_username" autocomplete='username' %}
+                    {% if form.username.errors %}
+                        <label class="label text-error">
+                            {{ form.username.errors }}
                         </label>
                     {% endif %}
                 </div>
