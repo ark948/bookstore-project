@@ -18,3 +18,18 @@ class CustomUserSignUpForm(UserCreationForm):
         fields = (
             "email",
         )
+
+
+class CustomUserChangeForm(UserChangeForm):
+
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'type': 'email',
+            'id': 'email'
+        })
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ("email",)
