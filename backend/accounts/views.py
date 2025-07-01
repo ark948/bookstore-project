@@ -21,6 +21,8 @@ from . import utils
 # profile
 
 def signup(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect(reverse("home:index"))
     if request.method == "POST":
         form = CustomUserSignUpForm(request.POST)
         if form.is_valid():
@@ -30,6 +32,8 @@ def signup(request: HttpRequest):
     return render(request, 'accounts/forms/signup.html', {'form': form})
 
 def login(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect(reverse("home:index"))
     if request.method == "POST":
         form = EmailLoginForm(request.POST)
         if form.is_valid():

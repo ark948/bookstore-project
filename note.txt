@@ -106,7 +106,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
     different approaches:
     - Email and Username (not popular anymore)
-    - Email Only (ok)
+    - Email Only (ok) (done)
     - Phone Number Only (ok and better)
     - Email or Phone Number (best)
 
@@ -139,6 +139,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     9. it appears that there is no other way that specifying a cusotm authentication backend
     10. add the custom backend to AUTHENTICATION_BACKENDS in settings.py (this config variable may not be visible by default)
     11. VERY IMPORTANT, make sure the name of the login view is not as same as the django's login function
+
+    - now we can try adding phone number login
+    1. let's start by adding phone_number field to model
     
     New superuser:
     admin@site.com
