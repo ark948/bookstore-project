@@ -3,6 +3,10 @@ from django.urls import reverse
 
 # Create your views here.
 
+from .forms import (
+    CustomUserSignUpForm
+)
+
 # signup
 # login
 # logout
@@ -10,7 +14,8 @@ from django.urls import reverse
 # profile
 
 def signup(request):
-    pass
+    form = CustomUserSignUpForm()
+    return render(request, 'accounts/signup.html', {'form': form})
 
 def login():
     pass

@@ -133,6 +133,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     VERY IMPORTANT: Make sure to check if groups and permissions are ok for users in admin panel (in both user view, and new user window).
     6. check admin panel for everything about custom user
     7. nex comes signup functionality. add backends.py to accounts
+    (but first, let's check if current forms are able to sign users up without specifying a custom authentication backend)
     
     New superuser:
     admin@site.com
