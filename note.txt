@@ -137,6 +137,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     8. the default authentication form (from django.contrib.auth.forms) will not display the eamil form
     (i tried to modify it, but it is showing errors that is beyond me, "user is inactive")
     9. it appears that there is no other way that specifying a cusotm authentication backend
+    10. add the custom backend to AUTHENTICATION_BACKENDS in settings.py (this config variable may not be visible by default)
     
     New superuser:
     admin@site.com

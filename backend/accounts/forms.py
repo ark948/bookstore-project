@@ -35,9 +35,12 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ("email",)
 
 
-class CustomAuthenticationForm(AuthenticationForm):
-    email = forms.EmailField(widget=forms.TextInput(attrs={
-            'autofocus': True,
-            'type': 'email',
-        })
+class EmailLoginForm(forms.Form):
+    email = forms.EmailField(widget=forms.TextInput(attrs={'autofocus': True}), required=True)
+    password = forms.CharField(
+        label="رمزعبور",
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            "autocomplete": "current-password"
+        }),
     )
