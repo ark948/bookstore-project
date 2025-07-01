@@ -1,3 +1,4 @@
+from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
@@ -13,7 +14,12 @@ from .forms import (
 # account recovery
 # profile
 
-def signup(request):
+def signup(request: HttpRequest):
+    if request.method == "POST":
+        form = CustomUserSignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'accounts/messages/signup_success.html')
     form = CustomUserSignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
