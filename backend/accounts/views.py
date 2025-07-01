@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth import login as auth_login
+from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
@@ -36,7 +36,7 @@ def signup(request: HttpRequest):
     return render(request, 'accounts/forms/signup.html', {'form': form})
 
 
-def login(request: HttpRequest):
+def login_view(request: HttpRequest):
     if request.user.is_authenticated:
         return redirect(reverse("home:index"))
     if request.method == "POST":
@@ -47,7 +47,7 @@ def login(request: HttpRequest):
             user = authenticate(username = email, password = password)
             print("\n", user)
             if user != None:
-                auth_login(request, user)
+                login(request, user)
                 return render(request, 'accounts/messages/login_success.html')
     form = EmailLoginForm()
     return render(request, 'accounts/forms/login.html', {'form': form})
