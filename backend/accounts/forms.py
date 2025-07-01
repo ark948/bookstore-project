@@ -14,7 +14,7 @@ class RegistrationForm(UserCreationForm):
         })
     )
     email = forms.EmailField(label='آدرس ایمیل',
-        required=True,
+        required=False,
         widget=forms.EmailInput(attrs={
             'type': 'email',
             'id': 'email',

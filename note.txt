@@ -54,6 +54,7 @@ Postgresql or MySQL database and backup (extra points if backups are automated)
 admin
 admin@site.com
 123
+09116355962
 8. adding htmx
 django-htmx package can be used + the regular way of downloading a copy of htmx.js
     1. > pip install django-htmx
@@ -102,6 +103,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     add factories.py to accounts
 
 14. PROBLEM: Signing up users, unique constraint failed for username
+    applied migrations, need to test (still has problems)
+    (authentication must be done with either email or phone_number, since this is a bookstore project, email should optional)
     
 
 stuff to add:
