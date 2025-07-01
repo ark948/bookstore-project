@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.forms import AuthenticationForm
 from django.http.request import HttpRequest
@@ -33,6 +34,7 @@ def signup(request: HttpRequest):
     form = CustomUserSignUpForm()
     return render(request, 'accounts/forms/signup.html', {'form': form})
 
+
 def login(request: HttpRequest):
     if request.user.is_authenticated:
         return redirect(reverse("home:index"))
@@ -56,3 +58,8 @@ def logout_view(request: HttpRequest):
         return redirect(reverse("home:index"))
     logout(request)
     return redirect(reverse("home:index"))
+
+
+@login_required
+def protected_view(request: HttpRequest):
+    return render(request, 'accounts/private.html')
