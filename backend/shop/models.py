@@ -9,7 +9,7 @@ from accounts.models import CustomUser
 # checks:
 # ALL models must be Capitalized (DONE)
 # ALL models must be singular (DONE)
-# ALL fields must be lowercased using underscores, not camelCase (full_name, NOT fullName)
+# ALL fields must be lowercased using underscores, not camelCase (full_name, NOT fullName) (DONE)
 # Provide Verbose name for all non-relation fields (otherwise django will do it itself but with its own ways)
 # Provide related_name for all relation fields
 # Provide verbose_name and verbose_name_plural for model itself (by using class Meta)
@@ -27,15 +27,15 @@ from accounts.models import CustomUser
 
 # Inherit this to use created_at and updated_at
 class BaseModel(models.Model):
-    created_at = models.DateTimeField(db_index=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(db_index=True, default=timezone.now, verbose_name="Created at")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated at")
 
     class Meta:
         abstract = True
 
 
 class Country(models.Model):
-    name = models.CharField("Name", max_length=128, blank=False, null=False)
+    name = models.CharField("Country Name", max_length=128, blank=False, null=False)
 
     class Meta:
         verbose_name = "Country"
@@ -121,7 +121,7 @@ class Publication(models.Model):
     title = models.CharField("Title", max_length=128)
     book_count = models.PositiveSmallIntegerField("Number of Books")
     country = models.ForeignKey(Country, on_delete=models.DO_NOTHING, related_name='publications', verbose_name="Based in") # Country.publications.all()
-    url = models.URLField()
+    url = models.URLField(verbose_name="Publication's Website", blank=True)
 
 
 class Language(models.Model):
@@ -130,7 +130,11 @@ class Language(models.Model):
 
 
 class Format(models.Model):
-    name = models.CharField(max_length=64, unique=True)
+    BOOK_FORMATS = {
+        'HC': "Hardcover",
+        'PB': "Paperback"
+    }
+    name = models.CharField(max_length=64, choices=BOOK_FORMATS, default=BOOK_FORMATS["PB"])
     book_count = models.PositiveSmallIntegerField("Number of Books")
 
 class Series(models.Model):
