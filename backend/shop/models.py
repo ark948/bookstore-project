@@ -137,6 +137,15 @@ class Format(models.Model):
     name = models.CharField(max_length=64, choices=BOOK_FORMATS, default=BOOK_FORMATS["PB"])
     book_count = models.PositiveSmallIntegerField("Number of Books")
 
+
+class Size(models.Model):
+    BOOK_SIZES = {
+        'SM': "Small",
+        'MD': "Medium",
+        'LG': "Large"
+    }
+    name = models.CharField(max_length=32, choices=BOOK_SIZES, default=BOOK_SIZES["MD"])
+
 class Series(models.Model):
     name = models.CharField(max_length=128)
     book_count = models.PositiveSmallIntegerField("Number of Books in this series")
