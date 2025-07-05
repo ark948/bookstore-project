@@ -198,15 +198,12 @@ class Book(BaseModel):
     description = models.TextField("Description")
     summary = models.TextField(verbose_name="Summary")
     age_recommendation = models.ForeignKey(AgeRecommendation, on_delete=models.DO_NOTHING, null=True, verbose_name="Suitable for")
-    cover_image = models.ImageField("Cover Image")
     keywords = models.CharField("Keywords")
     translator = models.ForeignKey(Translator, verbose_name="Translated by")
     illustrator = models.ForeignKey(Illustrator, verbose_name="Illustrated by")
     awards = models.ManyToManyField(Award, "Awards won")
-    rating = models.SmallIntegerField(
-            "Rating", 
-            validators=[MinValueValidator(1), MaxValueValidator(10)]
-        )
+    rating = models.SmallIntegerField("Rating", validators=[MinValueValidator(1), MaxValueValidator(10)])
+    cover_image = models.ImageField("Cover Image")
 
     class Meta:
         verbose_name = "Book"
@@ -297,4 +294,4 @@ class BookAuthor(models.Model):
     book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
     author_id = models.ForeignKey(Author, on_delete=models.CASCADE)
     # author_order = models.IntegerField()
-    role = models.CharField(max_length=64, blank=True)
+    role = models.CharField(max_length=64, blank=True, verbose_name="Role")
