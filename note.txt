@@ -15,6 +15,10 @@ Must include:
     - internationalization (only en and fa)
 
     NOTE: Language must be farsi first
+    NOTE: Comment should just be a short opinion
+    NOTE: Review should be more comprehensive
+    bonus feature: if a user's review get for example 20 upvotes, that user should get an small discount
+    (upvotes must be from verified users)
 
 Add docker, nginx, gunicorn
 Postgresql or MySQL database and backup (extra points if backups are automated)

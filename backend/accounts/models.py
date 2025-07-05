@@ -20,6 +20,10 @@ class CustomUser(AbstractUser):
         return f"UserObj {self.pk}"
     
 
+# class CustomAddress(models.Model):
+#     pass
+    
+
 # # NOT USED, for learning purposes only
 # class unused_CustomUser(AbstractBaseUser, PermissionsMixin):
 #     email = models.EmailField("email address", unique=True)
