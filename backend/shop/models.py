@@ -23,6 +23,7 @@ from accounts.models import CustomUser
 # EXCEPTION: if a CharField has both unique=True and blank=True, then null=True is required
 # NULL value for relationships (mostly one to one)
 # At least one unique (required value) for each table
+# Configure image field for book's cover image (static location)
 
 
 # Inherit this to use created_at and updated_at
@@ -144,28 +145,27 @@ class Size(models.Model):
         'MD': "Medium",
         'LG': "Large"
     }
-    name = models.CharField(max_length=32, choices=BOOK_SIZES, default=BOOK_SIZES["MD"])
+    name = models.CharField(max_length=32, choices=BOOK_SIZES, default=BOOK_SIZES["MD"], verbose_name="Name of book size")
 
 class Series(models.Model):
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, verbose_name="Name of the series")
     book_count = models.PositiveSmallIntegerField("Number of Books in this series")
 
 
 class Organization(models.Model):
-    title = models.CharField(max_length=128)
+    title = models.CharField(max_length=128, verbose_name="Organization's name")
 
 
-class Award(models.Model):
+class Award(BaseModel):
     AWARD_STATUSES = {
         "UN": "Unknown",
         "AC": "Active",
         "NC": "Inactive",
         "RV": "Revoked"
     }
-    name = models.CharField(max_length=128)
-    issued_by = models.ForeignKey(Organization, on_delete=models.DO_NOTHING, related_name='awards')
-    date = models.DateField()
-    status = models.CharField(max_length=2, choices=AWARD_STATUSES, default=AWARD_STATUSES["UN"])
+    title = models.CharField(max_length=128, verbose_name="Title of the Award")
+    issued_by = models.ForeignKey(Organization, on_delete=models.DO_NOTHING, related_name='awards', verbose_name="Issued by")
+    status = models.CharField(max_length=2, choices=AWARD_STATUSES, default=AWARD_STATUSES["UN"], verbose_name="Status of award")
 
 
 class AgeRecommendation(models.Model):
@@ -176,33 +176,33 @@ class AgeRecommendation(models.Model):
         "MADL": "26-39", # Mid adults
         "ELDR": "40-60" # Elderly adults
     }
-    group = models.CharField(max_length=4, choices=AGE_GROUPS, default=AGE_GROUPS["YADL"])
+    group = models.CharField(max_length=4, choices=AGE_GROUPS, default=AGE_GROUPS["YADL"], verbose_name="Age group")
         
 
 class Book(BaseModel):
     title = models.CharField("Title", max_length=128, blank=False, null=False)
-    authors = models.ManyToManyField(Author, related_name='books', through='BookAuthor')
-    publisher = models.ForeignKey(Publication, related_name='books') # publisher.books.all()
-    language = models.ForeignKey(Language, on_delete=models.DO_NOTHING, related_name='books') # Language.books.all()
-    original_language = models.ForeignKey(Language)
+    authors = models.ManyToManyField(Author, related_name='books', through='BookAuthor', verbose_name="Author(s)")
+    publisher = models.ForeignKey(Publication, related_name='books', verbose_name="Published by") # publisher.books.all()
+    language = models.ForeignKey(Language, on_delete=models.DO_NOTHING, related_name='books', verbose_name="Language") # Language.books.all()
+    original_language = models.ForeignKey(Language, verbose_name="Original language")
     edition = models.PositiveSmallIntegerField("Edition")
     page_count = models.IntegerField("Number of Pages")
     pub_date = models.DateField("Published on")
-    format = models.ForeignKey(Format) # hardcover, paperback, ebook, audio
-    series = models.ForeignKey(Series) # is this book part of a series
+    format = models.ForeignKey(Format, verbose_name="Format") # hardcover, paperback, ebook, audio
+    series = models.ForeignKey(Series, verbose_name="Belongs to series") # is this book part of a series
     ISBN = models.CharField("ISBN", blank=False, null=False)
-    genre = models.ForeignKey(Genre, on_delete=models.DO_NOTHING, related_name="books") # Genre.books.all()
+    genre = models.ForeignKey(Genre, on_delete=models.DO_NOTHING, related_name="books", verbose_name="Genre") # Genre.books.all()
     price = models.DecimalField("Price")
     available = models.BooleanField("Available", default=False)
     copies_available = models.PositiveSmallIntegerField("In Stock")
     description = models.TextField("Description")
-    summary = models.TextField()
-    age_recommendation = models.ForeignKey(AgeRecommendation, on_delete=models.DO_NOTHING, null=True)
-    cover_image = models.ImageField()
-    keywords = models.CharField()
-    translator = models.ForeignKey(Translator)
-    illustrator = models.ForeignKey(Illustrator)
-    awards = models.ManyToManyField(Award)
+    summary = models.TextField(verbose_name="Summary")
+    age_recommendation = models.ForeignKey(AgeRecommendation, on_delete=models.DO_NOTHING, null=True, verbose_name="Suitable for")
+    cover_image = models.ImageField("Cover Image")
+    keywords = models.CharField("Keywords")
+    translator = models.ForeignKey(Translator, verbose_name="Translated by")
+    illustrator = models.ForeignKey(Illustrator, verbose_name="Illustrated by")
+    awards = models.ManyToManyField(Award, "Awards won")
     rating = models.SmallIntegerField(
             "Rating", 
             validators=[MinValueValidator(1), MaxValueValidator(10)]
@@ -238,9 +238,6 @@ class Comment(BaseModel):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="comments") # user.comments.all()
 
 
-class Status(models.Model):
-    title = models.CharField("Title", max_length=64)
-
 class OrderItem(models.Model):
     books = models.ManyToManyField(Book)
     items_count = models.PositiveSmallIntegerField(
@@ -251,9 +248,16 @@ class OrderItem(models.Model):
 
 
 class Order(BaseModel):
+    ORDER_STATUSES = (
+        ("PENDING-PAYMENT", "Pending payment"),
+        ("CONFIRMED", "Confirmed"),
+        ("PROCESSING", "Processing"),
+        ("SHIPPED", "Shipped"),
+        ("CANCELLED", "Cancelled")
+    )
     customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders') # CustomUser.orders.all()
     order_items = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name="orders") # Status.orders.all()
+    status = models.CharField(max_length=32, choices=ORDER_STATUSES, default=ORDER_STATUSES[2], verbose_name="Status of order")
 
     class Meta:
         unique_together = (
@@ -261,15 +265,30 @@ class Order(BaseModel):
             'order_items'
         )
 
+    def __str__(self) -> str:
+        return f"[OrderObj] {self.pk}"
+
 
 class Payment(BaseModel):
     customer_id = models.ForeignKey(CustomUser)
     order_id = models.ForeignKey(Order)
 
+    class Meta:
+        unique_together = (
+            'customer_id',
+            'order_id'
+        )
+
 
 class Invoice(BaseModel):
     order_id = models.ForeignKey(Order)
     payment_id = models.ForeignKey(Payment)
+
+    class Meta:
+        unique_together = (
+            'order_id',
+            'payment_id'
+        )
 
 
 # Association tables
