@@ -166,9 +166,9 @@ class AgeRecommendation(models.Model):
     group = models.CharField(max_length=4, choices=AGE_GROUPS, default=AGE_GROUPS["YADL"])
         
 
-class Book(models.Model):
+class Book(BaseModel):
     title = models.CharField("Title", max_length=128, blank=False, null=False)
-    authors = models.ManyToManyField(Author, related_name='books')
+    authors = models.ManyToManyField(Author, related_name='books', through='BookAuthor')
     publisher = models.ForeignKey(Publication, related_name='books') # publisher.books.all()
     language = models.ForeignKey(Language, on_delete=models.DO_NOTHING, related_name='books') # Language.books.all()
     original_language = models.ForeignKey(Language)
@@ -219,11 +219,10 @@ class Discount(models.Model):
     expiry = models.DateTimeField()
 
 
-class Comment(models.Model):
+class Comment(BaseModel):
     body = models.CharField("Body", max_length=5000)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="comments") # book.comments.all()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="comments") # user.comments.all()
-    created_at = models.DateTimeField("Created At", auto_now_add=True)
 
 
 class Status(models.Model):
@@ -238,11 +237,10 @@ class OrderItems(models.Model):
     total_price = models.DecimalField()
 
 
-class Order(models.Model):
+class Order(BaseModel):
     customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders') # CustomUser.orders.all()
     order_items = models.ForeignKey(OrderItems, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name="orders") # Status.orders.all()
-    created_at = models.DateTimeField("Date", auto_now_add=True, default=timezone.now)
 
     class Meta:
         unique_together = (
@@ -251,12 +249,12 @@ class Order(models.Model):
         )
 
 
-class Payment(models.Model):
+class Payment(BaseModel):
     customer_id = models.ForeignKey(CustomUser)
     order_id = models.ForeignKey(Order)
-    created_at = models.DateTimeField("Created At", auto_now_add=True)
 
-class Invoice(models.Model):
+
+class Invoice(BaseModel):
     order_id = models.ForeignKey(Order)
     payment_id = models.ForeignKey(Payment)
 
@@ -267,4 +265,4 @@ class BookAuthor(models.Model):
     book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
     author_id = models.ForeignKey(Author, on_delete=models.CASCADE)
     # author_order = models.IntegerField()
-    role = models.CharField(max_length=64)
+    role = models.CharField(max_length=64, blank=True)
