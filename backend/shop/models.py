@@ -246,11 +246,11 @@ class OrderItem(models.Model):
 
 class Order(BaseModel):
     ORDER_STATUSES = (
-        ("PENDING-PAYMENT", "Pending payment"),
-        ("CONFIRMED", "Confirmed"),
-        ("PROCESSING", "Processing"),
-        ("SHIPPED", "Shipped"),
-        ("CANCELLED", "Cancelled")
+        ("pending payment", "Pending Payment"),
+        ("confirmed", "Confirmed"),
+        ("processing", "Processing"),
+        ("shipped", "Shipped"),
+        ("cancelled", "Cancelled")
     )
     customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders') # CustomUser.orders.all()
     order_items = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
