@@ -7,8 +7,8 @@ from accounts.models import CustomUser
 # Create your models here.
 
 # checks:
-# ALL models must be Capitalized
-# ALL models must be singular
+# ALL models must be Capitalized (DONE)
+# ALL models must be singular (DONE)
 # ALL fields must be lowercased using underscores, not camelCase (full_name, NOT fullName)
 # Provide Verbose name for all non-relation fields (otherwise django will do it itself but with its own ways)
 # Provide related_name for all relation fields
@@ -228,7 +228,7 @@ class Comment(BaseModel):
 class Status(models.Model):
     title = models.CharField("Title", max_length=64)
 
-class OrderItems(models.Model):
+class OrderItem(models.Model):
     books = models.ManyToManyField(Book)
     items_count = models.PositiveSmallIntegerField(
         "Total Number of Items",
@@ -239,7 +239,7 @@ class OrderItems(models.Model):
 
 class Order(BaseModel):
     customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders') # CustomUser.orders.all()
-    order_items = models.ForeignKey(OrderItems, on_delete=models.CASCADE)
+    order_items = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name="orders") # Status.orders.all()
 
     class Meta:
