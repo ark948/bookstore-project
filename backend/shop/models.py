@@ -14,6 +14,11 @@ from accounts.models import CustomUser
 # Provide related_name for all relation fields (DONE)
 # Provide verbose_name and verbose_name_plural for model itself (by using class Meta) (DONE)
 # Provide ordering to Meta, ONLY IF NECESSARY (IT WILL AFFECT PERFORMANCE)
+# Models with ordering: (DONE)
+    # Book (title)
+    # Genre (name)
+    # Country (name)
+    # Language (name)
 # Provide index if necessary
 # FIX all choice fields (dicts are faster for key related lookups)
 # Add get_<modelName>_display for all choice fields (a human-readable version) CANCELLED, it is automatically provided by django
@@ -42,9 +47,9 @@ class Country(models.Model):
     name = models.CharField("Country Name", max_length=128, blank=False, null=False)
 
     class Meta:
+        ordering = ["name"]
         verbose_name = "Country"
         verbose_name_plural = "Countries"
-        ordering = ["name"]
     
     def __str__(self) -> str:
         return f"[CountryObj] {self.name}"
@@ -130,9 +135,13 @@ class Language(models.Model):
     name = models.CharField("Name", max_length=128)
     book_count = models.PositiveSmallIntegerField("Number of Books")
 
+    class Meta:
+        ordering = ('name',)
+
 
 class OriginalLanguage(Language):
-    pass
+    class Meta:
+        ordering = ('name',)
 
 
 class Format(models.Model):
