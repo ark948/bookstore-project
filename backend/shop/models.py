@@ -36,16 +36,20 @@ from accounts.models import CustomUser
 
 # Relationships
 # ------------------
-# Book m:m Author -> BookAuthor
-# Book m:m Genres -> BookGenre
-# Book m:m Tag -> BookTag
+# Book M:N Author -> BookAuthor
+# Book M:N Genres -> BookGenre
+# Book M:N Tag -> BookTag
+# Book M:N Translator -> BookTranslator
+# Book M:N Illustrator -> BookIllustrator
+# Book M:N award
 
-# Book m:m Translator -> BookTranslator
-# Book m:m Illustrator -> BookIllustrator
+# Author 1:1 Country (nationality field)
+# Translator 1:1 Country (nationality field)
+# Illustrator 1:1 Country  (nationality field)
 
-# Author n:m Country (nationality field)
-# Translator n:m Country (nationality field)
-# Illustrator n:m Country  (nationality field)
+# Country 1:N Author
+# Country 1:N Translator
+# Country 1:N Illustrator
 
 # Order n:n OrderItems
 # Order n:n Payment (can be splitted in more advanced systems, but not for now)
