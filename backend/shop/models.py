@@ -7,6 +7,7 @@ from accounts.models import CustomUser
 # Create your models here.
 
 # checks:
+# ------------------
 # ALL models must be Capitalized (DONE)
 # ALL models must be singular (DONE)
 # ALL fields must be lowercased using underscores, not camelCase (full_name, NOT fullName) (DONE)
@@ -22,6 +23,8 @@ from accounts.models import CustomUser
 # Provide index if necessary: (DONE)
     # Index provided to Book
 # FIX all choice fields (dicts are faster for key related lookups) (DONE)
+# Rename manytomany fields to plural format such genres field of Book model
+# Distinguish between DO_NOTHING and CASCADE
 # add null=True and blank=True (null for database, blank is for validation)
 # EXAMPLE: if blank is true, then a form will allow empty value
 # if a null is required for CharField or TextField, DO NOT USE Null, use default="" and blank=True instead
@@ -30,8 +33,25 @@ from accounts.models import CustomUser
 # At least one unique (required value) for each table
 # Configure image field for book's cover image (static location)
 
+
 # Relationships
+# ------------------
 # Book m:m Author -> BookAuthor
+# Book m:m Genres -> BookGenre
+# Book m:m Tag -> BookTag
+
+# Book m:m Translator -> BookTranslator
+# Book m:m Illustrator -> BookIllustrator
+
+# Author n:m Country (nationality field)
+# Translator n:m Country (nationality field)
+# Illustrator n:m Country  (nationality field)
+
+# Order n:n OrderItems
+# Order n:n Payment (can be splitted in more advanced systems, but not for now)
+# Order n:n CustomUser
+
+# Payment n:n Invoice
 
 
 # Inherit this to use created_at and updated_at
@@ -122,6 +142,10 @@ class Genre(models.Model):
 
     def __str__(self) -> str:
         return f"[GenreObj] {self.title}"
+    
+
+class Tag(models.Model):
+    name = models.CharField("Name", max_length=64, blank=False, unique=True)
 
 
 class Publication(models.Model):
@@ -199,7 +223,8 @@ class Book(TimeStampModel):
     format = models.ForeignKey("Format", Format, related_name='books') # <FormatObj>.books.all()
     series = models.ForeignKey("Belongs to series", Series, related_name='books') # <SeriesObj>.books.all()
     ISBN = models.CharField("ISBN", blank=False, null=False, unique=True)
-    genre = models.ForeignKey("Genre", Genre, on_delete=models.DO_NOTHING, related_name="books") # <GenreObj>.books.all()
+    genres = models.ManyToManyField(Genre, through="BookGenre") # related_name deleted
+    tags = models.ManyToManyField(Tag, through="BookTag") # related_name not provided
     price = models.DecimalField("Price", validators=[MinValueValidator(0)])
     available = models.BooleanField("Available", default=False)
     copies_available = models.PositiveSmallIntegerField("In Stock")
@@ -207,8 +232,8 @@ class Book(TimeStampModel):
     summary = models.TextField("Summary", blank=True)
     age_recommendation = models.ForeignKey("Suitable for ages", AgeRecommendation, on_delete=models.DO_NOTHING, null=True, related_name='books') # <AgeRecommendationObj>.books.all()
     keywords = models.CharField("Keywords") # FIX Rel
-    translator = models.ForeignKey("Translated by", Translator) # FIX Rel
-    illustrator = models.ForeignKey("Illustrated by", Illustrator) # Fix Rel
+    translators = models.ManyToManyField(Translator, through="BookTranslator")
+    illustrators = models.ManyToManyField(Illustrator, through="BookIllustrator")
     rating = models.SmallIntegerField("Rating", validators=[MinValueValidator(1), MaxValueValidator(10)])
     cover_image = models.ImageField("Cover Image")
 
@@ -311,9 +336,31 @@ class Invoice(TimeStampModel):
 
 
 # Association tables
+
 # FIX Rel
 class BookAuthor(models.Model):
     book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
     author_id = models.ForeignKey(Author, on_delete=models.CASCADE)
     # author_order = models.IntegerField()
-    role = models.CharField(verbose_name="Role", max_length=64, blank=True)
+    # role = models.CharField(verbose_name="Role", max_length=64, blank=True)
+
+
+class BookGenre(models.Model):
+    book_id = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
+    genre_id = models.ForeignKey(Genre, on_delete=models.DO_NOTHING)
+    # extra fields if required
+
+
+class BookTag(models.Model):
+    book_id = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
+    tag_id = models.ForeignKey(Tag, on_delete=models.DO_NOTHING)
+
+
+class BookTranslator(models.Model):
+    book_id = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
+    translator_id = models.ForeignKey(Translator, on_delete=models.DO_NOTHING)
+
+
+class BookIllustrator(models.Model):
+    book_id = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
+    illustrator_id = models.ForeignKey(Illustrator, on_delete=models.DO_NOTHING)
