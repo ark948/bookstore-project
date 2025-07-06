@@ -23,8 +23,10 @@ from accounts.models import CustomUser
 # Provide index if necessary: (DONE)
     # Index provided to Book
 # FIX all choice fields (dicts are faster for key related lookups) (DONE)
-# Rename manytomany fields to plural format such genres field of Book model
-# Distinguish between DO_NOTHING and CASCADE
+# Rename manytomany fields to plural format such as genres field of Book model (DONE)
+# Distinguish between DO_NOTHING and CASCADE in relation fields
+# NOTE: DO_NOTHING will cause integrity problems, best to choose something else
+# UPDATE all DO_NOTHING statements
 # add null=True and blank=True (null for database, blank is for validation)
 # EXAMPLE: if blank is true, then a form will allow empty value
 # if a null is required for CharField or TextField, DO NOT USE Null, use default="" and blank=True instead
@@ -41,7 +43,9 @@ from accounts.models import CustomUser
 # Book M:N Tag -> BookTag
 # Book M:N Translator -> BookTranslator
 # Book M:N Illustrator -> BookIllustrator
-# Book M:N award
+
+# Book 1:N Award (CASCADE)
+# Award 1:1 Book (DO_NOTHING)
 
 # Book 1:1 Publication
 # Publication 1:N Book
@@ -64,11 +68,11 @@ from accounts.models import CustomUser
 # Book 1:1 AgeRecommendation
 # AgeRecommendation 1:N Book
 
-# Book 1:N Review
-# Review 1:1 Book
+# Book 1:N Review (CASCADE)
+# Review 1:1 Book (DO_NOTHING)
 
-# Book 1:N Comment
-# Comment 1:1 Book
+# Book 1:N Comment (CASCADE)
+# Comment 1:1 Book (DO_NOTHING)
 
 # Payment 1:1 Discount
 # Discount 1:N Payment
@@ -101,7 +105,7 @@ class TimeStampModel(models.Model):
 
 
 class Country(models.Model):
-    name = models.CharField("Country Name", max_length=128, blank=False, null=False)
+    name = models.CharField("Country Name", max_length=128, blank=False, null=False, default="Unknown")
 
     class Meta:
         ordering = ["name"]
@@ -119,7 +123,7 @@ class Translator(models.Model):
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     book_count = models.PositiveSmallIntegerField("Number of Books")
-    nationality = models.ForeignKey("Nationality", Country, models.DO_NOTHING, related_name='translators') # <CountryObj>.translators.all()
+    nationality = models.ForeignKey("Nationality", Country, models.SET_DEFAULT, related_name='translators') # <CountryObj>.translators.all()
 
     @property
     def full_name(self) -> str:
@@ -139,7 +143,7 @@ class Illustrator(models.Model):
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     book_count = models.PositiveSmallIntegerField("Number of Books")
-    nationality = models.ForeignKey("Nationality", Country, models.DO_NOTHING, related_name='illustrators') # <CountryObj>.illustrators.all()
+    nationality = models.ForeignKey("Nationality", Country, models.SET_DEFAULT, related_name='illustrators') # <CountryObj>.illustrators.all()
 
     @property
     def full_name(self) -> str:
@@ -158,7 +162,7 @@ class Author(models.Model):
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     book_count = models.PositiveSmallIntegerField("Number of Books")
-    nationality = models.ForeignKey("Nationality", Country, models.DO_NOTHING, related_name='authors') # <AuthorObj>.authors.all()
+    nationality = models.ForeignKey("Nationality", Country, models.SET_DEFAULT, related_name='authors') # <AuthorObj>.authors.all()
 
     @property
     def full_name(self) -> str:
@@ -188,7 +192,7 @@ class Tag(models.Model):
 class Publication(models.Model):
     title = models.CharField("Title", max_length=128)
     book_count = models.PositiveSmallIntegerField("Number of Books from this publisher")
-    country = models.ForeignKey("Based in", Country, on_delete=models.DO_NOTHING, related_name='publications') # <CountryObj>.publications.all()
+    country = models.ForeignKey("Based in", Country, on_delete=models.SET_DEFAULT, related_name='publications') # <CountryObj>.publications.all()
     url = models.URLField("Publication's Website", blank=True)
 
 
@@ -233,26 +237,27 @@ class Series(models.Model):
 
 
 class Organization(models.Model):
-    title = models.CharField("Organization's name", max_length=128)
+    title = models.CharField("Organization's name", max_length=128, default="Unknown")
 
 
 
 class AgeRecommendation(models.Model):
     AGE_GROUPS = {
+        "UNAW": "0-0",
         "CHLD": "0-12", # Children
         "TNGS": "13-17", # Teenagers
         "YADL": "18-25", # Young adults
         "MADL": "26-39", # Mid adults
         "ELDR": "40-60" # Elderly adults
     }
-    group = models.CharField("Age group", max_length=4, choices=AGE_GROUPS, default=AGE_GROUPS["YADL"])
+    group = models.CharField("Age group", max_length=4, choices=AGE_GROUPS, default=AGE_GROUPS["UNAW"])
         
 
 class Book(TimeStampModel):
     title = models.CharField("Title", max_length=256, blank=False, null=False, db_index=True)
     authors = models.ManyToManyField("Author(s)", Author, related_name='books', through='BookAuthor')
     publisher = models.ForeignKey("Published by", Publication, related_name='books') # <PublisherObj>.books.all()
-    language = models.ForeignKey("Language", Language, on_delete=models.DO_NOTHING, related_name='books') # <LanguageObj>.books.all()
+    language = models.ForeignKey("Language", Language, on_delete=models.SET_DEFAULT, related_name='books') # <LanguageObj>.books.all()
     original_language = models.ForeignKey("Original language", OriginalLanguage, related_name="books") # <OriginalLanguageObj>.books.all()
     edition = models.PositiveSmallIntegerField("Edition")
     page_count = models.IntegerField("Number of Pages")
@@ -267,7 +272,7 @@ class Book(TimeStampModel):
     copies_available = models.PositiveSmallIntegerField("In Stock")
     description = models.TextField("Description", blank=True)
     summary = models.TextField("Summary", blank=True)
-    age_recommendation = models.ForeignKey("Suitable for ages", AgeRecommendation, on_delete=models.DO_NOTHING, null=True, related_name='books') # <AgeRecommendationObj>.books.all()
+    age_recommendation = models.ForeignKey("Suitable for ages", AgeRecommendation, on_delete=models.SET_DEFAULT, null=True, related_name='books') # <AgeRecommendationObj>.books.all()
     keywords = models.CharField("Keywords") # FIX Rel
     translators = models.ManyToManyField(Translator, through="BookTranslator")
     illustrators = models.ManyToManyField(Illustrator, through="BookIllustrator")
@@ -291,9 +296,9 @@ class Award(TimeStampModel):
         "RV": "Revoked"
     }
     title = models.CharField("Title of the Award", max_length=128)
-    issued_by = models.ForeignKey("Issued by", Organization, on_delete=models.DO_NOTHING, related_name='awards') # <OrganizationObj>.awards.all()
+    issued_by = models.ForeignKey("Issued by", Organization, on_delete=models.SET_DEFAULT, related_name='awards') # <OrganizationObj>.awards.all()
     status = models.CharField("Status of award", max_length=2, choices=AWARD_STATUSES, default=AWARD_STATUSES["UN"])
-    book_id = models.ForeignKey(Book, on_delete=models.DO_NOTHING, related_name='awards') # <BookObj>.awards.all()
+    book_id = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='awards') # <BookObj>.awards.all()
 
     
 class Review(TimeStampModel):
@@ -383,21 +388,21 @@ class BookAuthor(models.Model):
 
 
 class BookGenre(models.Model):
-    book_id = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
-    genre_id = models.ForeignKey(Genre, on_delete=models.DO_NOTHING)
+    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
+    genre_id = models.ForeignKey(Genre, on_delete=models.CASCADE)
     # extra fields if required
 
 
 class BookTag(models.Model):
-    book_id = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
-    tag_id = models.ForeignKey(Tag, on_delete=models.DO_NOTHING)
+    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
+    tag_id = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
 
 class BookTranslator(models.Model):
-    book_id = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
-    translator_id = models.ForeignKey(Translator, on_delete=models.DO_NOTHING)
+    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
+    translator_id = models.ForeignKey(Translator, on_delete=models.CASCADE)
 
 
 class BookIllustrator(models.Model):
-    book_id = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
-    illustrator_id = models.ForeignKey(Illustrator, on_delete=models.DO_NOTHING)
+    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
+    illustrator_id = models.ForeignKey(Illustrator, on_delete=models.CASCADE)
