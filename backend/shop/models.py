@@ -21,8 +21,7 @@ from accounts.models import CustomUser
     # Language (name)
 # Provide index if necessary: (DONE)
     # Index provided to Book
-# FIX all choice fields (dicts are faster for key related lookups)
-# Add get_<modelName>_display for all choice fields (a human-readable version) CANCELLED, it is automatically provided by django
+# FIX all choice fields (dicts are faster for key related lookups) (DONE)
 # add null=True and blank=True (null for database, blank is for validation)
 # EXAMPLE: if blank is true, then a form will allow empty value
 # if a null is required for CharField or TextField, DO NOT USE Null, use default="" and blank=True instead
