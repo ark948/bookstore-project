@@ -12,7 +12,7 @@ from accounts.models import CustomUser
 # ALL fields must be lowercased using underscores, not camelCase (full_name, NOT fullName) (DONE)
 # Provide Verbose name for all non-relation fields (otherwise django will do it itself but with its own ways) (DONE)
 # Provide related_name for all relation fields (DONE)
-# Provide verbose_name and verbose_name_plural for model itself (by using class Meta)
+# Provide verbose_name and verbose_name_plural for model itself (by using class Meta) (DONE)
 # Provide ordering to Meta, ONLY IF NECESSARY (IT WILL AFFECT PERFORMANCE)
 # Provide index if necessary
 # FIX all choice fields (dicts are faster for key related lookups)
@@ -98,10 +98,6 @@ class Author(models.Model):
     book_count = models.PositiveSmallIntegerField("Number of Books")
     nationality = models.ForeignKey("Nationality", Country, models.DO_NOTHING, related_name='authors') # <AuthorObj>.authors.all()
 
-    class Meta:
-        verbose_name = "Author"
-        verbose_name_plural = "Authors"
-
     @property
     def full_name(self) -> str:
         if self.first_name and self.last_name:
@@ -112,6 +108,7 @@ class Author(models.Model):
     def __str__(self) -> str:
         return f"[AuthorObj] {self.pk}"
 
+
 class Genre(models.Model):
     title = models.CharField("Title", max_length=64, blank=False, null=False, unique=True)
 
@@ -120,6 +117,7 @@ class Genre(models.Model):
 
     def __str__(self) -> str:
         return f"[GenreObj] {self.title}"
+
 
 class Publication(models.Model):
     title = models.CharField("Title", max_length=128)
@@ -154,9 +152,14 @@ class Size(models.Model):
     }
     name = models.CharField("Name of book size", max_length=32, choices=BOOK_SIZES, default=BOOK_SIZES["MD"])
 
+
 class Series(models.Model):
     name = models.CharField("Name of the series", max_length=128)
     book_count = models.PositiveSmallIntegerField("Number of Books in this series")
+
+    class Meta:
+        verbose_name = "Series"
+        verbose_name_plural = "Series"
 
 
 class Organization(models.Model):
@@ -176,7 +179,7 @@ class AgeRecommendation(models.Model):
         
 
 class Book(TimeStampModel):
-    title = models.CharField("Title", max_length=128, blank=False, null=False)
+    title = models.CharField("Title", max_length=256, blank=False, null=False, db_index=True)
     authors = models.ManyToManyField("Author(s)", Author, related_name='books', through='BookAuthor')
     publisher = models.ForeignKey("Published by", Publication, related_name='books') # <PublisherObj>.books.all()
     language = models.ForeignKey("Language", Language, on_delete=models.DO_NOTHING, related_name='books') # <LanguageObj>.books.all()
@@ -201,6 +204,7 @@ class Book(TimeStampModel):
     cover_image = models.ImageField("Cover Image")
 
     class Meta:
+        ordering = ("title",)
         verbose_name = "Book"
         verbose_name_plural = "Books"
 
