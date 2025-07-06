@@ -43,6 +43,39 @@ from accounts.models import CustomUser
 # Book M:N Illustrator -> BookIllustrator
 # Book M:N award
 
+# Book 1:1 Publication
+# Publication 1:N Book
+
+# Book 1:1 Format
+# Format 1:N Book
+
+# Book 1:1 Size
+# Size 1:N Book
+
+# Book 1:1 Series
+# Series 1:N Book
+
+# Book 1:1 Language
+# Language 1:N Book
+
+# Book 1:1 OriginalLanguage
+# OriginalLanguage 1:N
+
+# Book 1:1 AgeRecommendation
+# AgeRecommendation 1:N Book
+
+# Book 1:N Review
+# Review 1:1 Book
+
+# Book 1:N Comment
+# Comment 1:1 Book
+
+# Payment 1:1 Discount
+# Discount 1:N Payment
+
+# Organization 1:N Award
+# Award 1:1 Organization
+
 # Author 1:1 Country (nationality field)
 # Translator 1:1 Country (nationality field)
 # Illustrator 1:1 Country  (nationality field)
@@ -51,9 +84,9 @@ from accounts.models import CustomUser
 # Country 1:N Translator
 # Country 1:N Illustrator
 
-# Order n:n OrderItems
-# Order n:n Payment (can be splitted in more advanced systems, but not for now)
-# Order n:n CustomUser
+# Order 1:1 OrderItems
+# Order 1:1 Payment (can be splitted in more advanced systems, but not for now)
+# Order 1:1 CustomUser
 
 # Payment n:n Invoice
 
