@@ -30,7 +30,10 @@ from accounts.models import CustomUser
 # add null=True and blank=True (null for database, blank is for validation) (DONE)
 # EXAMPLE: if blank is true, then a form will allow empty value (DONE)
 # if a null is required for CharField or TextField, DO NOT USE Null, use default="" and blank=True instead (DONE)
-# Configure image field for book's cover image (static location)
+# Configure image field for book's cover image (static location) (DONE)
+
+# Relationships to watch that may causes errors:
+# Book - OrderItems (books field)
 
 
 # Relationships
@@ -86,8 +89,10 @@ from accounts.models import CustomUser
 # Country 1:N Illustrator
 
 # Order 1:1 OrderItems
-# Order 1:1 Payment (can be splitted in more advanced systems, but not for now)
 # Order 1:1 CustomUser
+# Order 1:N Payment
+
+# Payment 1:1 Order
 
 # Payment n:n Invoice
 
@@ -350,7 +355,7 @@ class Order(TimeStampModel):
         ("cancelled", "Cancelled")
     )
     customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders') # <CustomUserObj>.orders.all()
-    order_items = models.ForeignKey(OrderItem, on_delete=models.CASCADE) # FIX Rel
+    order_items_id = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
     status = models.CharField("Status of order", max_length=32, choices=ORDER_STATUSES, default=ORDER_STATUSES[2])
 
     class Meta:
@@ -363,9 +368,17 @@ class Order(TimeStampModel):
         return f"[OrderObj] {self.pk}"
 
 
+# An order may have more than one payment, for example, if one failed, we still want to keep the record of it
 class Payment(TimeStampModel):
+    PAYMENT_STATUSES = (
+        ('pending', 'Pending')
+        ('successful', "Successful"),
+        ('failed', 'Failed'),
+        ('expired', 'Expired')
+    )
     customer_id = models.ForeignKey(CustomUser, related_name='payments') # <CustomUserObj>.payments.all()
-    order_id = models.ForeignKey(Order) # FIX Rel
+    order_id = models.ForeignKey(Order, related_name='payments') # <OrderObj>.payments.all()
+    status = models.CharField("Payment's status", choices=PAYMENT_STATUSES, default=PAYMENT_STATUSES[0])
 
     class Meta:
         unique_together = (
@@ -373,10 +386,11 @@ class Payment(TimeStampModel):
             'order_id'
         )
 
-# FIX Rel
+# Only successful payments can have invoices
+# therefore, payment must have a status field
 class Invoice(TimeStampModel):
-    order_id = models.ForeignKey(Order)
-    payment_id = models.ForeignKey(Payment)
+    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
+    payment_id = models.ForeignKey(Payment, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = (
@@ -387,11 +401,10 @@ class Invoice(TimeStampModel):
 
 # Association tables
 
-# FIX Rel
 class BookAuthor(models.Model):
     book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
     author_id = models.ForeignKey(Author, on_delete=models.CASCADE)
-    # author_order = models.IntegerField()
+    # author_order = models.IntegerField() # Could be implemented later
     # role = models.CharField(verbose_name="Role", max_length=64, blank=True)
 
 
