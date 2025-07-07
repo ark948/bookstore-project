@@ -319,7 +319,7 @@ class Award(TimeStampModel):
         "RV": "Revoked"
     }
     title = models.CharField("Title of the Award", max_length=128, blank=True, default="")
-    issued_by = models.ForeignKey("Issued by", Organization, on_delete=models.SET_DEFAULT, related_name='awards') # <OrganizationObj>.awards.all()
+    issued_by = models.ForeignKey(verbose_name="Issued by", to=Organization, on_delete=models.SET_DEFAULT, related_name='awards') # <OrganizationObj>.awards.all()
     status = models.CharField("Status of award", max_length=2, choices=AWARD_STATUSES, default=AWARD_STATUSES["UN"])
     book_id = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='awards') # <BookObj>.awards.all()
 
@@ -381,10 +381,10 @@ class Order(TimeStampModel):
 # An order may have more than one payment, for example, if one failed, we still want to keep the record of it
 class Payment(TimeStampModel):
     PAYMENT_STATUSES = (
-        ('pending', 'Pending')
+        ('pending', 'Pending'),
         ('successful', "Successful"),
         ('failed', 'Failed'),
-        ('expired', 'Expired')
+        ('expired', 'Expired'),
     )
     customer_id = models.ForeignKey(CustomUser, related_name='payments') # <CustomUserObj>.payments.all()
     order_id = models.ForeignKey(Order, related_name='payments') # <OrderObj>.payments.all()
