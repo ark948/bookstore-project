@@ -25,14 +25,11 @@ from accounts.models import CustomUser
 # FIX all choice fields (dicts are faster for key related lookups) (DONE)
 # Rename manytomany fields to plural format such as genres field of Book model (DONE)
 # Distinguish between DO_NOTHING and CASCADE in relation fields (DONE)
-# NOTE: DO_NOTHING will cause integrity problems, best to choose something else
+# NOTE: DO_NOTHING will cause integrity problems, best to choose something else (DONE)
 # UPDATE all DO_NOTHING statements (DONE)
-# add null=True and blank=True (null for database, blank is for validation)
-# EXAMPLE: if blank is true, then a form will allow empty value
-# if a null is required for CharField or TextField, DO NOT USE Null, use default="" and blank=True instead
-# EXCEPTION: if a CharField has both unique=True and blank=True, then null=True is required
-# NULL value for relationships (mostly one to one)
-# At least one unique (required value) for each table
+# add null=True and blank=True (null for database, blank is for validation) (DONE)
+# EXAMPLE: if blank is true, then a form will allow empty value (DONE)
+# if a null is required for CharField or TextField, DO NOT USE Null, use default="" and blank=True instead (DONE)
 # Configure image field for book's cover image (static location)
 
 
