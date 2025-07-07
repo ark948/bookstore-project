@@ -199,7 +199,7 @@ class Keyword(models.Model):
 class Publication(models.Model):
     title = models.CharField("Title", max_length=128, blank=False)
     book_count = models.PositiveSmallIntegerField("Number of Books from this publisher", blank=True, null=True)
-    country = models.ForeignKey("Based in", Country, on_delete=models.SET_DEFAULT, related_name='publications') # <CountryObj>.publications.all()
+    country = models.ForeignKey(verbose_name="Based in", to=Country, on_delete=models.SET_DEFAULT, related_name='publications') # <CountryObj>.publications.all()
     url = models.URLField("Publication's Website", blank=True)
 
 
