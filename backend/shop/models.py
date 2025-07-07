@@ -262,7 +262,7 @@ class AgeRecommendation(models.Model):
 
 class Book(TimeStampModel):
     title = models.CharField("Title", max_length=256, blank=False, db_index=True)
-    authors = models.ManyToManyField("Author(s)", Author, related_name='books', through='BookAuthor')
+    authors = models.ManyToManyField(verbose_name="Author(s)", to=Author, through='BookAuthor', related_name='books')
     publisher = models.ForeignKey("Published by", Publication, related_name='books') # <PublisherObj>.books.all()
     language = models.ForeignKey("Language", Language, on_delete=models.SET_DEFAULT, related_name='books') # <LanguageObj>.books.all()
     original_language = models.ForeignKey("Original language", OriginalLanguage, related_name="books") # <OriginalLanguageObj>.books.all()
