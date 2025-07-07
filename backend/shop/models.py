@@ -386,8 +386,8 @@ class Payment(TimeStampModel):
         ('failed', 'Failed'),
         ('expired', 'Expired'),
     )
-    customer_id = models.ForeignKey(CustomUser, related_name='payments') # <CustomUserObj>.payments.all()
-    order_id = models.ForeignKey(Order, related_name='payments') # <OrderObj>.payments.all()
+    customer_id = models.ForeignKey(CustomUser, related_name='payments', on_delete=models.CASCADE) # <CustomUserObj>.payments.all()
+    order_id = models.ForeignKey(Order, related_name='payments', on_delete=models.CASCADE) # <OrderObj>.payments.all()
     status = models.CharField("Payment's status", choices=PAYMENT_STATUSES, default=PAYMENT_STATUSES[0])
 
     class Meta:
