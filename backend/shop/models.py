@@ -280,7 +280,7 @@ class Book(TimeStampModel):
     page_count = models.IntegerField("Number of Pages")
     pub_date = models.DateField("Published on", blank=True, null=True)
     format = models.ForeignKey(verbose_name="Format", to=Format, on_delete=models.PROTECT, related_name='books') # <FormatObj>.books.all()
-    series = models.ForeignKey(verbose_name="Belongs to series", to=Series, related_name='books') # <SeriesObj>.books.all()
+    series = models.ForeignKey(verbose_name="Belongs to series", on_delete=models.PROTECT, to=Series, related_name='books') # <SeriesObj>.books.all()
     ISBN = models.CharField("ISBN", blank=True, null=True) # some books may not have ISBN
     genres = models.ManyToManyField(Genre, through="BookGenre") # related_name deleted
     tags = models.ManyToManyField(Tag, through="BookTag") # related_name not provided
@@ -290,8 +290,8 @@ class Book(TimeStampModel):
     description = models.TextField("Description", blank=True, default="")
     summary = models.TextField("Summary", blank=True, default="")
     age_recommendation = models.ForeignKey(
-            "Suitable for ages", 
-            AgeRecommendation, 
+            verbose_name="Suitable for ages", 
+            to=AgeRecommendation, 
             on_delete=models.SET_DEFAULT, 
             null=True, 
             related_name='books'
