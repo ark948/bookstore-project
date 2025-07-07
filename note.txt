@@ -146,10 +146,21 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
     - now we can try adding phone number login
     1. let's start by adding phone_number field to model
-    
+    I'll complete this later...
+
     New superuser:
     admin@site.com
     123
+
+15. Configuring image upload for Book Image Cover
+    1. add MEDIA_ROOT and MEDIA_URL to settings.py
+    2. configure urls for serving media files
+    3. add upload_to to ImageField of BookModel
+    4. i think we're supposed to add a media folder next to manage.py
+    5. form is needed
+    6. html template is needed
+    7. add a view, which will save the form if valid and request is POST
+    8. add url
 
 stuff to add:
 (i keep these things here so that i don't forget them)

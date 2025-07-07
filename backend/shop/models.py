@@ -285,7 +285,7 @@ class Book(TimeStampModel):
     translators = models.ManyToManyField(Translator, through="BookTranslator")
     illustrators = models.ManyToManyField(Illustrator, through="BookIllustrator")
     rating = models.PositiveSmallIntegerField("Rating", validators=[MinValueValidator(1), MaxValueValidator(10)])
-    cover_image = models.ImageField("Cover Image")
+    cover_image = models.ImageField("Cover Image", upload_to='images/')
 
     class Meta:
         ordering = ("title",)
