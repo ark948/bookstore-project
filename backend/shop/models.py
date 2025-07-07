@@ -263,14 +263,18 @@ class AgeRecommendation(models.Model):
 class Book(TimeStampModel):
     title = models.CharField("Title", max_length=256, blank=False, db_index=True)
     authors = models.ManyToManyField(verbose_name="Author(s)", to=Author, through='BookAuthor', related_name='books')
-    publisher = models.ForeignKey("Published by", Publication, related_name='books') # <PublisherObj>.books.all()
-    language = models.ForeignKey("Language", Language, on_delete=models.SET_DEFAULT, related_name='books') # <LanguageObj>.books.all()
-    original_language = models.ForeignKey("Original language", OriginalLanguage, related_name="books") # <OriginalLanguageObj>.books.all()
+    publisher = models.ForeignKey(verbose_name="Published by", to=Publication, related_name='books') # <PublisherObj>.books.all()
+    language = models.ForeignKey(verbose_name="Language", to=Language, on_delete=models.SET_DEFAULT, related_name='books') # <LanguageObj>.books.all()
+    original_language = models.ForeignKey(
+            verbose_name="Original language", 
+            to=OriginalLanguage, 
+            related_name="books"
+        ) # <OriginalLanguageObj>.books.all()
     edition = models.PositiveSmallIntegerField("Edition", blank=True, null=True)
     page_count = models.IntegerField("Number of Pages")
     pub_date = models.DateField("Published on", blank=True, null=True)
-    format = models.ForeignKey("Format", Format, related_name='books') # <FormatObj>.books.all()
-    series = models.ForeignKey("Belongs to series", Series, related_name='books') # <SeriesObj>.books.all()
+    format = models.ForeignKey(verbose_name="Format", to=Format, related_name='books') # <FormatObj>.books.all()
+    series = models.ForeignKey(verbose_name="Belongs to series", to=Series, related_name='books') # <SeriesObj>.books.all()
     ISBN = models.CharField("ISBN", blank=True, null=True) # some books may not have ISBN
     genres = models.ManyToManyField(Genre, through="BookGenre") # related_name deleted
     tags = models.ManyToManyField(Tag, through="BookTag") # related_name not provided
