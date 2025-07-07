@@ -125,7 +125,7 @@ class Translator(models.Model):
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
-    nationality = models.ForeignKey("Nationality", Country, models.SET_DEFAULT, related_name='translators') # <CountryObj>.translators.all()
+    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, on_delete=models.SET_DEFAULT, related_name='translators') # <CountryObj>.translators.all()
 
     @property
     def full_name(self) -> str:
