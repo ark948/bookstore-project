@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from time import timezone
+import time
 
 from accounts.models import CustomUser
 
@@ -99,7 +99,7 @@ from accounts.models import CustomUser
 
 # Inherit this to use created_at and updated_at
 class TimeStampModel(models.Model):
-    created_at = models.DateTimeField("Created at", db_index=True, default=timezone.now)
+    created_at = models.DateTimeField("Created at", auto_now_add=True)
     updated_at = models.DateTimeField("Updated at", auto_now=True)
 
     class Meta:
