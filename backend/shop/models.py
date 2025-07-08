@@ -271,11 +271,12 @@ class Book(TimeStampModel):
             on_delete=models.PROTECT, 
             related_name='books'
         ) # <PublisherObj>.books.all()
-    language = models.ForeignKey(verbose_name="Language", to=Language, on_delete=models.SET_DEFAULT, related_name='books') # <LanguageObj>.books.all()
+    language = models.ForeignKey(verbose_name="Language", to=Language, null=True, on_delete=models.SET_NULL, related_name='books') # <LanguageObj>.books.all()
     original_language = models.ForeignKey(
             verbose_name="Original language",
             to=OriginalLanguage, 
-            on_delete=models.PROTECT,
+            null=True,
+            on_delete=models.SET_NULL,
             related_name="books"
         ) # <OriginalLanguageObj>.books.all()
     edition = models.PositiveSmallIntegerField("Edition", blank=True, null=True)
