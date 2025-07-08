@@ -12,11 +12,8 @@ from .models import (
     Tag,
     Keyword,
     Publication,
-    OriginalLanguage,
-    Format,
     Size,
     Series,
-    AgeRecommendation,
     Book,
     Award,
     Review,
@@ -25,7 +22,6 @@ from .models import (
     Order,
     Payment,
     Invoice,
-    BookAuthor,
 )
 
 
@@ -38,11 +34,8 @@ admin.site.register(Genre)
 admin.site.register(Tag)
 admin.site.register(Keyword)
 admin.site.register(Publication)
-admin.site.register(OriginalLanguage)
-admin.site.register(Format)
 admin.site.register(Size)
 admin.site.register(Series)
-admin.site.register(AgeRecommendation)
 admin.site.register(Book)
 admin.site.register(Award)
 admin.site.register(Review)
@@ -51,4 +44,3 @@ admin.site.register(Comment)
 admin.site.register(Order)
 admin.site.register(Payment)
 admin.site.register(Invoice)
-admin.site.register(BookAuthor)

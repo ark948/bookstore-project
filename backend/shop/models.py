@@ -38,7 +38,9 @@ from accounts.models import CustomUser
 # NOTE: Changed some relations to SET_NULL
 # NOTE: for ImageField, Pillow must be installed, > pip install Pillow
 
-# NOTE: ManyToMany fields are not recognized (Association Tables), specifically authors field on Book
+# NOTE: ManyToMany fields are not recognized (Association Tables), specifically authors field on Book (Solved)
+# NOTE: If a 'through' model created, objects need to be created explicitly
+# Best to just remove the association tables, and add if only extra fields were required.
 
 # Relationships
 # ------------------
@@ -111,7 +113,7 @@ class TimeStampModel(models.Model):
 
 
 class Country(models.Model):
-    name = models.CharField("Country Name", max_length=128, blank=False, null=False, default="Unknown")
+    name = models.CharField("Country Name", max_length=128, blank=False, null=False)
 
     class Meta:
         ordering = ["name"]
@@ -231,24 +233,10 @@ class Language(models.Model):
         return self.name
 
 
-class OriginalLanguage(Language):
-    class Meta:
-        ordering = ('name',)
-
-    def __str__(self) -> str:
-        return self.name
+# OriginalLanguage does not need a separate table
 
 
-class Format(models.Model):
-    BOOK_FORMATS = {
-        'hardcover': "Hardcover",
-        'paperback': "Paperback"
-    }
-    name = models.CharField("Name", max_length=64, choices=BOOK_FORMATS, default=BOOK_FORMATS["paperback"])
-    book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
-
-    def __str__(self) -> str:
-        return self.name
+# Format does not need a separate table
 
 
 class Size(models.Model):
@@ -277,24 +265,24 @@ class Organization(models.Model):
 
 
 
-class AgeRecommendation(models.Model):
-    AGE_GROUPS = {
-        "UNAV": "0-0", # Unavailable
-        "CHLD": "0-12", # Children
-        "TNGS": "13-17", # Teenagers
-        "YADL": "18-25", # Young adults
-        "MADL": "26-39", # Mid adults
-        "ELDR": "40-60" # Elderly adults
-    }
-    group = models.CharField("Age group", max_length=4, choices=AGE_GROUPS, default=AGE_GROUPS["UNAV"])
-
-    def __str__(self) -> str:
-        return self.group
+# AgeRecommendation does not need a separate table
         
 
 class Book(TimeStampModel):
+    BOOK_FORMATS = {
+        'hardcover': "Hardcover",
+        'paperback': "Paperback"
+    }
+    AGE_GROUPS = {
+        "Unavailable": "0-0",
+        "Children": "0-12",
+        "Teenagers": "13-17",
+        "Young Adults": "18-25",
+        "Adults": "26-39",
+        "Elderly": "40-60"
+    }
     title = models.CharField("Title", max_length=256, blank=False, db_index=True)
-    authors = models.ManyToManyField(Author, through="BookAuthor")
+    authors = models.ManyToManyField(Author)
     publisher = models.ForeignKey(
             verbose_name="Published by", 
             to=Publication, 
@@ -305,7 +293,7 @@ class Book(TimeStampModel):
     language = models.ForeignKey(verbose_name="Language", to=Language, null=True, on_delete=models.SET_NULL, related_name='current_books') # <LanguageObj>.books.all()
     original_language = models.ForeignKey(
             verbose_name="Original language",
-            to=OriginalLanguage, 
+            to=Language, 
             null=True,
             on_delete=models.SET_NULL,
             related_name="original_books"
@@ -313,29 +301,22 @@ class Book(TimeStampModel):
     edition = models.PositiveSmallIntegerField("Edition", blank=True, null=True)
     page_count = models.IntegerField("Number of Pages")
     pub_date = models.DateField("Published on", blank=True, null=True)
-    format = models.ForeignKey(verbose_name="Format", to=Format, null=True, on_delete=models.SET_NULL, related_name='books') # <FormatObj>.books.all()
+    format = models.CharField(verbose_name="Format", choices=BOOK_FORMATS, null=False, blank=False, default=BOOK_FORMATS["paperback"])
     series = models.ForeignKey(verbose_name="Belongs to series", null=True, on_delete=models.SET_NULL, to=Series, related_name='books', blank=True) # <SeriesObj>.books.all()
-    ISBN = models.CharField("ISBN", blank=True, null=True) # some books may not have ISBN
-    genres = models.ManyToManyField(Genre, through="BookGenre") # related_name deleted
-    tags = models.ManyToManyField(Tag, through="BookTag") # related_name not provided
+    ISBN = models.CharField("ISBN", blank=True, null=True)
+    genres = models.ManyToManyField(Genre)
+    tags = models.ManyToManyField(Tag)
     price = models.DecimalField("Price", validators=[MinValueValidator(0)], blank=True, null=True, decimal_places=3, max_digits=12)
     available = models.BooleanField("Available", default=False)
     copies_available = models.PositiveSmallIntegerField("In Stock", blank=True, null=True)
     description = models.TextField("Description", blank=True, default="")
     summary = models.TextField("Summary", blank=True, default="")
-    age_recommendation = models.ForeignKey(
-            verbose_name="Suitable for ages", 
-            to=AgeRecommendation, 
-            on_delete=models.SET_NULL, 
-            null=True, 
-            related_name='books',
-            blank=True
-        ) # <AgeRecommendationObj>.books.all()
-    keywords = models.ManyToManyField(Keyword, through="BookKeyword")
-    translators = models.ManyToManyField(Translator, through="BookTranslator")
-    illustrators = models.ManyToManyField(Illustrator, through="BookIllustrator")
-    rating = models.PositiveSmallIntegerField("Rating", validators=[MinValueValidator(1), MaxValueValidator(10)])
-    cover_image = models.ImageField("Cover Image", upload_to='images/')
+    age_recommendation = models.CharField("Age recommended for", choices=AGE_GROUPS, null=False, default=AGE_GROUPS["Unavailable"])
+    keywords = models.ManyToManyField(Keyword)
+    translators = models.ManyToManyField(Translator, null=True, blank=True)
+    illustrators = models.ManyToManyField(Illustrator, null=True, blank=True)
+    rating = models.PositiveSmallIntegerField("Rating", validators=[MinValueValidator(1), MaxValueValidator(10)], null=True, blank=True)
+    cover_image = models.ImageField("Cover Image", upload_to='images/', null=True, blank=True)
 
     class Meta:
         ordering = ("title",)
@@ -343,13 +324,7 @@ class Book(TimeStampModel):
         verbose_name_plural = "Books"
 
     def __str__(self) -> str:
-        return f"[BookObj] {self.title}"
-    
-
-class BookAuthor(models.Model):
-    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
-    author_id = models.ForeignKey(Author, on_delete=models.CASCADE)
-    extra_test_field = models.BooleanField(default=False)
+        return self.title
     
 
 class Award(TimeStampModel):
@@ -451,28 +426,11 @@ class Invoice(TimeStampModel):
 
 
 # Association tables
+# NOTE: Objects need to ba creatd explicitly
 
-class BookGenre(models.Model):
-    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
-    genre_id = models.ForeignKey(Genre, on_delete=models.CASCADE)
-    # extra fields if required
-
-
-class BookTag(models.Model):
-    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
-    tag_id = models.ForeignKey(Tag, on_delete=models.CASCADE)
-
-
-class BookTranslator(models.Model):
-    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
-    translator_id = models.ForeignKey(Translator, on_delete=models.CASCADE)
-
-
-class BookIllustrator(models.Model):
-    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
-    illustrator_id = models.ForeignKey(Illustrator, on_delete=models.CASCADE)
-
-
-class BookKeyword(models.Model):
-    book_id = models.ForeignKey(Book, models.CASCADE)
-    keyword_id = models.ForeignKey(Keyword, on_delete=models.CASCADE)
+# BookAuthor removed
+# BookGenre removed
+# BookTranslator removed
+# BookTag removed
+# BookIllustrator removed
+# BookKeyword removed
