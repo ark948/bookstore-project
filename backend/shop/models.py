@@ -268,16 +268,17 @@ class Book(TimeStampModel):
     publisher = models.ForeignKey(
             verbose_name="Published by", 
             to=Publication, 
-            on_delete=models.PROTECT, 
+            null=True,
+            on_delete=models.SET_NULL, 
             related_name='books'
         ) # <PublisherObj>.books.all()
-    language = models.ForeignKey(verbose_name="Language", to=Language, null=True, on_delete=models.SET_NULL, related_name='books') # <LanguageObj>.books.all()
+    language = models.ForeignKey(verbose_name="Language", to=Language, null=True, on_delete=models.SET_NULL, related_name='current_books') # <LanguageObj>.books.all()
     original_language = models.ForeignKey(
             verbose_name="Original language",
             to=OriginalLanguage, 
             null=True,
             on_delete=models.SET_NULL,
-            related_name="books"
+            related_name="original_books"
         ) # <OriginalLanguageObj>.books.all()
     edition = models.PositiveSmallIntegerField("Edition", blank=True, null=True)
     page_count = models.IntegerField("Number of Pages")
