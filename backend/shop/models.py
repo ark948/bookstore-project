@@ -35,6 +35,8 @@ from accounts.models import CustomUser
 # Relationships to watch that may causes errors:
 # Book - OrderItems (books field)
 
+# NOTE: Changed some relations to SET_NULL
+# NOTE: for ImageField, Pillow must be installed, > pip install Pillow
 
 # Relationships
 # ------------------
@@ -125,7 +127,7 @@ class Translator(models.Model):
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
-    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, on_delete=models.SET_DEFAULT, related_name='translators') # <CountryObj>.translators.all()
+    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='translators') # <CountryObj>.translators.all()
 
     @property
     def full_name(self) -> str:
@@ -145,7 +147,7 @@ class Illustrator(models.Model):
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
-    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, on_delete=models.SET_DEFAULT, related_name='illustrators') # <CountryObj>.illustrators.all()
+    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='illustrators') # <CountryObj>.illustrators.all()
 
     @property
     def full_name(self) -> str:
@@ -165,7 +167,7 @@ class Author(models.Model):
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
-    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, on_delete=models.SET_DEFAULT, related_name='authors', default="Unknown") # <CountryObj>.authors.all()
+    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='authors') # <CountryObj>.authors.all()
 
     @property
     def full_name(self) -> str:
@@ -199,7 +201,7 @@ class Keyword(models.Model):
 class Publication(models.Model):
     title = models.CharField("Title", max_length=128, blank=False)
     book_count = models.PositiveSmallIntegerField("Number of Books from this publisher", blank=True, null=True)
-    country = models.ForeignKey(verbose_name="Based in", to=Country, on_delete=models.SET_DEFAULT, related_name='publications') # <CountryObj>.publications.all()
+    country = models.ForeignKey(verbose_name="Based in", to=Country, on_delete=models.SET_NULL, related_name='publications') # <CountryObj>.publications.all()
     url = models.URLField("Publication's Website", blank=True)
 
 
@@ -292,9 +294,9 @@ class Book(TimeStampModel):
     age_recommendation = models.ForeignKey(
             verbose_name="Suitable for ages", 
             to=AgeRecommendation, 
-            on_delete=models.SET_DEFAULT, 
+            on_delete=models.SET_NULL, 
             null=True, 
-            related_name='books'
+            related_name='books',
         ) # <AgeRecommendationObj>.books.all()
     keywords = models.ManyToManyField(Keyword, through="BookKeyword")
     translators = models.ManyToManyField(Translator, through="BookTranslator")
