@@ -140,6 +140,6 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_URL = 'accounts:login'
 LOGOUT_URL = 'accounts:logout'
 
-
-MEDIA_ROOT =  [ BASE_DIR / 'media' ]
+import os
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

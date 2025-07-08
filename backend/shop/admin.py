@@ -25,6 +25,7 @@ from .models import (
     Order,
     Payment,
     Invoice,
+    BookAuthor,
 )
 
 
@@ -50,3 +51,4 @@ admin.site.register(Comment)
 admin.site.register(Order)
 admin.site.register(Payment)
 admin.site.register(Invoice)
+admin.site.register(BookAuthor)

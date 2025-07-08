@@ -33,10 +33,12 @@ from accounts.models import CustomUser
 # Configure image field for book's cover image (static location) (DONE)
 
 # Relationships to watch that may causes errors:
-# Book - OrderItems (books field)
+# Book - OrderItems (books field)w
 
 # NOTE: Changed some relations to SET_NULL
 # NOTE: for ImageField, Pillow must be installed, > pip install Pillow
+
+# NOTE: ManyToMany fields are not recognized (Association Tables), specifically authors field on Book
 
 # Relationships
 # ------------------
@@ -117,7 +119,7 @@ class Country(models.Model):
         verbose_name_plural = "Countries"
     
     def __str__(self) -> str:
-        return f"[CountryObj] {self.name}"
+        return self.name
     
 
 class Translator(models.Model):
@@ -137,7 +139,12 @@ class Translator(models.Model):
             return None
         
     def __str__(self) -> str:
-        return f"[TranslatorObj] {self.pk}"
+        if self.pen_name:
+            return self.pen_name
+        elif self.first_name and self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        else:
+            return f"[TranslatorObj] {self.pk}"
 
 
 class Illustrator(models.Model):
@@ -177,7 +184,12 @@ class Author(models.Model):
             return None
 
     def __str__(self) -> str:
-        return f"[AuthorObj] {self.pk}"
+        if self.pen_name:
+            return self.pen_name
+        elif self.first_name and self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        else:
+            return f"[Author - {self.pk}]"
 
 
 class Genre(models.Model):
@@ -204,6 +216,9 @@ class Publication(models.Model):
     country = models.ForeignKey(verbose_name="Based in", to=Country, null=True, on_delete=models.SET_NULL, related_name='publications') # <CountryObj>.publications.all()
     url = models.URLField("Publication's Website", blank=True)
 
+    def __str__(self) -> str:
+        return self.title
+
 
 class Language(models.Model):
     name = models.CharField("Name", max_length=128, unique=True)
@@ -212,10 +227,16 @@ class Language(models.Model):
     class Meta:
         ordering = ('name',)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class OriginalLanguage(Language):
     class Meta:
         ordering = ('name',)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Format(models.Model):
@@ -225,6 +246,9 @@ class Format(models.Model):
     }
     name = models.CharField("Name", max_length=64, choices=BOOK_FORMATS, default=BOOK_FORMATS["paperback"])
     book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Size(models.Model):
@@ -244,6 +268,9 @@ class Series(models.Model):
         verbose_name = "Series"
         verbose_name_plural = "Series"
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Organization(models.Model):
     title = models.CharField("Organization's name", max_length=128, blank=True, default="Unknown")
@@ -260,11 +287,14 @@ class AgeRecommendation(models.Model):
         "ELDR": "40-60" # Elderly adults
     }
     group = models.CharField("Age group", max_length=4, choices=AGE_GROUPS, default=AGE_GROUPS["UNAV"])
+
+    def __str__(self) -> str:
+        return self.group
         
 
 class Book(TimeStampModel):
     title = models.CharField("Title", max_length=256, blank=False, db_index=True)
-    authors = models.ManyToManyField(verbose_name="Author(s)", to=Author, through='BookAuthor', related_name='books')
+    authors = models.ManyToManyField(Author, through="BookAuthor")
     publisher = models.ForeignKey(
             verbose_name="Published by", 
             to=Publication, 
@@ -283,8 +313,8 @@ class Book(TimeStampModel):
     edition = models.PositiveSmallIntegerField("Edition", blank=True, null=True)
     page_count = models.IntegerField("Number of Pages")
     pub_date = models.DateField("Published on", blank=True, null=True)
-    format = models.ForeignKey(verbose_name="Format", to=Format, on_delete=models.PROTECT, related_name='books') # <FormatObj>.books.all()
-    series = models.ForeignKey(verbose_name="Belongs to series", on_delete=models.PROTECT, to=Series, related_name='books') # <SeriesObj>.books.all()
+    format = models.ForeignKey(verbose_name="Format", to=Format, null=True, on_delete=models.SET_NULL, related_name='books') # <FormatObj>.books.all()
+    series = models.ForeignKey(verbose_name="Belongs to series", null=True, on_delete=models.SET_NULL, to=Series, related_name='books', blank=True) # <SeriesObj>.books.all()
     ISBN = models.CharField("ISBN", blank=True, null=True) # some books may not have ISBN
     genres = models.ManyToManyField(Genre, through="BookGenre") # related_name deleted
     tags = models.ManyToManyField(Tag, through="BookTag") # related_name not provided
@@ -299,6 +329,7 @@ class Book(TimeStampModel):
             on_delete=models.SET_NULL, 
             null=True, 
             related_name='books',
+            blank=True
         ) # <AgeRecommendationObj>.books.all()
     keywords = models.ManyToManyField(Keyword, through="BookKeyword")
     translators = models.ManyToManyField(Translator, through="BookTranslator")
@@ -313,6 +344,12 @@ class Book(TimeStampModel):
 
     def __str__(self) -> str:
         return f"[BookObj] {self.title}"
+    
+
+class BookAuthor(models.Model):
+    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
+    author_id = models.ForeignKey(Author, on_delete=models.CASCADE)
+    extra_test_field = models.BooleanField(default=False)
     
 
 class Award(TimeStampModel):
@@ -414,13 +451,6 @@ class Invoice(TimeStampModel):
 
 
 # Association tables
-
-class BookAuthor(models.Model):
-    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
-    author_id = models.ForeignKey(Author, on_delete=models.CASCADE)
-    # author_order = models.IntegerField() # Could be implemented later
-    # role = models.CharField(verbose_name="Role", max_length=64, blank=True)
-
 
 class BookGenre(models.Model):
     book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
