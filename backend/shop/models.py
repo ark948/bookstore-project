@@ -165,7 +165,7 @@ class Author(models.Model):
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
-    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, on_delete=models.SET_DEFAULT, related_name='authors') # <AuthorObj>.authors.all()
+    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, on_delete=models.SET_DEFAULT, related_name='authors', default="Unknown") # <CountryObj>.authors.all()
 
     @property
     def full_name(self) -> str:
@@ -319,7 +319,7 @@ class Award(TimeStampModel):
         "RV": "Revoked"
     }
     title = models.CharField("Title of the Award", max_length=128, blank=True, default="")
-    issued_by = models.ForeignKey(verbose_name="Issued by", to=Organization, on_delete=models.SET_DEFAULT, related_name='awards') # <OrganizationObj>.awards.all()
+    issued_by = models.ForeignKey(verbose_name="Issued by", to=Organization, on_delete=models.SET_DEFAULT, related_name='awards', default="Unknown") # <OrganizationObj>.awards.all()
     status = models.CharField("Status of award", max_length=2, choices=AWARD_STATUSES, default=AWARD_STATUSES["UN"])
     book_id = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='awards') # <BookObj>.awards.all()
 
