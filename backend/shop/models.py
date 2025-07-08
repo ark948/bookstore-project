@@ -288,7 +288,7 @@ class Book(TimeStampModel):
     ISBN = models.CharField("ISBN", blank=True, null=True) # some books may not have ISBN
     genres = models.ManyToManyField(Genre, through="BookGenre") # related_name deleted
     tags = models.ManyToManyField(Tag, through="BookTag") # related_name not provided
-    price = models.DecimalField("Price", validators=[MinValueValidator(0)], blank=True, null=True)
+    price = models.DecimalField("Price", validators=[MinValueValidator(0)], blank=True, null=True, decimal_places=3, max_digits=12)
     available = models.BooleanField("Available", default=False)
     copies_available = models.PositiveSmallIntegerField("In Stock", blank=True, null=True)
     description = models.TextField("Description", blank=True, default="")
@@ -341,7 +341,7 @@ class Review(TimeStampModel):
 
 
 class Discount(TimeStampModel):
-    percentage = models.DecimalField("Percentage")
+    percentage = models.DecimalField("Percentage", decimal_places=2, max_digits=4)
     expiry = models.DateTimeField("Expires on")
 
 
