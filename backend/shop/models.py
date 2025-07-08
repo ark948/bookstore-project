@@ -357,7 +357,7 @@ class OrderItem(TimeStampModel):
         "Total Number of Items",
         validators=[MaxValueValidator(50)]
     )
-    total_price = models.DecimalField("Total Price")
+    total_price = models.DecimalField("Total Price", decimal_places=3, max_digits=12)
 
 
 class Order(TimeStampModel):
@@ -375,7 +375,7 @@ class Order(TimeStampModel):
     class Meta:
         unique_together = (
             'customer_id',
-            'order_items'
+            'order_items_id'
         )
 
     def __str__(self) -> str:
