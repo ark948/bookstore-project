@@ -171,12 +171,24 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     IMPORTANT: Will not commit migration file to repo, until it is decently usable.
     - Using the following command, the migrations can be reversed for an app (fully reversed):
     > python manage.py migrate <appName> zero
+    - And to check migration files for errors:
+    > python manage.py makemigrations --check
 
 
 17. Some fixes and improvements for models
     - Remove all book_count fields
     this functionality SHOULD NOT be a database row, it could be easily implemented as a model property
     - All models must have suitable str methods
+    - Book publication date should only include year
+    - Genre could have a description field
+    - Language model closing popup is broken (OPEN)
+    - dob of Author, Translator and Illustrator must be allowed to left blank (OK)
+
+  
+18. Adding a date field for book pub date field (only year)
+    packages that can be used: django-bootstrap-datepicker-plus
+    (this package requires bootstrap and jquery)
+    - instead we could implement this as a IntegerField (DONE)
 
 
 stuff to add:

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.contrib.admin.widgets import FilteredSelectMultiple, AdminDateWidget
 from django import forms
 
 # Register your models here.
@@ -40,6 +40,14 @@ class BookAuthorsAdminForm(forms.ModelForm):
         )
     )
 
+    genres = forms.ModelMultipleChoiceField(
+        queryset=Genre.objects.all(),
+        widget=FilteredSelectMultiple(
+            verbose_name="Genres",
+            is_stacked=False
+        )
+    )
+
 
 class BookAdmin(admin.ModelAdmin):
     form = BookAuthorsAdminForm
@@ -56,7 +64,6 @@ admin.site.register(Keyword)
 admin.site.register(Publication)
 admin.site.register(Size)
 admin.site.register(Series)
-admin.site.register(Book, BookAdmin)
 admin.site.register(Award)
 admin.site.register(Review)
 admin.site.register(Discount)
@@ -64,3 +71,4 @@ admin.site.register(Comment)
 admin.site.register(Order)
 admin.site.register(Payment)
 admin.site.register(Invoice)
+admin.site.register(Book, BookAdmin)

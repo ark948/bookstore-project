@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 import time
-
+import datetime
 from accounts.models import CustomUser
 
 # Create your models here.
@@ -143,16 +143,13 @@ class Translator(models.Model):
 
     @property
     def full_name(self) -> str:
-        if self.first_name and self.last_name:
-            return f"{self.first_name} {self.last_name}"
-        else:
-            return None
+        return self.name
         
     def __str__(self) -> str:
         if self.pen_name:
             return self.pen_name
-        elif self.first_name and self.last_name:
-            return f"{self.first_name} {self.last_name}"
+        elif self.name:
+            return self.name
         else:
             return f"[TranslatorObj] {self.pk}"
 
@@ -176,10 +173,7 @@ class Illustrator(models.Model):
 
     @property
     def full_name(self) -> str:
-        if self.first_name and self.last_name:
-            return f"{self.first_name} {self.last_name}"
-        else:
-            return None
+        return self.name
         
     def __str__(self) -> str:
         return f"[IllustratorObj] {self.pk}"
@@ -198,18 +192,13 @@ class Author(models.Model):
 
     @property
     def full_name(self) -> str:
-        if self.first_name and self.last_name:
-            return f"{self.first_name} {self.last_name}"
-        else:
-            return None
+        return self.name
 
     def __str__(self) -> str:
         if self.pen_name:
             return self.pen_name
-        elif self.first_name and self.last_name:
-            return f"{self.first_name} {self.last_name}"
-        else:
-            return f"[Author - {self.pk}]"
+        elif self.name:
+            return self.name
 
 
 class Genre(models.Model):
@@ -311,9 +300,14 @@ class Organization(models.Model):
 
 
 # AgeRecommendation does not need a separate table
+
+def get_year_choices():
+    current_year = datetime.date.today().year
+    return [(r, r) for r in range(1900, current_year + 1)]
         
 
 class Book(TimeStampModel):
+    
     BOOK_FORMATS = {
         'hardcover': "Hardcover",
         'paperback': "Paperback"
@@ -351,7 +345,7 @@ class Book(TimeStampModel):
         ) # <OriginalLanguageObj>.books.all()
     edition = models.PositiveSmallIntegerField("Edition", blank=True, null=True)
     page_count = models.IntegerField("Number of Pages")
-    pub_date = models.DateField("Published on", blank=True, null=True)
+    pub_date = models.IntegerField("Publication Year",choices=get_year_choices(), default=datetime.date.today().year)
     format = models.CharField(verbose_name="Format", choices=BOOK_FORMATS, null=False, blank=False, default=BOOK_FORMATS["paperback"])
     series = models.ForeignKey(verbose_name="Belongs to series", null=True, on_delete=models.SET_NULL, to=Series, related_name='books', blank=True) # <SeriesObj>.books.all()
     ISBN = models.CharField("ISBN", blank=True, null=True)
