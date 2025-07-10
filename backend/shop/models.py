@@ -129,7 +129,17 @@ class Translator(models.Model):
     name = models.CharField("Name", max_length=128, blank=True, default="")
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
-    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='translators') # <CountryObj>.translators.all()
+    nationality = models.ForeignKey(
+            verbose_name="Nationality", 
+            to=Country, 
+            null=True, 
+            on_delete=models.SET_NULL, 
+            related_name='translators'
+        ) # <CountryObj>.translators.all()
+    
+    @property
+    def books_count(self) -> int:
+        return len(self.books.all())
 
     @property
     def full_name(self) -> str:
@@ -152,7 +162,17 @@ class Illustrator(models.Model):
     name = models.CharField("Name", max_length=128, blank=True, default="")
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
-    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='illustrators') # <CountryObj>.illustrators.all()
+    nationality = models.ForeignKey(
+        verbose_name="Nationality", 
+        to=Country, 
+        null=True, 
+        on_delete=models.SET_NULL, 
+        related_name='illustrators'
+    ) # <CountryObj>.illustrators.all()
+
+    @property
+    def books_count(self) -> int:
+        return len(self.books.all())
 
     @property
     def full_name(self) -> str:
@@ -173,7 +193,7 @@ class Author(models.Model):
     nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='authors') # <CountryObj>.authors.all()
     
     @property
-    def books_count(self):
+    def books_count(self) -> int:
         return len(self.books.all())
 
     @property
@@ -197,6 +217,10 @@ class Genre(models.Model):
 
     class Meta:
         ordering = ("title",)
+
+    @property
+    def books_count(self) -> int:
+        return len(self.books.all())
 
     def __str__(self) -> str:
         return self.title
@@ -226,12 +250,24 @@ class Publication(models.Model):
         ) # <CountryObj>.publications.all()
     url = models.URLField("Publication's Website", blank=True)
 
+    @property
+    def books_count(self) -> int:
+        return len(self.books.all())
+
     def __str__(self) -> str:
         return self.title
 
 
 class Language(models.Model):
     name = models.CharField("Name", max_length=128, unique=True)
+
+    @property
+    def get_books_count_current_language(self) -> int:
+        return len(self.current_books.all())
+    
+    @property
+    def get_books_count_original_language(self) -> int:
+        return len(self.original_books.all())
 
     class Meta:
         ordering = ('name',)
@@ -299,7 +335,13 @@ class Book(TimeStampModel):
             on_delete=models.SET_NULL, 
             related_name='books'
         ) # <PublisherObj>.books.all()
-    language = models.ForeignKey(verbose_name="Language", to=Language, null=True, on_delete=models.SET_NULL, related_name='current_books') # <LanguageObj>.books.all()
+    language = models.ForeignKey(
+            verbose_name="Language", 
+            to=Language, 
+            null=True, 
+            on_delete=models.SET_NULL, 
+            related_name='current_books'
+        ) # <LanguageObj>.books.all()
     original_language = models.ForeignKey(
             verbose_name="Original language",
             to=Language, 
@@ -313,7 +355,7 @@ class Book(TimeStampModel):
     format = models.CharField(verbose_name="Format", choices=BOOK_FORMATS, null=False, blank=False, default=BOOK_FORMATS["paperback"])
     series = models.ForeignKey(verbose_name="Belongs to series", null=True, on_delete=models.SET_NULL, to=Series, related_name='books', blank=True) # <SeriesObj>.books.all()
     ISBN = models.CharField("ISBN", blank=True, null=True)
-    genres = models.ManyToManyField(Genre)
+    genres = models.ManyToManyField(Genre, related_name="books")
     tags = models.ManyToManyField(Tag, blank=True)
     price = models.DecimalField("Price", validators=[MinValueValidator(0)], blank=True, null=True, decimal_places=3, max_digits=12)
     available = models.BooleanField("Available", default=False)
@@ -322,8 +364,8 @@ class Book(TimeStampModel):
     summary = models.TextField("Summary", blank=True, default="")
     age_recommendation = models.CharField("Age recommended for", choices=AGE_GROUPS, null=False, default=AGE_GROUPS["Unavailable"])
     keywords = models.ManyToManyField(Keyword, blank=True)
-    translators = models.ManyToManyField(Translator, blank=True)
-    illustrators = models.ManyToManyField(Illustrator, blank=True)
+    translators = models.ManyToManyField(Translator, blank=True, related_name='books')
+    illustrators = models.ManyToManyField(Illustrator, blank=True, related_name='books')
     rating = models.PositiveSmallIntegerField("Rating", validators=[MinValueValidator(1), MaxValueValidator(10)], null=True, blank=True)
     cover_image = models.ImageField("Cover Image", upload_to='images/', null=True, blank=True)
 
