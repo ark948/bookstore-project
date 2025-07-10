@@ -36,7 +36,7 @@ def publication(country):
 
 
 @pytest.fixture
-def book(country, language, author, publication):
+def book(language, author, publication):
     book_obj = Book.objects.create(
         title = "The Good Book",
         language = language,
