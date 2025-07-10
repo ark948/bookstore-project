@@ -17,7 +17,11 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return f"UserObj {self.pk}"
+        return self.email
+    
+    def save(self, *args, **kwargs):
+        self.email = self.email.lower().strip()
+        return super().save(*args, **kwargs)
     
 
 # class CustomAddress(models.Model):

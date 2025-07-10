@@ -162,6 +162,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     7. add a view, which will save the form if valid and request is POST
     8. add url
 
+16. page_count fields on shop models, should be properties
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar
