@@ -192,6 +192,10 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 19. In order to run tests for shop models, migrations need to be applied
 
+20. Only bookstore staff must be allowed to enter new books, so a sort of Access Control is required.
+    
+
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
