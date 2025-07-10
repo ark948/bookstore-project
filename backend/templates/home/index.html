@@ -19,6 +19,10 @@
             <a href="{% url 'accounts:prtd-page' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">GO TO SECURE PAGE</a>
         </p>
 
+        <p>
+            <a href="{% url 'admin:index' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">ورود به پنل مدیریت</a>
+        </p>
+
     {% else %}
 
         <p>
@@ -32,6 +36,5 @@
         <p>
             <a href="{% url 'accounts:prtd-page' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">GO TO SECURE PAGE</a>
         </p>
-
     {% endif %}
 {% endblock content %}
