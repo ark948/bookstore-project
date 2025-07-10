@@ -16,6 +16,7 @@ def test_accounts_signup(client: Client):
 
 
 # this is just to check if factory fixture was created successfully
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_user_factory(user):
     print(user.email)

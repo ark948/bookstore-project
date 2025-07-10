@@ -190,6 +190,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     (this package requires bootstrap and jquery)
     - instead we could implement this as a IntegerField (DONE)
 
+19. In order to run tests for shop models, migrations need to be applied
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
