@@ -210,9 +210,15 @@ class Genre(models.Model):
 class Tag(models.Model):
     name = models.CharField("Name", max_length=64, blank=False, unique=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Keyword(models.Model):
     name = models.CharField("Name", max_length=64, blank=False, unique=True)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Publication(models.Model):
