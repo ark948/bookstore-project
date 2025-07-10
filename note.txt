@@ -173,6 +173,12 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     > python manage.py migrate <appName> zero
 
 
+17. Some fixes and improvements for models
+    - Remove all book_count fields
+    this functionality SHOULD NOT be a database row, it could be easily implemented as a model property
+    - All models must have suitable str methods
+
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar

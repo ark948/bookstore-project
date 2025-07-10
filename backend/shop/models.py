@@ -201,7 +201,7 @@ class Genre(models.Model):
         ordering = ("title",)
 
     def __str__(self) -> str:
-        return f"[GenreObj] {self.title}"
+        return self.title
     
 
 class Tag(models.Model):
@@ -268,6 +268,9 @@ class Series(models.Model):
 
 class Organization(models.Model):
     title = models.CharField("Organization's name", max_length=128, blank=True, default="Unknown")
+
+    def __str__(self) -> str:
+        return self.title
 
 
 
