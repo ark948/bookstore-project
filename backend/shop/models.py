@@ -129,7 +129,6 @@ class Translator(models.Model):
     name = models.CharField("Name", max_length=128, blank=True, default="")
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
-    book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
     nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='translators') # <CountryObj>.translators.all()
 
     @property
@@ -153,7 +152,6 @@ class Illustrator(models.Model):
     name = models.CharField("Name", max_length=128, blank=True, default="")
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
-    book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
     nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='illustrators') # <CountryObj>.illustrators.all()
 
     @property
@@ -220,8 +218,12 @@ class Keyword(models.Model):
 
 class Publication(models.Model):
     title = models.CharField("Title", max_length=128, blank=False)
-    book_count = models.PositiveSmallIntegerField("Number of Books from this publisher", blank=True, null=True)
-    country = models.ForeignKey(verbose_name="Based in", to=Country, null=True, on_delete=models.SET_NULL, related_name='publications') # <CountryObj>.publications.all()
+    country = models.ForeignKey(
+            verbose_name="Based in", 
+            to=Country, null=True, 
+            on_delete=models.SET_NULL, 
+            related_name='publications'
+        ) # <CountryObj>.publications.all()
     url = models.URLField("Publication's Website", blank=True)
 
     def __str__(self) -> str:
@@ -230,7 +232,6 @@ class Publication(models.Model):
 
 class Language(models.Model):
     name = models.CharField("Name", max_length=128, unique=True)
-    book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
 
     class Meta:
         ordering = ('name',)
@@ -256,7 +257,6 @@ class Size(models.Model):
 
 class Series(models.Model):
     name = models.CharField("Name of the series", max_length=128, blank=True, default="")
-    book_count = models.PositiveSmallIntegerField("Number of Books in this series", blank=True, null=True)
 
     class Meta:
         verbose_name = "Series"
@@ -372,6 +372,7 @@ class Comment(TimeStampModel):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="comments") # <CustomUserObj>.comments.all()
 
 
+# should items_count be removed?
 class OrderItem(TimeStampModel):
     books = models.ManyToManyField(Book) # a book can be in more than one cart, as long as copies_available > 1
     items_count = models.PositiveSmallIntegerField(
