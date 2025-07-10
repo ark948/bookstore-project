@@ -168,15 +168,18 @@ class Illustrator(models.Model):
     def __str__(self) -> str:
         return f"[IllustratorObj] {self.pk}"
 
-
+from django.db.models import Sum
 class Author(models.Model):
     pen_name = models.CharField("Pen Name", max_length=128, blank=True, default="")
     first_name = models.CharField("First Name", max_length=128, blank=True, default="")
     last_name = models.CharField("Last Name", max_length=128, blank=True, default="")
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
-    book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
     nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='authors') # <CountryObj>.authors.all()
+    
+    @property
+    def books_count(self):
+        return len(self.books.all())
 
     @property
     def full_name(self) -> str:
@@ -282,7 +285,7 @@ class Book(TimeStampModel):
         "Elderly": "40-60"
     }
     title = models.CharField("Title", max_length=256, blank=False, db_index=True)
-    authors = models.ManyToManyField(Author)
+    authors = models.ManyToManyField(Author, related_name="books")
     publisher = models.ForeignKey(
             verbose_name="Published by", 
             to=Publication, 
@@ -313,8 +316,8 @@ class Book(TimeStampModel):
     summary = models.TextField("Summary", blank=True, default="")
     age_recommendation = models.CharField("Age recommended for", choices=AGE_GROUPS, null=False, default=AGE_GROUPS["Unavailable"])
     keywords = models.ManyToManyField(Keyword)
-    translators = models.ManyToManyField(Translator, null=True, blank=True)
-    illustrators = models.ManyToManyField(Illustrator, null=True, blank=True)
+    translators = models.ManyToManyField(Translator, blank=True)
+    illustrators = models.ManyToManyField(Illustrator, blank=True)
     rating = models.PositiveSmallIntegerField("Rating", validators=[MinValueValidator(1), MaxValueValidator(10)], null=True, blank=True)
     cover_image = models.ImageField("Cover Image", upload_to='images/', null=True, blank=True)
 

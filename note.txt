@@ -163,6 +163,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     8. add url
 
 16. page_count fields on shop models, should be properties
+    - Attempting to implement using model managers and custom queries
+    - Book save method is broken, requires tag, keyword and author to be resubmitted even if exists.
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
