@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.admin.widgets import FilteredSelectMultiple
+from django import forms
 
 # Register your models here.
 
@@ -25,6 +27,24 @@ from .models import (
 )
 
 
+class BookAuthorsAdminForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = "__all__"
+
+    authors = forms.ModelMultipleChoiceField(
+        queryset=Author.objects.all(),
+        widget=FilteredSelectMultiple(
+            verbose_name="Authors",
+            is_stacked=False
+        )
+    )
+
+
+class BookAdmin(admin.ModelAdmin):
+    form = BookAuthorsAdminForm
+
+
 admin.site.register(Country)
 admin.site.register(Language)
 admin.site.register(Illustrator)
@@ -36,7 +56,7 @@ admin.site.register(Keyword)
 admin.site.register(Publication)
 admin.site.register(Size)
 admin.site.register(Series)
-admin.site.register(Book)
+admin.site.register(Book, BookAdmin)
 admin.site.register(Award)
 admin.site.register(Review)
 admin.site.register(Discount)

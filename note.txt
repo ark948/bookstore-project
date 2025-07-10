@@ -165,6 +165,12 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 16. page_count fields on shop models, should be properties
     - Attempting to implement using model managers and custom queries
     - Book submission is broken, authors cannot be removed from Authors.
+    it is possible that the problem is just with admin panel.
+    - Attempting to modify Book submission page in admin panel (Successful)
+    problem is fixed, just need to repeat this for some other manytomany fields as well, such as Book Genre
+    IMPORTANT: Will not commit migration file to repo, until it is decently usable.
+    - Using the following command, the migrations can be reversed for an app (fully reversed):
+    > python manage.py migrate <appName> zero
 
 
 stuff to add:
