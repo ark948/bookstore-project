@@ -126,8 +126,7 @@ class Country(models.Model):
 
 class Translator(models.Model):
     pen_name = models.CharField("Pen Name", max_length=128, blank=True, default="")
-    first_name = models.CharField("First Name", max_length=128, blank=True, default="")
-    last_name = models.CharField("Last Name", max_length=128, blank=True, default="")
+    name = models.CharField("Name", max_length=128, blank=True, default="")
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
@@ -151,8 +150,7 @@ class Translator(models.Model):
 
 class Illustrator(models.Model):
     pen_name = models.CharField("Pen Name", max_length=128, blank=True, default="")
-    first_name = models.CharField("First Name", max_length=128, blank=True, default="")
-    last_name = models.CharField("Last Name", max_length=128, blank=True, default="")
+    name = models.CharField("Name", max_length=128, blank=True, default="")
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     book_count = models.PositiveSmallIntegerField("Number of Books", blank=True, null=True)
@@ -168,11 +166,10 @@ class Illustrator(models.Model):
     def __str__(self) -> str:
         return f"[IllustratorObj] {self.pk}"
 
-from django.db.models import Sum
+
 class Author(models.Model):
     pen_name = models.CharField("Pen Name", max_length=128, blank=True, default="")
-    first_name = models.CharField("First Name", max_length=128, blank=True, default="")
-    last_name = models.CharField("Last Name", max_length=128, blank=True, default="")
+    name = models.CharField("Name", max_length=128, blank=True, default="")
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
     nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='authors') # <CountryObj>.authors.all()
