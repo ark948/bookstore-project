@@ -31,6 +31,27 @@ class CustomUser(AbstractUser):
         return super().save(*args, **kwargs)
     
 
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        "accounts.CustomUser",
+        on_delete=models.CASCADE,
+        primary_key=True,
+        related_name="profile"
+    )
+
+    address = models.CharField("Address", max_length=500, default="")
+
+    def __str__(self) -> str:
+        return f"{self.user}"
+    
+    class Meta:
+        verbose_name = "profile"
+        verbose_name_plural = "profiles"
+        db_table = "user_profiles"
+
+
+
 # class CustomAddress(models.Model):
 #     pass
     

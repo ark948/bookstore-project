@@ -203,6 +203,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     2. Using Django's Groups and Permissions
 
 
+21. A nice way to save some information about users (such as delivery address) is UserProfile model
+    
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
