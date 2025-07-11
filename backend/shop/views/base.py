@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
-from shop.decorators import role_required
+from accounts.decorators import role_required
 
 
 @role_required('admin')
