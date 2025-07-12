@@ -5,6 +5,7 @@ from django import forms
 from .models import Book
 
 class NewBookForm(forms.ModelForm):
+    title = forms.CharField(label="عنوان", max_length=256, required=True)
     class Meta:
         model = Book
-        fields = "__all__"
+        fields = ('title', )
