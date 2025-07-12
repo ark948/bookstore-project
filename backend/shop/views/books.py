@@ -13,7 +13,7 @@ def books_list(request: HttpRequest) -> HttpResponse:
     context = {
         'books': books_list_obj
     }
-    return render(request, "shop/books-list.html", context=context)
+    return render(request, "shop/books/books-list.html", context=context)
 
 
 @role_required("employee")
