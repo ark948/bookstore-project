@@ -2,6 +2,7 @@
 
 {% block content %}
     لیست کتاب ها
+    <a href="{% url 'shop:add-book' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">افزودن +</a>
 
     {% for book in books %}
         <p>

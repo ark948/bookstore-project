@@ -1,0 +1,11 @@
+{% extends "_base.html" %}
+
+{% block content %}
+    کتاب جدید
+
+    {% if form %}
+        <form method="post">
+            {{ form.as_p }}
+        </form>
+    {% endif %}
+{% endblock content %}
