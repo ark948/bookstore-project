@@ -8,6 +8,7 @@ from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseForbidden
+from django.contrib import messages
 
 # Create your views here.
 
@@ -49,6 +50,8 @@ def login_view(request: HttpRequest):
             if user != None:
                 login(request, user)
                 return render(request, 'accounts/messages/login_success.html')
+            messages.error(request, "نام کاربری و یا رمز عبور اشتباه است.")
+            return redirect(reverse("accounts:login"))
     form = EmailLoginForm()
     return render(request, 'accounts/forms/login.html', {'form': form})
 
