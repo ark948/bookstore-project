@@ -1,11 +1,11 @@
 from django.urls import path
 
-from .views import base
+from .views import dashboards
 
 app_name = "shop"
 
 urlpatterns = [
-    path("admin/", base.admin_dashboard, name='admin'),
-    path("manager/", base.manager_dashboard, name='manager'),
-    path("employee/", base.employee_dashboard, name='employee'),
+    path("admin/", dashboards.admin_dashboard, name='admin'),
+    path("manager/", dashboards.manager_dashboard, name='manager'),
+    path("employee/", dashboards.employee_dashboard, name='employee'),
 ]
