@@ -23,6 +23,14 @@
             <a href="{% url 'admin:index' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">ورود به پنل مدیریت</a>
         </p>
 
+        {% if user.role == "employee" %}
+            <p>
+                <a href="{% url 'shop:books-list' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                    لیست کتاب ها
+                </a>
+            </p>
+        {% endif %}
+
     {% else %}
 
         <p>

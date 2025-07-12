@@ -194,7 +194,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 20. Only bookstore staff must be allowed to enter new books, so a sort of Access Control is required.
     - different approaches can be taken
-    1. Using CustomUser and adding a Role field to it
+    1. Using CustomUser and adding a Role field to it (DONE)
         - add role field and role choices to CustomUser model
         - for permissions, we can create decorators that will check the user's role before allowing access
         - then i will add some test views to test those decorators
@@ -204,6 +204,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 
 21. A nice way to save some information about users (such as delivery address) is UserProfile model
+
+22. Adding CRUD views for Book
     
 
 
