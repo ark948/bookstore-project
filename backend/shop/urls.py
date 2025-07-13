@@ -11,4 +11,6 @@ urlpatterns = [
 
     path("books/list/", books.books_list, name='books-list'),
     path("book/new/", books.add_book, name='add-book'),
+
+    path("books/authors/load-authors/", books.load_authors_list, name='load-authors'),
 ]
