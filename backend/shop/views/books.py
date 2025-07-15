@@ -52,7 +52,7 @@ def add_book_test(request):
         form = NewBookForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "ok")
+            messages.success(request, "با موفقیت افزوده شد.")
             return redirect(reverse('shop:books-list'))
         return render(request, "shop/books/add-book-test.html", context={
             'form': form
