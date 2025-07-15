@@ -10,77 +10,46 @@
         <a href="{% url 'shop:add-book-test' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">افزودن تست+</a>
     </p>
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <div class="overflow-x-auto">
+        <table class="table table-xs">
+          <thead>
             <tr>
-                <th scope="col" class="px-6 py-3">
-                    عنوان
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    نویسنده
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    ژانر
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    زبان
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    انتشارات
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    تعداد صفحات
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    قیمت
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    موجودی
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    تعداد
-                </th>
+              <th>#</th>
+              <th>عنوان</th>
+              <th>نویسنده</th>
+              <th>انتشارات</th>
+              <th>ژانر</th>
+              <th>زبان</th>
+              <th>موجود</th>
+              <th>قیمت</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             {% for book in books %}
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ book.title }}
-                </th>
-                <td class="px-6 py-4">
-                    {% for author in book.authors.all %}
-                        [{{ author }}]
-                    {% endfor %}
-                </td>
-                <td class="px-6 py-4">
-                    {% for genre in book.genres.all %}
-                        [{{ genre }}]
-                    {% endfor %}
-                </td>
-                <td class="px-6 py-4">
-                    {{ book.language }}
-                </td>
-                <td class="px-6 py-4">
-                    {{ book.publisher }}
-                </td>
-                <td class="px-6 py-4">
-                    {{ book.page_count }}
-                </td>
-                <td class="px-6 py-4">
-                    {{ book.price }}
-                </td>
-                <td class="px-6 py-4">
-                    {{ book.available }}
-                </td>
-                <td class="px-6 py-4">
-                    {{ book.copies_available }}
-                </td>
+            <tr>
+              <th>{{ forloop.counter }}</th>
+              <td>{{ book.title }}</td>
+              <td>
+                {% for i in book.authors.all %}
+                    [{{ i.name }}]
+                {% endfor %}
+              </td>
+              <td>{{ book.publisher }}</td>
+              <td>
+                {% for i in book.genres.all %}
+                  [{{ i.title }}]
+                {% endfor %}
+              </td>
+              <td>{{ book.language }}</td>
+              <td>{{ book.available }}</td>
+              <td>{{ book.copies_available }}</td>
             </tr>
             {% endfor %}
-        </tbody>
-    </table>
-</div>
+          </tbody>
+          <tfoot>
+            
+          </tfoot>
+        </table>
+      </div>
 
 {% endblock content %}
