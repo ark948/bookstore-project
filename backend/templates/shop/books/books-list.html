@@ -12,7 +12,7 @@
     </p>
 
     <div class="overflow-x-auto">
-        <table class="table table-xs">
+        <table class="table table-md">
           <thead>
             <tr>
               <th>#</th>
@@ -31,6 +31,7 @@
               <th>امتیاز</th>
               <th>موجود</th>
               <th>قیمت</th>
+              <th>تعداد موجودی</th>
             </tr>
           </thead>
           <tbody>
@@ -51,13 +52,41 @@
               </td>
               <td>{{ book.language }}</td>
               <td>{{ book.original_language }}</td>
-              <td>{{ book.edition }}</td>
+              <td>
+                {% if book.edition %}
+                  {{ book.edition }}
+                {% else %}
+                  یافت نشد
+                {% endif %}
+              </td>
               <td>{{ book.page_count }}</td>
               <td>{{ book.pub_date }}</td>
               <td>{{ book.format }}</td>
-              <td>{{ book.ISBN }}</td>
-              <td>{{ book.translator }}</td>
-              <td>{{ book.rating }}</td>
+              <td>
+                {% if book.ISBN %}
+                  {{ book.ISBN }}
+                {% else %}
+                  یافت نشد
+                {% endif %}
+              </td>
+              <td>
+                {% for i in book.translator.all %}
+                  {% if i %}
+                    {{ i.name }}
+                  {% else %}
+                    -
+                  {% endif %}
+                {% empty %}
+                  -
+                {% endfor %}
+              </td>
+              <td>
+                {% if book.rating %}
+                  {{ book.rating }}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
               <td>
                 {% if book.available %}
                   <span>&#10003;</span>
@@ -67,9 +96,14 @@
               </td>
               <td>
                 {% if book.available %}
-                  {{ book.price|intcomma }} تومان
+                  {{ book.price|floatformat:"0g" }} &nbsp تومان
                 {% else %}
                   -
+                {% endif %}
+              </td>
+              <td>
+                {% if book.available %}
+                  {{ book.copies_available }}
                 {% endif %}
               </td>
             </tr>
