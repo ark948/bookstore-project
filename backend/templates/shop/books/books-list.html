@@ -1,4 +1,5 @@
 {% extends "_base.html" %}
+{% load humanize %}
 
 {% block content %}
     لیست کتاب ها
@@ -20,6 +21,14 @@
               <th>انتشارات</th>
               <th>ژانر</th>
               <th>زبان</th>
+              <th>زبان اصلی</th>
+              <th>چاپ</th>
+              <th>تعداد صفحه</th>
+              <th>تاریخ انتشار</th>
+              <th>فرمت چاپ</th>
+              <th>ISBN</th>
+              <th>مترجم</th>
+              <th>امتیاز</th>
               <th>موجود</th>
               <th>قیمت</th>
             </tr>
@@ -41,8 +50,28 @@
                 {% endfor %}
               </td>
               <td>{{ book.language }}</td>
-              <td>{{ book.available }}</td>
-              <td>{{ book.copies_available }}</td>
+              <td>{{ book.original_language }}</td>
+              <td>{{ book.edition }}</td>
+              <td>{{ book.page_count }}</td>
+              <td>{{ book.pub_date }}</td>
+              <td>{{ book.format }}</td>
+              <td>{{ book.ISBN }}</td>
+              <td>{{ book.translator }}</td>
+              <td>{{ book.rating }}</td>
+              <td>
+                {% if book.available %}
+                  <span>&#10003;</span>
+                {% else %}
+                  <span>&#10007;</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if book.available %}
+                  {{ book.price|intcomma }} تومان
+                {% else %}
+                  -
+                {% endif %}
+              </td>
             </tr>
             {% endfor %}
           </tbody>
