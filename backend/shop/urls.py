@@ -15,4 +15,7 @@ urlpatterns = [
 
     path("books/authors/load-authors/", books.load_authors_list, name='load-authors'),
     path("books/authors-autocomplete/", books.AuthorsAutoComplete.as_view(), name='authors-autocomplete'),
+    path("books/publishers-autocomplete/", books.PublishersAutoComplete.as_view(), name='publishers-autocomplete'),
+    path("books/genres-autocomplete/", books.GenresAutoComplete.as_view(), name='genres-autocomplete'),
+    path("books/languages-autocomplete/", books.LanguageAutoComplete.as_view(), name='languages-autocomplete'),
 ]

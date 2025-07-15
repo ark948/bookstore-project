@@ -1,12 +1,17 @@
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib import messages
 
 from dal import autocomplete
 
 from shop.models import (
     Book,
-    Author
+    Author,
+    Publication,
+    Genre,
+    Language,
 )
 from shop.forms import NewBookForm
 from accounts.decorators import role_required
@@ -41,23 +46,45 @@ def load_authors_list(request: HttpRequest):
 
 @role_required("employee")
 def add_book_test(request):
-    if request.method == "POST":
-        pass
     form = NewBookForm()
-    authors = Author.objects.all()
-    context = {
-        "authors": authors,
-        "form": form
-    }
+    if request.method == "POST":
+        print("\n\n", request.POST, "\n\n")
+        form = NewBookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "ok")
+            return redirect(reverse('shop:books-list'))
+        return render(request, "shop/books/add-book-test.html", context={
+            'form': form
+        })
+    context = { "form": form }
     return render(request, "shop/books/add-book-test.html", context=context)
 
 
 class AuthorsAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        if not self.request.user.is_authenticated:
-            return Author.objects.none()
-        
         qs = Author.objects.all()
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+        return qs
+    
+class PublishersAutoComplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Publication.objects.all()
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+        return qs
+    
+class GenresAutoComplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):        
+        qs = Genre.objects.all()
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+        return qs
+    
+class LanguageAutoComplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Language.objects.all()
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
         return qs
