@@ -206,6 +206,20 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 21. A nice way to save some information about users (such as delivery address) is UserProfile model
 
 22. Adding CRUD views for Book
+
+23. Having many problems with Adding books
+    - Specifically with how to add multiple authors to book in templates.
+    - django's admin widgets do not render properly
+    - flowbite or daisyui do not have a component like that
+    - Select2 component is required
+    - Other options are: django-select2 and django-autocomplete-light
+    - django-select2 requires a cache backend such as redis (that i do not have right now)
+    - Attempting to try django-autocomplete-light package
+    > pip install django-autocomplete-light
+    - add to installed_apps (before django admin, )
+    (for some reason it is not working)
+    - Attempting to try django-select2
+    
     
 
 

@@ -46,7 +46,6 @@ def login_view(request: HttpRequest):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = authenticate(username = email, password = password)
-            print("\n", user)
             if user != None:
                 login(request, user)
                 return render(request, 'accounts/messages/login_success.html')
