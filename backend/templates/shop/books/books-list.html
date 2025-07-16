@@ -41,7 +41,11 @@
               <td>{{ book.title }}</td>
               <td>
                 {% for i in book.authors.all %}
-                    [{{ i.name }}]
+                    {% if i.fa_name %}
+                      [{{ i.fa_name }}]
+                    {% else %}
+                      [{{ i.en_name }}]
+                    {% endif %}
                 {% endfor %}
               </td>
               <td>{{ book.publisher }}</td>

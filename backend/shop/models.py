@@ -6,102 +6,7 @@ from accounts.models import CustomUser
 
 # Create your models here.
 
-# checks:
-# ------------------
-# ALL models must be Capitalized (DONE)
-# ALL models must be singular (DONE)
-# ALL fields must be lowercased using underscores, not camelCase (full_name, NOT fullName) (DONE)
-# Provide Verbose name for all non-relation fields (otherwise django will do it itself but with its own ways) (DONE)
-# Provide related_name for all relation fields (DONE)
-# Provide verbose_name and verbose_name_plural for model itself (by using class Meta) (DONE)
-# Provide ordering to Meta, ONLY IF NECESSARY (IT WILL AFFECT PERFORMANCE)
-# Models with ordering: (DONE)
-    # Book (title)
-    # Genre (name)
-    # Country (name)
-    # Language (name)
-# Provide index if necessary: (DONE)
-    # Index provided to Book
-# FIX all choice fields (dicts are faster for key related lookups) (DONE)
-# Rename manytomany fields to plural format such as genres field of Book model (DONE)
-# Distinguish between DO_NOTHING and CASCADE in relation fields (DONE)
-# NOTE: DO_NOTHING will cause integrity problems, best to choose something else (DONE)
-# UPDATE all DO_NOTHING statements (DONE)
-# add null=True and blank=True (null for database, blank is for validation) (DONE)
-# EXAMPLE: if blank is true, then a form will allow empty value (DONE)
-# if a null is required for CharField or TextField, DO NOT USE Null, use default="" and blank=True instead (DONE)
-# Configure image field for book's cover image (static location) (DONE)
-
-# Relationships to watch that may causes errors:
-# Book - OrderItems (books field)w
-
-# NOTE: Changed some relations to SET_NULL
-# NOTE: for ImageField, Pillow must be installed, > pip install Pillow
-
-# NOTE: ManyToMany fields are not recognized (Association Tables), specifically authors field on Book (Solved)
-# NOTE: If a 'through' model created, objects need to be created explicitly
-# Best to just remove the association tables, and add if only extra fields were required.
-
-# Relationships
-# ------------------
-# Book M:N Author -> BookAuthor
-# Book M:N Genres -> BookGenre
-# Book M:N Tag -> BookTag
-# Book M:N Translator -> BookTranslator
-# Book M:N Illustrator -> BookIllustrator
-
-# Book 1:N Award (CASCADE)
-# Award 1:1 Book (DO_NOTHING)
-
-# Book 1:1 Publication
-# Publication 1:N Book
-
-# Book 1:1 Format
-# Format 1:N Book
-
-# Book 1:1 Size
-# Size 1:N Book
-
-# Book 1:1 Series
-# Series 1:N Book
-
-# Book 1:1 Language
-# Language 1:N Book
-
-# Book 1:1 OriginalLanguage
-# OriginalLanguage 1:N
-
-# Book 1:1 AgeRecommendation
-# AgeRecommendation 1:N Book
-
-# Book 1:N Review (CASCADE)
-# Review 1:1 Book (DO_NOTHING)
-
-# Book 1:N Comment (CASCADE)
-# Comment 1:1 Book (DO_NOTHING)
-
-# Payment 1:1 Discount
-# Discount 1:N Payment
-
-# Organization 1:N Award
-# Award 1:1 Organization
-
-# Author 1:1 Country (nationality field)
-# Translator 1:1 Country (nationality field)
-# Illustrator 1:1 Country  (nationality field)
-
-# Country 1:N Author
-# Country 1:N Translator
-# Country 1:N Illustrator
-
-# Order 1:1 OrderItems
-# Order 1:1 CustomUser
-# Order 1:N Payment
-
-# Payment 1:1 Order
-
-# Payment n:n Invoice
-
+# NOTE: for notes and some info on this database design, refer to note.txt
 
 # Inherit this to use created_at and updated_at
 class TimeStampModel(models.Model):
@@ -124,18 +29,22 @@ class Country(models.Model):
         return self.name
     
 
-class Translator(models.Model):
+class Contributor(models.Model):
     pen_name = models.CharField("Pen Name", max_length=128, blank=True, default="")
-    name = models.CharField("Name", max_length=128, blank=True, default="")
+    fa_name = models.CharField("Name (fa)", max_length=128, blank=True, default="")
+    en_name = models.CharField("Name (en)", max_length=128, blank=True, default="")
     email = models.EmailField("Email", blank=True, null=True)
     dob = models.DateField("Date of Birth", blank=True, null=True)
+    
+
+class Translator(Contributor):
     nationality = models.ForeignKey(
-            verbose_name="Nationality", 
-            to=Country, 
-            null=True, 
-            on_delete=models.SET_NULL, 
-            related_name='translators'
-        ) # <CountryObj>.translators.all()
+        verbose_name="Nationality", 
+        to=Country, 
+        null=True, 
+        on_delete=models.SET_NULL, 
+        related_name='translators'
+    ) # <CountryObj>.translators.all()
     
     @property
     def books_count(self) -> int:
@@ -143,22 +52,18 @@ class Translator(models.Model):
 
     @property
     def full_name(self) -> str:
-        return self.name
+        return self.fa_name
         
     def __str__(self) -> str:
         if self.pen_name:
             return self.pen_name
-        elif self.name:
-            return self.name
+        elif self.fa_name:
+            return self.fa_name
         else:
             return f"[TranslatorObj] {self.pk}"
 
 
-class Illustrator(models.Model):
-    pen_name = models.CharField("Pen Name", max_length=128, blank=True, default="")
-    name = models.CharField("Name", max_length=128, blank=True, default="")
-    email = models.EmailField("Email", blank=True, null=True)
-    dob = models.DateField("Date of Birth", blank=True, null=True)
+class Illustrator(Contributor):
     nationality = models.ForeignKey(
         verbose_name="Nationality", 
         to=Country, 
@@ -173,32 +78,34 @@ class Illustrator(models.Model):
 
     @property
     def full_name(self) -> str:
-        return self.name
+        return self.fa_name
         
     def __str__(self) -> str:
         return f"[IllustratorObj] {self.pk}"
 
 
-class Author(models.Model):
-    pen_name = models.CharField("Pen Name", max_length=128, blank=True, default="")
-    name = models.CharField("Name", max_length=128, blank=True, default="")
-    email = models.EmailField("Email", blank=True, null=True)
-    dob = models.DateField("Date of Birth", blank=True, null=True)
-    nationality = models.ForeignKey(verbose_name="Nationality", to=Country, null=True, on_delete=models.SET_NULL, related_name='authors') # <CountryObj>.authors.all()
-    
+class Author(Contributor):
+    nationality = models.ForeignKey(
+        verbose_name="Nationality", 
+        to=Country, 
+        null=True, 
+        on_delete=models.SET_NULL, 
+        related_name='authors'
+    ) # <CountryObj>.authors.all()
+
     @property
     def books_count(self) -> int:
         return len(self.books.all())
 
     @property
     def full_name(self) -> str:
-        return self.name
+        return self.fa_name
 
     def __str__(self) -> str:
         if self.pen_name:
             return self.pen_name
-        elif self.name:
-            return self.name
+        elif self.fa_name:
+            return self.fa_name
 
 
 class Genre(models.Model):

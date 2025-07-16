@@ -222,6 +222,11 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 24. Adding DaisyUI
     - (Flowbite is not enough)
 
+25. Since some fields are common for Authors, Translators, and Illustrators, i added the Contributor model
+    - it's better that database be clean before making any changes to schema
+    - to reverse the migrations back to base (for one app only):
+    > python manage.py migrate <appName> zero (WARNING: data will be lost)
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar
@@ -231,3 +236,104 @@ daisyui or flowbite
 pytest
 django-pytest
 authentication with htmx and modals
+
+
+
+################################################### DATABASE stuff ###################################################
+(some of them needs updating...)
+
+# checks:
+# ------------------
+# ALL models must be Capitalized (DONE)
+# ALL models must be singular (DONE)
+# ALL fields must be lowercased using underscores, not camelCase (full_name, NOT fullName) (DONE)
+# Provide Verbose name for all non-relation fields (otherwise django will do it itself but with its own ways) (DONE)
+# Provide related_name for all relation fields (DONE)
+# Provide verbose_name and verbose_name_plural for model itself (by using class Meta) (DONE)
+# Provide ordering to Meta, ONLY IF NECESSARY (IT WILL AFFECT PERFORMANCE)
+# Models with ordering: (DONE)
+    # Book (title)
+    # Genre (name)
+    # Country (name)
+    # Language (name)
+# Provide index if necessary: (DONE)
+    # Index provided to Book
+# FIX all choice fields (dicts are faster for key related lookups) (DONE)
+# Rename manytomany fields to plural format such as genres field of Book model (DONE)
+# Distinguish between DO_NOTHING and CASCADE in relation fields (DONE)
+# NOTE: DO_NOTHING will cause integrity problems, best to choose something else (DONE)
+# UPDATE all DO_NOTHING statements (DONE)
+# add null=True and blank=True (null for database, blank is for validation) (DONE)
+# EXAMPLE: if blank is true, then a form will allow empty value (DONE)
+# if a null is required for CharField or TextField, DO NOT USE Null, use default="" and blank=True instead (DONE)
+# Configure image field for book's cover image (static location) (DONE)
+
+# Relationships to watch that may causes errors:
+# Book - OrderItems (books field)w
+
+# NOTE: Changed some relations to SET_NULL
+# NOTE: for ImageField, Pillow must be installed, > pip install Pillow
+
+# NOTE: ManyToMany fields are not recognized (Association Tables), specifically authors field on Book (Solved)
+# NOTE: If a 'through' model created, objects need to be created explicitly
+# Best to just remove the association tables, and add if only extra fields were required.
+
+# Relationships
+# ------------------
+# Book M:N Author -> BookAuthor
+# Book M:N Genres -> BookGenre
+# Book M:N Tag -> BookTag
+# Book M:N Translator -> BookTranslator
+# Book M:N Illustrator -> BookIllustrator
+
+# Book 1:N Award (CASCADE)
+# Award 1:1 Book (DO_NOTHING)
+
+# Book 1:1 Publication
+# Publication 1:N Book
+
+# Book 1:1 Format
+# Format 1:N Book
+
+# Book 1:1 Size
+# Size 1:N Book
+
+# Book 1:1 Series
+# Series 1:N Book
+
+# Book 1:1 Language
+# Language 1:N Book
+
+# Book 1:1 OriginalLanguage
+# OriginalLanguage 1:N
+
+# Book 1:1 AgeRecommendation
+# AgeRecommendation 1:N Book
+
+# Book 1:N Review (CASCADE)
+# Review 1:1 Book (DO_NOTHING)
+
+# Book 1:N Comment (CASCADE)
+# Comment 1:1 Book (DO_NOTHING)
+
+# Payment 1:1 Discount
+# Discount 1:N Payment
+
+# Organization 1:N Award
+# Award 1:1 Organization
+
+# Author 1:1 Country (nationality field)
+# Translator 1:1 Country (nationality field)
+# Illustrator 1:1 Country  (nationality field)
+
+# Country 1:N Author
+# Country 1:N Translator
+# Country 1:N Illustrator
+
+# Order 1:1 OrderItems
+# Order 1:1 CustomUser
+# Order 1:N Payment
+
+# Payment 1:1 Order
+
+# Payment n:n Invoice
