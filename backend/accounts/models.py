@@ -12,11 +12,12 @@ class CustomUser(AbstractUser):
         ('admin', 'Admin'), # Can access everything
         ('manager', 'Manager'), # Can manage employees, has some restrictions to certain admin features
         ('employee', 'Employee'), # Limited access, has full access to books
+        ('user', 'User')
     ]
 
     username = None
     email = models.EmailField("email address", unique=True)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="employee")
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="user")
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

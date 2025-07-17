@@ -227,6 +227,10 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     - to reverse the migrations back to base (for one app only):
     > python manage.py migrate <appName> zero (WARNING: data will be lost)
 
+
+26. IMPORTANT mistake, default role for user must not be employee.
+
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar
