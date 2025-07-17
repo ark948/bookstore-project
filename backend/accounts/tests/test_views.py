@@ -25,7 +25,14 @@ def test_user_factory(user):
 def test_custom_user_fixture(custom_user):
     assert isinstance(custom_user, CustomUser)
     assert custom_user.email == 'user1@email.com'
-    assert custom_user.check_password('test123*A') is True
+    assert custom_user.role == 'user'
+
+
+@pytest.mark.django_db
+def test_custom_user_employee_fixture(custom_employee):
+    assert isinstance(custom_employee, CustomUser)
+    assert custom_employee.email == 'user1@email.com'
+    assert custom_employee.role == 'employee'
 
 
 @pytest.mark.django_db
