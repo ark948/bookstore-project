@@ -104,8 +104,12 @@ class Author(Contributor):
     def __str__(self) -> str:
         if self.pen_name:
             return self.pen_name
+        elif self.en_name:
+            return self.en_name
         elif self.fa_name:
             return self.fa_name
+        else:
+            return f"[<AuthorObj> {self.pk}]"
 
 
 class Genre(models.Model):

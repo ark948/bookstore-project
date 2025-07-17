@@ -21,7 +21,7 @@ def language():
 @pytest.fixture
 def author(country):
     some_author = Author.objects.create(
-        name = 'Some Guy',
+        en_name = 'Some Guy',
         nationality = country
     )
     some_author.save()
