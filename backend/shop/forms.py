@@ -29,3 +29,29 @@ class NewBookForm(forms.ModelForm):
             'original_language': autocomplete.ModelSelect2(url=reverse_lazy('shop:languages-autocomplete')),
             'genres': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:genres-autocomplete')),
         }
+
+
+class EditBookForm(forms.ModelForm):
+    pk = forms.CharField(label='شناسه')
+    title = forms.CharField(label="عنوان", max_length=256, required=True)
+
+    class Meta:
+        model = Book    
+        readonly_fields = ('pk', )
+        fields = (
+            "pk",
+            'title',
+            'authors',
+            'publisher',
+            'language',
+            'original_language',
+            'genres',
+            'page_count'
+        )
+        widgets = {
+            'authors': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:authors-autocomplete')),
+            'publisher': autocomplete.ModelSelect2(url=reverse_lazy('shop:publishers-autocomplete')),
+            'language': autocomplete.ModelSelect2(url=reverse_lazy('shop:languages-autocomplete')),
+            'original_language': autocomplete.ModelSelect2(url=reverse_lazy('shop:languages-autocomplete')),
+            'genres': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:genres-autocomplete')),
+        }

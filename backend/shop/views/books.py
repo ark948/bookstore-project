@@ -61,6 +61,11 @@ def add_book_test(request):
     return render(request, "shop/books/add-book-test.html", context=context)
 
 
+@role_required("employee")
+def edit_book_test(request):
+    return None
+
+
 class AuthorsAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Author.objects.all()

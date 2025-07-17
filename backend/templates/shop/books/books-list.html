@@ -12,7 +12,7 @@
     </p>
 
     <div class="overflow-x-auto">
-        <table class="table table-md">
+        <table class="table table-xs">
           <thead>
             <tr>
               <th>#</th>
@@ -109,6 +109,10 @@
                 {% if book.available %}
                   {{ book.copies_available }}
                 {% endif %}
+              </td>
+              <td>
+                <button class="btn btn-primary btn-outline btn-xs">Edit</button>
+                <button class="btn btn-error btn-outline btn-xs">Delete</button>
               </td>
             </tr>
             {% endfor %}
