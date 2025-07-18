@@ -1,11 +1,28 @@
 {% extends "_base.html" %}
+{% load widget_tweaks %}
 {% load static %}
 
 {% block content %}
 
 <form action="{% url 'shop:add-book-test' %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {% render_field field class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
+            {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+            {% if field.errors %}
+                <div class="text-danger">
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
 
     <table style="display: none">
         {{ view.formset.empty_form }}
