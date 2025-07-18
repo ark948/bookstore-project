@@ -3,6 +3,8 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
+from django.forms.models import model_to_dict
+from typing import List
 
 from dal import autocomplete
 
@@ -13,57 +15,61 @@ from shop.models import (
     Genre,
     Language,
 )
-from shop.forms import NewBookForm
+from shop import forms
 from accounts.decorators import role_required
 
 
 @role_required("employee")
 def books_list(request: HttpRequest) -> HttpResponse:
-    books_list_obj = Book.objects.all()
-    context = {
-        'books': books_list_obj
-    }
-    return render(request, "shop/books/books-list.html", context=context)
+    books_list_obj: Book = Book.objects.all()
+    return render(request, "shop/books/books-list.html", context={ 'books': books_list_obj })
 
 
 @role_required("employee")
 def add_book(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         pass
-    form = NewBookForm()
-    context = {
-        "form": form
-    }
-    return render(request, "shop/books/add-book.html", context=context)
+    return render(request, "shop/books/add-book.html", context={ 'form': forms.NewBookForm() })
 
 
 @role_required("employee")
-def load_authors_list(request: HttpRequest):
-    authors_list_obj = Author.objects.all()
-    response = render(request, "shop/books/partials/authors-list.html", {'authors': authors_list_obj})
-    return response
+def load_authors_list(request: HttpRequest) -> HttpResponse:
+    authors_list_obj: List[Author] = Author.objects.all()
+    return render(request, "shop/books/partials/authors-list.html", {'authors': authors_list_obj})
+    
 
 
 @role_required("employee")
 def add_book_test(request):
-    form = NewBookForm()
+    form = forms.NewBookForm()
     if request.method == "POST":
-        print("\n\n", request.POST, "\n\n")
-        form = NewBookForm(request.POST)
+        form = forms.NewBookForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, "با موفقیت افزوده شد.")
             return redirect(reverse('shop:books-list'))
-        return render(request, "shop/books/add-book-test.html", context={
-            'form': form
-        })
-    context = { "form": form }
-    return render(request, "shop/books/add-book-test.html", context=context)
+        return render(request, "shop/books/add-book-test.html", context={ 'form': form })
+    return render(request, "shop/books/add-book-test.html", context={ "form": form })
 
 
 @role_required("employee")
-def edit_book_test(request):
-    return None
+def edit_book_test(request: HttpRequest, pk: int) -> HttpResponse:
+    try:
+        item: Book = Book.objects.get(pk)
+    except Exception as error:
+        messages.error(request, "شناسه یافت نشد.")
+        return redirect(reverse("books:books-list")) # update if htmx was used
+    if request.method == "POST":
+        form = forms.EditBookForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"کتاب با موفقیت ویرایش شد. {pk}")
+            return redirect(reverse("books:books-list")) # update if htmx was used
+        else:
+            return render(request, "shop/books/edit-book.html", { 'form': form })
+    form = forms.EditBookForm(initial=model_to_dict(item))
+    return render(request, "shop/books/edit-book.html", { 'form': form })
+        
 
 
 class AuthorsAutoComplete(autocomplete.Select2QuerySetView):
