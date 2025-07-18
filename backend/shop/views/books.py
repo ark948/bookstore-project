@@ -92,14 +92,14 @@ class PublishersAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Publication.objects.all()
         if self.q:
-            qs = qs.filter(name__istartswith=self.q)
+            qs = qs.filter(title__istartswith=self.q)
         return qs
     
 class GenresAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):        
         qs = Genre.objects.all()
         if self.q:
-            qs = qs.filter(name__istartswith=self.q)
+            qs = qs.filter(title__istartswith=self.q)
         return qs
     
 class LanguageAutoComplete(autocomplete.Select2QuerySetView):
