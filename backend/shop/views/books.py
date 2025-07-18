@@ -43,7 +43,7 @@ def add_book(request: HttpRequest) -> HttpResponse:
 
 @role_required("employee")
 def load_authors_list(request: HttpRequest) -> HttpResponse:
-    authors_list_obj: List[Author] = Author.objects.all()
+    authors_list_obj: List[Author] = Author.objects.all().order_by('fa_name', 'en_name')
     return render(request, "shop/books/partials/authors-list.html", {'authors': authors_list_obj})
     
 
@@ -83,14 +83,14 @@ def edit_book_test(request: HttpRequest, pk: int) -> HttpResponse:
 
 class AuthorsAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        qs = Author.objects.all()
+        qs = Author.objects.all().order_by('fa_name', 'en_name')
         if self.q:
             qs = qs.filter(en_name__istartswith=self.q)
         return qs
     
 class PublishersAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        qs = Publication.objects.all()
+        qs = Publication.objects.all().order_by('title')
         if self.q:
             qs = qs.filter(title__istartswith=self.q)
         return qs
