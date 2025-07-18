@@ -85,7 +85,7 @@ class AuthorsAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Author.objects.all()
         if self.q:
-            qs = qs.filter(name__istartswith=self.q)
+            qs = qs.filter(en_name__istartswith=self.q)
         return qs
     
 class PublishersAutoComplete(autocomplete.Select2QuerySetView):
