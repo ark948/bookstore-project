@@ -1,6 +1,7 @@
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import permission_required, user_passes_test
 from django.urls import reverse
 from django.contrib import messages
 from django.forms.models import model_to_dict
@@ -17,6 +18,14 @@ from shop.models import (
 )
 from shop import forms
 from accounts.decorators import role_required
+
+
+def has_custom_permission(user):
+    return user.is_authenticated
+
+@user_passes_test(has_custom_permission, login_url='accounts:login')
+def secret_view(request):
+    return HttpResponse("Secret stuff")
 
 
 @role_required("employee")
@@ -56,7 +65,7 @@ def add_book_test(request):
 def edit_book_test(request: HttpRequest, pk: int) -> HttpResponse:
     try:
         item: Book = Book.objects.get(pk)
-    except Exception as error:
+    except Exception:
         messages.error(request, "شناسه یافت نشد.")
         return redirect(reverse("books:books-list")) # update if htmx was used
     if request.method == "POST":
