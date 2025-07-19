@@ -36,20 +36,19 @@ def books_list(request: HttpRequest) -> HttpResponse:
 
 @role_required("employee")
 def add_book(request: HttpRequest) -> HttpResponse:
+    form = forms.NewBookForm()
     if request.method == "POST":
-        pass
-    return render(request, "shop/books/add-book.html", context={ 'form': forms.NewBookForm() })
+        form = forms.NewBookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "کتاب با موفقیت افوزده شد.")
+            return redirect(reverse("shop:books-list"))
+        return render(request, "shop/books/add-book.html", context={ 'form': form })
+    return render(request, "shop/books/add-book.html", context={ "form": form })
 
 
 @role_required("employee")
-def load_authors_list(request: HttpRequest) -> HttpResponse:
-    authors_list_obj: List[Author] = Author.objects.all().order_by('fa_name', 'en_name')
-    return render(request, "shop/books/partials/authors-list.html", {'authors': authors_list_obj})
-    
-
-
-@role_required("employee")
-def add_book_test(request):
+def add_book_test(request: HttpRequest) -> HttpResponse:
     form = forms.NewBookForm()
     if request.method == "POST":
         form = forms.NewBookForm(request.POST)
@@ -79,6 +78,14 @@ def edit_book_test(request: HttpRequest, pk: int) -> HttpResponse:
     form = forms.EditBookForm(initial=model_to_dict(item))
     return render(request, "shop/books/edit-book.html", { 'form': form })
         
+
+
+# This is not used, replaced by django-autocomplete-light
+# But will remain for reference purposes
+@role_required("employee")
+def load_authors_list(request: HttpRequest) -> HttpResponse:
+    authors_list_obj: List[Author] = Author.objects.all().order_by('fa_name', 'en_name')
+    return render(request, "shop/books/partials/authors-list.html", {'authors': authors_list_obj})
 
 
 class AuthorsAutoComplete(autocomplete.Select2QuerySetView):

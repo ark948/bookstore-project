@@ -230,6 +230,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 26. IMPORTANT mistake, default role for user must not be employee.
 
+27. Since the 'add-new-book' feature is ok, now the 'add-new-book-test' view can be safely remvoed and replaced by the actual one
+    - but before that, the tmeplate needs to be cleaned
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
