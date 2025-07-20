@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.forms.models import model_to_dict
 from typing import List
+from django.db.models import QuerySet
 
 from dal import autocomplete
 
@@ -34,7 +35,7 @@ def secret_view_v2(request):
 
 @role_required("employee")
 def books_list(request: HttpRequest) -> HttpResponse:
-    books_list_obj: Book = Book.objects.all()
+    books_list_obj: QuerySet = Book.objects.all()
     return render(request, "shop/books/books-list.html", context={ 'books': books_list_obj })
 
 
@@ -88,7 +89,7 @@ def edit_book_test(request: HttpRequest, pk: int) -> HttpResponse:
 # But will remain for reference purposes
 @role_required("employee")
 def load_authors_list(request: HttpRequest) -> HttpResponse:
-    authors_list_obj: List[Author] = Author.objects.all().order_by('fa_name', 'en_name')
+    authors_list_obj: QuerySet = Author.objects.all().order_by('fa_name', 'en_name')
     return render(request, "shop/books/partials/authors-list.html", {'authors': authors_list_obj})
 
 

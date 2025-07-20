@@ -16,6 +16,7 @@
           <thead>
             <tr>
               <th>#</th>
+              <th>شناسه</th>
               <th>عنوان</th>
               <th>نویسنده</th>
               <th>انتشارات</th>
@@ -38,6 +39,7 @@
             {% for book in books %}
             <tr>
               <th>{{ forloop.counter }}</th>
+              <th>{{ book.pk }}</th>
               <td>{{ book.title }}</td>
               <td>
                 {% for i in book.authors.all %}
@@ -118,7 +120,9 @@
             {% endfor %}
           </tbody>
           <tfoot>
-            
+            <tr>
+              <td>تعداد کل: {{ books|length }}</td>
+            </tr>
           </tfoot>
         </table>
       </div>
