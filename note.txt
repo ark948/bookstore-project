@@ -231,19 +231,46 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 26. IMPORTANT mistake, default role for user must not be employee.
 
 27. Since the 'add-new-book' feature is ok, now the 'add-new-book-test' view can be safely remvoed and replaced by the actual one
-    - but before that, the tmeplate needs to be cleaned
+    - use htmx to allow for more than one inseriton (form must be cleaned and re-rendered)
+    - a separate page for adding books, modal for adding authors and publishers and ... on the spot
+    (using django-autocomplete-light)
+
+28. 4 different ways of implementing Access Control:
+    - decorators (for function based views)
+    - mixins (for class based views)
+    - using auxiliary model
+        - makemigrations and migrate (actual table will not be created)
+        - then enter django shell and assign the new permission object to a user
+        >>> from django.contrib.auth import get_user_model
+        >>> from django.contrib.auth.models import Permission 
+        >>> User = get_user_model()
+        >>> admin = User.objects.get(username="admin")
+        >>> editor = Permission.objects.get(codename="editor_rights")
+        >>> admin.user_permissions.add(editor)
+        - then this user (admin) can access the protected view (employee_view and origin_view)
+        - you can also check user's permission in tempaltes:
+            {% if perms.myapp.editor_rights %}
+                <p>You can Edit this Article.</p>
+                <button>Edit</button>
+            {% endif %}
+    - using middleware
+        - this approach will be gloabl
+        - add the custom middleware to middlewares config var in settings.py
 
 
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar
 django-browser-reload
-htmx
-daisyui or flowbite
-pytest
-django-pytest
+htmx (done)
+daisyui or flowbite (done)
+pytest (done)
+django-pytest (done)
 authentication with htmx and modals
 
+
+# Current problems:
+- redirect to requested page after successful login does not work.
 
 
 ################################################### DATABASE stuff ###################################################

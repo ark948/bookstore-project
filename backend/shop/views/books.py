@@ -27,6 +27,10 @@ def has_custom_permission(user):
 def secret_view(request):
     return HttpResponse("Secret stuff")
 
+@user_passes_test(lambda user: user.is_authenticated, login_url='accounts:login')
+def secret_view_v2(request):
+    return HttpResponse("Secret stuff 2")
+
 
 @role_required("employee")
 def books_list(request: HttpRequest) -> HttpResponse:

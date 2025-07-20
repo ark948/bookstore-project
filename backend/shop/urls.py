@@ -12,6 +12,7 @@ urlpatterns = [
 
     # books views
     path("books/test-view/", books.secret_view, name='secret'),
+    path("books/secret-view/", books.secret_view_v2, name='secret-2'),
     path("books/list/", books.books_list, name='books-list'),
     path("book/new/", books.add_book, name='add-book'),
     path("book/new-test/", books.add_book_test, name='add-book-test'),
