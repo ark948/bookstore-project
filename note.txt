@@ -261,6 +261,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 29. Edit book process:
     - two ways, either by directly clicking on the edit button of each individual book
     - or by providing pk to some field (separate page entirely) (we'll go with this first)
+    - need to figure out a clear approach
+    - Book edit form will be devided into two versions, one quick edit and one complete edit (will include all fields)
 
 
 stuff to add:

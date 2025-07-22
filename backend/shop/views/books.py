@@ -112,7 +112,7 @@ def edit_book_request_page(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         try:
             item: Book = Book.objects.get(pk=request.POST.get('book_id'))
-            form = forms.EditBookForm(initial=model_to_dict(item))
+            form = forms.QuickBookEditForm(initial=model_to_dict(item))
             response = render(request, 'shop/books/partials/edit-book-form.html', {'form': form})
             return response
         except Book.DoesNotExist:

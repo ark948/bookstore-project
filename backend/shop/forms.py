@@ -68,7 +68,7 @@ class NewBookForm(forms.ModelForm):
         }
 
 
-class EditBookForm(forms.ModelForm):
+class QuickBookEditForm(forms.ModelForm):
     pk = forms.CharField(label='شناسه')
     title = forms.CharField(label="عنوان", max_length=256, required=True)
 
@@ -92,3 +92,9 @@ class EditBookForm(forms.ModelForm):
             'original_language': autocomplete.ModelSelect2(url=reverse_lazy('shop:languages-autocomplete')),
             'genres': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:genres-autocomplete')),
         }
+
+
+class FullBookEditForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = "__all__"
