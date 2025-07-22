@@ -1,5 +1,5 @@
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import permission_required, user_passes_test
 from django.urls import reverse
@@ -85,7 +85,7 @@ def edit_book_test(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, "shop/books/edit-book.html", { 'form': form })
 
 
-
+# NOT USED
 @role_required("employee")
 def edit_book(request: HttpRequest, pk: int) -> HttpResponse:
     context = {}
@@ -104,6 +104,21 @@ def edit_book(request: HttpRequest, pk: int) -> HttpResponse:
     response = render(request, "books/forms/edit-book-form.html", context)
     response['HX-Trigger'] = "success"
     return response
+
+
+
+@role_required("employee")
+def edit_book_request_page(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        try:
+            item: Book = Book.objects.get(pk=request.POST.get('book_id'))
+            form = forms.EditBookForm(initial=model_to_dict(item))
+            response = render(request, 'shop/books/partials/edit-book-form.html', {'form': form})
+            return response
+        except Book.DoesNotExist:
+            return HttpResponse("شناسه یافت نشد.")
+        form = forms.EditBookForm()
+    return render(request, 'shop/books/edit-book-page.html')
         
 
 

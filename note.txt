@@ -260,7 +260,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 29. Edit book process:
     - two ways, either by directly clicking on the edit button of each individual book
-    - or by providing pk to some field
+    - or by providing pk to some field (separate page entirely) (we'll go with this first)
 
 
 stuff to add:

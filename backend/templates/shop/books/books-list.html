@@ -116,12 +116,12 @@
               <td>
                 <button 
                   class="btn btn-primary btn-outline btn-xs"
-                  hx-get="{% url 'shop:edit-book' pk=book.pk %}"
                   hx-trigger="click"
                   hx-target="#edit_response_holder"
                   hx-on:success="edit_book_modal_container.showModal();">
                   ویرایش
                 </button>
+                &nbsp;
                 <button
                   class="btn btn-error btn-outline btn-xs">
                   Delete
@@ -138,4 +138,8 @@
         </table>
       </div>
 
+
+      <p>
+        <a href="{% url 'shop:edit-request' %}">صفحه ویرایش</a>
+      </p>
 {% endblock content %}
