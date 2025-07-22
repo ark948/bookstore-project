@@ -82,6 +82,27 @@ def edit_book_test(request: HttpRequest, pk: int) -> HttpResponse:
             return render(request, "shop/books/edit-book.html", { 'form': form })
     form = forms.EditBookForm(initial=model_to_dict(item))
     return render(request, "shop/books/edit-book.html", { 'form': form })
+
+
+
+@role_required("employee")
+def edit_book(request: HttpRequest, pk: int) -> HttpResponse:
+    context = {}
+    try:
+        item: Book = Book.objects.get(pk=pk)
+    except Book.DoesNotExist:
+        messages.error(request, "شناسه یافت نشد.")
+
+    if request.method == "POST":
+        form = forms.EditBookForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("shop:books-list"))
+    context['form'] = forms.EditBookForm(initial=model_to_dict(item))
+    context['item_id'] = item.pk
+    response = render(request, "books/forms/edit-book-form.html", context)
+    response['HX-Trigger'] = "success"
+    return response
         
 
 

@@ -258,6 +258,11 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
         - add the custom middleware to middlewares config var in settings.py
 
 
+29. Edit book process:
+    - two ways, either by directly clicking on the edit button of each individual book
+    - or by providing pk to some field
+
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar

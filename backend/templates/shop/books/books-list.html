@@ -114,7 +114,14 @@
               </td>
               <td>
                 <button class="btn btn-primary btn-outline btn-xs">Edit</button>
-                <button class="btn btn-error btn-outline btn-xs">Delete</button>
+                <button
+                  class="btn btn-error btn-outline btn-xs"
+                  hx-get="{% url 'shop:book-edit' pk=book.pk %}"
+                  hx-trigger="click"
+                  hx-target="%edit_response_holder"
+                  hx-on:success="edit_book_modal_container.close.showModal();">
+                  Delete
+                </button>
               </td>
             </tr>
             {% endfor %}
@@ -126,5 +133,13 @@
           </tfoot>
         </table>
       </div>
+
+      <p>
+        <button
+          onclick=""
+          hx-get="{% url 'shop:book-edit' %}">
+          ویرایش
+        </button>
+      </p>
 
 {% endblock content %}
