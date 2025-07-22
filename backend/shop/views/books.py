@@ -65,13 +65,14 @@ def add_book_test(request: HttpRequest) -> HttpResponse:
     return render(request, "shop/books/add-book-test.html", context={ "form": form })
 
 
+# NOT USED
 @role_required("employee")
 def edit_book_test(request: HttpRequest, pk: int) -> HttpResponse:
     try:
         item: Book = Book.objects.get(pk)
     except Exception:
         messages.error(request, "شناسه یافت نشد.")
-        return redirect(reverse("books:books-list")) # update if htmx was used
+        return redirect(reverse("shop:books-list")) # update if htmx was used
     if request.method == "POST":
         form = forms.EditBookForm(request.POST, instance=item)
         if form.is_valid():

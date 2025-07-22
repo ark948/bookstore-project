@@ -1,0 +1,14 @@
+<div>
+    <p>
+        ویرایش {{ item_id }}
+    </p>
+{% if form %}
+    <form>
+        {{ form.as_p }}
+        <button type="submit">ثبت</button>
+    </form>
+
+{% else %}
+    <p>فرم یافت نشد.</p>
+{% endif %}
+</div>
