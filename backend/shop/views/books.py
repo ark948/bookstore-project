@@ -117,7 +117,6 @@ def edit_book_request_page(request: HttpRequest) -> HttpResponse:
             return response
         except Book.DoesNotExist:
             return HttpResponse("شناسه یافت نشد.")
-        form = forms.EditBookForm()
     return render(request, 'shop/books/edit-book-page.html')
         
 
