@@ -1,6 +1,7 @@
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import permission_required, user_passes_test
 from django.urls import reverse
 from django.contrib import messages
@@ -65,60 +66,35 @@ def add_book_test(request: HttpRequest) -> HttpResponse:
     return render(request, "shop/books/add-book-test.html", context={ "form": form })
 
 
-# NOT USED
-@role_required("employee")
-def edit_book_test(request: HttpRequest, pk: int) -> HttpResponse:
-    try:
-        item: Book = Book.objects.get(pk)
-    except Exception:
-        messages.error(request, "شناسه یافت نشد.")
-        return redirect(reverse("shop:books-list")) # update if htmx was used
-    if request.method == "POST":
-        form = forms.EditBookForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"کتاب با موفقیت ویرایش شد. {pk}")
-            return redirect(reverse("books:books-list")) # update if htmx was used
-        else:
-            return render(request, "shop/books/edit-book.html", { 'form': form })
-    form = forms.EditBookForm(initial=model_to_dict(item))
-    return render(request, "shop/books/edit-book.html", { 'form': form })
-
-
-# NOT USED
-@role_required("employee")
-def edit_book(request: HttpRequest, pk: int) -> HttpResponse:
-    context = {}
-    try:
-        item: Book = Book.objects.get(pk=pk)
-    except Book.DoesNotExist:
-        messages.error(request, "شناسه یافت نشد.")
-
-    if request.method == "POST":
-        form = forms.EditBookForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse("shop:books-list"))
-    context['form'] = forms.EditBookForm(initial=model_to_dict(item))
-    context['item_id'] = item.pk
-    response = render(request, "books/forms/edit-book-form.html", context)
-    response['HX-Trigger'] = "success"
-    return response
-
-
-
 @role_required("employee")
 def edit_book_request_page(request: HttpRequest) -> HttpResponse:
+    return render(request, 'shop/books/edit-book-page.html')
+
+
+@role_required("employee")
+def get_book_for_edit(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         try:
-            item: Book = Book.objects.get(pk=request.POST.get('book_id'))
-            form = forms.QuickBookEditForm(initial=model_to_dict(item))
-            response = render(request, 'shop/books/partials/edit-book-form.html', {'form': form})
-            return response
-        except Book.DoesNotExist:
+            item = Book.objects.get(pk=int(request.POST.get('input_field_name')))
+        except Exception as e:
             return HttpResponse("شناسه یافت نشد.")
-    return render(request, 'shop/books/edit-book-page.html')
-        
+        form = forms.QuickBookEditForm(instance=item)
+        response = render(request, "shop/books/partials/edit-book-form.html", {'form': form})
+        return response
+
+
+@role_required("employee")
+def edit_book_process(request: HttpRequest, pk: int) -> HttpResponse:
+    item: Book = Book.objects.get(pk=pk)
+    if request.method == "POST":
+        form = forms.QuickBookEditForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "آیتم بروزرسانی شد.")
+            return redirect(reverse("shop:books-list"))
+        else:
+            return render(request, "shop/books/partials/edit-book-form.html", {'form': form})
+
 
 
 # This is not used, replaced by django-autocomplete-light

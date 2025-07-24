@@ -3,9 +3,11 @@
         ویرایش {{ item_id }}
     </p>
 {% if form %}
-    <form>
+    
+    <form method="post" action="{% url 'shop:edit-process' form.instance.id %}">
+        {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">ثبت</button>
+        <button class="btn btn-primary btn-xs" type="submit">Save</button>
     </form>
 
 {% else %}

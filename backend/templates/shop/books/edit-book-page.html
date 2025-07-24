@@ -6,22 +6,17 @@
         شناسه کتاب را وارد کنید.
     </p>
 
-    <form id="edit_form">
+    <form id="edit_form" hx-post="{% url 'shop:get-book' %}" hx-target="#response_holder" hx-swap="innerHTML">
         {% csrf_token %}
         شناسه:
-        <input class="input mt-4" id="book_id" type="number" name="book_id">
+        <input class="input mt-4" name="input_field_name" id="input_field_id">
         <p>
-            <button class="btn btn-outline btn-primary mt-4"
-                hx-post="{% url 'shop:edit-request' %}" hx-target="#response_holder" hx-swap="innerHTML">
-                    جستجو
+            <button class="btn btn-primary btn-xs">
+                جستجو
             </button>
         </p>
 
     </form>
-
-    <button class="btn btn-secondary btn-outline">
-        نمایش کامل فیلد ها؟
-    </button>
 
     <div id="response_holder">
 

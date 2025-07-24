@@ -69,14 +69,13 @@ class NewBookForm(forms.ModelForm):
 
 
 class QuickBookEditForm(forms.ModelForm):
-    pk = forms.CharField(label='شناسه')
+    id = forms.IntegerField(label="شناسه")
     title = forms.CharField(label="عنوان", max_length=256, required=True)
 
     class Meta:
-        model = Book    
-        readonly_fields = ('pk', )
+        model = Book
         fields = (
-            "pk",
+            'id',
             'title',
             'authors',
             'publisher',
@@ -92,6 +91,10 @@ class QuickBookEditForm(forms.ModelForm):
             'original_language': autocomplete.ModelSelect2(url=reverse_lazy('shop:languages-autocomplete')),
             'genres': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:genres-autocomplete')),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super(QuickBookEditForm, self).__init__(*args, **kwargs)
+        self.fields['id'].disabled = True  # or use widget attrs
 
 
 class FullBookEditForm(forms.ModelForm):
