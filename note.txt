@@ -263,8 +263,15 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     - or by providing pk to some field (separate page entirely) (we'll go with this first)
     - need to figure out a clear approach
     - Book edit form will be devided into two versions, one quick edit and one complete edit (will include all fields)
+    - separate edit page is complete, it should be updated with full edit form
+    - now we'll add edit with modal window, which will use quick edit form
+    the process:
+        upon clicking on edit, a get request will be sent along with the item id and also open a modal window
+        response should include the form, that will be placed inside mdoal window
+
     VERY IMPORTANT: when creating ModelForm, instance parameter should be used for editing.
     for creating new objects and filling some default fields, use initial.
+    the following is unrelated:
     <input type="text" id="my-input" name="my_input_name" value="Another Value">
     <button hx-get="/your-htmx-endpoint/" hx-target="#result-div" hx-vals='{"input_value": document.getElementById("my-input").value}'>
         Get Value
