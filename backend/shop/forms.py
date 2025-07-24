@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.urls import reverse_lazy
+from django.core.exceptions import ValidationError
 
 from dal import autocomplete
 
@@ -95,6 +96,13 @@ class QuickBookEditForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(QuickBookEditForm, self).__init__(*args, **kwargs)
         self.fields['id'].disabled = True  # or use widget attrs
+
+    # dummy validation to test form errors, DELTE LATER
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if title.startswith('x'):
+            raise ValidationError('No name starts with x.')
+        return title
 
 
 class FullBookEditForm(forms.ModelForm):
