@@ -94,8 +94,35 @@ def edit_book_process(request: HttpRequest, pk: int) -> HttpResponse:
             return redirect(reverse("shop:books-list"))
         else:
             return render(request, "shop/books/partials/edit-book-form.html", {'form': form})
+        
+
+@role_required("employee")
+def load_edit_form_for_modal_container(request: HttpRequest, pk: int) -> HttpResponse:
+    try:
+        item: Book = Book.objects.get(pk=pk)
+    except Exception as error:
+        messages.error(request, "خطایی رخ داد.")
+        return redirect(reverse("shop:books-list"))
+    form = forms.QuickBookEditForm(instance=item)
+    response = render(request, "shop/books/forms/edit-book-form.html", {'form': form})
+    return response
 
 
+@role_required("employee")
+def process_edit_form_from_modal(request: HttpRequest, pk: int) -> HttpResponse:
+    try:
+        item: Book = Book.objects.get(pk=pk)
+    except Exception as error:
+        return HttpResponse("خطایی رخ داده است.")
+    if request.method == "POST":
+        form = forms.QuickBookEditForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            response = HttpResponse("بروزرسای با موفقیت ثبت شد.")
+            return response
+        else:
+            response = render(request, "shop/books/forms/edit-book-form.html", {'form': form})
+            return response
 
 # This is not used, replaced by django-autocomplete-light
 # But will remain for reference purposes

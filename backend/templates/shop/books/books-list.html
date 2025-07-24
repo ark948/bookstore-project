@@ -116,7 +116,10 @@
               <td>
                 <button 
                   class="btn btn-primary btn-outline btn-xs"
-                  onclick="edit_book_modal_container.showModal();">
+                  onclick="edit_book_modal_container.showModal();"
+                  hx-get="{% url 'shop:load-for-edit' book.id %}"
+                  hx-target="#edit_response_holder"
+                  hx-swap="innerHTML">
                   ویرایش
                 </button>
                 &nbsp;

@@ -11,6 +11,7 @@ urlpatterns = [
     path("dashboard/employee/", dashboards.employee_dashboard, name='employee'),
 
     # books views
+    path("books/<int:pk>/edit-with-modal/", books.load_edit_form_for_modal_container, name='load-for-edit'),
     path("books/<int:pk>/edit-process/", books.edit_book_process, name='edit-process'),
     path("books/get-book-for-edit/", books.get_book_for_edit, name='get-book'),
     path("books/edit-request/", books.edit_book_request_page, name='edit-request'),
