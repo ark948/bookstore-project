@@ -118,7 +118,8 @@ def process_edit_form_from_modal(request: HttpRequest, pk: int) -> HttpResponse:
         form = forms.QuickBookEditForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            response = HttpResponse("بروزرسای با موفقیت ثبت شد.")
+            response = render(request, "shop/books/messages/successful-edit-with-modal.html", {'message': "بروزرسانی انجام شد."})
+            response['HX-Trigger'] = "done"
             return response
         else:
             response = render(request, "shop/books/forms/edit-book-form.html", {'form': form})

@@ -2,7 +2,11 @@
     <form>
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-primary btn-xs">
+        <button 
+            class="btn btn-primary btn-xs"
+            hx-post="{% url 'shop:edit-modal-process' form.instance.id %}"
+            hx-target="#edit_response_holder"
+            hx-on:done="console.log('edit ok');">
             ثبت
         </button>
     </form>
