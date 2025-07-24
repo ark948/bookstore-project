@@ -2,6 +2,7 @@
 {% load humanize %}
 
 {% block content %}
+  {% include 'shop/books/modals/edit-book-modal-container.html' %}
     لیست کتاب ها
     <p>
         <a href="{% url 'shop:add-book' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">افزودن +</a>
@@ -114,7 +115,8 @@
               </td>
               <td>
                 <button 
-                  class="btn btn-primary btn-outline btn-xs">
+                  class="btn btn-primary btn-outline btn-xs"
+                  onclick="edit_book_modal_container.showModal();">
                   ویرایش
                 </button>
                 &nbsp;
