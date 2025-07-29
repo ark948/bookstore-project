@@ -1,69 +1,99 @@
 {% extends "_base.html" %}
 {% load widget_tweaks %}
+{% load static %}
 
 {% block content %}
-    کتاب جدید
 
-    <div id="new_book_form_holder">
-      {% if form %}
-      <form method="post" class="max-w-sm mx-auto">
-          <div class="grid md:grid-cols-2 md:gap-6">
-              <div class="relative z-0 w-full mb-5 group">
-                  {% render_field form.title class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
-                  {{ form.title|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
-              </div>
-          </div>
-          <div class="flex flex-col-reverse md:grid md:grid-cols-2 md:gap-1">
-            <div class="col-span-1">
-              نویسندگان انتخاب شده:
-              <ul id="selected-authors" class="mt-2 w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                <li class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">Profile</li>
+{% if form.errors %}
+    {% for error in form.errors %}
+        <p>
+            ERROR: {{ error }}
+        </p>
+    {% endfor %}
+{% endif %}
 
-              </ul>
-            </div>
-            <div class="col-span-1">
-              <button 
-              id="dropdownSearchButton" 
-              data-dropdown-toggle="dropdownSearch" 
-              data-dropdown-placement="bottom" 
-              class="m-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
-              type="button" 
-              hx-get="{% url 'shop:load-authors' %}" 
-              hx-target="#authors-list"
-              hx-on:click="console.log('HTMX call');"
-              hx-swap="innerHTML">
-              لیست نویسندگان
-              <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                </svg>
-                </button>
-                
-                <!-- Dropdown menu -->
-                <div id="dropdownSearch" class="z-10 hidden bg-white rounded-lg shadow-sm w-60 dark:bg-gray-700">
-                    <div class="p-3">
-                      <label for="input-group-search" class="sr-only">Search</label>
-                      <div class="relative">
-                        <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                          </svg>
-                        </div>
-                        <input type="text" id="input-group-search" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="جستجو">
-                      </div>
-                    </div>
-                    <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownSearchButton" id="authors-list">
-                      
-                    </ul>
-                    <button
-                    onclick="transferAuthors();"
-                       type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">انتخاب</button>
-                </div>
-            </div>
-          </div>
-          <script>
-          </script>
-
-    {% endif %}
-    </div>
+<div id="new_form_response_holder">
+    <form class="max-w-md mx-auto">
+        {% csrf_token %}
     
+    
+        <div class="flex flex-col">
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.title class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
+                {{ form.title|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.authors class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
+                {{ form.authors|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.publisher class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
+                {{ form.publisher|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.language %}
+                {{ form.language|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.original_language %}
+                {{ form.original_language|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.genres %}
+                {{ form.genres|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.page_count class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
+                {{ form.page_count|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+        </div>
+    
+        <!-- <div class="flex flex-row-reverse items-center gap-2 mb-4">
+            {{ form.title|add_class:"form-input block w-full rounded-md border-gray-300 shadow-sm" }}
+            <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                {{ form.title.label }}
+            </label>
+        </div> -->
+    
+        
+        <!-- {{ form.as_p }} -->
+    
+        <table style="display: none">
+            {{ view.formset.empty_form }}
+        </table>
+    
+        <table>
+            {{ view.formset }}
+        </table>
+    
+        <button type="button" class="text-white text-xs bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">لغو</button>
+    
+        <button type="submit" class="text-white text-xs bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            hx-post="{% url 'shop:add-book' %}"
+            hx-target="#new_form_response_holder"
+            hx-swap="innerHTML">ثبت</button>
+    </form>
+</div>
+
+
+    <script>
+        (function($) {
+            $('#add-form').click(function() {
+                var index = $('#id_inline_test_models-TOTAL_FORMS').val()
+                var newTable = $('#id_inline_test_models-__prefix__-DELETE').parents('table').clone()
+                newTable.find(':input').each(function() {
+                    for (attr of ['name', 'id'])
+                        $(this).attr(
+                            attr,
+                            $(this).attr(attr).replace('__prefix__', index)
+                        )
+                })
+                newTable.insertBefore($(this))
+                $('#id_inline_test_models-TOTAL_FORMS').val(
+                    parseInt($('#id_inline_test_models-TOTAL_FORMS').val()) + 1
+                )
+                newTable.slideDown()
+            })
+        })($)
+    </script>
 {% endblock content %}

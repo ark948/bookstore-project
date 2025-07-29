@@ -19,8 +19,7 @@ urlpatterns = [
     path("books/test-view/", books.secret_view, name='secret'),
     path("books/secret-view/", books.secret_view_v2, name='secret-2'),
     path("books/list/", books.books_list, name='books-list'),
-    path("book/new/", books.add_book, name='add-book'),
-    path("book/new-test/", books.add_book_test, name='add-book-test'),
+    path("books/new/", books.add_book, name='add-book'),
 
     # partial forms
     path("books/provide-new-form/", books.provide_new_book_form, name='prvd-new-book-form'),

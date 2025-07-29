@@ -40,18 +40,6 @@ def books_list(request: HttpRequest) -> HttpResponse:
     return render(request, "shop/books/books-list.html", context={ 'books': books_list_obj })
 
 
-@role_required("employee")
-def add_book(request: HttpRequest) -> HttpResponse:
-    form = forms.NewBookForm()
-    if request.method == "POST":
-        form = forms.NewBookForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "کتاب با موفقیت افوزده شد.")
-            return redirect(reverse("shop:books-list"))
-        return render(request, "shop/books/add-book.html", context={ 'form': form })
-    return render(request, "shop/books/add-book.html", context={ "form": form })
-
 
 @role_required("employee")
 def provide_new_book_form(request: HttpRequest) -> HttpResponse:
@@ -61,7 +49,7 @@ def provide_new_book_form(request: HttpRequest) -> HttpResponse:
 
 
 @role_required("employee")
-def add_book_test(request: HttpRequest) -> HttpResponse:
+def add_book(request: HttpRequest) -> HttpResponse:
     form = forms.NewBookForm()
     if request.method == "POST":
         form = forms.NewBookForm(request.POST)
@@ -71,8 +59,8 @@ def add_book_test(request: HttpRequest) -> HttpResponse:
             return render(request, "shop/books/messages/successful-new-book-response.html", {'message': 'کتاب با موفقیت افزوده شد.'})
         else:
             messages.error(request, "در فرم خطا مشکل وجود دارد.")
-            return render(request, "shop/books/add-book-test.html", context={ 'form': form })
-    return render(request, "shop/books/add-book-test.html", context={ "form": form })
+            return render(request, "shop/books/add-book.html", context={ 'form': form })
+    return render(request, "shop/books/add-book.html", context={ "form": form })
 
 
 @role_required("employee")
