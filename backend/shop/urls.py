@@ -22,6 +22,9 @@ urlpatterns = [
     path("book/new/", books.add_book, name='add-book'),
     path("book/new-test/", books.add_book_test, name='add-book-test'),
 
+    # partial forms
+    path("books/provide-new-form/", books.provide_new_book_form, name='prvd-new-book-form'),
+
     # Autocomplete fields (django-autocomplete-light)
     path("books/authors/load-authors/", books.load_authors_list, name='load-authors'),
     path("books/authors-autocomplete/", books.AuthorsAutoComplete.as_view(), name='authors-autocomplete'),
