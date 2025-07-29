@@ -4,8 +4,11 @@ charset-normalizer==3.4.2
 colorama==0.4.6
 Django==5.2.3
 django-appconf==1.1.0
+django-autocomplete-light==3.12.1
 django-compressor==4.5.1
 django-htmx==1.23.1
+django-redis==6.0.0
+django-select2==8.4.1
 django-widget-tweaks==1.5.0
 factory_boy==3.3.3
 Faker==37.4.0
@@ -18,6 +21,7 @@ Pygments==2.19.2
 pytest==8.4.1
 pytest-django==4.11.1
 rcssmin==1.1.2
+redis==6.2.0
 requests==2.32.4
 rjsmin==1.2.2
 sqlparse==0.5.3

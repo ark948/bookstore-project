@@ -1,67 +1,99 @@
 {% load widget_tweaks %}
 {% load static %}
 
-<form class="max-w-md mx-auto">
-    {% csrf_token %}
+{% if form.errors %}
+    {% for error in form.errors %}
+        <p>
+            ERROR: {{ error }}
+        </p>
+    {% endfor %}
+{% endif %}
 
-
-    <div class="flex flex-col">
-        <div class="relative z-0 w-full mb-5 group">
-            {% render_field form.title class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
-            {{ form.title|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
-        </div>
-        <div class="relative z-0 w-full mb-5 group">
-            {% render_field form.authors class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
-            {{ form.authors|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
-        </div>
-        <div class="relative z-0 w-full mb-5 group">
-            {% render_field form.publisher class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
-            {{ form.publisher|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
-        </div>
-        <div class="relative z-0 w-full mb-5 group">
-            {% render_field form.language %}
-            {{ form.language|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
-        </div>
-        <div class="relative z-0 w-full mb-5 group">
-            {% render_field form.original_language %}
-            {{ form.original_language|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
-        </div>
-        <div class="relative z-0 w-full mb-5 group">
-            {% render_field form.genres %}
-            {{ form.genres|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
-        </div>
-        <div class="relative z-0 w-full mb-5 group">
-            {% render_field form.page_count class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
-            {{ form.page_count|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
-        </div>
-    </div>
-
-    <!-- <div class="flex flex-row-reverse items-center gap-2 mb-4">
-        {{ form.title|add_class:"form-input block w-full rounded-md border-gray-300 shadow-sm" }}
-        <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700">
-            {{ form.title.label }}
-        </label>
-    </div> -->
-
+<div id="new_form_response_holder">
+    <form class="max-w-md mx-auto">
+        {% csrf_token %}
     
-    <!-- {{ form.as_p }} -->
+    
+        <div class="flex flex-col">
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.title class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
+                {{ form.title|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.authors class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
+                {{ form.authors|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.publisher class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
+                {{ form.publisher|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.language %}
+                {{ form.language|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.original_language %}
+                {{ form.original_language|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.genres %}
+                {{ form.genres|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {% render_field form.page_count class+="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " %}
+                {{ form.page_count|add_label_class:"peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" }}
+            </div>
+        </div>
+    
+        <!-- <div class="flex flex-row-reverse items-center gap-2 mb-4">
+            {{ form.title|add_class:"form-input block w-full rounded-md border-gray-300 shadow-sm" }}
+            <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                {{ form.title.label }}
+            </label>
+        </div> -->
+    
+        
+        <!-- {{ form.as_p }} -->
+    
+        <table style="display: none">
+            {{ view.formset.empty_form }}
+        </table>
+    
+        <table>
+            {{ view.formset }}
+        </table>
 
-    <table style="display: none">
-        {{ view.formset.empty_form }}
-    </table>
+        <button type="submit" class="btn btn-success w-48 btn-sm m-4"
+            hx-post="{% url 'shop:add-book' %}"
+            hx-target="#new_form_response_holder"
+            hx-swap="innerHTML">ثبت
+        </button>
+    
+        <a href="{% url 'shop:books-list' %}" class="btn btn-error w-48 btn-sm m-4">
+            لغو
+        </a>
+    
+    </form>
+</div>
 
-    <table>
-        {{ view.formset }}
-    </table>
 
-    <button type="submit" class="btn btn-success w-48 btn-sm m-4"
-    hx-post="{% url 'shop:add-book' %}"
-    hx-target="#new_form_response_holder"
-    hx-swap="innerHTML">ثبت
-    </button>
-
-    <a href="{% url 'shop:books-list' %}" class="btn btn-error w-48 btn-sm m-4">
-        لغو
-    </a>
-
-</form>
+    <script>
+        (function($) {
+            $('#add-form').click(function() {
+                var index = $('#id_inline_test_models-TOTAL_FORMS').val()
+                var newTable = $('#id_inline_test_models-__prefix__-DELETE').parents('table').clone()
+                newTable.find(':input').each(function() {
+                    for (attr of ['name', 'id'])
+                        $(this).attr(
+                            attr,
+                            $(this).attr(attr).replace('__prefix__', index)
+                        )
+                })
+                newTable.insertBefore($(this))
+                $('#id_inline_test_models-TOTAL_FORMS').val(
+                    parseInt($('#id_inline_test_models-TOTAL_FORMS').val()) + 1
+                )
+                newTable.slideDown()
+            })
+        })($)
+    </script>
