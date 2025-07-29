@@ -2,11 +2,20 @@
 {% load humanize %}
 
 {% block content %}
-  {% include 'shop/books/modals/edit-book-modal-container.html' %}
+  {% include "shop/books/modals/edit-book-modal-container.html" %}
+  {% include "shop/books/modals/new-book-modal-container.html" %}
     لیست کتاب ها
     <p>
         <a href="{% url 'shop:add-book' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline btn btn-info btn-xs">افزودن +</a>
     </p>
+
+    <button class="btn btn-info btn-xs"
+      onclick="new_book_quick_modal_container.showModal();"
+      hx-get="{% url 'shop:prvd-new-book-form' %}"
+      hx-target="#new_response_holder"
+      hx-swap="innerHTML">
+      افزودن سریغ+
+    </button>
 
     <div class="overflow-x-auto">
         <table class="table table-xs">
