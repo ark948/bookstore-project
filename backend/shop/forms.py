@@ -109,3 +109,25 @@ class FullBookEditForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = "__all__"
+
+
+class BookFormV2(forms.ModelForm):
+    title = forms.CharField(label="عنوان")
+    
+    class Meta:
+        model = Book
+        fields = (
+            'title',
+            'authors',
+        )
+
+        widgets = {
+            'authors': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:authors-autocomplete')),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['authors'].widget.attrs.update({
+            'data-dropdown-parent': "#modal-form-container"
+        })

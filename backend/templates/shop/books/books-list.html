@@ -1,5 +1,6 @@
 {% extends "_base.html" %}
 {% load humanize %}
+{% load static %}
 
 {% block content %}
   {% include "shop/books/modals/edit-book-modal-container.html" %}
@@ -10,10 +11,9 @@
     </p>
 
     <button class="btn btn-info btn-xs"
-      onclick="new_book_quick_modal_container.showModal();"
-      hx-get="{% url 'shop:prvd-new-book-form' %}"
-      hx-target="#new_response_holder"
-      hx-swap="innerHTML">
+        hx-on:click="new_book_quick_modal_container.showModal();"
+        hx-get="{% url 'shop:prvd-new-book-form' %}"
+        hx-target="#new_response_holder">
       افزودن سریغ+
     </button>
 

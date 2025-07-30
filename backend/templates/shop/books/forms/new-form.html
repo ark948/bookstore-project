@@ -1,0 +1,13 @@
+<div>
+    {% if form %}
+        <form>
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary btn-sm">
+                ثبت
+            </button>
+        </form>
+    {% endif %}
+</div>

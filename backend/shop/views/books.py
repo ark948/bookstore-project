@@ -40,11 +40,10 @@ def books_list(request: HttpRequest) -> HttpResponse:
     return render(request, "shop/books/books-list.html", context={ 'books': books_list_obj })
 
 
-
 @role_required("employee")
 def provide_new_book_form(request: HttpRequest) -> HttpResponse:
-    form = forms.NewBookForm()
-    return render(request, "shop/books/forms/new-book-form.html", {'form': form})
+    form = forms.BookFormV2()
+    return render(request, "shop/books/forms/new-form.html", {'form': form})
 
 
 @role_required("employee")

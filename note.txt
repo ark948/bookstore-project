@@ -278,6 +278,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     </button>
     <div id="result-div"></div>
 
+30. Need to remove, Flowbite, creates too cluttered elements
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
@@ -294,7 +296,33 @@ authentication with htmx and modals
 - redirect to requested page after successful login does not work.
 
 
-################################################### DATABASE stuff ###################################################
+
+################################################### Naming conventions ###################################################
+- tempalte files:
+    <action being done>-<object being affected>-<*type(s)>.html
+    - example:
+    edit-book-modal-container.html
+    new-book-form.html
+    books-list.html
+
+    - elements ids:
+    <action>-<object>-<type>
+
+- form classes:
+    <action which will be performed - Capitalized><Object being affected - Capitalized><Extra info>Form.py
+    - example:
+    NewBookForm(forms.ModelForm):
+    
+
+- view functions:
+    <action being performed>_<object being affected>_<extra info>():
+
+- url routes:
+    (AppName is fixed for all routes in current app)
+    "/<corresponding view file name>/<action being performed>/"
+
+
+################################################### DATABASE information ###################################################
 (some of them needs updating...)
 
 # checks:
