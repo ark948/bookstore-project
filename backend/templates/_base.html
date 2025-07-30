@@ -11,8 +11,8 @@
         {% endblock title %}
     </title>
     <link rel="stylesheet" href="{% static 'dist/output.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="{% static 'css/daisyui@5.css' %}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
 </head>
 <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
     <nav class="flex flex-row-reverse justify-between items-center p-4 bg-gray-800 text-white">
