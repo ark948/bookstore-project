@@ -278,7 +278,11 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     </button>
     <div id="result-div"></div>
 
-30. Need to remove, Flowbite, creates too cluttered elements
+30. Need to remove Flowbite, creates too cluttered elements
+    > npm uninstall flowbite (next to package.json)
+    - remove statements from input.css
+    - remove class attributes
+    - remove and rebuild output.css
 
 
 stuff to add:
