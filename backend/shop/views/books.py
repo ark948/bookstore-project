@@ -42,7 +42,7 @@ def books_list(request: HttpRequest) -> HttpResponse:
 
 @role_required("employee")
 def provide_new_book_form(request: HttpRequest) -> HttpResponse:
-    form = forms.BookFormV2()
+    form = forms.NewBookForm()
     return render(request, "shop/books/forms/new-form.html", {'form': form})
 
 
