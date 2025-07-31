@@ -1,11 +1,10 @@
-<div>
-    {% if form %}
-    <form method="post">
-        {% csrf_token %}
-        
-        {{ form.as_p }}
+{% load crispy_forms_tags %}
+{% load tailwind_filters %}
 
-        <button type="submit">Submit</button>
-    </form>
-    {% endif %}
-</div>
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-primary btn-outline btn-sm w-30 mt-4">
+        ثبت
+    </button>
+</form>
