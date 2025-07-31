@@ -1,13 +1,11 @@
 <div>
     {% if form %}
-        <form>
-            {% csrf_token %}
+    <form method="post">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
 
-            {{ form.as_p }}
-
-            <button type="submit" class="btn btn-primary btn-sm">
-                ثبت
-            </button>
-        </form>
+        <button type="submit">Submit</button>
+    </form>
     {% endif %}
 </div>

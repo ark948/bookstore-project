@@ -112,8 +112,6 @@ class FullBookEditForm(forms.ModelForm):
 
 
 class BookFormV2(forms.ModelForm):
-    title = forms.CharField(label="عنوان")
-    
     class Meta:
         model = Book
         fields = (
@@ -122,7 +120,9 @@ class BookFormV2(forms.ModelForm):
         )
 
         widgets = {
-            'authors': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:authors-autocomplete')),
+            'authors': autocomplete.ModelSelect2Multiple(
+                url=reverse_lazy('shop:authors-autocomplete')
+            ),
         }
 
     def __init__(self, *args, **kwargs):

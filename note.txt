@@ -284,6 +284,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     - remove class attributes
     - remove and rebuild output.css
 
+31. Alternatives to Django-autocomplete-light
+    tom select, django-select2, slim select, choices js
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
