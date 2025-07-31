@@ -46,11 +46,17 @@ INSTALLED_APPS = [
     'django_htmx',
     'widget_tweaks',
     # "django_select2",
+    "crispy_forms",
+    "crispy_tailwind",
 
     'accounts',
     'home',
     'shop',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+
+CRISPY_TEMPLATE_PACK = "tailwind"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -131,3 +131,17 @@ class BookFormV2(forms.ModelForm):
         self.fields['authors'].widget.attrs.update({
             'data-dropdown-parent': "#modal-form-container"
         })
+
+
+class BookCreationForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = (
+            'title',
+            'authors',
+            'publisher',
+            'language',
+            'original_language',
+            'genres',
+            'page_count'
+        )

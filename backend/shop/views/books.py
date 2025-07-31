@@ -128,6 +128,18 @@ def load_authors_list(request: HttpRequest) -> HttpResponse:
     return render(request, "shop/books/partials/authors-list.html", {'authors': authors_list_obj})
 
 
+@role_required("employee")
+def book_creation_view(request):
+    if request.method == "POST":
+        form = forms.BookCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "OK")
+            return redirect(reverse("shop:books-list"))
+    context = { 'form': forms.BookCreationForm() }
+    return render(request, "shop/books/create-book.html", context=context)
+
+
 class AuthorsAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Author.objects.all().order_by('fa_name', 'en_name')

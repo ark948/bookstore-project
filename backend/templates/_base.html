@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{% static 'dist/output.css' %}">
     <link href="{% static 'css/daisyui@5.css' %}" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
     <nav class="flex flex-row-reverse justify-between items-center p-4 bg-gray-800 text-white">
@@ -39,5 +41,7 @@
         {% endblock content %}
     </div>
     <script src="{% static 'js/htmx.min.js' %}" defer></script>
+    {% block script %}
+    {% endblock script %}
 </body>
 </html>
