@@ -1,4 +1,4 @@
-<table class="table table-xs">
+<table class="table table-sm">
   <thead class="text-xs uppercase">
     <tr class="text-gray-900 text-center">
       <th>#</th>
@@ -29,39 +29,74 @@
       <th>{{ book.pk }}</th>
       <td>{{ book.title }}</td>
       <td>
-        {% for i in book.authors.all %} {% if i.fa_name %} [{{ i.fa_name }}] {%
-        else %} [{{ i.en_name }}] {% endif %} {% endfor %}
+        {% for i in book.authors.all %} 
+          {% if i.fa_name %} 
+            [{{ i.fa_name }}] 
+          {% else %} [{{ i.en_name }}] 
+        {% endif %} {% endfor %}
       </td>
       <td>{{ book.publisher }}</td>
-      <td>{% for i in book.genres.all %} [{{ i.title }}] {% endfor %}</td>
+      <td>
+        {% for i in book.genres.all %} 
+          [{{ i.title }}] 
+        {% endfor %}
+      </td>
       <td>{{ book.language }}</td>
       <td>{{ book.original_language }}</td>
       <td>
-        {% if book.edition %} {{ book.edition }} {% else %} یافت نشد {% endif %}
+        {% if book.edition %} 
+          {{ book.edition }} 
+        {% else %} 
+          یافت نشد 
+        {% endif %}
       </td>
       <td>{{ book.page_count }}</td>
       <td>{{ book.pub_date }}</td>
       <td>{{ book.format }}</td>
       <td>
-        {% if book.ISBN %} {{ book.ISBN }} {% else %} یافت نشد {% endif %}
-      </td>
-      <td>
-        {% for i in book.translator.all %} {% if i %} {{ i.name }} {% else %} -
-        {% endif %} {% empty %} - {% endfor %}
-      </td>
-      <td>{% if book.rating %} {{ book.rating }} {% else %} - {% endif %}</td>
-      <td>
-        {% if book.available %}
-        <span>&#10003;</span>
-        {% else %}
-        <span>&#10007;</span>
+        {% if book.ISBN %} 
+          {{ book.ISBN }} 
+        {% else %} 
+          یافت نشد 
         {% endif %}
       </td>
       <td>
-        {% if book.available %} {{ book.price|floatformat:"0g" }} &nbsp تومان {%
-        else %} - {% endif %}
+        {% for i in book.translator.all %} 
+          {% if i %} 
+            {{ i.name }} 
+          {% else %} 
+            -
+          {% endif %}
+        {% empty %} 
+          -
+        {% endfor %}
       </td>
-      <td>{% if book.available %} {{ book.copies_available }} {% endif %}</td>
+      <td>
+        {% if book.rating %} 
+          {{ book.rating }} 
+        {% else %} 
+          -
+        {% endif %}
+      </td>
+      <td>
+        {% if book.available %}
+          <span>&#10003;</span>
+        {% else %}
+          <span>&#10007;</span>
+        {% endif %}
+      </td>
+      <td>
+        {% if book.available %} 
+          {{ book.price|floatformat:"0g" }} &nbsp تومان 
+        {% else %} 
+            - 
+        {% endif %}
+      </td>
+      <td>
+        {% if book.available %} 
+          {{ book.copies_available }} 
+        {% endif %}
+      </td>
       <td>
         <div class="flex items-center justify-center space-x-4">
           <button
