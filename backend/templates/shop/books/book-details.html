@@ -1,0 +1,13 @@
+{% extends "_base.html" %}
+
+{% if item %}
+    {{ item.title }}
+    {% for i in item.authors.all %}
+        {% if i.fa_name %}
+            {{ i.fa_name }},
+        {% else %}
+            {{ i.en_name }},
+        {% endif %}
+    {% endfor %}
+    {{ item.publisher }}
+{% endif %}

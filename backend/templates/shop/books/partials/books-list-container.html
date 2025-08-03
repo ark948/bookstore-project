@@ -27,7 +27,11 @@
     <tr class="text-center">
       <th>{{ forloop.counter }}</th>
       <th>{{ book.pk }}</th>
-      <td>{{ book.title }}</td>
+      <td>
+        <a href="{% url 'shop:book-details' book.id %}">
+          {{ book.title }}
+        </a>
+      </td>
       <td>
         {% for i in book.authors.all %} 
           {% if i.fa_name %} 
