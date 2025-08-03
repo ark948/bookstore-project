@@ -62,24 +62,23 @@
       </td>
       <td>{% if book.available %} {{ book.copies_available }} {% endif %}</td>
       <td>
-        <button
-          class="btn btn-primary btn-outline btn-xs"
-          hx-on:click="edit_book_modal_container.showModal();"
-          hx-get="{% url 'shop:load-for-edit' book.id %}"
-          hx-target="#edit_response_holder"
-          hx-swap="innerHTML"
-        >
-          ویرایش
-        </button>
-        &nbsp;
-        <form
-          hx-delete=""
-          hx-on:success="console.log('Refresh page.');"
-          hx-confirm="آیا مطمئنید؟"
-        >
-          {% csrf_token %}
-          <button class="btn btn-error btn-outline btn-xs">حذف</button>
-        </form>
+        <div class="flex items-center justify-center space-x-4">
+          <button
+            class="btn btn-primary btn-outline btn-xs"
+            hx-on:click="edit_book_modal_container.showModal();"
+            hx-get="{% url 'shop:load-for-edit' book.id %}"
+            hx-target="#edit_response_holder"
+            hx-swap="innerHTML">
+              ویرایش
+          </button>
+          <form
+            hx-delete=""
+            hx-on:success="console.log('Refresh page.');"
+            hx-confirm="آیا مطمئنید؟">
+              {% csrf_token %}
+            <button class="btn btn-error btn-outline btn-xs">حذف</button>
+          </form>
+        </div>
       </td>
     </tr>
     {% endfor %}
