@@ -52,6 +52,17 @@ def provide_books_list(request: HttpRequest) -> HttpResponse:
     response = render(request, "shop/books/partials/books-list-container.html", {'books': books})
     return response
 
+
+@role_required("employee")
+def delete_book(request: HttpRequest, pk: int) -> HttpResponse:
+    book: Book = Book.objects.get(pk=pk)
+    book.delete()
+    messages.info(request, "حذف انجام شد.")
+    response = HttpResponse()
+    response['HX-Redirect'] = reverse("shop:books-list")
+    return response
+
+
 @role_required("employee")
 def add_book(request: HttpRequest) -> HttpResponse:
     form = forms.NewBookForm()
