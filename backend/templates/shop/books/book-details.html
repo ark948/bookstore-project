@@ -1,13 +1,27 @@
 {% extends "_base.html" %}
 
-{% if item %}
-    {{ item.title }}
-    {% for i in item.authors.all %}
-        {% if i.fa_name %}
-            {{ i.fa_name }},
-        {% else %}
-            {{ i.en_name }},
-        {% endif %}
-    {% endfor %}
-    {{ item.publisher }}
-{% endif %}
+
+{% block content %}
+    <div class="flex flex-row-reverse grid grid-cols-2">
+        <div class="col-span-1">
+            {% if item.cover_image %}
+                {{ item.cover_image }}
+            {% else %}
+                [NO_COVER]
+            {% endif %}
+        </div>
+        <div class="col-span-1">
+            {% if item %}
+                {{ item.title }}
+                {% for i in item.authors.all %}
+                    {% if i.fa_name %}
+                        {{ i.fa_name }},
+                    {% else %}
+                        {{ i.en_name }},
+                    {% endif %}
+                {% endfor %}
+                {{ item.publisher }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
