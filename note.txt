@@ -286,6 +286,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 31. Alternatives to Django-autocomplete-light
     tom select, django-select2, slim select, choices js
+    select2 on modal does not work.
 
 
 stuff to add:

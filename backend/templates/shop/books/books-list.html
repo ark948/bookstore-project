@@ -10,7 +10,9 @@
         <a href="{% url 'shop:add-book' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline btn btn-info btn-xs">افزودن +</a>
     </p>
 
-    <button class="btn btn-info btn-xs"
+    <button 
+        id="myBtn"
+        class="btn btn-info btn-xs"
         hx-on:click="new_book_modal_container.showModal();"
         hx-get="{% url 'shop:prvd-new-book-form' %}"
         hx-target="#new_response_holder">
@@ -155,3 +157,14 @@
         </a>
       </p>
 {% endblock content %}
+
+{% block script %}
+      <script>
+        $('#myBtn').click(function() {
+          // Open your modal here (if done via JS)
+            console.log("modal triggered");
+          // Initialize select2 after modal visible
+          $("#id_authors").select2(); // This does not work
+        });
+      </script>
+{% endblock script %}
