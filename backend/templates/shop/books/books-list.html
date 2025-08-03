@@ -130,10 +130,15 @@
                   ویرایش
                 </button>
                 &nbsp;
-                <button
-                  class="btn btn-error btn-outline btn-xs">
-                  Delete
-                </button>
+                <form
+                  hx-delete=""
+                  hx-on:success="console.log('Refresh page.');"
+                  hx-confirm="آیا مطمئنید؟">
+                  {% csrf_token %}
+                  <button class="btn btn-warning btn-outline btn-xs">
+                    حذف
+                  </button>
+                </form>
               </td>
             </tr>
             {% endfor %}
