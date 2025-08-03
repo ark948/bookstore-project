@@ -47,6 +47,12 @@ def provide_new_book_form(request: HttpRequest) -> HttpResponse:
 
 
 @role_required("employee")
+def provide_books_list(request: HttpRequest) -> HttpResponse: 
+    books: QuerySet = Book.objects.all()
+    response = render(request, "shop/books/partials/books-list-container.html", {'books': books})
+    return response
+
+@role_required("employee")
 def add_book(request: HttpRequest) -> HttpResponse:
     form = forms.NewBookForm()
     if request.method == "POST":

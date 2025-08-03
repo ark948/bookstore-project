@@ -25,6 +25,7 @@ urlpatterns = [
 
     # partial forms
     path("books/provide-new-form/", books.provide_new_book_form, name='prvd-new-book-form'),
+    path("books/provide-books-list/", books.provide_books_list, name='prvd-books-list'),
 
     # Autocomplete fields (django-autocomplete-light)
     path("books/authors-autocomplete/", books.AuthorsAutoComplete.as_view(), name='authors-autocomplete'),
