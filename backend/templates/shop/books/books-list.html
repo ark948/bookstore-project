@@ -20,13 +20,19 @@
     </button>
 
     <div class="overflow-x-auto">
-      {% include "shop/books/partials/books-list-container.html" %}
+
+      <button class="btn btn-primary btn-xs"
+        hx-get="{% url 'shop:prvd-books-list' %}"
+        hx-target="#books_list_container"
+      >
+        بروزرسانی
+      </button>
+
       <div id="books_list_container">
+        {% include "shop/books/partials/books-list-container.html" %}
       </div>
         
     </div>
-
-
       <p>
         <a href="{% url 'shop:edit-request' %}">صفحه ویرایش</a>
       </p>
