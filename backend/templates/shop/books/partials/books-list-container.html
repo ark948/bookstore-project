@@ -1,6 +1,6 @@
 <table class="table table-xs">
-  <thead>
-    <tr>
+  <thead class="text-xs uppercase">
+    <tr class="text-gray-900 text-center">
       <th>#</th>
       <th>شناسه</th>
       <th>عنوان</th>
@@ -19,11 +19,12 @@
       <th>موجود</th>
       <th>قیمت</th>
       <th>تعداد موجودی</th>
+      <th>عملیات</th>
     </tr>
   </thead>
   <tbody>
     {% for book in books %}
-    <tr>
+    <tr class="text-center">
       <th>{{ forloop.counter }}</th>
       <th>{{ book.pk }}</th>
       <td>{{ book.title }}</td>
