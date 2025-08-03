@@ -108,9 +108,10 @@
               ویرایش
           </button>
           <form
+            id="delete_form"
             hx-delete="{% url 'shop:delete-book' book.id %}"
-            hx-on:success="console.log('Refresh page.');"
             hx-target="#books_list_container"
+            hx-on="htmx:responseError: if(event.detail.xhr.status === 404) { alert('آیتم پیدا نشد یا قبلا حذف شده.'); }"
             hx-confirm="آیا مطمئنید؟">
               {% csrf_token %}
             <button class="btn btn-error btn-outline btn-xs">حذف</button>

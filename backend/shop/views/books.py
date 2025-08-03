@@ -1,5 +1,5 @@
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse, Http404
+from django.http.response import HttpResponse, Http404, HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import permission_required, user_passes_test
@@ -55,8 +55,14 @@ def provide_books_list(request: HttpRequest) -> HttpResponse:
 
 @role_required("employee")
 def delete_book(request: HttpRequest, pk: int) -> HttpResponse:
-    book: Book = Book.objects.get(pk=pk)
-    book.delete()
+    try:
+        book: Book = Book.objects.get(pk=pk)
+        book.delete()
+    except Book.DoesNotExist:
+        if request.htmx:
+            return HttpResponseNotFound("آیتم پیدا نشد.")
+        else:
+            return HttpResponseNotFound("آیتم پیدا نشد.")
     messages.info(request, "حذف انجام شد.")
     response = HttpResponse()
     response['HX-Redirect'] = reverse("shop:books-list")

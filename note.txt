@@ -291,6 +291,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 32. Moving books list to separate container
 
+33. Delete book error handling logic may need to be checked again
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
