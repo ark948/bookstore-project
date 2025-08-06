@@ -9,6 +9,8 @@ from django.forms.models import model_to_dict
 from typing import List
 from django.db.models import QuerySet
 
+from http import HTTPStatus
+
 from dal import autocomplete
 
 from shop.models import (
@@ -89,7 +91,7 @@ def add_book(request: HttpRequest) -> HttpResponse:
             return render(request, "shop/books/messages/successful-new-book-response.html", {'message': 'کتاب با موفقیت افزوده شد.'})
         else:
             messages.error(request, "در فرم خطا مشکل وجود دارد.")
-            return render(request, "shop/books/add-book.html", context={ 'form': form })
+            return render(request, "shop/books/add-book.html", context={ 'form': form }, status=HTTPStatus.BAD_REQUEST)
     return render(request, "shop/books/add-book.html", context={ "form": form })
 
 

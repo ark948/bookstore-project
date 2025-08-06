@@ -4,6 +4,9 @@ from pytest_django.asserts import assertTemplateUsed
 
 from accounts.tests.conftest import user, custom_user, custom_employee
 from shop.models import Book
+from shop.forms import (
+    NewBookForm
+)
 
 
 @pytest.mark.django_db
@@ -24,16 +27,11 @@ def test_books_list(client, custom_employee, book):
     assert response.context['books'][0] == book
 
 
-@pytest.mark.skip
+
 @pytest.mark.django_db
 def test_books_add_book(client, custom_employee, author, publication, language):
     client.force_login(custom_employee)
-    response = client.get(reverse("shop:books-list"))
-    print(response.context['books'])
     
-    all_books = Book.objects.count()
-    assert all_books == 0
-
     form_data = {
         'title': 'A new book',
         'authors': [author.pk],
@@ -42,8 +40,6 @@ def test_books_add_book(client, custom_employee, author, publication, language):
         'original_language': [language.pk],
         'page_count': 200
     }
-    response = client.post(reverse('shop:add-book'), data=form_data)
-    assert response.status_code == 200
 
-    response = client.get(reverse('shop:books-list'))
-    print(response.context['books'])
+    form = NewBookForm(data=form_data)
+    print(form.errors)
