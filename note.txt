@@ -293,6 +293,23 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 33. Delete book error handling logic may need to be checked again
 
+34. Update on tests structure:
+    Unfortunately, i realizing now that i was not following a good practice of what to test in my models.
+    Here is what should be tested:
+    What to test in models?
+        Field defaults and validation
+        Make sure fields have expected defaults or validations work.
+
+        Model methods
+        Test any custom methods or properties on your model.
+
+        Model managers and querysets
+        If you have custom managers or queryset methods, test their behavior.
+
+        String representation
+        Test the __str__ method (or __repr__) if you rely on it for display.
+    along with custom managers or querysets
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
