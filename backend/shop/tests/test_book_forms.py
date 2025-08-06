@@ -5,15 +5,15 @@ from shop.forms import NewBookForm
 
 
 @pytest.mark.django_db
-def test_books_forms_new_book_form(client, custom_employee, author, publication, language):
+def test_books_forms_new_book_form(client, custom_employee, book_obj):
     client.force_login(custom_employee)
     
     form_data = {
         'title': 'A new book',
-        'authors': [author.pk],
-        'publisher': publication.pk,
-        'language': [language.pk],
-        'original_language': [language.pk],
+        'authors': [book_obj['author'].pk],
+        'publisher': book_obj['publication'].pk,
+        'language': [book_obj['language'].pk],
+        'original_language': [book_obj['language'].pk],
         'page_count': 200
     }
 
