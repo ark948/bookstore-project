@@ -42,5 +42,9 @@ def test_books_add_book(client, custom_employee, author, publication, language, 
         'genres': [genre.pk,],
     }
 
-    form = NewBookForm(data=form_data)
-    print(form.errors)
+    url = reverse('shop:add-book')
+    response = client.post(url, form_data)
+    assert response.status_code == 200
+
+    book = Book.objects.filter(title='A new book').first()
+    assert book is not None
