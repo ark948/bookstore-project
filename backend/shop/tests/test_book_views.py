@@ -29,16 +29,17 @@ def test_books_list(client, custom_employee, book):
 
 
 @pytest.mark.django_db
-def test_books_add_book(client, custom_employee, author, publication, language):
+def test_books_add_book(client, custom_employee, author, publication, language, genre):
     client.force_login(custom_employee)
     
     form_data = {
         'title': 'A new book',
         'authors': [author.pk],
         'publisher': publication.pk,
-        'language': [language.pk],
-        'original_language': [language.pk],
-        'page_count': 200
+        'language': language.pk,
+        'original_language': language.pk,
+        'page_count': 200,
+        'genres': [genre.pk,],
     }
 
     form = NewBookForm(data=form_data)

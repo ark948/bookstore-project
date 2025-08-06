@@ -1,7 +1,7 @@
 import pytest
 
 from shop.models import (
-    Country, Language, Author, Publication, Book
+    Country, Language, Author, Publication, Book, Genre
 )
 
 @pytest.fixture
@@ -33,6 +33,11 @@ def publication(country):
     pub = Publication.objects.create(title="Nice Publication", country=country)
     pub.save()
     return pub
+
+
+@pytest.fixture
+def genre():
+    return Genre.objects.create(title='Drama')
 
 
 @pytest.fixture
