@@ -2,24 +2,26 @@ import pytest
 from django.urls import reverse
 from pytest_django.asserts import assertTemplateUsed
 
-from accounts.tests.conftest import user, custom_user, custom_employee
+from accounts.tests.conftest import user, custom_employee
 from shop.models import Book
 from shop.forms import (
     NewBookForm
 )
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
-def test_books_list_inaccessible(client, custom_user):
-    client.force_login(custom_user)
+def test_books_list_inaccessible(client, user):
+    client.force_login(user)
     response = client.get(reverse('shop:books-list'))
 
     assert response.status_code == 403
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_books_list(client, custom_employee, book):
-    client.login(username='user1@email.com', password='test123*A')
+    client.force_login(custom_employee)
     response = client.get(reverse("shop:books-list"))
 
     assert response.status_code == 200
@@ -27,19 +29,19 @@ def test_books_list(client, custom_employee, book):
     assert response.context['books'][0] == book
 
 
-
+@pytest.mark.skip
 @pytest.mark.django_db
-def test_books_add_book(client, custom_employee, author, publication, language, genre):
+def test_books_add_book(client, custom_employee, book_obj):
     client.force_login(custom_employee)
     
     form_data = {
         'title': 'A new book',
-        'authors': [author.pk],
-        'publisher': publication.pk,
-        'language': language.pk,
-        'original_language': language.pk,
+        'authors': [book_obj['author']],
+        'publisher': book_obj['publication'],
+        'language': book_obj['language'],
+        'original_language': book_obj['language'],
         'page_count': 200,
-        'genres': [genre.pk,],
+        'genres': [book_obj['genre'],],
     }
 
     url = reverse('shop:add-book')

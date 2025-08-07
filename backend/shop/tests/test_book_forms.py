@@ -1,6 +1,6 @@
 import pytest
 
-from accounts.tests.conftest import user, custom_user, custom_employee
+from accounts.tests.conftest import custom_employee
 from shop.forms import NewBookForm
 
 
