@@ -1,12 +1,21 @@
 import pytest
+import logging
 
 from accounts.factories import CustomUserFactory, CustomEmployeeFactory
 from accounts.models import CustomUser
 
+
+@pytest.fixture(autouse=True)
+def disable_logging_for_forbidden_requests(caplog):
+    logger = logging.getLogger('django.request')
+    logger.setLevel(logging.CRITICAL)
+    yield
+    logger.setLevel(logging.WARNING)
+
+
 @pytest.fixture
 def user():
     return CustomUserFactory()
-
 
 
 @pytest.fixture

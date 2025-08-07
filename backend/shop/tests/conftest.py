@@ -1,8 +1,16 @@
 import pytest
+import logging
 
 from shop.models import (
     Country, Language, Author, Publication, Book, Genre
 )
+
+@pytest.fixture(autouse=True)
+def disable_logging_for_forbidden_requests(caplog):
+    logger = logging.getLogger('django.request')
+    logger.setLevel(logging.CRITICAL)
+    yield
+    logger.setLevel(logging.WARNING)
 
 
 @pytest.fixture
