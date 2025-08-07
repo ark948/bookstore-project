@@ -1,9 +1,10 @@
 import pytest
 import logging
+from pytest_lazy_fixtures import lf
 from django.urls import reverse
 from pytest_django.asserts import assertTemplateUsed
 
-from accounts.tests.conftest import user, custom_employee
+from accounts.tests.conftest import user, custom_employee, custom_admin, custom_manager
 from shop.models import Book
 from shop.forms import (
     NewBookForm
@@ -28,6 +29,18 @@ def test_books_list(client, custom_employee, book_obj):
     assertTemplateUsed(response, 'shop/books/books-list.html')
     assert response.context['books'][0] == book_obj['book']
 
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("user_fixtures, expected_status", [
+    (lf("user"), 403),
+    (lf("custom_manager"), 403),
+    (lf("custom_admin"), 403),
+    (lf("custom_employee"), 200),
+])
+def test_books_list_only_accessible_to_employee(client, user_fixtures, expected_status):
+    client.force_login(user_fixtures)
+    response = client.get(reverse('shop:books-list'))
+    assert response.status_code == expected_status
 
 
 @pytest.mark.django_db
