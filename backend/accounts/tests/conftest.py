@@ -1,7 +1,7 @@
 import pytest
 import logging
 
-from accounts.factories import CustomUserFactory, CustomEmployeeFactory
+from accounts.factories import CustomUserFactory, CustomEmployeeFactory, CustomManagerFactory
 from accounts.models import CustomUser
 
 
@@ -21,6 +21,11 @@ def user():
 @pytest.fixture
 def custom_employee():
     return CustomEmployeeFactory()
+
+
+@pytest.fixture
+def custom_manager():
+    return CustomManagerFactory()
 
 
 @pytest.fixture
