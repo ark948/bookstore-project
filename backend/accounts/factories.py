@@ -35,3 +35,14 @@ class CustomManagerFactory(factory.django.DjangoModelFactory):
     last_name = factory.Faker('last_name')
     role = "manager"
     email = factory.Sequence(lambda n: 'manager%d@email.com' % n)
+
+
+class CustomAdminFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = "accounts.CustomUser"
+        django_get_or_create = ('email',)
+
+    first_name = factory.Faker('first_name')
+    last_name = factory.Faker('last_name')
+    role = "admin"
+    email = factory.Sequence(lambda n: 'admin%d@email.com' % n)
