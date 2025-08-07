@@ -70,6 +70,7 @@ def delete_book(request: HttpRequest, pk: int) -> HttpResponse:
     response['HX-Redirect'] = reverse("shop:books-list")
     return response
 
+
 @role_required("employee")
 def book_details(request: HttpRequest, pk: int) -> HttpResponse:
     try:

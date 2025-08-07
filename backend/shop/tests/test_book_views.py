@@ -66,3 +66,11 @@ def test_books_add_book(client, custom_employee, book_obj):
     assert isinstance(book, Book)
     assert book.title == "A new book"
     assert list(book.authors.all()) == [book_obj['author']]
+
+
+@pytest.mark.django_db
+def test_book_details(client, custom_employee, book_obj):
+    client.force_login(custom_employee)
+
+    response = client.get(reverse("shop:book-details", kwargs={'pk': book_obj['book'].id}))
+    assert response.context['item'] == book_obj['book']
