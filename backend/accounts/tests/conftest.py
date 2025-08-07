@@ -1,6 +1,6 @@
 import pytest
 
-from accounts.factories import CustomUserFactory
+from accounts.factories import CustomUserFactory, CustomEmployeeFactory
 from accounts.models import CustomUser
 
 @pytest.fixture
@@ -8,46 +8,33 @@ def user():
     return CustomUserFactory()
 
 
-@pytest.fixture
-def custom_user():
-    user = CustomUser.objects.create(
-        email='user1@email.com'
-    )
-    user.set_password('test123*A')
-    user.save()
-    return user
-
 
 @pytest.fixture
 def custom_employee():
-    user = CustomUser.objects.create(
-        email='user1@email.com',
-        role='employee'
-    )
-    user.set_password('test123*A')
-    user.save()
-    return user
+    return CustomEmployeeFactory()
 
 
 @pytest.fixture
-def custom_manager():
-    user = CustomUser.objects.create(
-        email='user1@email.com',
+def users(user, employee):
+    
+    manager = CustomUser.objects.create(
+        email='user_mgm@email.com',
         role='manager'
     )
-    user.set_password('test123*A')
-    user.save()
-    return user
+    manager.set_password('test123*A')
+    manager.save()
 
-
-@pytest.fixture
-def custom_admin():
-    user = CustomUser.objects.create(
-        email='user1@email.com',
+    admin = CustomUser.objects.create(
+        email='user_adm@email.com',
         role='admin'
     )
-    user.set_password('test123*A')
-    user.is_active = True
-    user.is_staff = True
-    user.save()
-    return user
+    admin.set_password('test123*A')
+    admin.save()
+
+    return {
+        'user': user,
+        'employee': employee,
+        'manager': manager,
+        'admin': admin
+    }
+    

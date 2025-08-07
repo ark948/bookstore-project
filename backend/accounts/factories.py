@@ -12,7 +12,7 @@ class CustomUserFactory(factory.django.DjangoModelFactory):
 
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
-    email = factory.Sequence(lambda n: 'user%d@gmail.com' % n)
+    email = factory.Sequence(lambda n: 'user%d@email.com' % n)
 
 
 class CustomEmployeeFactory(factory.django.DjangoModelFactory):
@@ -23,4 +23,4 @@ class CustomEmployeeFactory(factory.django.DjangoModelFactory):
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
     role = "employee"
-    email = factory.Sequence(lambda n: 'employee%d@gmail.com' % n)
+    email = factory.Sequence(lambda n: 'employee%d@email.com' % n)

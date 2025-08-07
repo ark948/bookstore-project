@@ -309,6 +309,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
         String representation
         Test the __str__ method (or __repr__) if you rely on it for display.
     along with custom managers or querysets
+    IMPORTANT: By deleting unnecessary fixtures (in accounts app), i was able to increase the speed of 4 tests significantly
 
 
 stuff to add:
