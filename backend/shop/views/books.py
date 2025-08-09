@@ -98,6 +98,18 @@ def add_book(request: HttpRequest) -> HttpResponse:
 
 @role_required("employee")
 def request_book_for_editing(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        item_id = request.POST.get('input_field_name')
+        if item_id is None:
+            messages.error("خطا در دریافت شناسه.")
+            return redirect("shop:edit-request")
+        book_obj: Book = Book.objects.get(pk=item_id)
+        if book_obj:
+            form = forms.FullBookEditForm(instance=book_obj)
+            response = render(request, "shop/books/partials/edit-book-form-full.html", {'form': form})
+            return response
+        else:
+            return HttpResponse("متاسفانه کتاب یافت نشد یا وجود ندارد.")
     return render(request, 'shop/books/edit-book-page.html')
 
 
