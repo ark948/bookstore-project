@@ -16,7 +16,7 @@ from shop.forms import (
 def test_books_list_inaccessible(client, user, caplog):
     with caplog.at_level(logging.WARNING, logger='django.request'):
         client.force_login(user)
-        response = client.get(reverse('shop:books-list'))
+        response = client.get(reverse('shop:books:books-list'))
         assert response.status_code == 403
 
 @pytest.mark.skip
