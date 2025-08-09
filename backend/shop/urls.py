@@ -16,6 +16,8 @@ urlpatterns = [
     path("books/<int:pk>/edit-with-modal-process/", books.process_edit_form_from_modal, name='edit-modal-process'),
     path("books/<int:pk>/edit-with-modal/", books.load_edit_form_for_modal_container, name='load-for-edit'),
     path("books/<int:pk>/edit-process/", books.edit_book_process, name='edit-process'),
+    path("books/edit-request/", books.request_book_for_editing, name='edit-request'),
+    # path("books/request-book/", books.),
     path("books/test-view/", books.secret_view, name='secret'),
     path("books/secret-view/", books.secret_view_v2, name='secret-2'),
     path("books/list/", books.books_list, name='books-list'),

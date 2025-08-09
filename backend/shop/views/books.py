@@ -97,7 +97,7 @@ def add_book(request: HttpRequest) -> HttpResponse:
 
 
 @role_required("employee")
-def edit_book_request_page(request: HttpRequest) -> HttpResponse:
+def request_book_for_editing(request: HttpRequest) -> HttpResponse:
     return render(request, 'shop/books/edit-book-page.html')
 
 
@@ -111,7 +111,6 @@ def get_book_for_edit(request: HttpRequest) -> HttpResponse:
         form = forms.QuickBookEditForm(instance=item)
         response = render(request, "shop/books/partials/edit-book-form.html", {'form': form})
         return response
-    return render(request, "shop/books/")
 
 
 @role_required("employee")

@@ -6,7 +6,7 @@
         شناسه کتاب را وارد کنید.
     </p>
 
-    <form id="edit_form" hx-post="{% url 'shop:get-book' %}" hx-target="#response_holder" hx-swap="innerHTML">
+    <form id="edit_form" hx-post="#" hx-target="#response_holder" hx-swap="innerHTML">
         {% csrf_token %}
         شناسه:
         <input class="input mt-4" name="input_field_name" id="input_field_id">
