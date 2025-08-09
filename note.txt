@@ -313,6 +313,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     - we can use caplog to supress Forbidden WARNINGs
     caplog is a built-in pytest fixture
 
+35. Re-strucuting:
+    Moving views and urls of specific parts into their own module
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
