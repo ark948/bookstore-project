@@ -20,11 +20,6 @@ urlpatterns = [
     path("provide-new-form/", views.provide_new_book_form, name='prvd-new-book-form'),
     path("provide-books-list/", views.provide_books_list, name='prvd-books-list'),
 
-    # # dashboard views
-    # path("dashboard/admin/", dashboards.admin_dashboard, name='admin'),
-    # path("dashboard/manager/", dashboards.manager_dashboard, name='manager'),
-    # path("dashboard/employee/", dashboards.employee_dashboard, name='employee'),
-
     # Autocomplete routes (django-autocomplete-light)
     path("authors-autocomplete/", views.AuthorsAutoComplete.as_view(), name='authors-autocomplete'),
     path("publishers-autocomplete/", views.PublishersAutoComplete.as_view(), name='publishers-autocomplete'),
