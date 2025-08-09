@@ -2,8 +2,6 @@ from django.urls import path
 
 from . import views
 
-app_name = "books"
-
 urlpatterns = [
     # CRUD Actions
     path("details/<int:pk>/", views.book_details, name='book-details'),

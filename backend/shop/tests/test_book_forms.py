@@ -3,7 +3,7 @@ import pytest
 from accounts.tests.conftest import custom_employee
 from shop.forms import NewBookForm
 
-@pytest.mark.skip
+
 @pytest.mark.django_db
 def test_books_forms_new_book_form(client, custom_employee, book_obj):
     client.force_login(custom_employee)
