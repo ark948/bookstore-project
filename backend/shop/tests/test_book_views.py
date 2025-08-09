@@ -6,7 +6,7 @@ from pytest_django.asserts import assertTemplateUsed
 
 from accounts.tests.conftest import user, custom_employee, custom_admin, custom_manager
 from shop.models import Book
-from shop.forms import (
+from shop.books.forms import (
     NewBookForm
 )
 

@@ -10,7 +10,7 @@ from dal import autocomplete
 
 # Create your forms here
 
-from .models import Book, Author, Publication, Language, Genre
+from shop.models import Book, Author, Publication, Language, Genre
 
 class NewBookForm(forms.ModelForm):
     title = forms.CharField(label="عنوان", max_length=256, required=True)

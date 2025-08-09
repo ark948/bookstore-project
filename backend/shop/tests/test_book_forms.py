@@ -1,7 +1,9 @@
 import pytest
 
 from accounts.tests.conftest import custom_employee
-from shop.forms import NewBookForm
+from shop.books.forms import (
+    NewBookForm
+)
 
 
 @pytest.mark.django_db
