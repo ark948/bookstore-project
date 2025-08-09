@@ -1,12 +1,11 @@
 from django.urls import path, include
 
-from views import dashboards
+from .views import dashboards
 
 app_name = "shop"
 
 urlpatterns = [
     path("books/", include("shop.books.urls")),
-
 
     # dashboard views
     path("dashboard/admin/", dashboards.admin_dashboard, name='admin'),

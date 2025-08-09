@@ -1,6 +1,8 @@
 from django.urls import path
 
-from shop.books import views
+from . import views
+
+app_name = "books"
 
 urlpatterns = [
     # CRUD Actions
