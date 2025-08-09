@@ -2,6 +2,9 @@ from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+
 
 from dal import autocomplete
 
@@ -109,6 +112,14 @@ class FullBookEditForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = "full_edit_form"
+        self.helper.form_class = "edit_form"
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit('submit', 'Send'))
 
 
 class BookFormV2(forms.ModelForm):
