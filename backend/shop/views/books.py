@@ -111,6 +111,7 @@ def get_book_for_edit(request: HttpRequest) -> HttpResponse:
         form = forms.QuickBookEditForm(instance=item)
         response = render(request, "shop/books/partials/edit-book-form.html", {'form': form})
         return response
+    return render(request, "shop/books/")
 
 
 @role_required("employee")
