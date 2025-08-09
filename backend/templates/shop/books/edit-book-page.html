@@ -29,3 +29,11 @@
     </div>
 
 {% endblock content %}
+
+{% block script %}
+    <script>
+        $("#id_authors").select2();
+        $("#id_genres").select2();
+        $("#div_id_authors").select2();
+    </script>
+{% endblock script %}

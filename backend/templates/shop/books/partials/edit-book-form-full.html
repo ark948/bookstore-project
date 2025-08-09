@@ -1,8 +1,8 @@
 {% load crispy_forms_tags %}
+{% crispy form form.helper %}
 
 <div>
     {% if form %}
-        <form>
             {% csrf_token %}
 
             {% crispy form %}
@@ -13,6 +13,5 @@
             <button class="btn btn-error btn-xs">
                 لغو
             </button>
-        </form>
     {% endif %}
 </div>
