@@ -1,9 +1,10 @@
+{% load crispy_forms_tags %}
 <div>
     {% if form %}
         <form>
             {% csrf_token %}
 
-            {{ form.as_div }}
+            {{ form|crispy }}
 
             <button class="btn btn-primary btn-xs">
                 ثبت
