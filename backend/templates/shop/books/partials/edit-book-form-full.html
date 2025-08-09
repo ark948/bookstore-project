@@ -1,0 +1,16 @@
+<div>
+    {% if form %}
+        <form>
+            {% csrf_token %}
+
+            {{ form.as_div }}
+
+            <button class="btn btn-primary btn-xs">
+                ثبت
+            </button>
+            <button class="btn btn-error btn-xs">
+                لغو
+            </button>
+        </form>
+    {% endif %}
+</div>
