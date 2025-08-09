@@ -20,7 +20,7 @@ from shop.models import (
     Genre,
     Language,
 )
-from shop import forms
+from shop.books import forms
 from accounts.decorators import role_required
 
 
