@@ -5,6 +5,7 @@ from .views import dashboards
 app_name = "shop"
 
 urlpatterns = [
+    path("customers/", include("shop.customers.urls")),
     path("books/", include("shop.books.urls")),
 
     # dashboard views
