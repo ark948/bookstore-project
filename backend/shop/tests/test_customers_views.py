@@ -19,3 +19,5 @@ def test_customers_browse_page(client):
 
     assert response.status_code == 200
     assertTemplateUsed(response, "shop/customers/browse.html")
+    assert "items" in response.context
+    assert list(response.context['items']) == []
