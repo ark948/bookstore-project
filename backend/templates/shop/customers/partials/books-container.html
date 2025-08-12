@@ -1,0 +1,10 @@
+<div>
+
+    {% if item %}
+    {% for item in items %}
+        <div>
+            {% include "shop/customers/partials/book-item.html" %}
+        </div>
+    {% endfor %}
+    {% endif %}
+</div>
