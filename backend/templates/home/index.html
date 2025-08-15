@@ -31,6 +31,14 @@
             </p>
         {% endif %}
 
+        {% if user.role == "user" %}
+            <p>
+                <a href="{% url 'shop:customers_browse' %}">
+                    لیست محصولات
+                </a>
+            </p>
+        {% endif %}
+
     {% else %}
 
         <p>
