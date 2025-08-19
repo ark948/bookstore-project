@@ -317,6 +317,16 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     Moving views and urls of specific parts into their own module
 
 
+36. Adding a simple Cart system
+    - using sessions and cookies
+    (sessions are kept in server side)
+    (cookies are kept in client and they contain the session id)
+    - session data can be stored in database, filesystem, anc cache system
+    (cache system is a more suitable choice)
+    django supports memcached backend out of the box
+    
+
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar
