@@ -16,6 +16,7 @@ def browse(request: HttpRequest) -> HttpResponse:
     books = Book.objects.all()
     return render(request, "shop/customers/browse.html", {"items": books})
 
+
 @require_POST
 def cart_add(request: HttpRequest, product_id):
     cart = Cart(request)
@@ -25,3 +26,16 @@ def cart_add(request: HttpRequest, product_id):
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], override_quantity=cd['override'])
     return redirect(reverse("shop:cart-details"))
+
+
+@require_POST
+def cart_remove(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Book, id=product_id)
+    cart.remove(product)
+    return redirect(reverse("shop:cart-details"))
+
+
+def cart_detail(request):
+    cart = Cart(request)
+    return render(request, "shop/customers/cart.html", {'cart': cart})
