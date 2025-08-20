@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
 
 from shop.models import Book
@@ -27,6 +27,8 @@ def item_detail(request, id):
 
 @require_POST
 def cart_add(request: HttpRequest, product_id):
+    if request.htmx:
+        return HttpResponse("OK")
     cart = Cart(request)
     product = get_object_or_404(Book, id=product_id)
     form = ItemAddForm(request.POST)
