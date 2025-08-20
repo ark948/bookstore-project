@@ -25,7 +25,7 @@
             {% endif %}
 
             {% if item_form %}
-                <form action="{% url 'shop:cart_add' %}" method="post">
+                <form action="{% url 'shop:cart_add' item.id %}" method="post">
                     {{ item_form }}
                     {% csrf_token %}
                     <input type="submit" class="btn btn-primary btn-xs" value="افزودن">
