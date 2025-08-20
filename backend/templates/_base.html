@@ -17,21 +17,21 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
-    <nav class="flex justify-between items-center px-4 py-2 bg-base-100">
+    <nav class="flex justify-between items-center px-4 py-2 bg-gray-800 text-white">
         <!-- Left side -->
         <ul class="flex items-center">
           <li>
-            <a href="{% url 'home:index' %}" class="btn btn-ghost">Home</a>
+            <a href="{% url 'home:index' %}" class="btn btn-ghost text-white hover:text-black-400">خانه</a>
           </li>
         </ul>
       
         <!-- Right side -->
         <ul class="flex items-center space-x-2">
           <li>
-            <a href="{% url 'home:about' %}" class="btn btn-ghost">About</a>
+            <a href="{% url 'home:about' %}" class="btn btn-ghost text-white hover:text-black-400">درباره ما</a>
           </li>
           <li>
-            <a href="{% url 'home:contact' %}" class="btn btn-ghost">Contact Us</a>
+            <a href="{% url 'home:contact' %}" class="btn btn-ghost text-white hover:text-black-400">ارتباط با ما</a>
           </li>
         </ul>
       </nav>
