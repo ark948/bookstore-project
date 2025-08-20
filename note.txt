@@ -324,7 +324,19 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     - session data can be stored in database, filesystem, anc cache system
     (cache system is a more suitable choice)
     django supports memcached backend out of the box
-    
+
+37. Item purchase flow
+    User enters website
+    (User is encouraged to register and login)
+    User enters browse page to view book items
+    User selects a book and is navigated to detail page of that book item
+    (here ItemAddForm and item itself must be rendered in template to allow user to select quantity)
+    User will confirm the quantity (default is 1) and adds item to cart
+    User will enter cart detail page to view total sum of cart items
+    If user is satisfied with their cart, user will be directed to information form
+    If user is logged in, they must simply confirm their shipping info, select payment option
+    otherwise they must provide address and other required info
+    then be asked to select payment option
 
 
 stuff to add:
