@@ -22,6 +22,13 @@
         <ul class="flex space-x-4 space-x-reverse">
           <li class="rtl:pr-4"><a href="{% url 'shop:books-list' %}">لیست</a></li>
           <li class="rtl:pr-4"><a href="{% url 'home:index' %}">حساب</a></li>
+          {% if user.is_authenticated and user.role == "user" %}
+            <li>
+                <a href="{% url 'shop:cart_detail' %}">
+                    سبد خرید
+                </a>
+            </li>
+          {% endif %}
         </ul>
     </nav>
     <div class="m-12">
