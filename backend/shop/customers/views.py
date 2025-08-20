@@ -17,6 +17,14 @@ def browse(request: HttpRequest) -> HttpResponse:
     return render(request, "shop/customers/browse.html", {"items": books})
 
 
+def item_detail(request, id):
+    item = get_object_or_404(Book, id=id)
+    item_form = ItemAddForm()
+    return render(request,
+                  "shop/customers/partials/book-item.html",
+                  {'item': item, 'item_form': item_form})
+
+
 @require_POST
 def cart_add(request: HttpRequest, product_id):
     cart = Cart(request)
