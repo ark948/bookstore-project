@@ -1,0 +1,59 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}
+    سبد خرید
+{% endblock title %}
+
+{% block content %}
+    <h1>
+        سبد خرید
+    </h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>عنوان</th>
+                <th>قیمت</th>
+                <th>تعداد</th>
+                <th>قیمت کل</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+                {% with product=item.product %}
+                    <tr>
+                        <td>
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{% if product.cover_image %} {{ item.cover_image.url }} {% endif %}">
+                            </a>
+                        </td>
+                        <td>{{ product.title }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>
+                            <form action="{% url 'shop:cart-remove' product.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" class="btn btn-error btn-xs" value="حذف">
+                            </form>
+                        </td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.total_price }}</td>
+                    </tr>
+                {% endwith %}
+            {% endfor %}
+            <tr>
+                <td>مجموع</td>
+                <td colspan="4"></td>
+                <td>{{ cart.get_total_price }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        <a href="{% url 'shop:customers_browse' %}" class="btn btn-sm">
+            ادامه خرید
+        </a>
+        <a href="#" class="btn btn-secondary btn-xs">
+            اتمام خرید
+        </a>
+    </p>
+{% endblock content %}
