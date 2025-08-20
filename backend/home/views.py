@@ -11,6 +11,11 @@ from accounts.models import CustomUser
 def index(request):
     return render(request, 'home/index.html')
 
+def about(request):
+    return render(request, "home/about.html")
+
+def contact_us(request):
+    return render(request, "home/contact_us.html")
 
 def has_custom_permission(user):
     # Replace with your custom logic
