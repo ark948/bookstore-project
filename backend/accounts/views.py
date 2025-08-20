@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.forms import AuthenticationForm
 from django.http.request import HttpRequest
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseForbidden
@@ -68,3 +69,7 @@ def protected_view(request: HttpRequest):
     if request.user.is_authenticated == False:
         return HttpResponseForbidden()
     return render(request, 'accounts/private.html')
+
+
+def profile(request: HttpRequest) -> HttpResponse:
+    return render(request, "accounts/profile.html")
