@@ -15,7 +15,7 @@ def about(request):
     return render(request, "home/about.html")
 
 def contact_us(request):
-    return render(request, "home/contact_us.html")
+    return render(request, "home/contact.html")
 
 def has_custom_permission(user):
     # Replace with your custom logic
