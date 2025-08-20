@@ -326,10 +326,10 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     django supports memcached backend out of the box
 
 37. Item purchase flow
-    User enters website
+    User enters website (customers landing page)
     (User is encouraged to register and login)
-    User enters browse page to view book items
-    User selects a book and is navigated to detail page of that book item
+    User enters browse page to view book items (customers browse page)
+    User selects a book and is navigated to detail page of that book item (book detail page)
     (here ItemAddForm and item itself must be rendered in template to allow user to select quantity)
     User will confirm the quantity (default is 1) and adds item to cart
     User will enter cart detail page to view total sum of cart items
@@ -337,6 +337,11 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     If user is logged in, they must simply confirm their shipping info, select payment option
     otherwise they must provide address and other required info
     then be asked to select payment option
+
+
+38. Structural update:
+    endpoint names should use underscore and url routes should use minus
+    (starting from customers app)
 
 
 stuff to add:

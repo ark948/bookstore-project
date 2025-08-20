@@ -33,7 +33,7 @@ def cart_add(request: HttpRequest, product_id):
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], override_quantity=cd['override'])
-    return redirect(reverse("shop:cart-details"))
+    return redirect(reverse("shop:cart_details"))
 
 
 @require_POST
@@ -41,7 +41,7 @@ def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Book, id=product_id)
     cart.remove(product)
-    return redirect(reverse("shop:cart-details"))
+    return redirect(reverse("shop:cart_details"))
 
 
 def cart_detail(request):
