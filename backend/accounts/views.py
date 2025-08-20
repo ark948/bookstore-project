@@ -71,5 +71,6 @@ def protected_view(request: HttpRequest):
     return render(request, 'accounts/private.html')
 
 
+@login_required
 def profile(request: HttpRequest) -> HttpResponse:
     return render(request, "accounts/profile.html")

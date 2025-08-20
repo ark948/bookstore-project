@@ -1,0 +1,20 @@
+{% extends "_base.html" %}
+
+{% block title %}
+    حساب کاربری
+{% endblock title %}
+
+{% block content %}
+    <h1>
+        حساب کاربری
+    </h1>
+
+    <div>
+        <p>
+            آدرس ایمیل شما: {{ user.email }}
+        </p>
+        <p>
+            نوع حساب شما: {{ user.role }}
+        </p>
+    </div>
+{% endblock content %}
