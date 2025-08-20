@@ -48,6 +48,11 @@
               <p class="font-bold text-indigo-600">
                 {{ item.price }}
               </p>
+              <p>
+                <a href="{% url 'shop:item-detail' %}">
+                  جزئیات
+                </a>
+              </p>
             </div>
           </article>
         {% endfor %}

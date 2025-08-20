@@ -1,0 +1,36 @@
+{% extends "_base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <div class="flex flex-row-reverse grid grid-cols-2">
+        <div class="col-span-1">
+            {% if item.cover_image %}
+                <img src="{{ item.cover_image.url }}" alt="Cover image for {{ item.title }}">
+            {% else %}
+                [NO_COVER]
+            {% endif %}
+        </div>
+        <div class="col-span-1">
+            {% if item %}
+                {{ item.title }}
+                {% for i in item.authors.all %}
+                    {% if i.fa_name %}
+                        {{ i.fa_name }},
+                    {% else %}
+                        {{ i.en_name }},
+                    {% endif %}
+                {% endfor %}
+                {{ item.publisher }}
+            {% endif %}
+
+            {% if item_form %}
+                <form action="{% url 'shop:cart-add' %}" method="post">
+                    {{ item_form }}
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-primary btn-xs" value="افزودن">
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
