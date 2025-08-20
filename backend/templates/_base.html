@@ -17,24 +17,24 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
-    <nav class="flex justify-between items-center px-4 py-2 bg-gray-800 text-white">
-        <!-- Left side -->
-        <ul class="flex items-center">
-          <li>
-            <a href="{% url 'home:index' %}" class="btn btn-ghost text-white hover:text-black-400">خانه</a>
-          </li>
-        </ul>
-      
-        <!-- Right side -->
-        <ul class="flex items-center space-x-2">
-          <li>
-            <a href="{% url 'home:about' %}" class="btn btn-ghost text-white hover:text-black-400">درباره ما</a>
-          </li>
-          <li>
-            <a href="{% url 'home:contact' %}" class="btn btn-ghost text-white hover:text-black-400">ارتباط با ما</a>
-          </li>
-        </ul>
-      </nav>
+  <nav class="flex flex-row-reverse justify-between items-center px-4 py-2 bg-gray-800 text-white">
+    <!-- Left side (visually left in RTL) -->
+    <ul class="flex items-center">
+      <li>
+        <a href="#" class="btn btn-ghost text-white hover:text-black-400">سبد</a>
+      </li>
+    </ul>
+  
+    <!-- Right side -->
+    <ul class="flex items-center space-x-reverse space-x-2">
+      <li>
+        <a href="#" class="btn btn-ghost text-white hover:text-black-400">خانه</a>
+      </li>
+      <li>
+        <a href="#" class="btn btn-ghost text-white hover:text-black-400">فروشگاه</a>
+      </li>
+    </ul>
+  </nav>
     <div class="m-12">
         <div id="navbar">
             {% if user.is_authenticated %}
