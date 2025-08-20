@@ -17,23 +17,21 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
-  <nav class="flex flex-row-reverse justify-between items-center px-4 py-2 bg-gray-800 text-white">
-    <!-- Left side (visually left in RTL) -->
-    <ul class="flex items-center">
-      <li>
-        <a href="#" class="btn btn-ghost text-white hover:text-black-400">سبد</a>
-      </li>
-    </ul>
-  
-    <!-- Right side -->
-    <ul class="flex items-center space-x-reverse space-x-2">
-      <li>
-        <a href="#" class="btn btn-ghost text-white hover:text-black-400">خانه</a>
-      </li>
-      <li>
-        <a href="#" class="btn btn-ghost text-white hover:text-black-400">فروشگاه</a>
-      </li>
-    </ul>
+  <nav class="flex flex-row justify-between items-center px-4 py-2 bg-gray-800 text-white">
+      <div>
+        <!-- right -->
+        <ul class="flex space-x-4">
+          <li><a href="{% url 'home:index' %}" class="btn btn-ghost text-white hover:text-black-400">خانه</a></li>
+          <li><a href="{% url 'shop:customers_browse' %}" class="btn btn-ghost text-white hover:text-black-400">فروشگاه</a></li>
+        </ul>
+      </div>
+      <div>
+        <!-- left -->
+        <ul class="flex space-x-4">
+          <li><a href="{% url 'shop:cart_detail' %}" class="btn btn-ghost text-white hover:text-black-400">سبد</a></li>
+          <li><a href="#" class="btn btn-ghost text-white hover:text-black-400">حساب کاربری</a></li>
+        </ul>
+      </div>
   </nav>
     <div class="m-12">
         <div id="navbar">
