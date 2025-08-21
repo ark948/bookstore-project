@@ -9,10 +9,11 @@
     <h1>
         سبد خرید
     </h1>
-    <table>
+    <table class="table table-sm">
         <thead>
             <tr>
                 <th>#</th>
+                <th>تصویر</th>
                 <th>عنوان</th>
                 <th>قیمت</th>
                 <th>تعداد</th>
@@ -24,20 +25,23 @@
                 {% with product=item.product %}
                     <tr>
                         <td>
+                            {{ forloop.counter }}
+                        </td>
+                        <td>
                             <a href="{{ product.get_absolute_url }}">
-                                <img src="{% if product.cover_image %} {{ item.cover_image.url }} {% endif %}">
+                                <img class="h-30 w-24" src="{% if product.cover_image %} {{ product.cover_image.url }} {% endif %}">
                             </a>
                         </td>
                         <td>{{ product.title }}</td>
-                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.total_price }}</td>
                         <td>
                             <form action="{% url 'shop:cart_remove' product.id %}" method="post">
                                 {% csrf_token %}
                                 <input type="submit" class="btn btn-error btn-xs" value="حذف">
                             </form>
                         </td>
-                        <td>{{ product.price }}</td>
-                        <td>{{ product.total_price }}</td>
                     </tr>
                 {% endwith %}
             {% endfor %}
