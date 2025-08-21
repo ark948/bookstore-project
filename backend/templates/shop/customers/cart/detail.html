@@ -1,4 +1,5 @@
 {% extends "_base.html" %}
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block title %}
@@ -18,6 +19,7 @@
                 <th>قیمت</th>
                 <th>تعداد</th>
                 <th>قیمت کل</th>
+                <th>عملیات</th>
             </tr>
         </thead>
         <tbody>
@@ -29,12 +31,22 @@
                         </td>
                         <td>
                             <a href="{{ product.get_absolute_url }}">
-                                <img class="h-30 w-24" src="{% if product.cover_image %} {{ product.cover_image.url }} {% endif %}">
+                                <img class="h-12 w-8" src="{% if product.cover_image %} {{ product.cover_image.url }} {% endif %}">
                             </a>
                         </td>
                         <td>{{ product.title }}</td>
                         <td>{{ product.price }}</td>
-                        <td>{{ item.quantity }}</td>
+                        <td>
+                            {{ item.quantity }}
+                            <form>
+                                {% csrf_token %}
+                                {{ quantity_form|crispy }}
+                                <input type="hidden" value="{{ product.id }}">
+                                <button type="submit" class="btn btn-primary btn-outline btn-xs">
+                                    بروزرسانی
+                                </button>
+                            </form>
+                        </td>
                         <td>{{ item.total_price }}</td>
                         <td>
                             <form action="{% url 'shop:cart_remove' product.id %}" method="post">
