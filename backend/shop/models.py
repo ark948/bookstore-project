@@ -280,7 +280,7 @@ class Book(TimeStampModel):
         verbose_name_plural = "Books"
 
     def __str__(self) -> str:
-        return self.title
+        return f"{self.title}_{self.pk}"
     
 
 class Award(TimeStampModel):

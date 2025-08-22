@@ -38,10 +38,10 @@
                         <td>{{ product.price }}</td>
                         <td>
                             {{ item.quantity }}
-                            <form method="post" action="{% url 'shop:cart_update' %}">
+                            <form method="post" action="{% url 'shop:cart_update' product.id %}">
                                 {% csrf_token %}
                                 {{ quantity_form|crispy }}
-                                <input type="hidden" value="{{ product.id }}">
+                                <input type="hidden" value="{{ product.id }}" name="product" id="id_product">
                                 <button type="submit" class="btn btn-primary btn-outline btn-xs">
                                     بروزرسانی تعداد
                                 </button>

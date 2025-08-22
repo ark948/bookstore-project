@@ -3,6 +3,11 @@ from django.urls import reverse
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
 
+from icecream import ic
+ic.configureOutput(
+    includeContext=False
+)
+
 from shop.models import Book
 from .cart import Cart
 from .forms import ItemAddForm
@@ -55,5 +60,7 @@ def cart_detail(request):
 @require_POST
 def cart_update(request: HttpRequest, product_id):
     cart = Cart(request)
-    
-    return None
+    for item in cart:
+        if item['product'].id == int(request.POST.get('product')):
+            item['quantity'] = int(request.POST.get('quantity'))
+    return redirect(reverse('shop:cart_detail'))
