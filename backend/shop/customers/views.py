@@ -60,16 +60,13 @@ def cart_detail(request):
 @require_POST
 def cart_update(request: HttpRequest, product_id):
     cart = Cart(request)
+    new_quantity = int(request.POST.get('quantity', 1))
     for item in cart:
-        if item['product'].id == int(request.POST.get('product')):
-            try:
-                # item['quantity'] = int(request.POST.get('quantity'))
-                # cart.update_quantity(product_id=product_id, quantity=int(request.POST.get('quantity', 1)))
-                cart.remove(item['product'])
-                cart.add(
-                    product=Book.objects.get(pk=product_id),
-                    quantity=int(request.POST.get('quantity', 1)),
-                )
-            except Exception as error:
-                print("ERROR\n", error)
+        if item['product'].id == product_id:
+            book = get_object_or_404(Book, id=product_id)
+            cart.remove(item['product'])
+            cart.add(
+                product=book,
+                quantity=new_quantity,
+            )
     return redirect(reverse('shop:cart_detail'))
