@@ -50,3 +50,10 @@ def cart_detail(request):
     cart = Cart(request)
     quantity_form = ItemAddForm()
     return render(request, "shop/customers/cart/detail.html", {'cart': cart, 'quantity_form': quantity_form})
+
+
+@require_POST
+def cart_update(request: HttpRequest, product_id):
+    cart = Cart(request)
+    
+    return None
