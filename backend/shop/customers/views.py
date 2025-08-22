@@ -62,5 +62,14 @@ def cart_update(request: HttpRequest, product_id):
     cart = Cart(request)
     for item in cart:
         if item['product'].id == int(request.POST.get('product')):
-            item['quantity'] = int(request.POST.get('quantity'))
+            try:
+                # item['quantity'] = int(request.POST.get('quantity'))
+                # cart.update_quantity(product_id=product_id, quantity=int(request.POST.get('quantity', 1)))
+                cart.remove(item['product'])
+                cart.add(
+                    product=Book.objects.get(pk=product_id),
+                    quantity=int(request.POST.get('quantity', 1)),
+                )
+            except Exception as error:
+                print("ERROR\n", error)
     return redirect(reverse('shop:cart_detail'))
