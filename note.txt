@@ -348,6 +348,15 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 39. Cart has a problem with Decimal and conversion
     (Book price MUST NOT BE EMPTY)
 
+40. Need to update Create Book process
+    (Buisness logic and service layer, maybe)
+    Price cannot be empty (either 0 or the last submitted price)
+    is item available or not?
+    Only one form
+    Only one view
+    no quick view, no quick form
+    no modal
+    Only one clear and complete process of adding new books by an employee
 
 stuff to add:
 (i keep these things here so that i don't forget them)
