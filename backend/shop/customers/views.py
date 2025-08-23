@@ -58,7 +58,7 @@ def cart_remove(request, product_id):
 def cart_detail(request):
     cart = Cart(request)
     quantity_form = ItemAddForm()
-    return render(request, "shop/customers/cart/detail.html", {'cart': cart, 'quantity_form': quantity_form})
+    return render(request, "shop/customers/cart/detail.html", {'cart': cart, 'form': quantity_form})
 
 
 @require_POST
