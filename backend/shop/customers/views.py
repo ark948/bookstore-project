@@ -65,12 +65,10 @@ def cart_detail(request):
 def cart_update(request: HttpRequest, product_id):
     cart = Cart(request)
     new_quantity = int(request.POST.get('quantity', 1))
-    for item in cart:
-        if item['product'].id == product_id:
-            book = get_object_or_404(Book, id=product_id)
-            cart.remove(item['product'])
-            cart.add(
-                product=book,
-                quantity=new_quantity,
-            )
+    book = get_object_or_404(Book, id=product_id)
+    cart.add(
+        product=book,
+        quantity=new_quantity,
+        override_quantity=True
+    )
     return redirect(reverse('shop:cart_detail'))
