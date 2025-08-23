@@ -324,6 +324,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     - session data can be stored in database, filesystem, anc cache system
     (cache system is a more suitable choice)
     django supports memcached backend out of the box
+    (later could be upgraded to Redis)
 
 37. Item purchase flow
     User enters website (customers landing page)
