@@ -357,6 +357,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     no quick view, no quick form
     no modal
     Only one clear and complete process of adding new books by an employee
+    (instead of modal, we can use htmx to load the entire form in the same page as the books list table)
+    
 
 stuff to add:
 (i keep these things here so that i don't forget them)
