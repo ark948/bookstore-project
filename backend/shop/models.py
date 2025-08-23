@@ -262,7 +262,7 @@ class Book(TimeStampModel):
     ISBN = models.CharField("ISBN", blank=True, null=True)
     genres = models.ManyToManyField(Genre, related_name="books")
     tags = models.ManyToManyField(Tag, blank=True)
-    price = models.DecimalField("Price", validators=[MinValueValidator(0)], blank=True, null=True, decimal_places=3, max_digits=12)
+    price = models.DecimalField("Price", validators=[MinValueValidator(0)], blank=False, null=False, decimal_places=3, max_digits=12, default=0)
     available = models.BooleanField("Available", default=False)
     copies_available = models.PositiveSmallIntegerField("In Stock", blank=True, null=True)
     description = models.TextField("Description", blank=True, default="")

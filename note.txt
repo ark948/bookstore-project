@@ -346,6 +346,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 
 39. Cart has a problem with Decimal and conversion
+    (Book price MUST NOT BE EMPTY)
 
 
 stuff to add:
