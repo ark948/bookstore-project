@@ -28,12 +28,19 @@
         </div>
         <div class="mb-4">
           <label for="filter_only_available">فقط موجود</label>
-          <input type="checkbox" checked="checked" class="toggle toggle-accent" id="filter_only_available"/>
+          <input 
+            hx-get="{% url 'shop:only_available' %}"
+            hx-target="#books_list"
+            hx-swap="innerHTML"
+            type="checkbox"
+            class="toggle toggle-accent" 
+            id="filter_only_available"
+            />
         </div>
         <button class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">اعمال فیلتر ها</button>
       </aside>
 
-      <section class="w-2/3 grid grid-cols-1 gap-6">
+      <section class="w-2/3 grid grid-cols-1 gap-6" id="books_list">
 
         {% for item in items %}
           <article class="bg-white p-4 rounded shadow flex gap-4">
