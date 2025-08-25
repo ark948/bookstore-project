@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib import messages
 
 from icecream import ic
 ic.configureOutput(
@@ -35,7 +36,10 @@ def cart_add(request: HttpRequest, product_id):
     if request.htmx:
         return HttpResponse("OK")
     cart = Cart(request)
-    product = get_object_or_404(Book, id=product_id)
+    product: Book = get_object_or_404(Book, id=product_id)
+    if not product.available:
+        messages.error(request, "این کتاب موجود نیست.")
+        return redirect(reverse("shop:customers_browse"))
     form = ItemAddForm(request.POST)
     if form.is_valid():
         cd = form.cleaned_data

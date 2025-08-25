@@ -24,12 +24,16 @@
                 {{ item.publisher }}
             {% endif %}
 
-            {% if item_form %}
+            {% if item_form and item.available %}
                 <form action="{% url 'shop:cart_add' item.id %}" method="post">
                     {{ item_form }}
                     {% csrf_token %}
                     <input type="submit" class="btn btn-primary btn-xs" value="افزودن">
                 </form>
+            {% else %}
+                <h2 class="text">
+                    این کتاب در حال حاظر موجود نیست.
+                </h2>
             {% endif %}
         </div>
     </div>
