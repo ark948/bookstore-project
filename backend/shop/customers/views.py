@@ -30,14 +30,14 @@ def browse(request: HttpRequest) -> HttpResponse:
 
 def provide_all_books(request: HttpRequest) -> HttpResponse:
     books = Book.objects.all()
-    return render(request, "shop/customers/partials/books-container.html", {
+    return render(request, "shop/customers/partials/books-container-section.html", {
         'items': books
     })
 
 
 def provide_only_available_books(request: HttpRequest) -> HttpResponse:
     books = Book.objects.filter(available=True)
-    return render(request, "shop/customers/partials/books-container.html", {
+    return render(request, "shop/customers/partials/books-container-section.html", {
         'items': books
     })
 

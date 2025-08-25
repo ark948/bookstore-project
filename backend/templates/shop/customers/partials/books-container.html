@@ -13,51 +13,7 @@
 
       {% include "shop/customers/partials/filters.html" %}
 
-      <section class="w-2/3 grid grid-cols-1 gap-6" id="books_list">
-
-        {% for item in items %}
-          <article class="bg-white p-4 rounded shadow flex gap-4">
-              {% if item.cover_image %}
-              <img src="{{ item.cover_image.url }}" alt="Cover image for {{ item.title }}" class="w-24 flex-shrink-0 rounded">
-              {% else %}
-                  [NO_COVER]
-              {% endif %}
-            <div>
-              <h3 class="font-semibold text-lg mb-1">
-                {{ item.title }}
-              </h3>
-              <p class="text-gray-700 mb-2">
-                {{ item.summary }}
-              </p>
-              <p class="font-bold text-indigo-600">
-                {% if item.available %}
-                  {{ item.price }}
-                {% else %}
-                  موجود نیست.
-                {% endif %}
-              </p>
-              <p>
-                <a href="{% url 'shop:item_detail' item.id %}">
-                  جزئیات
-                </a>
-              </p>
-              {% if item.available %}
-              <p>
-                <div id="quick_add_response_holder">
-                  <button class="btn btn-success btn-xs m-4"
-                    hx-post="{% url 'shop:cart_add' item.id %}"
-                    hx-target="#quick_add_response_holder"
-                    hx-swap="innerHTML">
-                    افزودن سریع
-                  </button>
-                </div>
-              </p>
-              {% endif %}
-            </div>
-          </article>
-        {% endfor %}
-
-      </section>
+      {% include "shop/customers/partials/books-container-section.html" %}
 
     </div>
 </div>
