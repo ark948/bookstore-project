@@ -28,6 +28,12 @@ def browse(request: HttpRequest) -> HttpResponse:
         'genres': genres
     })
 
+def provide_only_available_books(request: HttpRequest) -> HttpResponse:
+    books = Book.objects.filter(available=True)
+    return render(request, "shop/customers/browse.html", {
+        'items': books
+    })
+
 
 def item_detail(request, id):
     item = get_object_or_404(Book, id=id)
