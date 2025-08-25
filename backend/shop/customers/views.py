@@ -28,6 +28,13 @@ def browse(request: HttpRequest) -> HttpResponse:
         'genres': genres
     })
 
+def provide_all_books(request: HttpRequest) -> HttpResponse:
+    books = Book.objects.all()
+    return render(request, "shop/customers/partials/books-container.html", {
+        'items': books
+    })
+
+
 def provide_only_available_books(request: HttpRequest) -> HttpResponse:
     books = Book.objects.filter(available=True)
     return render(request, "shop/customers/partials/books-container.html", {
