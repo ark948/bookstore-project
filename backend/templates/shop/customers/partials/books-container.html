@@ -57,9 +57,10 @@
                   جزئیات
                 </a>
               </p>
+              {% if item.available %}
               <p>
                 <div id="quick_add_response_holder">
-                  <button class="btn btn-secondary btn-outline btn-xs m-4"
+                  <button class="btn btn-success btn-xs m-4"
                     hx-post="{% url 'shop:cart_add' item.id %}"
                     hx-target="#quick_add_response_holder"
                     hx-swap="innerHTML">
@@ -67,6 +68,7 @@
                   </button>
                 </div>
               </p>
+              {% endif %}
             </div>
           </article>
         {% endfor %}
