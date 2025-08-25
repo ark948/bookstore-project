@@ -15,13 +15,17 @@
     </div>
     <div class="mb-4">
       <label for="filter_only_available">فقط موجود</label>
+      <input type="hidden" name="status" value="off">
       <input 
+        hx-trigger="change"
         hx-get="{% url 'shop:only_available' %}"
         hx-target="#books_list"
         hx-swap="outerHTML"
         type="checkbox"
         class="toggle toggle-accent" 
         id="filter_only_available"
+        value="on"
+        name="status"
         />
     </div>
     <button class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">اعمال فیلتر ها</button>
