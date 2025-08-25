@@ -46,7 +46,11 @@
                 {{ item.summary }}
               </p>
               <p class="font-bold text-indigo-600">
-                {{ item.price }}
+                {% if item.available %}
+                  {{ item.price }}
+                {% else %}
+                  موجود نیست.
+                {% endif %}
               </p>
               <p>
                 <a href="{% url 'shop:item_detail' item.id %}">
