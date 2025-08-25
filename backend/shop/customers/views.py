@@ -9,7 +9,9 @@ ic.configureOutput(
     includeContext=False
 )
 
-from shop.models import Book
+from shop.models import (
+    Book, Genre
+)
 from .cart import Cart
 from .forms import ItemAddForm
 
@@ -20,7 +22,11 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def browse(request: HttpRequest) -> HttpResponse:
     books = Book.objects.all()
-    return render(request, "shop/customers/browse.html", {"items": books})
+    genres = Genre.objects.all()
+    return render(request, "shop/customers/browse.html", {
+        'items': books,
+        'genres': genres
+    })
 
 
 def item_detail(request, id):
