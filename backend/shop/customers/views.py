@@ -113,6 +113,6 @@ def add_comment(request: HttpRequest) -> HttpResponse:
             user=request.user
         )
         comment_obj.save()
-        return JsonResponse("نظر با موفقیت ثبت شد.")
+        return HttpResponse("نظر با موفقیت ثبت شد.")
     else:
-        return JsonResponse(form.errors)
+        return HttpResponse(form.errors)
