@@ -12,7 +12,7 @@ ic.configureOutput(
 )
 
 from shop.models import (
-    Book, Genre
+    Book, Genre, Comment
 )
 from .cart import Cart
 from .forms import (
@@ -102,6 +102,10 @@ def cart_update(request: HttpRequest, product_id):
     return redirect(reverse('shop:cart_detail'))
 
 
+@require_POST
 @role_required('user')
 def add_comment(request: HttpRequest) -> HttpResponse:
-    pass    
+    form = ItemAddForm(request.POST)
+    if form.is_valid():
+        comment_obj: Comment = form.save(commit=False)
+        comment_obj.user = request.user

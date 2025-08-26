@@ -48,10 +48,14 @@
             </div>
             <div id="add_comment_section">
                 {% if comment_form %}
-                    <form action="#" method="post">
-                        {{ comment_form|crispy }}
+                    <form 
+                        action="#"
+                    >
+                        <label for="body" class="text">متن نظر</label>
+                        {{ comment_form.body }}
+                        {{ comment_form.book_id }}
                         {% csrf_token %}
-                        <input type="submit" class="btn btn-secondary btn-xs" value="ثبت نظر">
+                        <input type="submit" class="btn btn-success btn-xs" value="ثبت نظر">
                     </form>
                 {% endif %}
             </div>
