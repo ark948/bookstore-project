@@ -49,7 +49,9 @@
             <div id="add_comment_section">
                 {% if comment_form %}
                     <form 
-                        action="#"
+                        hx-post="{% url 'shop:add_comment' %}"
+                        hx-target="comments_section"
+                        hx-swap="innerHTML"
                     >
                         <label for="body" class="text">متن نظر</label>
                         {{ comment_form.body }}
