@@ -4,6 +4,8 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 
+from accounts.decorators import role_required
+
 from icecream import ic
 ic.configureOutput(
     includeContext=False
@@ -93,3 +95,8 @@ def cart_update(request: HttpRequest, product_id):
         override_quantity=True
     )
     return redirect(reverse('shop:cart_detail'))
+
+
+@role_required('user')
+def add_comment(request: HttpRequest) -> HttpResponse:
+    pass
