@@ -1,5 +1,6 @@
 {% extends "_base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 
 {% block content %}
@@ -35,14 +36,25 @@
                     این کتاب در حال حاظر موجود نیست.
                 </h2>
             {% endif %}
-        </div>
-        <div id="comments_section">
-            {% for comment in item.comments.all %}
-                <p>
-                    نظر توسط {{ comment.user }}:
-                    {{ comment.body }}
-                </p>
-            {% endfor %}
+            <div id="comments_section">
+                {% for comment in item.comments.all %}
+                    <p>
+                        نظر توسط {{ comment.user }}:
+                        {{ comment.body }}
+                    </p>
+                {% empty %}
+                    <p>هنوز نظری برای این کالا ثبت نشده است.</p>
+                {% endfor %}
+            </div>
+            <div id="add_comment_section">
+                {% if comment_form %}
+                    <form action="#" method="post">
+                        {{ comment_form|crispy }}
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-secondary btn-xs" value="ثبت نظر">
+                    </form>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock content %}

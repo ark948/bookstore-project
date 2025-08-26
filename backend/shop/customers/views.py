@@ -15,7 +15,10 @@ from shop.models import (
     Book, Genre
 )
 from .cart import Cart
-from .forms import ItemAddForm
+from .forms import (
+    ItemAddForm,
+    AddCommentForm
+)
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -45,10 +48,12 @@ def provide_only_available_books(request: HttpRequest) -> HttpResponse:
 def item_detail(request, id):
     item = get_object_or_404(Book, id=id)
     item_form = ItemAddForm()
+    add_comment_form = AddCommentForm()
     return render(request,
-                  "shop/customers/partials/book-item.html",
-                  {'item': item, 'item_form': item_form})
-
+                  "shop/customers/partials/book-item.html", {
+                      'item': item, 
+                      'item_form': item_form, 
+                      'comment_form': add_comment_form})
 
 @require_POST
 def cart_add(request: HttpRequest, product_id):
@@ -99,4 +104,4 @@ def cart_update(request: HttpRequest, product_id):
 
 @role_required('user')
 def add_comment(request: HttpRequest) -> HttpResponse:
-    pass
+    pass    
