@@ -7,13 +7,13 @@ ITEM_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 21)]
 class AddCommentForm(forms.Form):
     body = forms.CharField(
         widget=forms.Textarea(attrs={
+            'id': 'comment_body_id',
             'class': "textarea textarea-success",
             'rows': 8,
             'cols': 40
         })
     )
 
-    book_id = forms.IntegerField(required=False, widget=forms.HiddenInput())
 
 class ItemAddForm(forms.Form):
     quantity = forms.IntegerField(

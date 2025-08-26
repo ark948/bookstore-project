@@ -105,7 +105,14 @@ def cart_update(request: HttpRequest, product_id):
 @require_POST
 @role_required('user')
 def add_comment(request: HttpRequest) -> HttpResponse:
-    form = ItemAddForm(request.POST)
+    form = AddCommentForm(request.POST)
     if form.is_valid():
-        comment_obj: Comment = form.save(commit=False)
-        comment_obj.user = request.user
+        comment_obj = Comment(
+            body=form.cleaned_data['body'],
+            book=get_object_or_404(Book, id=int(request.POST['book_id'])),
+            user=request.user
+        )
+        comment_obj.save()
+        return JsonResponse("نظر با موفقیت ثبت شد.")
+    else:
+        return JsonResponse(form.errors)
