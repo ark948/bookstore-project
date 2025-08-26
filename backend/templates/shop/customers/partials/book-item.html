@@ -36,5 +36,13 @@
                 </h2>
             {% endif %}
         </div>
+        <div id="comments_section">
+            {% for comment in item.comments.all %}
+                <p>
+                    نظر توسط {{ comment.user }}:
+                    {{ comment.body }}
+                </p>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}
