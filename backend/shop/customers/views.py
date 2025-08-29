@@ -122,4 +122,6 @@ def add_comment(request: HttpRequest) -> HttpResponse:
 def get_number_of_cart_items(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
     total = 0
-    return HttpResponse('0')
+    for i in cart:
+        total += i['quantity']
+    return HttpResponse(str(total))
