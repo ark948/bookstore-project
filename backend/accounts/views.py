@@ -11,6 +11,8 @@ from django.urls import reverse
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 
+from decorators import role_required
+
 # Create your views here.
 
 from .forms import (
@@ -74,3 +76,8 @@ def protected_view(request: HttpRequest):
 @login_required
 def profile(request: HttpRequest) -> HttpResponse:
     return render(request, "accounts/profile.html")
+
+
+@role_required('user')
+def add_address(request: HttpRequest) -> HttpResponse:
+    pass

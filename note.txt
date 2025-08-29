@@ -361,6 +361,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 41. Trying to add a get cart count view using daisyui badge component
 
+42. Adding address form for customers
+
     
 
 stuff to add:
