@@ -27,16 +27,18 @@
       </div>
       <div>
         <!-- left -->
-        <ul class="flex space-x-4">
-          <li><a href="{% url 'shop:cart_detail' %}" class="btn btn-ghost text-white hover:text-black-400">سبد</a></li>
-          <button class="btn">
-            سبد <div class="badge badge-sm"
-                  hx-get="{% url 'shop:cart_count' %}"
-                  hx-trigger="load"
-                  hx-target="this"
-                  hx-swap="innerHTML"
-                  >+99</div>
-          </button>
+        <ul class="flex space-x-4 items-center">
+          <li>
+            <a class="btn btn-sm" href="{% url 'shop:cart_detail' %}">
+              سبد
+              <div class="badge badge-sm"
+                    hx-get="{% url 'shop:cart_count' %}"
+                    hx-trigger="load"
+                    hx-target="this"
+                    hx-swap="innerHTML">
+                  </div>
+            </a>
+          </li>
           <li><a href="{% url 'accounts:profile' %}" class="btn btn-ghost text-white hover:text-black-400">حساب کاربری</a></li>
         </ul>
       </div>
