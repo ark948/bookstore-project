@@ -4,6 +4,15 @@ from django.contrib.auth.forms import AuthenticationForm
 
 from .models import CustomUser
 
+class CustomerAddressForm(forms.Form):
+    post_code = forms.CharField("کد پستی", min_length=5, required=True)
+    address = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'class': "textarea textarea-success",
+            'rows': 8,
+            'cols': 40
+        })
+    )
 
 class CustomUserSignUpForm(UserCreationForm):
     email = forms.EmailField(
