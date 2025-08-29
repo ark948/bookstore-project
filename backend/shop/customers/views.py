@@ -116,3 +116,10 @@ def add_comment(request: HttpRequest) -> HttpResponse:
         return HttpResponse("نظر با موفقیت ثبت شد.")
     else:
         return HttpResponse(form.errors)
+    
+
+@role_required('user')
+def get_number_of_cart_items(request: HttpRequest) -> HttpResponse:
+    cart = Cart(request)
+    total = 0
+    return HttpResponse('0')
