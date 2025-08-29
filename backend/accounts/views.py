@@ -11,13 +11,14 @@ from django.urls import reverse
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 
-from decorators import role_required
+from accounts.decorators import role_required
 
 # Create your views here.
 
 from .forms import (
     CustomUserSignUpForm,
-    EmailLoginForm
+    EmailLoginForm,
+    CustomerAddressForm
 )
 
 from . import utils
@@ -80,4 +81,7 @@ def profile(request: HttpRequest) -> HttpResponse:
 
 @role_required('user')
 def add_address(request: HttpRequest) -> HttpResponse:
-    pass
+    if request.method == "POST":
+        pass
+    form = CustomerAddressForm()
+    return render(request, "accounts/add_address.html", {'form': form})

@@ -1,0 +1,17 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    {% if form %}
+        <form>
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="btn btn-primary btn-sm">
+                ثبت
+            </button>
+        </form>
+    {% endif %}
+{% endblock content %}

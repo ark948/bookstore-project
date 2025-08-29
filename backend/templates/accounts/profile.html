@@ -16,5 +16,19 @@
         <p>
             نوع حساب شما: {{ user.role }}
         </p>
+        {% if user.address %}
+            <div>
+                <p>آدرس شما: {{ user.address }}</p>
+            </div>
+        {% else %}
+            <div>
+                <p>آدرسی ثبت نشده است.</p>
+                <p>
+                    <a href="{% url 'accounts:add_address' %}" class="link link-primary">
+                        ثبت آدرس
+                    </a>
+                </p>
+            </div>
+        {% endif %}
     </div>
 {% endblock content %}
