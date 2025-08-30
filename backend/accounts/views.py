@@ -15,6 +15,8 @@ from accounts.decorators import role_required
 
 # Create your views here.
 
+from accounts.models import UserProfile
+
 from .forms import (
     CustomUserSignUpForm,
     EmailLoginForm,
@@ -82,6 +84,15 @@ def profile(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def add_address(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        pass
+        form = CustomerAddressForm(request.POST)
+        if form.is_valid():
+            user_profile = request.user.profile
+            user_profile.address = form.cleaned_data['address']
+            user_profile.save()
+            messages.success(request, "آدرس با موفقیت ثبت شد.")
+            return redirect(reverse("accounts:profile"))
+        else:
+            messages.error(request, "خططای رخ داده است. لطفا دوباره امتحان کنید.")
+            return render(request, "accounts/add_address.html", {'form': form})
     form = CustomerAddressForm()
     return render(request, "accounts/add_address.html", {'form': form})
