@@ -1,0 +1,2 @@
+PROVINCE_CHOICES = ()
+CITIES = ()

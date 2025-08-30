@@ -6,12 +6,16 @@ from .models import CustomUser
 
 class CustomerAddressForm(forms.Form):
     post_code = forms.CharField(label="کد پستی", min_length=5, required=True)
+    province = forms.ChoiceField(label='استان', required=True)
+    city = forms.ChoiceField(label='شهر', required=True)
+    landline = forms.CharField(label='', widget=forms.IntegerField(), required=False)
     address = forms.CharField(
         widget=forms.Textarea(attrs={
             'class': "textarea textarea-success",
             'rows': 8,
             'cols': 40
-        })
+        }),
+        required=True
     )
 
 class CustomUserSignUpForm(UserCreationForm):
