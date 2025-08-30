@@ -30,5 +30,20 @@
                 </p>
             </div>
         {% endif %}
+
+        <!-- name of each tab group should be unique -->
+        <div class="tabs tabs-border">
+            <input type="radio" name="my_tabs_2" class="tab" aria-label="جاری" />
+            <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 1</div>
+        
+            <input type="radio" name="my_tabs_2" class="tab" aria-label="در حال پردازش" checked="checked" />
+            <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 2</div>
+        
+            <input type="radio" name="my_tabs_2" class="tab" aria-label="به اتمام رسیده" />
+            <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 3</div>
+
+            <input type="radio" name="my_tabs_2" class="tab" aria-label="لغو شده" />
+            <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 3</div>
+        </div>
     </div>
 {% endblock content %}
