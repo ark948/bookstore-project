@@ -9,5 +9,7 @@ def create_profile(sender, instance, created, **kwargs):
     if created:
         try:
             user_profile = UserProfile.objects.create(user=instance)
+            if user_profile:
+                print("\nProfile Created\n")
         except Exception as error:
             print("\nSIGNAL ERROR: ", error, "\n")
