@@ -45,7 +45,7 @@ class UserProfile(models.Model):
     province = models.CharField("Province", null=True, blank=True)
     city = models.CharField("City", null=True, blank=True)
     landline = models.CharField("Landline", null=True, blank=True)
-    address = models.CharField("Address", max_length=500, default="")
+    address = models.CharField("Address", max_length=500, null=True)
 
 
     def __str__(self) -> str:
