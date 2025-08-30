@@ -7,4 +7,7 @@ from accounts.models import UserProfile
 @receiver(post_save, sender=CustomUser)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        try:
+            user_profile = UserProfile.objects.create(user=instance)
+        except Exception as error:
+            print("\nSIGNAL ERROR: ", error, "\n")
