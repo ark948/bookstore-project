@@ -27,7 +27,7 @@
 
             {% if item_form and item.available %}
                 <form action="{% url 'shop:cart_add' item.id %}" method="post">
-                    {{ item_form }}
+                    {{ item_form|crispy }}
                     {% csrf_token %}
                     <input type="submit" class="btn btn-primary btn-xs" value="افزودن">
                 </form>

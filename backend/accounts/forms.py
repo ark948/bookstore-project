@@ -1,14 +1,31 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.forms import AuthenticationForm
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field, Submit
 
 from .models import CustomUser
+
+# THIS IS JUST AN EXAMPLE (how to crispy forms and tailwind together)
+class MyForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Field('name', css_class='border border-gray-300 rounded p-2'),
+            Field('email', css_class='border border-gray-300 rounded p-2'),
+        )
+        self.helper.add_input(Submit('submit', 'Submit', css_class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'))
 
 class CustomerAddressForm(forms.Form):
     post_code = forms.CharField(label="کد پستی", min_length=5, required=True)
     province = forms.ChoiceField(label='استان', required=True)
     city = forms.ChoiceField(label='شهر', required=True)
-    landline = forms.CharField(label='', widget=forms.IntegerField(), required=False)
+    landline = forms.CharField(label='تلفن ثابت', widget=forms.NumberInput(), required=False)
     address = forms.CharField(
         widget=forms.Textarea(attrs={
             'class': "textarea textarea-success",
@@ -17,6 +34,12 @@ class CustomerAddressForm(forms.Form):
         }),
         required=True
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "post"
+        self.helper.field_class = 'mb-4 p-4 rounded border border-gray-300'
 
 class CustomUserSignUpForm(UserCreationForm):
     email = forms.EmailField(

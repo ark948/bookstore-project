@@ -4,12 +4,12 @@
 
 {% block content %}
     {% if form %}
-        <form method="post" action="{% url 'accounts:add_address' %}">
+        <form method="post" action="{% url 'accounts:add_address' %}" class="m-4">
             {% csrf_token %}
 
-            {{ form.as_p }}
-
-            <button class="btn btn-primary btn-sm">
+            {{ form|crispy }}
+        
+            <button class="btn btn-primary btn-sm m-4 w-24 btn-accent">
                 ثبت
             </button>
         </form>
