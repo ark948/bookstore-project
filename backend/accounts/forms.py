@@ -21,6 +21,18 @@ class MyForm(forms.Form):
         )
         self.helper.add_input(Submit('submit', 'Submit', css_class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'))
 
+
+class CustomerAddressForm2(forms.Form):
+    post_code = forms.CharField(label="کد پستی", min_length=5, required=True)
+    province = forms.ChoiceField(label='استان', required=True)
+    city = forms.ChoiceField(label='شهر', required=True)
+    landline = forms.CharField(label='تلفن ثابت', widget=forms.NumberInput(), required=False)
+    address = forms.CharField(
+        label="آدرس",
+        widget=forms.Textarea()
+    )
+
+    
 class CustomerAddressForm(forms.Form):
     post_code = forms.CharField(label="کد پستی", min_length=5, required=True)
     province = forms.ChoiceField(label='استان', required=True)
