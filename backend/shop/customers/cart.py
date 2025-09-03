@@ -38,7 +38,7 @@ class Cart:
         """
         return sum(item['quantity'] for item in self.cart.values())
 
-    def add(self, product, quantity=1, override_quantity=False):
+    def add(self, product: Book, quantity: int = 1, override_quantity: bool = False):
         """
         Add a product to cart or update its quantity.
         """
@@ -58,7 +58,7 @@ class Cart:
         # mark the session as "modified" to make sure it gets saved
         self.session.modified = True
 
-    def remove(self, product):
+    def remove(self, product: Book):
         """
         Remove a product from cart.
         """
