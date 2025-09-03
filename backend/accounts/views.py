@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.forms import AuthenticationForm
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseForbidden
@@ -114,3 +114,7 @@ def add_address_v2(request: HttpRequest) -> HttpResponse:
             return render(request, "accounts/add_address_2.html", {'form': form})
     form = CustomerAddressForm2()
     return render(request, "accounts/add_address_2.html", {'form': form})
+
+
+def load_city_names(request: HttpRequest) -> JsonResponse:
+    pass
