@@ -68,9 +68,11 @@
         $('#price_range').val("");
         $('#price_range_value').html("0 تومان");
         document.getElementById('filter_only_available').checked = false;
+        $('#genre_select').prop('selectedIndex', 0);
       }
 
       function calc() {
+        // JQuery only detects checked event, for some reason
         if (document.getElementById('filter_only_available').checked)
         {
           console.log("checked");
