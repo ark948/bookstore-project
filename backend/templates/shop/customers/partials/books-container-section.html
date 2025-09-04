@@ -16,7 +16,7 @@
           </p>
           <p class="font-bold text-indigo-600">
             {% if item.available %}
-              {{ item.price }} تومان
+              <span id="item_price">{{ item.price }} تومان</span>
             {% else %}
               <span class="text-red-600">موجود نیست</span>
             {% endif %}

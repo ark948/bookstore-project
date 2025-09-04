@@ -6,6 +6,8 @@ from django.contrib import messages
 
 from accounts.decorators import role_required
 
+from decimal import Decimal
+
 from icecream import ic
 ic.configureOutput(
     includeContext=False
@@ -139,6 +141,16 @@ def filter_by_genre(request: HttpRequest) -> HttpResponse:
         else:
             books = Book.objects.all()
             return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
+    else:
+        books = Book.objects.all()
+        return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
+    
+@role_required('user')
+def filter_by_price(request: HttpRequest) -> HttpResponse:
+    if request.htmx:
+        term = request.GET.get('priceRange')
+        books = Book.objects.filter(price__range=(0, Decimal(term))).all()
+        return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
     else:
         books = Book.objects.all()
         return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
