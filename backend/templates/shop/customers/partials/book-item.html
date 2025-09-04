@@ -25,6 +25,13 @@
                 {{ item.publisher }}
             {% endif %}
 
+            <div>
+                ژانر
+                {% for i in item.genres.all %}
+                    {{ i.title }},
+                {% endfor %}
+            </div>
+
             {% if item_form and item.available %}
                 <form action="{% url 'shop:cart_add' item.id %}" method="post">
                     {{ item_form|crispy }}
@@ -45,7 +52,7 @@
                         hx-post="{% url 'shop:add_comment' %}"
                         hx-target="#comments_section"
                         hx-swap="innerHTML"
-                    >
+                        >
                         <label for="comment_body_id" class="text">متن نظر</label>
                         {{ comment_form.body }}
                         <input type="hidden" name="book_id" value="{{ item.id }}">
