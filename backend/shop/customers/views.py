@@ -128,7 +128,15 @@ def get_number_of_cart_items(request: HttpRequest) -> HttpResponse:
 
 
 @role_required('user')
-def filter_by_genre(request: HttpRequest, term: str) -> HttpResponse:
-    books = Book.objects.filter(genres__icontains=term).all()
-    response = render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
-    return response
+def filter_by_genre(request: HttpRequest) -> HttpResponse:
+    if request.htmx:
+        term = request.GET.get('genreSelect')
+        if term:
+            print("\nGetting all items with genre of -> ", term, "\n")
+            books = Book.objects.filter(genres__title__exact=term).all()
+            response = render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
+            return response
+        else:
+            books = Book.objects.all()
+    else:
+        return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
