@@ -15,6 +15,9 @@ urlpatterns = [
     # info loaders
     path('get-cart-count/', views.get_number_of_cart_items, name='cart_count'),
 
+    # search
+    path("search/", views.search_books, name='search'),
+
     # filters
     path('filter-by-price/', views.filter_by_price, name='filter_price'),
     path('filter-by-genre/', views.filter_by_genre, name='filter_genre'),

@@ -155,3 +155,11 @@ def filter_by_price(request: HttpRequest) -> HttpResponse:
     else:
         books = Book.objects.all()
         return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
+    
+
+@role_required('user')
+def search_books(request: HttpRequest) -> HttpResponse:
+    if request.htmx:
+        return HttpResponse("OK")
+    else:
+        return HttpResponse("OK")

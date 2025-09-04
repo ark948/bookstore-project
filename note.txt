@@ -379,6 +379,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     without 3rd-party packages
     genre, available-only, price
 
+47. Adding search
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)

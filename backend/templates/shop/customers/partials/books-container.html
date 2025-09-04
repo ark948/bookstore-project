@@ -17,13 +17,13 @@
               <path d="m21 21-4.3-4.3"></path>
             </g>
           </svg>
-          <input
-            id="search"
-            type="search"
-            placeholder="عنوان کتاب..."
-          />
+          <input name="search" id="search" type="search" placeholder="جستجو عنوان..." />
         </label>
-        <button class="btn btn-info btn-sm btn-outline w-20">
+        <button class="btn btn-info btn-sm btn-outline w-20"
+            hx-get="{% url 'shop:search' %}"
+            hx-target="#books_list"
+            hx-swap="outerHTML"
+            hx-indicator="#spinner">
           جستجو
         </button>
       </form>
