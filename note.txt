@@ -368,6 +368,14 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 44. Automatically creating user profile objects upon user registration
     using signals
 
+45. Adding django-filter
+    pip install django-filter
+    INSTALLED_APPS = [
+        ...
+        'django_filters',
+    ]
+
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar

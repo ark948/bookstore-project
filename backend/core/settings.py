@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django_htmx',
+    'django_filters',
     'widget_tweaks',
     # "django_select2",
     "crispy_forms",
