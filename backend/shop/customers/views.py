@@ -145,6 +145,7 @@ def filter_by_genre(request: HttpRequest) -> HttpResponse:
         books = Book.objects.all()
         return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
     
+    
 @role_required('user')
 def filter_by_price(request: HttpRequest) -> HttpResponse:
     if request.htmx:
