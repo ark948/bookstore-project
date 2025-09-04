@@ -31,16 +31,20 @@
           <li>
             {% if user.role == "admin" %}
               <a href="{% url 'admin:index' %}">Panel</a>
-            {% else %}
+            {% elif user.role == 'user' %}
             <a class="btn btn-sm" href="{% url 'shop:cart_detail' %}">
               سبد
-              <div class="badge badge-sm"
-                    hx-get="{% url 'shop:cart_count' %}"
-                    hx-trigger="load"
-                    hx-target="this"
-                    hx-swap="innerHTML">
-                  </div>
+              <div 
+                  class="badge badge-sm"
+                  hx-get="{% url 'shop:cart_count' %}"
+                  hx-trigger="load"
+                  hx-target="this"
+                  hx-swap="innerHTML"
+                >
+              </div>
             </a>
+            {% else %}
+              <a class="btn btn-ghost text-white hover:text-black-400" href="{% url 'accounts:login' %}">ورود</a>
             {% endif %}
           </li>
           <li><a href="{% url 'accounts:profile' %}" class="btn btn-ghost text-white hover:text-black-400">حساب کاربری</a></li>
