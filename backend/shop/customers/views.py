@@ -125,3 +125,10 @@ def get_number_of_cart_items(request: HttpRequest) -> HttpResponse:
     for i in cart:
         total += i['quantity']
     return HttpResponse(str(total))
+
+
+@role_required('user')
+def filter_by_genre(request: HttpRequest, term: str) -> HttpResponse:
+    books = Book.objects.filter(genres__icontains=term).all()
+    response = render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
+    return response

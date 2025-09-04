@@ -4,8 +4,8 @@
       <label class="block mb-1 font-medium">دسته بندی</label>
       <select class="select select-accent border border-gray-300 rounded p-2">
         <option>کل موضوعات</option>
-        {% for i in genres %}
-          <option>{{ i.title }}</option>
+        {% for genre in genres %}
+          <option>{{ genre.title }}</option>
         {% endfor %}
       </select>
     </div>
@@ -17,16 +17,16 @@
       <label for="filter_only_available">فقط موجود</label>
       <input type="hidden" name="status" value="off">
       <input 
-        hx-trigger="change"
-        hx-get="{% url 'shop:only_available' %}"
-        hx-target="#books_list"
-        hx-swap="outerHTML"
-        type="checkbox"
-        class="toggle toggle-accent" 
-        id="filter_only_available"
-        value="on"
-        name="status"
-        hx-indicator="#spinner"
+          hx-trigger="change"
+          hx-get="{% url 'shop:only_available' %}"
+          hx-target="#books_list"
+          hx-swap="outerHTML"
+          type="checkbox"
+          class="toggle toggle-accent" 
+          id="filter_only_available"
+          value="on"
+          name="status"
+          hx-indicator="#spinner"
         />
     </div>
     <button class="btn btn-info btn-outline w-full">اعمال فیلتر ها</button>
