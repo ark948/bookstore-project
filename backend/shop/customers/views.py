@@ -133,15 +133,12 @@ def filter_by_genre(request: HttpRequest) -> HttpResponse:
         term = request.GET.get('genreSelect')
         genres_list = list(Genre.objects.all())
         genres_list = [item.title for item in genres_list]
-        print("\n", genres_list)
         if term and term in genres_list:
-            print("\nGetting all items with genre of -> ", term, "\n")
             books = Book.objects.filter(genres__title__exact=term).all()
-            response = render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
-            return response
+            return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
         else:
-            print("\n", term)
             books = Book.objects.all()
             return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
     else:
+        books = Book.objects.all()
         return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
