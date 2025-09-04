@@ -3,7 +3,7 @@
     {% for item in items %}
       <article class="bg-white p-4 rounded shadow flex gap-4">
           {% if item.cover_image %}
-          <img src="{{ item.cover_image.url }}" alt="Cover image for {{ item.title }}" class="w-24 flex-shrink-0 rounded">
+          <img src="{{ item.cover_image.url }}" alt="Cover image for {{ item.title }}" class="w-24 object-contain flex-shrink-0 rounded">
           {% else %}
               [NO_COVER]
           {% endif %}
