@@ -1,9 +1,8 @@
 from django.urls import path, include
 
-from .views import dashboards
+import dashboards
 
 app_name = "shop"
-
 urlpatterns = [
     path("customers/", include("shop.customers.urls")),
     path("books/", include("shop.books.urls")),
