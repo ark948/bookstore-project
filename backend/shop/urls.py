@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-import dashboards
+from shop import dashboards
 
 app_name = "shop"
 urlpatterns = [

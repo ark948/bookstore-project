@@ -164,4 +164,5 @@ def search_books(request: HttpRequest) -> HttpResponse:
         books = Book.objects.filter(title__icontains=term).all()
         return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
     else:
-        return HttpResponse("OK")
+        books = Book.objects.all()
+        return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
