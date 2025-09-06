@@ -59,7 +59,11 @@
         hx-indicator="#spinner">
         اعمال قیمت
       </button>
-      <button class="btn btn-warning btn-outline w-full" onclick="clearFilters();">
+      <button class="btn btn-warning btn-outline w-full" onclick="clearFilters();"
+          hx-get="{% url 'shop:load_books' %}"
+          hx-target="#books_list"
+          hx-swap="outerHTML"
+          hx-indicator="#spinner">
         حذف فیلتر ها
       </button>
       <button class="btn btn-default btn-outline w-full">
