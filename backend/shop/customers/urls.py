@@ -12,6 +12,9 @@ urlpatterns = [
     path("browse/", views.browse, name='customers_browse'),
     path("", views.index, name='customers_index'),
 
+    # loaders
+    path('load-books/', views.load_books, name='load_books'),
+
     # info loaders
     path('get-cart-count/', views.get_number_of_cart_items, name='cart_count'),
 

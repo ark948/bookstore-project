@@ -166,3 +166,9 @@ def search_books(request: HttpRequest) -> HttpResponse:
     else:
         books = Book.objects.all()
         return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
+    
+
+@role_required('user')
+def load_books(request: HttpRequest) -> HttpResponse:
+    books = Book.objects.all()
+    return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
