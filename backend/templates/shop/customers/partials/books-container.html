@@ -29,7 +29,12 @@
           جستجو
         </button>
       </form>
-      <button class="btn btn-default btn-sm btn-outline w-24 mr-42">
+      <button class="btn btn-default btn-sm btn-outline w-24 mr-42"
+          hx-get="{% url 'shop:load_books' %}"
+          hx-target="#books_list"
+          hx-swap="outerHTML"
+          hx-indicator="#spinner"
+          hx-trigger="click delay:50ms">
         بارگذاری مجدد
       </button>
     </div>
