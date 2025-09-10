@@ -1,8 +1,4 @@
 import factory
-from datetime import datetime
-
-
-from .models import CustomUser
 
 
 class CustomUserFactory(factory.django.DjangoModelFactory):

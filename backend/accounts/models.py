@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import AbstractUser # for AbstracUser
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin # for AbstractBaseUser
 
@@ -57,10 +56,8 @@ class UserProfile(models.Model):
         db_table = "user_profiles"
 
 
-
 # class CustomAddress(models.Model):
 #     pass
-    
 
 # # NOT USED, for learning purposes only
 # class unused_CustomUser(AbstractBaseUser, PermissionsMixin):

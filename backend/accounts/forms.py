@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.contrib.auth.forms import AuthenticationForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit
 
@@ -22,7 +21,7 @@ class MyForm(forms.Form):
         self.helper.add_input(Submit('submit', 'Submit', css_class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'))
 
 
-class CustomerAddressForm2(forms.Form):
+class CustomerAddressForm_widget_tweaks(forms.Form):
     post_code = forms.CharField(label="کد پستی", min_length=5, required=True)
     province = forms.ChoiceField(label='استان', required=True)
     city = forms.ChoiceField(label='شهر', required=True)
@@ -33,7 +32,7 @@ class CustomerAddressForm2(forms.Form):
     )
 
     
-class CustomerAddressForm(forms.Form):
+class CustomerAddressForm_crispy_forms(forms.Form):
     post_code = forms.CharField(label="کد پستی", min_length=5, required=True)
     province = forms.ChoiceField(label='استان', required=True)
     city = forms.ChoiceField(label='شهر', required=True)

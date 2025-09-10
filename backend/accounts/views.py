@@ -1,9 +1,6 @@
-from django.contrib.auth import authenticate
-from django.contrib.auth import login
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
-from django.contrib.auth.forms import AuthenticationForm
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
@@ -11,20 +8,15 @@ from django.urls import reverse
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 
-from accounts.decorators import role_required
-
 # Create your views here.
 
 from accounts.models import UserProfile
-
+from accounts.decorators import role_required
 from .forms import (
     CustomUserSignUpForm,
     EmailLoginForm,
-    CustomerAddressForm,
-    CustomerAddressForm2
+    CustomerAddressForm_widget_tweaks
 )
-
-from . import utils
 
 # signup
 # login
@@ -91,7 +83,7 @@ def profile(request: HttpRequest) -> HttpResponse:
 def add_address(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         # form = CustomerAddressForm(request.POST)
-        form = CustomerAddressForm2(request.POST)
+        form = CustomerAddressForm_widget_tweaks(request.POST)
         if form.is_valid():
             user_profile = request.user.profile
             user_profile.address = form.cleaned_data['address']
@@ -102,7 +94,7 @@ def add_address(request: HttpRequest) -> HttpResponse:
             messages.error(request, "خططای رخ داده است. لطفا دوباره امتحان کنید.")
             return render(request, "accounts/add_address.html", {'form': form})
     # form = CustomerAddressForm()
-    form = CustomerAddressForm2()
+    form = CustomerAddressForm_widget_tweaks()
     return render(request, "accounts/add_address.html", {'form': form})
 
 
