@@ -384,8 +384,10 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 48. users (customers) need to have access to the follwoing, in their profile page:
     their favorite/bookmarked books
+        (for user favorites, we can have a many-to-many Relationship between profile and book)
     their purchases history
     their payment history
+    their comments, reviews, ratings
     the books they visited
     their addresses
     their info
