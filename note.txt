@@ -380,6 +380,16 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     genre, available-only, price
 
 47. Adding search
+    (done, manual)
+
+48. users (customers) need to have access to the follwoing, in their profile page:
+    their favorite/bookmarked books
+    their purchases history
+    their payment history
+    the books they visited
+    their addresses
+    their info
+    their submitted tickets (if ticket-based support system was implemented)
 
 
 stuff to add:
@@ -390,7 +400,6 @@ htmx (done)
 daisyui or flowbite (done)
 pytest (done)
 django-pytest (done)
-authentication with htmx and modals
 
 
 # Current problems:

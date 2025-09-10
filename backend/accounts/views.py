@@ -99,6 +99,9 @@ def add_address(request: HttpRequest) -> HttpResponse:
     return render(request, "accounts/add_address.html", {'form': form})
 
 
+# form is different for add_address views
+
+
 @role_required('user')
 def add_address_v2(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
