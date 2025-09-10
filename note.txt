@@ -391,6 +391,10 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
         had to revert migrations for shop app
         > python manage.py showmigrations
         > python manage.py migrate <app_name> <migration name or number>
+        - to access related records in many-to-many relations, if related_name is not defined:
+        model.<the other side of relationship>_set.all()
+        example:
+        user.favorite_set.all()
     their purchases history
     their payment history
     their comments, reviews, ratings

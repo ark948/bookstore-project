@@ -33,6 +33,7 @@
             </div>
 
             <div>
+                {% if user.is_authenticated %}
                 <form 
                         hx-get="{% url 'shop:add_favorite' %}"
                         hx-target="#favorite_response"
@@ -44,6 +45,7 @@
                 </form>
                 <div id="favorite_response">
                 </div>
+                {% endif %}
             </div>
 
             {% if item_form and item.available %}

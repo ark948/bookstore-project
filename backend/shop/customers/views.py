@@ -51,11 +51,12 @@ def item_detail(request, id):
     item = get_object_or_404(Book, id=id)
     item_form = ItemAddForm()
     add_comment_form = AddCommentForm()
-    return render(request,
-                  "shop/customers/partials/book-item.html", {
-                      'item': item, 
-                      'item_form': item_form, 
-                      'comment_form': add_comment_form})
+    return render(request, "shop/customers/partials/book-item.html", {
+            'item': item, 
+            'item_form': item_form, 
+            'comment_form': add_comment_form
+        }
+    )
 
 @require_POST
 def cart_add(request: HttpRequest, product_id):
@@ -184,4 +185,16 @@ def add_book_to_favorites(request: HttpRequest) -> HttpResponse:
             favorite.save()
         return HttpResponse("OK")
     else:
-        return HttpResponse("NOK")
+        return HttpResponse("N OK")
+    
+
+@role_required('user')
+def remove_book_from_favorites(request: HttpRequest) -> HttpResponse:
+    if request.htmx:
+        book_id = request.GET.get('book_id')
+        favorite = Favorite.objects.filter(user_id__id=request.user.id, book_id__id=book_id)
+        if favorite:
+            favorite.delete()
+            return HttpResponse("Deleted")
+    else:
+        return HttpResponse("N OK")
