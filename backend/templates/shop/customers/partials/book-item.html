@@ -33,10 +33,17 @@
             </div>
 
             <div>
-                <form action="#">
+                <form 
+                        hx-get="{% url 'shop:add_favorite' %}"
+                        hx-target="#favorite_response"
+                        hx-swap="innerHTML"
+                    >
                     {% csrf_token %}
+                    <input type="hidden" name="book_id" value="{{ item.id }}">
                     <button class="btn btn-accent btn-outline btn-xs" type="submit">افزودن به علاقه‌مندی ها</button>
                 </form>
+                <div id="favorite_response">
+                </div>
             </div>
 
             {% if item_form and item.available %}

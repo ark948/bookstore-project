@@ -386,6 +386,11 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     their favorite/bookmarked books
         (for user favorites, we can have a many-to-many Relationship between profile and book)
         (there needs to be a check, users should not be able to add more than 20 favorites to their profiles (at first))
+        UPDATE: Profile table uses CustomUser id as it's primary key.
+        so favorite model, cannot use profile id
+        had to revert migrations for shop app
+        > python manage.py showmigrations
+        > python manage.py migrate <app_name> <migration name or number>
     their purchases history
     their payment history
     their comments, reviews, ratings

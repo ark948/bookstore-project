@@ -14,7 +14,7 @@ ic.configureOutput(
 )
 
 from shop.models import (
-    Book, Genre, Comment
+    Book, Genre, Comment, Favorite
 )
 from .cart import Cart
 from .forms import (
@@ -176,4 +176,12 @@ def load_books(request: HttpRequest) -> HttpResponse:
 
 @role_required('user')
 def add_book_to_favorites(request: HttpRequest) -> HttpResponse:
-    pass
+    if request.htmx:
+        book_id = request.GET.get('book_id')
+        book_item = get_object_or_404(Book, id=book_id)
+        if book_item:
+            favorite = Favorite(profile_id=request.user.id, book_id=book_item.id)
+            favorite.save()
+        return HttpResponse("OK")
+    else:
+        return HttpResponse("NOK")
