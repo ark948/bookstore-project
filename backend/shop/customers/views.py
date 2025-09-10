@@ -189,18 +189,36 @@ def add_book_to_favorites(request: HttpRequest) -> HttpResponse:
         if book_item:
             favorite = Favorite(user_id=request.user, book_id=book_item)
             favorite.save()
-        return HttpResponse("OK")
+            response = render(request, "shop/customers/partials/remove_from_favorite_partial.html", {'book_id': book_id})
+            return response
     else:
-        return HttpResponse("N OK")
+        return HttpResponse("add favorite ERROR")
     
 
 @role_required('user')
 def remove_book_from_favorites(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         book_id = request.GET.get('book_id')
-        favorite = Favorite.objects.filter(user_id__id=request.user.id, book_id__id=book_id)
+        book_item = get_object_or_404(Book, id=book_id)
+        favorite = Favorite.objects.filter(user_id=request.user, book_id=book_item)
         if favorite:
             favorite.delete()
-            return HttpResponse("Deleted")
+            response = render(request, "shop/customers/partials/add_to_favorite_partial.html", {'book_id': book_id})
+            return response
     else:
-        return HttpResponse("N OK")
+        return HttpResponse("remvoe favorite ERROR")
+    
+
+@role_required('user')
+def is_book_in_user_favorites(request: HttpRequest) -> HttpResponse:
+    if request.htmx:
+        book_id = request.GET.get('book_id')
+        book_item = get_object_or_404(Book, id=book_id)
+        favorite = Favorite.objects.filter(user_id=request.user, book_id=book_item).first()
+        if favorite:
+            response = render(request, "shop/customers/partials/remove_from_favorite_partial.html")
+        else:
+            response = render(request, "shop/customers/partials/add_to_favorite_partial.html")
+        return response
+    else:
+        return HttpResponse("خطا")

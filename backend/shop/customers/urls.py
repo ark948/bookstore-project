@@ -18,6 +18,7 @@ urlpatterns = [
     path("", views.index, name='customers_index'),
 
     # loaders
+    path("load-is-book-favorite/", views.is_book_in_user_favorites, name='is_book_favorite'),
     path("load-books/", views.load_books, name='load_books'),
     path("get-cart-count/", views.get_number_of_cart_items, name='cart_count'),
 

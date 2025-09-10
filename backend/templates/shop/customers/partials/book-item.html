@@ -32,30 +32,15 @@
                 {% endfor %}
             </div>
 
-            <div>
+            <div id="favorite_response_holder">
                 {% if user.is_authenticated %}
-                    {% if is_fav %}
-                        <form
-                                hx-get="{% url 'shop:remove_favorite' %}"
-                                hx-target="#favorite_response"
-                                hx-swap="innerHTML"
-                            >
-                            {% csrf_token %}
-                            <input type="hidden" name="book_id" value="{{ item.id }}">
-                            <button class="btn btn-error btn-outline btn-xs" type="submit">حذف از لیست علاقه‌مندی ها</button>
-                        </form>
-                    {% else %}
-                        <form 
-                                hx-get="{% url 'shop:add_favorite' %}"
-                                hx-target="#favorite_response"
-                                hx-swap="innerHTML"
-                            >
-                            {% csrf_token %}
-                            <input type="hidden" name="book_id" value="{{ item.id }}">
-                            <button class="btn btn-accent btn-outline btn-xs" type="submit">افزودن به علاقه‌مندی ها</button>
-                        </form>
-                    {% endif %}
-                    <div id="favorite_response">
+                    <div
+                        hx-trigger="load"
+                        hx-target="this"
+                        hx-get="{% url 'shop:is_book_favorite' %}"
+                        hx-swap="innerHTML"
+                        hx-vals='{"book_id": "{{ item.id }}"}'
+                    >
                     </div>
                 {% endif %}
             </div>

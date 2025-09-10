@@ -1,0 +1,11 @@
+<form
+        hx-get="{% url 'shop:remove_favorite' %}"
+        hx-target="#favorite_response_holder"
+        hx-swap="innerHTML"
+    >
+  {% csrf_token %}
+  <input type="hidden" name="book_id" value="{{ book_id }}" />
+  <button class="btn btn-error btn-outline btn-xs" type="submit">
+    حذف از لیست علاقه‌مندی ها
+  </button>
+</form>

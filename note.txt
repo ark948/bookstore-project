@@ -395,6 +395,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
         model.<the other side of relationship>_set.all()
         example:
         user.favorite_set.all()
+        - slight problem, in doing this without refreshing, book_id cannot be found after either adding or removing once
+        may need to use django-template-partials or figure out something else
     their purchases history
     their payment history
     their comments, reviews, ratings
