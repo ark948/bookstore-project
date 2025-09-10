@@ -19,6 +19,7 @@
         {% if user.profile.postal_code %}
             <div>
                 <p>آدرس شما: {{ user.profile.address }}</p>
+                <p>کد پستی شما: {{ user.profile.postal_code }}</p>
             </div>
             <p>
                 <a href="{% url 'accounts:add_address' %}" class="link link-primary">

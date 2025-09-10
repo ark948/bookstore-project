@@ -22,9 +22,9 @@ class MyForm(forms.Form):
 
 
 class CustomerAddressForm_widget_tweaks(forms.Form):
-    post_code = forms.CharField(label="کد پستی", min_length=5, required=True)
-    province = forms.ChoiceField(label='استان', required=True)
-    city = forms.ChoiceField(label='شهر', required=True)
+    postal_code = forms.CharField(label="کد پستی", min_length=5, required=True)
+    province = forms.CharField(label='استان', required=True)
+    city = forms.CharField(label='شهر', required=True)
     landline = forms.CharField(label='تلفن ثابت', widget=forms.NumberInput(), required=False)
     address = forms.CharField(
         label="آدرس",
