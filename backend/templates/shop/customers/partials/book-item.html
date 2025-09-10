@@ -32,6 +32,13 @@
                 {% endfor %}
             </div>
 
+            <div>
+                <form action="#">
+                    {% csrf_token %}
+                    <button class="btn btn-accent btn-outline btn-xs" type="submit">افزودن به علاقه‌مندی ها</button>
+                </form>
+            </div>
+
             {% if item_form and item.available %}
                 <form action="{% url 'shop:cart_add' item.id %}" method="post">
                     {{ item_form|crispy }}
@@ -49,9 +56,9 @@
             <div id="add_comment_section">
                 {% if comment_form %}
                     <form 
-                        hx-post="{% url 'shop:add_comment' %}"
-                        hx-target="#comments_section"
-                        hx-swap="innerHTML"
+                            hx-post="{% url 'shop:add_comment' %}"
+                            hx-target="#comments_section"
+                            hx-swap="innerHTML"
                         >
                         <label for="comment_body_id" class="text">متن نظر</label>
                         {{ comment_form.body }}

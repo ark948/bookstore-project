@@ -172,3 +172,8 @@ def search_books(request: HttpRequest) -> HttpResponse:
 def load_books(request: HttpRequest) -> HttpResponse:
     books = Book.objects.all()
     return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
+
+
+@role_required('user')
+def add_book_to_favorites(request: HttpRequest) -> HttpResponse:
+    pass
