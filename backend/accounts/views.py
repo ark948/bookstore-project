@@ -77,12 +77,9 @@ def profile(request: HttpRequest) -> HttpResponse:
 # add_address uses crispy_forms (this one deleted)
 # add_address_v2 uses django_widget_tweaks
 # to use cripsy_forms add {{ form|crispy }} to template inside the form tag
-
-
 @role_required('user')
 def add_address(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        # form = CustomerAddressForm(request.POST)
         form = CustomerAddressForm_widget_tweaks(request.POST)
         if form.is_valid():
             user_profile = request.user.profile
@@ -93,7 +90,6 @@ def add_address(request: HttpRequest) -> HttpResponse:
         else:
             messages.error(request, "خططای رخ داده است. لطفا دوباره امتحان کنید.")
             return render(request, "accounts/add_address.html", {'form': form})
-    # form = CustomerAddressForm()
     form = CustomerAddressForm_widget_tweaks()
     return render(request, "accounts/add_address.html", {'form': form})
 
