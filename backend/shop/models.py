@@ -383,12 +383,12 @@ class Invoice(TimeStampModel):
 
 
 class Favorite(models.Model):
-    profile_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = (
-            'profile_id',
+            'user_id',
             'book_id'
         )
 
