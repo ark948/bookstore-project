@@ -82,29 +82,15 @@ def profile(request: HttpRequest) -> HttpResponse:
     return render(request, "accounts/profile.html")
 
 
+# add_address uses crispy_forms (this one deleted)
+# add_address_v2 uses django_widget_tweaks
+# to use cripsy_forms add {{ form|crispy }} to template inside the form tag
+
+
 @role_required('user')
 def add_address(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        form = CustomerAddressForm(request.POST)
-        if form.is_valid():
-            user_profile = request.user.profile
-            user_profile.address = form.cleaned_data['address']
-            user_profile.save()
-            messages.success(request, "آدرس با موفقیت ثبت شد.")
-            return redirect(reverse("accounts:profile"))
-        else:
-            messages.error(request, "خططای رخ داده است. لطفا دوباره امتحان کنید.")
-            return render(request, "accounts/add_address.html", {'form': form})
-    form = CustomerAddressForm()
-    return render(request, "accounts/add_address.html", {'form': form})
-
-
-# form is different for add_address views
-
-
-@role_required('user')
-def add_address_v2(request: HttpRequest) -> HttpResponse:
-    if request.method == "POST":
+        # form = CustomerAddressForm(request.POST)
         form = CustomerAddressForm2(request.POST)
         if form.is_valid():
             user_profile = request.user.profile
@@ -114,9 +100,10 @@ def add_address_v2(request: HttpRequest) -> HttpResponse:
             return redirect(reverse("accounts:profile"))
         else:
             messages.error(request, "خططای رخ داده است. لطفا دوباره امتحان کنید.")
-            return render(request, "accounts/add_address_2.html", {'form': form})
+            return render(request, "accounts/add_address.html", {'form': form})
+    # form = CustomerAddressForm()
     form = CustomerAddressForm2()
-    return render(request, "accounts/add_address_2.html", {'form': form})
+    return render(request, "accounts/add_address.html", {'form': form})
 
 
 def load_city_names(request: HttpRequest) -> JsonResponse:

@@ -9,7 +9,6 @@ urlpatterns = [
 
     # Profile routes
     path("profile/", views.profile, name='profile'),
-    path("address-2/", views.add_address_v2, name='add_address_2'),
     path("address/", views.add_address, name='add_address'),
 
     # Authentication routes
