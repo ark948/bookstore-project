@@ -34,17 +34,24 @@
 
             <div>
                 {% if user.is_authenticated %}
-                <form 
-                        hx-get="{% url 'shop:add_favorite' %}"
-                        hx-target="#favorite_response"
-                        hx-swap="innerHTML"
-                    >
-                    {% csrf_token %}
-                    <input type="hidden" name="book_id" value="{{ item.id }}">
-                    <button class="btn btn-accent btn-outline btn-xs" type="submit">افزودن به علاقه‌مندی ها</button>
-                </form>
-                <div id="favorite_response">
-                </div>
+                    {% if is_fav %}
+                        <form action="#">
+                            <input type="hidden" name="book_id" value="{{ item.id }}">
+                            <button class="btn btn-error btn-outline btn-xs" type="submit">حذف از لیست علاقه‌مندی ها</button>
+                        </form>
+                    {% else %}
+                        <form 
+                                hx-get="{% url 'shop:add_favorite' %}"
+                                hx-target="#favorite_response"
+                                hx-swap="innerHTML"
+                            >
+                            {% csrf_token %}
+                            <input type="hidden" name="book_id" value="{{ item.id }}">
+                            <button class="btn btn-accent btn-outline btn-xs" type="submit">افزودن به علاقه‌مندی ها</button>
+                        </form>
+                    {% endif %}
+                    <div id="favorite_response">
+                    </div>
                 {% endif %}
             </div>
 

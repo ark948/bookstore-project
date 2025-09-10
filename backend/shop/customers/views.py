@@ -47,11 +47,17 @@ def provide_only_available_books(request: HttpRequest) -> HttpResponse:
     })
 
 
-def item_detail(request, id):
+def item_detail(request: HttpRequest, id) -> HttpResponse:
     item = get_object_or_404(Book, id=id)
     item_form = ItemAddForm()
     add_comment_form = AddCommentForm()
+    is_favorited = False
+    if request.user.is_authenticated and request.user.role == 'user':
+        favorite = Favorite.objects.filter(user_id=request.user, book_id=item)
+        if favorite:
+            is_favorited = True
     return render(request, "shop/customers/partials/book-item.html", {
+            'is_fav': is_favorited,
             'item': item, 
             'item_form': item_form, 
             'comment_form': add_comment_form
