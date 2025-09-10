@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 import time
 import datetime
-from accounts.models import CustomUser
+from accounts.models import CustomUser, UserProfile
 
 # Create your models here.
 
@@ -379,6 +379,17 @@ class Invoice(TimeStampModel):
         unique_together = (
             'order_id',
             'payment_id'
+        )
+
+
+class Favorite(models.Model):
+    profile_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (
+            'profile_id',
+            'book_id'
         )
 
 
