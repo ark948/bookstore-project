@@ -1,14 +1,15 @@
-<div>
+<div id="fav_items_container">
     <ul>
     {% if items %}
         {% for item in items %}
-            <li>{{ item.book_id.title }} - {{ item.book_id.price }} - 
+            <li id="item_container">{{ item.book_id.title }} - {{ item.book_id.price }} - 
                 <a class="link link-success" href="{% url 'shop:item_detail' id=item.book_id.id %}">=></a>
                 <a class="link link-error"
-                    hx-get="{% url 'accounts:remove_favorite' %}"
-                    hx-trigger="click"
-                    hx-vals='{"item_id": "{{ item.book_id.id }}"}'
-                >
+                        hx-get="{% url 'accounts:remove_favorite' %}"
+                        hx-trigger="click"
+                        hx-target="#fav_items_container"
+                        hx-vals='{"item_id": "{{ item.book_id.id }}"}'
+                    >
                     حذف
                 </a>
             </li>

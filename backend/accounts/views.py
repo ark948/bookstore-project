@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseForbidden
 from django.contrib import messages
@@ -11,6 +11,7 @@ from django.contrib import messages
 # Create your views here.
 
 from shop.models import (
+    Book,
     Favorite,
     Order,
 )
@@ -125,5 +126,10 @@ def orders_list(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def remove_favorite(request: HttpRequest) -> HttpResponse:
     if request.htmx:
-        print('\n', request.GET.get('item_id'))
+        item_id = request.GET.get('item_id')
+        favorite = Favorite.objects.filter(user_id=request.user, book_id=get_object_or_404(Book, id=int(item_id)))
+        if favorite:
+            favorite.delete()
+        items = Favorite.objects.filter(user_id=request.user).all()
+        return render( request, "accounts/partials/favorites.html", { 'items': items } )
     return HttpResponse("ok")
