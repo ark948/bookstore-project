@@ -120,3 +120,10 @@ def orders_list(request: HttpRequest) -> HttpResponse:
         if items.exists():
             return render( request, "accounts/partials/orders.html", { 'items': items } )
     return render( request, "accounts/partials/orders.html" )
+
+
+@role_required('user')
+def remove_favorite(request: HttpRequest) -> HttpResponse:
+    if request.htmx:
+        print('\n', request.GET.get('item_id'))
+    return HttpResponse("ok")

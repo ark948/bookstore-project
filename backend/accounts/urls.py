@@ -7,6 +7,8 @@ app_name = 'accounts'
 urlpatterns = [
     path('protected-page/', views.protected_view, name='prtd-page'),
 
+    path("favorite-remove/", views.remove_favorite, name='remove_favorite'),
+
     # loaders
     path("favorites-list/", views.favorites_list, name='fav_list'),
     path("orders-list/", views.orders_list, name='orders_list'),
