@@ -109,3 +109,8 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         items = Favorite.objects.filter(user_id=request.user).all()
         return render(request, "accounts/partials/favorites.html", {'items': items})
+    
+
+@role_required('user')
+def orders_list(request: HttpRequest) -> HttpResponse:
+    pass

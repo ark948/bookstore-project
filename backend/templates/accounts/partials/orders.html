@@ -1,0 +1,9 @@
+<div>
+    <ul>
+    {% if items %}
+        {% for item in items %}
+            <li>{{ forloop.counter }}: {{ item }}</li>
+        {% endfor %}
+    {% endif %}
+    </ul>
+</div>
