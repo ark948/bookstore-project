@@ -64,7 +64,11 @@
             <div class="tab-content border-base-300 bg-base-100 p-10" id="favorites_list_container">Tab content 2</div>
         
             <input type="radio" name="my_tabs_2" class="tab" aria-label="آدرس ها" />
-            <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 3</div>
+            <div class="tab-content border-base-300 bg-base-100 p-10">
+                <ul>
+                    <li>{{ user.profile.address }} - {{ user.profile.postal_code }}</li>
+                </ul>
+            </div>
 
             <input type="radio" name="my_tabs_2" class="tab" aria-label="بازدید ها" />
             <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 3</div>
