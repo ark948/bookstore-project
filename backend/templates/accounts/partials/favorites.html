@@ -1,8 +1,17 @@
 <div id="fav_items_container">
+    <button class="btn btn-outline btn-info btn-xs"
+            hx-get="{% url 'accounts:fav_list' %}"
+            hx-target="#fav_items_container"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+        >
+        بروزرسانی
+    </button>
     <ul>
     {% if items %}
         {% for item in items %}
-            <li id="item_container">{{ item.book_id.title }} - {{ item.book_id.price }} - 
+            <li id="item_container">
+                {{ forloop.counter }}: {{ item.book_id.title }} - {{ item.book_id.price }} - 
                 <a class="link link-success" href="{% url 'shop:item_detail' id=item.book_id.id %}">=></a>
                 <a class="link link-error"
                         hx-get="{% url 'accounts:remove_favorite' %}"
