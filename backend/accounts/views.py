@@ -118,5 +118,4 @@ def orders_list(request: HttpRequest) -> HttpResponse:
         items = Order.objects.filter(customer_id=request.user).all()
         if items.exists():
             return render( request, "accounts/partials/orders.html", { 'items': items } )
-        else:
-            return HttpResponse("سفارشی ثبت نشده است.")
+    return render( request, "accounts/partials/orders.html" )

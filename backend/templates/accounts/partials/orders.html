@@ -4,6 +4,8 @@
         {% for item in items %}
             <li>{{ forloop.counter }}: {{ item }}</li>
         {% endfor %}
+    {% else %}
+        <span>سفارشی ثبت نشده است.</span>
     {% endif %}
     </ul>
 </div>
