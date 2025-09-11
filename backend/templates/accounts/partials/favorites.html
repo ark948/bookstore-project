@@ -2,7 +2,11 @@
     <ul>
     {% if items %}
         {% for item in items %}
-            <li>{{ item.book_id.title }} - {{ item.book_id.price }}</li>
+            <li>{{ item.book_id.title }} - {{ item.book_id.price }} - 
+                <a class="link link-success" href="{% url 'shop:item_detail' id=item.book_id.id %}">
+                    =>
+                </a>
+            </li>
         {% endfor %}
     {% else %}
         <span>لیست خالی می‌باشد.</span>
