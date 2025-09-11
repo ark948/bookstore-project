@@ -100,3 +100,7 @@ def add_address(request: HttpRequest) -> HttpResponse:
 
 def load_city_names(request: HttpRequest) -> JsonResponse:
     pass
+
+
+def favorites_list(requet: HttpRequest) -> HttpResponse:
+    return HttpResponse("Here is you list")
