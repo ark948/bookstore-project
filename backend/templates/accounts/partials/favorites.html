@@ -4,6 +4,8 @@
         {% for item in items %}
             <li>{{ item.book_id.title }} - {{ item.book_id.price }}</li>
         {% endfor %}
+    {% else %}
+        <span>لیست خالی می‌باشد.</span>
     {% endif %}
     </ul>
 </div>

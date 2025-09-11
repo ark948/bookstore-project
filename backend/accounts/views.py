@@ -110,6 +110,7 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         items = Favorite.objects.filter(user_id=request.user).all()
         return render( request, "accounts/partials/favorites.html", { 'items': items } )
+    return render( request, "accounts/partials/favorites.html" )
     
 
 @role_required('user')
