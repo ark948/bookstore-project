@@ -11,7 +11,8 @@ from django.contrib import messages
 # Create your views here.
 
 from shop.models import (
-    Favorite
+    Favorite,
+    Order,
 )
 from accounts.decorators import role_required
 from .forms import (
@@ -108,9 +109,14 @@ def load_city_names(request: HttpRequest) -> JsonResponse:
 def favorites_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         items = Favorite.objects.filter(user_id=request.user).all()
-        return render(request, "accounts/partials/favorites.html", {'items': items})
+        return render( request, "accounts/partials/favorites.html", { 'items': items } )
     
 
 @role_required('user')
 def orders_list(request: HttpRequest) -> HttpResponse:
-    pass
+    if request.htmx:
+        items = Order.objects.filter(customer_id=request.user).all()
+        if items.exists():
+            return render( request, "accounts/partials/orders.html", { 'items': items } )
+        else:
+            return HttpResponse("سفارشی ثبت نشده است.")
