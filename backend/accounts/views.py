@@ -110,8 +110,8 @@ def load_city_names(request: HttpRequest) -> JsonResponse:
 def favorites_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         items = Favorite.objects.filter(user_id=request.user).all()
-        return render( request, "accounts/partials/favorites.html", { 'items': items } )
-    return render( request, "accounts/partials/favorites.html" )
+        return render( request, "accounts/partials/favorites_table.html", { 'items': items } )
+    return render( request, "accounts/partials/favorites_table.html" )
     
 
 @role_required('user')
