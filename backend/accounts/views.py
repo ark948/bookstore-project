@@ -10,7 +10,9 @@ from django.contrib import messages
 
 # Create your views here.
 
-from accounts.models import UserProfile
+from shop.models import (
+    Favorite
+)
 from accounts.decorators import role_required
 from .forms import (
     CustomUserSignUpForm,
@@ -102,5 +104,8 @@ def load_city_names(request: HttpRequest) -> JsonResponse:
     pass
 
 
-def favorites_list(requet: HttpRequest) -> HttpResponse:
-    return HttpResponse("Here is you list")
+@role_required('user')
+def favorites_list(request: HttpRequest) -> HttpResponse:
+    if request.htmx:
+        items = Favorite.objects.filter(user_id=request.user).all()
+        return render(request, "accounts/partials/favorites.html", {'items': items})

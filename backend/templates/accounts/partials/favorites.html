@@ -1,0 +1,9 @@
+<div>
+    <ul>
+    {% if items %}
+        {% for item in items %}
+            <li>{{ item.book_id.title }} - {{ item.book_id.price }}</li>
+        {% endfor %}
+    {% endif %}
+    </ul>
+</div>
