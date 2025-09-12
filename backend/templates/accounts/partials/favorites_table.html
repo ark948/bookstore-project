@@ -13,7 +13,7 @@
                     <a class="btn btn-error btn-outline btn-xs w-14 mt-2"
                         hx-get="{% url 'accounts:remove_favorite' %}"
                         hx-trigger="click"
-                        hx-target="#fav_items_container"
+                        hx-target="#favorites_list_container"
                         hx-vals='{"item_id": "{{ item.book_id.id }}"}'>
                         حذف
                     </a>
