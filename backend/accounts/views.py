@@ -7,6 +7,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.db.models import QuerySet
+
+from typing import Optional, Dict, Any
 
 # Create your views here.
 
@@ -109,12 +112,11 @@ def load_city_names(request: HttpRequest) -> JsonResponse:
 @role_required('user')
 def favorites_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
-        items = Favorite.objects.filter(user_id=request.user).all()
+        items: QuerySet = Favorite.objects.filter(user_id=request.user).all()
+        context: Optional[Dict[str, Any]] = None
         if items.exists():
             context = { 'items': items }
-        else:
-            context = None
-    return render( request, "accounts/partials/favorites.html", context)
+        return render( request, "accounts/partials/favorites.html", context or {})
     
 
 @role_required('user')
