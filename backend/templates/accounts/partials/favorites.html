@@ -1,25 +1,28 @@
 {% load static %}
 
-{% if items %}
-    <div class="flex">
-        {% for item in items %}
-            <div class="max-w-xs bg-white rounded-lg shadow-md overflow-hidden mr-4">
-                <img class="w-24 h-24 mx-auto mt-4 object-cover rounded" src="{{ item.book_id.cover_image.url }}" alt="Product Image" />
-                <div class="p-4 text-center">
-                <h2 class="text-lg font-semibold text-gray-800">{{ item.book_id.title }}</h2>
-                <p class="mt-2 text-gray-600">{{ item.book_id.price|floatformat:"g" }} تومان</p>
-                <p class="mt-2 text-gray-600"><a class="btn btn-success btn-outline btn-xs" href="{% url 'shop:item_detail' id=item.book_id.id %}">مشاهده</a></p>
-                <p>
-                    <a class="btn btn-error btn-outline btn-xs w-14 mt-2"
-                        hx-get="{% url 'accounts:remove_favorite' %}"
-                        hx-trigger="click"
-                        hx-target="#favorites_list_container"
-                        hx-vals='{"item_id": "{{ item.book_id.id }}"}'>
-                        حذف
-                    </a>
-                </p>
-                </div>
+
+<div class="flex">
+    {% for item in items %}
+        <div class="max-w-xs bg-white rounded-lg shadow-md overflow-hidden mr-4">
+            <img class="w-24 h-24 mx-auto mt-4 object-cover rounded" src="{{ item.book_id.cover_image.url }}" alt="Product Image" />
+            <div class="p-4 text-center">
+            <h2 class="text-lg font-semibold text-gray-800">{{ item.book_id.title }}</h2>
+            <p class="mt-2 text-gray-600">{{ item.book_id.price|floatformat:"g" }} تومان</p>
+            <p class="mt-2 text-gray-600">
+                <a class="btn btn-success btn-outline btn-xs" href="{% url 'shop:item_detail' id=item.book_id.id %}">مشاهده</a>
+            </p>
+            <p>
+                <a class="btn btn-error btn-outline btn-xs w-14 mt-2"
+                    hx-get="{% url 'accounts:remove_favorite' %}"
+                    hx-trigger="click"
+                    hx-target="#favorites_list_container"
+                    hx-vals='{"item_id": "{{ item.book_id.id }}"}'>
+                    حذف
+                </a>
+            </p>
             </div>
-        {% endfor %}
-    </div>
-{% endif %}
+        </div>
+    {% empty %}
+        لیست شما خالی می‌باشد.
+    {% endfor %}
+</div>
