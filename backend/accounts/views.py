@@ -115,7 +115,7 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
         items: QuerySet = Favorite.objects.filter(user_id=request.user).all()
         context: Optional[Dict[str, Any]] = None
         if items.exists():
-            context = { 'items': items }
+            context = { 'items': items, 'total': items.count() }
         return render( request, "accounts/partials/favorites.html", context or {})
     
 
