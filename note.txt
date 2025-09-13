@@ -405,6 +405,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     their info
     their submitted tickets (if ticket-based support system was implemented)
 
+49. Customer's comments need to be heavily improved
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
