@@ -12,42 +12,31 @@
 
 
 
-### Description:
+## Description:
 Simple online bookstore project used to demonstrate common aspects and features of an e-commerce project. Focusing mainly on the backend.
 
 
-### Tech Stack
-* Backend: 
+
+## Tech Stack
+* **Backend**: 
     * Django version 5.2
 
-* Frontend: 
+* **Frontend**: 
     * TailwindCSS v4.1
     * DaisyUI v5.0
     * HTMX
     * JQuery
 
-* Database:
+* **Database**:
     * SQLite (should be sufficient for development)
     * PostgreSQL (production)
 
 
-### Features
-* Session-based Authentication
-    * Registration
-    * Login
-    * Logout
-
-* Custom User model
-    * And Profile model
-
-* Image upload
-* CRUD
-* Database Relationship
-    * One to One
-    * One to Many
-    * Many to Many
-
-* Decorator-based Custom Permission
-* Tests and Test Fixtures
-    * Pytest
-    * and Factory-boy
+### Concepts implemented
+* **Session-based Authentication**
+* **Custom User Model + Profile model**
+* **Image Upload**
+* **CRUD**
+* **Database Relationships**
+* **Custom Permissions**
+* **Tests & Test Fixtures**
