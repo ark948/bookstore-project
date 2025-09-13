@@ -65,10 +65,15 @@
             <div class="tab-content border-base-300 bg-base-100 p-10" id="favorites_list_container"></div>
         
             <input type="radio" name="my_tabs_2" class="tab" aria-label="آدرس ها" />
-            <div class="tab-content border-base-300 bg-base-100 p-10">
-                <ul>
-                    <li>{{ user.profile.address }} - {{ user.profile.postal_code }}</li>
-                </ul>
+            <div class="tab-content border-base-300 bg-base-100 p-10" id="addresses_container">
+                آدرس فعلی: 
+                استان: {{ user.profile.province }}
+                شهر: {{ user.profile.city }}
+                نشانی: {{ user.profile.address }}
+                کد پستی: {{ user.profile.postal_code }}
+                <button class="btn btn-info btn-outline btn-xs">
+                    ویرایش
+                </button>
             </div>
 
             <input type="radio" name="my_tabs_2" class="tab" aria-label="بازدید ها" />
