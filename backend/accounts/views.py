@@ -111,10 +111,6 @@ def add_address(request: HttpRequest) -> HttpResponse:
     return render(request, "accounts/add_address.html", {'form': form})
 
 
-def load_city_names(request: HttpRequest) -> JsonResponse:
-    pass
-
-
 @role_required('user')
 def favorites_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
