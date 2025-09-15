@@ -142,7 +142,7 @@ def remove_favorite(request: HttpRequest) -> HttpResponse:
     return HttpResponse("ok")
 
 
-def address_form_view(request: HttpRequest) -> HttpResponse:
+def address_form(request: HttpRequest) -> HttpResponse:
     form = AddressForm()
     return render(request, "accounts/forms/address_form.html", { 'form': form })
 

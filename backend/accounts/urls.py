@@ -5,10 +5,6 @@ from . import views
 app_name = 'accounts'
 
 urlpatterns = [
-
-    path('set-address/', views.address_form_view, name='address_form'),
-    path('ajax/load-cities/', views.load_cities, name='load_cities'),
-
     path('protected-page/', views.protected_view, name='prtd-page'),
 
     path("favorite-remove/", views.remove_favorite, name='remove_favorite'),
@@ -20,6 +16,8 @@ urlpatterns = [
     # Profile routes
     path("profile/", views.profile, name='profile'),
     path("address/", views.add_address, name='add_address'),
+    path('set-address/', views.address_form_view, name='address_form'),
+    path('ajax/load-cities/', views.load_cities, name='load_cities'),
 
     # Authentication routes
     path("signup/", views.signup, name='signup'),
