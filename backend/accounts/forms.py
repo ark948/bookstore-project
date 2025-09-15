@@ -5,10 +5,6 @@ from crispy_forms.layout import Layout, Field, Submit
 
 from .models import CustomUser, Province, City
 
-class AddressForm(forms.Form):
-    province = forms.ModelChoiceField(queryset=Province.objects.all(), empty_label="Select province")
-    city = forms.ModelChoiceField(queryset=City.objects.none(), empty_label="Select city")
-
 # THIS IS JUST AN EXAMPLE (how to crispy forms and tailwind together)
 class MyForm(forms.Form):
     name = forms.CharField(max_length=100)
@@ -27,8 +23,8 @@ class MyForm(forms.Form):
 
 class CustomerAddressForm_widget_tweaks(forms.Form):
     postal_code = forms.CharField(label="کد پستی", min_length=5, required=True)
-    province = forms.CharField(label='استان', required=True)
-    city = forms.CharField(label='شهر', required=True)
+    province = forms.ModelChoiceField(label="استان", queryset=Province.objects.all(), empty_label="Select province")
+    city = forms.ModelChoiceField(label="شهر", queryset=City.objects.none(), empty_label="Select city")
     landline = forms.CharField(label='تلفن ثابت', widget=forms.NumberInput(), required=False)
     address = forms.CharField(
         label="آدرس",
