@@ -142,10 +142,6 @@ def remove_favorite(request: HttpRequest) -> HttpResponse:
     return HttpResponse("ok")
 
 
-def address_form(request: HttpRequest) -> HttpResponse:
-    form = AddressForm()
-    return render(request, "accounts/forms/address_form.html", { 'form': form })
-
 def load_cities(request: HttpRequest) -> HttpResponse:
     province_id = request.GET.get('province')
     cities: QuerySet = City.objects.filter(province_id=province_id).order_by('name')
