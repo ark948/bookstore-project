@@ -11,7 +11,7 @@ class CustomUser(AbstractUser):
         ('admin', 'Admin'), # Can access everything
         ('manager', 'Manager'), # Can manage employees, has some restrictions to certain admin features
         ('employee', 'Employee'), # Limited access, has full access to books
-        ('user', 'User')
+        ('user', 'User') # aka customers
     ]
 
     username = None
@@ -54,6 +54,21 @@ class UserProfile(models.Model):
         verbose_name = "profile"
         verbose_name_plural = "profiles"
         db_table = "user_profiles"
+
+
+class Province(models.Model):
+    name = models.CharField(max_length=100);
+
+    def __str__(self):
+        return self.name
+    
+
+class City(models.Model):
+    province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='cities')
+    name = models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.name
 
 
 # class CustomAddress(models.Model):

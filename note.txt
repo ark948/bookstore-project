@@ -411,6 +411,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     books require thumbnails
     logged-in status for employee on nav bar needs fixing
 
+51. Users need to submit their address
+    Adding Province and City models to accounts
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
