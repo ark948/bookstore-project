@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
 
-from .models import CustomUser, UserProfile
+from .models import CustomUser, UserProfile, Province, City
 from .forms import CustomUserSignUpForm, CustomUserChangeForm
 
 
@@ -41,3 +41,5 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(UserProfile)
+admin.site.register(Province)
+admin.site.register(City)
