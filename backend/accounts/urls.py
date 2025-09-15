@@ -6,7 +6,7 @@ app_name = 'accounts'
 
 urlpatterns = [
 
-    path('address/', views.address_form_view, name='address_form'),
+    path('set-address/', views.address_form_view, name='address_form'),
     path('ajax/load-cities/', views.load_cities, name='load_cities'),
 
     path('protected-page/', views.protected_view, name='prtd-page'),

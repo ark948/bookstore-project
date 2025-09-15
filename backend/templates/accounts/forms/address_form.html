@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Address Form</title>
-    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.x/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Include DaisyUI -->
-</head>
-<body class="p-6">
+{% extends "_base.html" %}
+
+{% load static %}
+
+{% block content %}
 
 <form method="POST" class="space-y-4 max-w-md mx-auto">
     {% csrf_token %}
@@ -16,10 +11,10 @@
     <label for="id_province" class="block text-sm font-medium text-gray-700">Province</label>
     <select name="province" id="id_province"
             class="select select-bordered w-full max-w-xs"
-            hx-get="{% url 'load_cities' %}"
+            hx-get="{% url 'accounts:load_cities' %}"
             hx-target="#city-select"
             hx-trigger="change"
-            hx-params="serialize"
+            hx-include="#id_province"
             >
         <option value="">Select province</option>
         {% for province in form.fields.province.queryset %}
@@ -37,6 +32,4 @@
 
     <button type="submit" class="btn btn-primary mt-6">Submit</button>
 </form>
-
-</body>
-</html>
+{% endblock content %}
