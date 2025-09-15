@@ -3,7 +3,11 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit
 
-from .models import CustomUser
+from .models import CustomUser, Province, City
+
+class AddressForm(forms.Form):
+    province = forms.ModelChoiceField(queryset=Province.objects.all(), empty_label="Select province")
+    city = forms.ModelChoiceField(queryset=City.objects.none(), empty_label="Select city")
 
 # THIS IS JUST AN EXAMPLE (how to crispy forms and tailwind together)
 class MyForm(forms.Form):
