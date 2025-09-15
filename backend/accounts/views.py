@@ -13,6 +13,11 @@ from typing import Optional, Dict, Any
 
 # Create your views here.
 
+from .models import (
+    Province,
+    City
+)
+
 from shop.models import (
     Book,
     Favorite,
@@ -22,7 +27,8 @@ from accounts.decorators import role_required
 from .forms import (
     CustomUserSignUpForm,
     EmailLoginForm,
-    CustomerAddressForm_widget_tweaks
+    CustomerAddressForm_widget_tweaks,
+    AddressForm
 )
 
 # signup
@@ -138,3 +144,13 @@ def remove_favorite(request: HttpRequest) -> HttpResponse:
         items = Favorite.objects.filter(user_id=request.user).all()
         return render( request, "accounts/partials/favorites.html", { 'items': items } )
     return HttpResponse("ok")
+
+
+def address_form_view(request: HttpRequest) -> HttpResponse:
+    form = AddressForm()
+    return render(request, "address_form.html", { 'form': form })
+
+def load_cities(request):
+    province_id = request.GET.get('province')
+    cities = City.objects.filter(province_id=province_id).order_by('name')
+    return render(request, 'city_dropdown_list.html', {'cities': cities})
