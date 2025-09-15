@@ -28,7 +28,6 @@ from .forms import (
     CustomUserSignUpForm,
     EmailLoginForm,
     CustomerAddressForm_widget_tweaks,
-    AddressForm
 )
 
 # signup

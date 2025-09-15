@@ -8,27 +8,10 @@
     {% csrf_token %}
     
     <!-- Province Select -->
-    <label for="id_province" class="block text-sm font-medium text-gray-700">Province</label>
-    <select name="province" id="id_province"
-            class="select select-bordered w-full max-w-xs"
-            hx-get="{% url 'accounts:load_cities' %}"
-            hx-target="#city-select"
-            hx-trigger="change"
-            hx-include="#id_province"
-            >
-        <option value="">Select province</option>
-        {% for province in form.fields.province.queryset %}
-            <option value="{{ province.pk }}">{{ province.name }}</option>
-        {% endfor %}
-    </select>
+
 
     <!-- City Select (will be replaced dynamically) -->
-    <label for="id_city" class="block text-sm font-medium text-gray-700 mt-4">City</label>
-    <div id="city-select">
-        <select name="city" id="id_city" class="select select-bordered w-full max-w-xs" disabled>
-            <option value="">Select city</option>
-        </select>
-    </div>
+
 
     <button type="submit" class="btn btn-primary mt-6">Submit</button>
 </form>
