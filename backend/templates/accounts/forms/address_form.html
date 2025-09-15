@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Address Form</title>
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.x/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include DaisyUI -->
+</head>
+<body class="p-6">
+
+<form method="POST" class="space-y-4 max-w-md mx-auto">
+    {% csrf_token %}
+    
+    <!-- Province Select -->
+    <label for="id_province" class="block text-sm font-medium text-gray-700">Province</label>
+    <select name="province" id="id_province"
+            class="select select-bordered w-full max-w-xs"
+            hx-get="{% url 'load_cities' %}"
+            hx-target="#city-select"
+            hx-trigger="change"
+            hx-params="serialize"
+            >
+        <option value="">Select province</option>
+        {% for province in form.fields.province.queryset %}
+            <option value="{{ province.pk }}">{{ province.name }}</option>
+        {% endfor %}
+    </select>
+
+    <!-- City Select (will be replaced dynamically) -->
+    <label for="id_city" class="block text-sm font-medium text-gray-700 mt-4">City</label>
+    <div id="city-select">
+        <select name="city" id="id_city" class="select select-bordered w-full max-w-xs" disabled>
+            <option value="">Select city</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-6">Submit</button>
+</form>
+
+</body>
+</html>

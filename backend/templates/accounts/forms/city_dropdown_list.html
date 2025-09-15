@@ -1,0 +1,6 @@
+<select name="city" id="id_city" class="select select-bordered w-full max-w-xs">
+    <option value="">Select city</option>
+    {% for city in cities %}
+        <option value="{{ city.pk }}">{{ city.name }}</option>
+    {% endfor %}
+</select>
