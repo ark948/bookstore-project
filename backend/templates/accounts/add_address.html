@@ -18,7 +18,7 @@
                 
                 <label for="id_province" class="text-sm font-medium text-gray-700">{{ form.province.label }}</label>
                 <select name="province" id="id_province"
-                        class="select select-bordered w-full max-w-xs m-4 p-4"
+                        class="select m-4"
                         hx-get="{% url 'accounts:load_cities' %}"
                         hx-target="#city-select"
                         hx-trigger="change"
@@ -37,8 +37,8 @@
     
                 <label for="id_city" class="text-sm font-medium text-gray-700 mt-4">{{ form.city.label }}</label>
                 <div id="city-select">
-                    <select name="city" id="id_city" class="select select-bordered w-full max-w-xs m-4 p-4" disabled>
-                        <option value="">Select city</option>
+                    <select name="city" id="id_city" class="select m-4" disabled>
+                        <option value="">انتخاب شهر</option>
                     </select>
                 </div>
                 {% if form.errors %}
