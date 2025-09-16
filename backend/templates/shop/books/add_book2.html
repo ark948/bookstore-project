@@ -7,35 +7,38 @@
 {% if form %}
     <form>
         {% csrf_token %}
-        <div class="m-4">
-            <label for="id_label">عنوان</label>
-            {{ form.title|add_class:"input" }}
-        </div>
-
-        <div class="m-4">
-            <label for="id_authors">نویسندگان</label>
-            {{ form.authors|add_class:"select" }}
-        </div>
-
-        <div class="m-4">
-            <label for="id_publisher">انتشارات</label>
-            {{ form.publisher|add_class:"select" }}
-        </div>
-
-        <div class="m-4">
-            <label for="id_language">زبان</label>
-            {{ form.language|add_class:"select" }}
-        </div>
-
-        <div class="m-4">
-            <label for="id_original_language">زبان اصلی</label>
-            {{ form.original_language|add_class:"select" }}
-        </div>
 
         {% for field in form %}
-            <p>
-                {{ field.field.widget.input_type }}
-            </p>
+            {% if field.field.widget.input_type == 'text' %}
+                <div class="m-4">
+                    {{ field.label }}
+                    {{ field|add_class:"input" }}
+                </div>
+            {% elif field.field.widget.input_type == 'select' %}
+                <div class="m-4">
+                    {{ field.label }}
+                    {{ field|add_class:"select" }}
+                </div>
+            {% elif field.field.widget.input_type == 'number' %}
+                <div class="m-4">
+                    {{ field.label }}
+                    {{ field|add_class:"input" }}
+                </div>
+            {% elif field.field.widget.input_type == 'checkbox' %}
+                <div class="m-4">
+                    {{ field.label }}
+                    {{ field|add_class:"checkbox" }}
+                </div>
+            {% elif field.field.widget.input_type == 'file' %}
+                <div class="m-4">
+                    {{ field.label }}
+                    {{ field|add_class:"file-input" }}
+                </div>
+            {% else %}
+                <p class="text-red-500">
+                    {{ field.field.widget.input_type }}
+                </p>
+            {% endif %}
         {% endfor %}
 
         <div>
