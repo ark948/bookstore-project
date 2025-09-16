@@ -98,7 +98,7 @@ def add_book(request: HttpRequest) -> HttpResponse:
 
 @role_required("employee")
 def add_book_2(request: HttpRequest) -> HttpRequest:
-    pass
+    return render(request, "shop/books/add_book2.html", {'form': forms.BookForm() })
 
 
 @role_required("employee")
