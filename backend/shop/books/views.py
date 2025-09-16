@@ -97,6 +97,11 @@ def add_book(request: HttpRequest) -> HttpResponse:
 
 
 @role_required("employee")
+def add_book_2(request: HttpRequest) -> HttpRequest:
+    pass
+
+
+@role_required("employee")
 def request_book_for_editing(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         item_id = request.POST.get('input_field_name')

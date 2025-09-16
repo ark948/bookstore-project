@@ -12,6 +12,11 @@ from dal import autocomplete
 
 from shop.models import Book, Author, Publication, Language, Genre
 
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = "__all__"
+
 class NewBookForm(forms.ModelForm):
     title = forms.CharField(label="عنوان", max_length=256, required=True)
     authors = forms.ModelMultipleChoiceField(
