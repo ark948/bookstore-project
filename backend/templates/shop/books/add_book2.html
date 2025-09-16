@@ -34,13 +34,16 @@
                     {{ field.label }}
                     {{ field|add_class:"file-input" }}
                 </div>
-            {% else %}
-                <p class="text-red-500 m-4">
-                    {{ field.label }}
-                    {{ field }}
-                </p>
             {% endif %}
         {% endfor %}
+        <div class="m-4">
+            <label for="id_description">توضیحات</label>
+            {{ form.description|add_class:"textarea" }}
+        </div>
+        <div class="m-4">
+            <label for="id_summary">خلاصه</label>
+            {{ form.summary|add_class:"textarea" }}
+        </div>
 
         <div>
             <button class="btn btn-primary btn-xs w-24">تبت</button>
