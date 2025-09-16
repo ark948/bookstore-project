@@ -1,12 +1,54 @@
 {% extends "_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
 
 
 {% block content %}
 {% if form %}
     <form>
         {% csrf_token %}
-            {{ form.as_div }}
-        <button class="btn btn-xs">Submit</button>
+        <div class="m-4">
+            <label for="id_label">عنوان</label>
+            {{ form.title|add_class:"input" }}
+        </div>
+
+        <div class="m-4">
+            <label for="id_authors">نویسندگان</label>
+            {{ form.authors|add_class:"select" }}
+        </div>
+
+        <div class="m-4">
+            <label for="id_publisher">انتشارات</label>
+            {{ form.publisher|add_class:"select" }}
+        </div>
+
+        <div class="m-4">
+            <label for="id_language">زبان</label>
+            {{ form.language|add_class:"select" }}
+        </div>
+
+        <div class="m-4">
+            <label for="id_original_language">زبان اصلی</label>
+            {{ form.original_language|add_class:"select" }}
+        </div>
+
+        {% for field in form %}
+            <p>
+                {{ field.field.widget.input_type }}
+            </p>
+        {% endfor %}
+
+        <div>
+            <button class="btn btn-primary btn-xs w-24">تبت</button>
+        </div>
     </form>
 {% endif %}
 {% endblock content %}
+
+
+{% block script %}
+    <script>
+        $("#id_authors").select2();
+        $("#id_genres").select2();
+    </script>
+{% endblock script %}
