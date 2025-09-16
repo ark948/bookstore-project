@@ -16,6 +16,36 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = "__all__"
+        labels = {
+            "title": "عنوان",
+            "authors": "نویسندگان",
+            "publisher": "انتشارات",
+            "language": "زبان",
+            "original_language": "زبان اصلی",
+            "edition": "ویرایش",
+            "page_count": "تعداد صفحات",
+            "pub_date": "تاریخ انتشار",
+            "format": "فرمت",
+            "series": "مربوط به مجموعه",
+            "ISBN": "ISBN",
+            "genres": "ژانر ها",
+            "tags": "برچسب ها",
+            "price": "قیمت",
+            "available": "موجودی",
+            "copies_available": "تـعداد در انبار",
+            "description": "توضیحات",
+            "summary": "خلاصه",
+            "age_recommendation": "رده سنی پیشنهادی",
+            "keywords": "کلمات کلیدی",
+            "translators": "مترجمین",
+            "illustrators": "تصویرپردازان",
+            "rating": "امتیاز",
+        }
+
+    # there is another way to modify label
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cover_image'].label = "تصویر"
 
 class NewBookForm(forms.ModelForm):
     title = forms.CharField(label="عنوان", max_length=256, required=True)
