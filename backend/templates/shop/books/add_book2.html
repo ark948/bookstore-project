@@ -35,8 +35,9 @@
                     {{ field|add_class:"file-input" }}
                 </div>
             {% else %}
-                <p class="text-red-500">
-                    {{ field.field.widget.input_type }}
+                <p class="text-red-500 m-4">
+                    {{ field.label }}
+                    {{ field }}
                 </p>
             {% endif %}
         {% endfor %}
