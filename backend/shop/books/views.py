@@ -80,8 +80,12 @@ def add_book(request: HttpRequest) -> HttpRequest:
 
 
 @role_required("employee")
-def edit_book(request: HttpRequest) -> HttpResponse:
-    pass
+def edit_book(request: HttpRequest, pk: int) -> HttpResponse:
+    if request.method == "POST":
+        pass
+    book = get_object_or_404(Book, pk=pk)
+    form = forms.BookForm(instance=book)
+    return render(request, "shop/books/edit_book.html", { 'form': form })
 
 
 @role_required("employee")

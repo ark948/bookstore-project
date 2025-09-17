@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+
+{% if form %}
+    <form>
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button class="btn btn-primary btn-sm">Submit</button>
+    </form>
+{% endif %}
+
+{% endblock content %}
