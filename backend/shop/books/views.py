@@ -43,12 +43,6 @@ def books_list(request: HttpRequest) -> HttpResponse:
 
 
 @role_required("employee")
-def provide_new_book_form(request: HttpRequest) -> HttpResponse:
-    form = forms.BookCreationForm()
-    return render(request, "shop/books/forms/new-form.html", {'form': form})
-
-
-@role_required("employee")
 def provide_books_list(request: HttpRequest) -> HttpResponse: 
     books: QuerySet = Book.objects.all()
     response = render(request, "shop/books/partials/books-list-container.html", {'books': books})
@@ -79,21 +73,6 @@ def book_details(request: HttpRequest, pk: int) -> HttpResponse:
         pass
     response = render(request, "shop/books/book-details.html", {'item': item})
     return response
-
-
-@role_required("employee")
-def add_book(request: HttpRequest) -> HttpResponse:
-    form = forms.NewBookForm()
-    if request.method == "POST":
-        form = forms.NewBookForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "با موفقیت افزوده شد.")
-            return render(request, "shop/books/messages/successful-new-book-response.html", {'message': 'کتاب با موفقیت افزوده شد.'})
-        else:
-            messages.error(request, "در فرم خطا مشکل وجود دارد.")
-            return render(request, "shop/books/add-book.html", context={ 'form': form }, status=HTTPStatus.BAD_REQUEST)
-    return render(request, "shop/books/add-book.html", context={ "form": form })
 
 
 @role_required("employee")

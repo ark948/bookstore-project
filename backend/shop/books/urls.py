@@ -9,8 +9,10 @@ urlpatterns = [
     path("<int:pk>/edit-process/", views.edit_book_process, name='edit-process'),
     path("edit-request/", views.request_book_for_editing, name='edit-request'),
     path("list/", views.books_list, name='books-list'),
-    path("new/", views.add_book, name='add-book'),
+
     path("create/", views.book_creation_view, name='create-book'),
+
+    # Adding books
     path("add-book/", views.add_book_2, name='add_book2'),
 
     # Modals
@@ -18,7 +20,6 @@ urlpatterns = [
     path("<int:pk>/edit-with-modal/", views.load_edit_form_for_modal_container, name='load-for-edit'),
 
     # Form providers (partials)
-    path("provide-new-form/", views.provide_new_book_form, name='prvd-new-book-form'),
     path("provide-books-list/", views.provide_books_list, name='prvd-books-list'),
 
     # Autocomplete routes (django-autocomplete-light)
