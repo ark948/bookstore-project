@@ -1,5 +1,7 @@
 # Online Bookstore Project
 
+## Work in progress... Not at all ready for production
+
 ## Contents:
 * [Description](#description)
 * Screenshots
