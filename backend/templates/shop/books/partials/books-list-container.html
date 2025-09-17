@@ -103,14 +103,17 @@
       </td>
       <td>
         <div class="flex items-center justify-center space-x-4">
-          <button
+          <a href="#" class="btn btn-info btn-outline btn-xs">
+            ویرایش
+          </a>
+          <!-- <button
             class="btn btn-primary btn-outline btn-xs"
             hx-on:click="edit_book_modal_container.showModal();"
             hx-get="#"
             hx-target="#edit_response_holder"
             hx-swap="innerHTML">
               ویرایش modal
-          </button>
+          </button> -->
           <form
             id="delete_form"
             hx-delete="{% url 'shop:delete-book' book.id %}"
