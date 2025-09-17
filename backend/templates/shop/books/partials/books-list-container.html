@@ -106,10 +106,10 @@
           <button
             class="btn btn-primary btn-outline btn-xs"
             hx-on:click="edit_book_modal_container.showModal();"
-            hx-get="{% url 'shop:load-for-edit' book.id %}"
+            hx-get="#"
             hx-target="#edit_response_holder"
             hx-swap="innerHTML">
-              ویرایش
+              ویرایش modal
           </button>
           <form
             id="delete_form"
