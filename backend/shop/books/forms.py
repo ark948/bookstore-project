@@ -46,8 +46,11 @@ class BookForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['cover_image'].label = "تصویر"
+    
 
-class NewBookForm(forms.ModelForm):
+# Unused
+# kept for reference
+class BookForm_v1_unused(forms.ModelForm):
     title = forms.CharField(label="عنوان", max_length=256, required=True)
     authors = forms.ModelMultipleChoiceField(
         queryset=Author.objects.all(),
@@ -107,7 +110,49 @@ class NewBookForm(forms.ModelForm):
         }
 
 
-class QuickBookEditForm(forms.ModelForm):
+# Unused
+# kept for reference
+class BookForm_v2_unused(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = (
+            'title',
+            'authors',
+        )
+
+        widgets = {
+            'authors': autocomplete.ModelSelect2Multiple(
+                url=reverse_lazy('shop:authors-autocomplete')
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['authors'].widget.attrs.update({
+            'data-dropdown-parent': "#modal-form-container"
+        })
+
+
+# Unused
+# kept for reference
+class BookForm_v3_unused(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = "full_edit_form"
+        self.helper.form_class = "edit_form"
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit('submit', 'Send'))
+
+
+# Unused
+# kept for reference
+class BookForm_v4_unused(forms.ModelForm):
     id = forms.IntegerField(label="شناسه")
     title = forms.CharField(label="عنوان", max_length=256, required=True)
 
@@ -132,7 +177,7 @@ class QuickBookEditForm(forms.ModelForm):
         }
     
     def __init__(self, *args, **kwargs):
-        super(QuickBookEditForm, self).__init__(*args, **kwargs)
+        super(BookForm_v4_unused, self).__init__(*args, **kwargs)
         self.fields['id'].disabled = True  # or use widget attrs
 
     # dummy validation to test form errors, DELTE LATER
@@ -141,53 +186,3 @@ class QuickBookEditForm(forms.ModelForm):
         if title.startswith('x'):
             raise ValidationError('No name starts with x.')
         return title
-
-
-class FullBookEditForm(forms.ModelForm):
-    class Meta:
-        model = Book
-        fields = "__all__"
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_id = "full_edit_form"
-        self.helper.form_class = "edit_form"
-        self.helper.form_method = "post"
-        self.helper.add_input(Submit('submit', 'Send'))
-
-
-class BookFormV2(forms.ModelForm):
-    class Meta:
-        model = Book
-        fields = (
-            'title',
-            'authors',
-        )
-
-        widgets = {
-            'authors': autocomplete.ModelSelect2Multiple(
-                url=reverse_lazy('shop:authors-autocomplete')
-            ),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['authors'].widget.attrs.update({
-            'data-dropdown-parent': "#modal-form-container"
-        })
-
-
-class BookCreationForm(forms.ModelForm):
-    class Meta:
-        model = Book
-        fields = (
-            'title',
-            'authors',
-            'publisher',
-            'language',
-            'original_language',
-            'genres',
-            'page_count'
-        )
