@@ -9,11 +9,7 @@ urlpatterns = [
     path("<int:pk>/edit-process/", views.edit_book_process, name='edit-process'),
     path("edit-request/", views.request_book_for_editing, name='edit-request'),
     path("list/", views.books_list, name='books-list'),
-
-    path("create/", views.book_creation_view, name='create-book'),
-
-    # Adding books
-    path("add-book/", views.add_book, name='add_book'),
+    path("create/", views.add_book, name='add_book'),
 
     # Modals
     path("<int:pk>/edit-with-modal-process/", views.process_edit_form_from_modal, name='edit-modal-process'),

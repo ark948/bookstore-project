@@ -410,7 +410,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 50. Fix adding book by employees (especially image field)
     books require thumbnails
     logged-in status for employee on nav bar needs fixing
-    (currently there are three ways to add book, all need to be removed and replaced by a single one)
+    Removed all add book views, replaced by only one
+    unused forms also to be deleted
+    template links require update
 
 51. Users need to submit their address
     Adding Province and City models to accounts
