@@ -22,10 +22,8 @@ from shop.models import (
 )
 from shop.books import forms
 from accounts.decorators import role_required
+from shop.utils import has_custom_permission
 
-
-def has_custom_permission(user):
-    return user.is_authenticated
 
 @user_passes_test(has_custom_permission, login_url='accounts:login')
 def secret_view(request):
