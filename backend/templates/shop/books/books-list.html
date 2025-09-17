@@ -7,17 +7,9 @@
   {% include "shop/books/modals/new-book-modal-container.html" %}
     لیست کتاب ها
     <p>
-        <a href="{% url 'shop:add-book' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline btn btn-info btn-xs">افزودن +</a>
+        <a href="{% url 'shop:add_book' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline btn btn-info btn-xs">افزودن +</a>
     </p>
 
-    <button 
-        id="myBtn"
-        class="btn btn-info btn-xs"
-        hx-on:click="new_book_modal_container.showModal();"
-        hx-get="{% url 'shop:prvd-new-book-form' %}"
-        hx-target="#new_response_holder">
-      افزودن سریغ+
-    </button>
     <p>
       <a href="{% url 'shop:edit-request' %}" class="btn btn-accent btn-xs">
         صفحه ویرایش
@@ -38,11 +30,6 @@
       </div>
         
     </div>
-      <p>
-        <a href="{% url 'shop:create-book' %}" class="btn btn-info btn-outline btn-xs w-20">
-          افزودن
-        </a>
-      </p>
 {% endblock content %}
 
 {% block script %}
