@@ -13,7 +13,7 @@ urlpatterns = [
     path("create/", views.book_creation_view, name='create-book'),
 
     # Adding books
-    path("add-book/", views.add_book_2, name='add_book2'),
+    path("add-book/", views.add_book, name='add_book'),
 
     # Modals
     path("<int:pk>/edit-with-modal-process/", views.process_edit_form_from_modal, name='edit-modal-process'),
