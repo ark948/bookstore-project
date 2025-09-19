@@ -2,46 +2,48 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <h4 class="underline decoration-sky-500">
-        ثبت نام
-    </h4>
-    <div class="flex flex-col items-center">
-        <form class="m-4" method="post" action="{% url 'accounts:signup' %}">
-            {% csrf_token %}
-                <!-- django-widget-tweaks can also be used to edit field attributes -->
-                <!-- {{ form.username|attr:"placeholder:Username" }} -->
-                <div class="m-4">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ایمیل:</label>
-                    {{ form.email|add_class:"input" }}
-                    {% if form.email.errors %}
-                        <label class="label text-error">
-                            {{ form.email.errors }}
-                        </label>
-                    {% endif %}
-                </div>
-                <div class="m-4">
-                    <label for="password1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">رمزعبور:</label>
-                    {{ form.password1|add_class:"input" }}
-                    {% if form.password1.errors %}
-                        <label class="label text-error">
-                            {{ form.password1.errors }}
-                        </label>
-                    {% endif %}
-                </div>
-                <div class="m-4">
-                    <label for="password2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">تکرار رمزعبور:</label>
-                    {{ form.password2|add_class:"input" }}
-                    {% if form.password2.errors %}
-                        <label class="label text-error">
-                            {{ form.password2.errors }}
-                        </label>
-                    {% endif %}
-                </div>
-                <div class="m-4">
-                    <button type="submit" class="btn btn-success w-full">
-                        ثبت نام
-                    </button>
-                </div>
-        </form>
+<div class="min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-sm">
+      <h2 class="text-2xl font-bold mb-6 text-center">ثبت نام</h2>
+            <form class="space-y-5" method="post" action="{% url 'accounts:signup' %}">
+                {% csrf_token %}
+                    <div class="m-4">
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ایمیل:</label>
+                        {{ form.email|attr:"class:input"|attr:"placeholder:johndoe@gmail.com" }}
+                        {% if form.email.errors %}
+                            <label class="label text-error">
+                                {{ form.email.errors }}
+                            </label>
+                        {% endif %}
+                    </div>
+                    <div class="m-4">
+                        <label for="password1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">رمزعبور:</label>
+                        {{ form.password1|add_class:"input" }}
+                        {% if form.password1.errors %}
+                            <label class="label text-error">
+                                {{ form.password1.errors }}
+                            </label>
+                        {% endif %}
+                    </div>
+                    <div class="m-4">
+                        <label for="password2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">تکرار رمزعبور:</label>
+                        {{ form.password2|add_class:"input" }}
+                        {% if form.password2.errors %}
+                            <label class="label text-error">
+                                {{ form.password2.errors }}
+                            </label>
+                        {% endif %}
+                    </div>
+                    <div class="m-4">
+                        <button type="submit" class="btn btn-success w-full">
+                            ثبت نام
+                        </button>
+                    </div>
+            </form>
+            <p class="mt-4 text-center text-sm text-gray-600">
+                قبلا ثبت نام کرده‌اید؟
+                <a href="{% url 'accounts:login' %}" class="text-indigo-600 hover:underline">ورود</a>
+            </p>
     </div>
+</div>
 {% endblock content %}

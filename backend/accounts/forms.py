@@ -59,6 +59,7 @@ class CustomUserSignUpForm(UserCreationForm):
             'type': 'email',
             'id': 'email',
             'placeholder': "johndoe@gmail.com",
+            'autocomplete': "off"
         })
     )
 
@@ -104,7 +105,13 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 class EmailLoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.TextInput(attrs={'autofocus': True}), required=True)
+    email = forms.EmailField(
+        widget=forms.TextInput(attrs={
+            'autofocus': True,
+            'autocomplete': "off"
+        }), 
+        required=True
+    )
     password = forms.CharField(
         label="رمزعبور",
         strip=False,
