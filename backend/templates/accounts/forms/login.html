@@ -2,42 +2,28 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <h4 class="underline decoration-sky-500">
-        ورود به سایت
-    </h4>
-    <div class="flex flex-col items-center">
-        {% if form %}
-            <form class="m-4" method="post" action="{% url 'accounts:login' %}">
-                {% csrf_token %}
-                    <div class="m-4">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ایمیل:</label>
-                        {% render_field form.email placeholder="alikarimi51@gmail.com" autocomplete='email' %}
-                    </div>
-                    <div class="m-4">
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">رمزعبور:</label>
-                        {% render_field form.password placeholder="••••••••••••" autocomplete='password' %}
-                    </div>
-                    <div class="m-4">
-                        <button 
-                            type="submit" 
-                            class="btn btn-primary btn-sm">
-                            ورود
-                        </button>
-                    </div>
-
-                    <div class="m-4">
-                        {% if form.errors %}
-                            {% for field in form %}
-                                {% for error in field.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
-                            {% endfor %}
-                            {% for error in form.non_field_errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-            </form>
-        {% endif %}
+<div class="min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-sm">
+      <h2 class="text-2xl font-bold mb-6 text-center">ورود به حساب</h2>
+      <form class="space-y-5" method="post" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+        <div>
+          <label for="email" class="block mb-1 font-medium text-gray-700">ایمیل</label>
+          {{ form.email|add_class:"input" }}
+        </div>
+        <div>
+          <label for="password" class="block mb-1 font-medium text-gray-700">پسورد</label>
+            {{ form.password|add_class:"input" }}
+        </div>
+        <button type="submit" class="btn btn-info w-full" >
+          ورود
+        </button>
+      </form>
+      <p class="mt-4 text-center text-sm text-gray-600">
+        هنوز ثبت نام نکرده‌اید؟
+        <a href="{% url 'accounts:signup' %}" class="text-indigo-600 hover:underline">ثبت نام</a>
+      </p>
     </div>
+  </div>
+  
 {% endblock content %}
