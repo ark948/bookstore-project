@@ -375,6 +375,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
         'django_filters',
     ]
 
+    - create the filter set (e.g. on book model for employees)
+    - replace the books_list provider with this filter set
+
 46. Adding manual filters
     without 3rd-party packages
     genre, available-only, price
@@ -415,6 +418,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     template links require update
     also edit book views require update
     filters for employee section
+    compound filtering (using django-filter)
 
 51. Users need to submit their address
     Adding Province and City models to accounts

@@ -1,3 +1,5 @@
+{% load static %}
+
 <table class="table table-sm">
   <thead class="text-xs uppercase">
     <tr class="text-gray-900 text-center">
@@ -23,110 +25,112 @@
     </tr>
   </thead>
   <tbody>
-    {% for book in books %}
-    <tr class="text-center">
-      <th>{{ forloop.counter }}</th>
-      <th>{{ book.pk }}</th>
-      <td>
-        <a href="{% url 'shop:book-details' book.id %}">
-          {{ book.title }}
-        </a>
-      </td>
-      <td>
-        {% for i in book.authors.all %} 
-          {% if i.fa_name %} 
-            [{{ i.fa_name }}] 
-          {% else %} [{{ i.en_name }}] 
-        {% endif %} {% endfor %}
-      </td>
-      <td>{{ book.publisher }}</td>
-      <td>
-        {% for i in book.genres.all %} 
-          [{{ i.title }}] 
-        {% endfor %}
-      </td>
-      <td>{{ book.language }}</td>
-      <td>{{ book.original_language }}</td>
-      <td>
-        {% if book.edition %} 
-          {{ book.edition }} 
-        {% else %} 
-          یافت نشد 
-        {% endif %}
-      </td>
-      <td>{{ book.page_count }}</td>
-      <td>{{ book.pub_date }}</td>
-      <td>{{ book.format }}</td>
-      <td>
-        {% if book.ISBN %} 
-          {{ book.ISBN }} 
-        {% else %} 
-          یافت نشد 
-        {% endif %}
-      </td>
-      <td>
-        {% for i in book.translator.all %} 
-          {% if i %} 
-            {{ i.name }} 
+    {% if filter.qs %}
+      {% for book in filter.qs %}
+      <tr class="text-center">
+        <th>{{ forloop.counter }}</th>
+        <th>{{ book.pk }}</th>
+        <td>
+          <a href="{% url 'shop:book-details' book.id %}">
+            {{ book.title }}
+          </a>
+        </td>
+        <td>
+          {% for i in book.authors.all %} 
+            {% if i.fa_name %} 
+              [{{ i.fa_name }}] 
+            {% else %} [{{ i.en_name }}] 
+          {% endif %} {% endfor %}
+        </td>
+        <td>{{ book.publisher }}</td>
+        <td>
+          {% for i in book.genres.all %} 
+            [{{ i.title }}] 
+          {% endfor %}
+        </td>
+        <td>{{ book.language }}</td>
+        <td>{{ book.original_language }}</td>
+        <td>
+          {% if book.edition %} 
+            {{ book.edition }} 
+          {% else %} 
+            یافت نشد 
+          {% endif %}
+        </td>
+        <td>{{ book.page_count }}</td>
+        <td>{{ book.pub_date }}</td>
+        <td>{{ book.format }}</td>
+        <td>
+          {% if book.ISBN %} 
+            {{ book.ISBN }} 
+          {% else %} 
+            یافت نشد 
+          {% endif %}
+        </td>
+        <td>
+          {% for i in book.translator.all %} 
+            {% if i %} 
+              {{ i.name }} 
+            {% else %} 
+              -
+            {% endif %}
+          {% empty %} 
+            -
+          {% endfor %}
+        </td>
+        <td>
+          {% if book.rating %} 
+            {{ book.rating }} 
           {% else %} 
             -
           {% endif %}
-        {% empty %} 
-          -
-        {% endfor %}
-      </td>
-      <td>
-        {% if book.rating %} 
-          {{ book.rating }} 
-        {% else %} 
-          -
-        {% endif %}
-      </td>
-      <td>
-        {% if book.available %}
-          <span>&#10003;</span>
-        {% else %}
-          <span>&#10007;</span>
-        {% endif %}
-      </td>
-      <td>
-        {% if book.available %} 
-          {{ book.price|floatformat:"0g" }} &nbsp تومان 
-        {% else %} 
-            {{ book.price }} (آخرین قیمت ثبت شده)
-        {% endif %}
-      </td>
-      <td>
-        {% if book.available %} 
-          {{ book.copies_available }} 
-        {% endif %}
-      </td>
-      <td>
-        <div class="flex items-center justify-center space-x-4">
-          <a href="{% url 'shop:edit_book' pk=book.pk %}" class="btn btn-info btn-outline btn-xs">
-            ویرایش
-          </a>
-          <!-- <button
-            class="btn btn-primary btn-outline btn-xs"
-            hx-on:click="edit_book_modal_container.showModal();"
-            hx-get="#"
-            hx-target="#edit_response_holder"
-            hx-swap="innerHTML">
-              ویرایش modal
-          </button> -->
-          <form
-            id="delete_form"
-            hx-delete="{% url 'shop:delete-book' book.id %}"
-            hx-target="#books_list_container"
-            hx-on="htmx:responseError: if(event.detail.xhr.status === 404) { alert('آیتم پیدا نشد یا قبلا حذف شده.'); }"
-            hx-confirm="آیا مطمئنید؟">
-              {% csrf_token %}
-            <button class="btn btn-error btn-outline btn-xs">حذف</button>
-          </form>
-        </div>
-      </td>
-    </tr>
-    {% endfor %}
+        </td>
+        <td>
+          {% if book.available %}
+            <span>&#10003;</span>
+          {% else %}
+            <span>&#10007;</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if book.available %} 
+            {{ book.price|floatformat:"0g" }} &nbsp تومان 
+          {% else %} 
+              {{ book.price }} (آخرین قیمت ثبت شده)
+          {% endif %}
+        </td>
+        <td>
+          {% if book.available %} 
+            {{ book.copies_available }} 
+          {% endif %}
+        </td>
+        <td>
+          <div class="flex items-center justify-center space-x-4">
+            <a href="{% url 'shop:edit_book' pk=book.pk %}" class="btn btn-info btn-outline btn-xs">
+              ویرایش
+            </a>
+            <!-- <button
+              class="btn btn-primary btn-outline btn-xs"
+              hx-on:click="edit_book_modal_container.showModal();"
+              hx-get="#"
+              hx-target="#edit_response_holder"
+              hx-swap="innerHTML">
+                ویرایش modal
+            </button> -->
+            <form
+              id="delete_form"
+              hx-delete="{% url 'shop:delete-book' book.id %}"
+              hx-target="#books_list_container"
+              hx-on="htmx:responseError: if(event.detail.xhr.status === 404) { alert('آیتم پیدا نشد یا قبلا حذف شده.'); }"
+              hx-confirm="آیا مطمئنید؟">
+                {% csrf_token %}
+              <button class="btn btn-error btn-outline btn-xs">حذف</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    {% endif %}
   </tbody>
   <tfoot>
     <tr>
@@ -134,3 +138,7 @@
     </tr>
   </tfoot>
 </table>
+
+<script>
+  $('#id_genres').select2();
+</script>

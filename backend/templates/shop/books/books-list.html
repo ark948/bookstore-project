@@ -1,6 +1,7 @@
 {% extends "_base.html" %}
 {% load humanize %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block content %}
   {% include "shop/books/modals/edit-book-modal-container.html" %}
@@ -19,21 +20,33 @@
     <div class="overflow-x-auto">
 
       <button class="btn btn-primary btn-xs"
-        hx-get="{% url 'shop:prvd-books-list' %}"
-        hx-target="#books_list_container"
-      >
+            hx-get="{% url 'shop:prvd-books-list' %}"
+            hx-target="#books_list_container"
+          >
         بروزرسانی
       </button>
-
-      <div id="books_list_container">
-        {% include "shop/books/partials/books-list-container.html" %}
+      <div class="flex">
+        <div id="books_list_container">
+          {% include "shop/books/partials/books-list-container.html" %}
+        </div>
+        <div>
+          <form action="#" method="GET">
+            <div class="mb-2 form-control">
+                {{ filter.form.genres|add_label_class:"label text-white" }}
+                {% render_field filter.form.genres %}
+            </div>
+            <button class="btn btn-xs">
+              filter
+            </button>
+          </form>
+        </div>
       </div>
-        
     </div>
 {% endblock content %}
 
 {% block script %}
       <script>
+        $('#id_genres').select2();
         $('#myBtn').click(function() {
           // Open your modal here (if done via JS)
             console.log("modal triggered");

@@ -23,6 +23,7 @@ from shop.models import (
 from shop.books import forms
 from accounts.decorators import role_required
 from shop.utils import has_custom_permission
+from shop.books.filters import BookFilter
 
 
 @user_passes_test(has_custom_permission, login_url='accounts:login')
@@ -36,15 +37,22 @@ def secret_view_v2(request):
 
 @role_required("employee")
 def books_list(request: HttpRequest) -> HttpResponse:
-    books_list_obj: QuerySet = Book.objects.all()
-    return render(request, "shop/books/books-list.html", context={ 'books': books_list_obj })
+    # books_list_obj: QuerySet = Book.objects.all()
+    books_filter = BookFilter(
+        data=request.GET,
+        queryset=Book.objects.all()
+    )
+    return render(request, "shop/books/books-list.html", context={ 'filter': books_filter })
 
 
 @role_required("employee")
 def provide_books_list(request: HttpRequest) -> HttpResponse: 
-    books: QuerySet = Book.objects.all()
-    response = render(request, "shop/books/partials/books-list-container.html", {'books': books})
-    return response
+    books_filter = BookFilter(
+        data=request.GET,
+        queryset=Book.objects.all()
+    )
+    # books: QuerySet = Book.objects.all()
+    return render(request, "shop/books/partials/books-list-container.html", { 'filter': books_filter })
 
 
 @role_required("employee")
