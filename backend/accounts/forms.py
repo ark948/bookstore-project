@@ -57,15 +57,36 @@ class CustomUserSignUpForm(UserCreationForm):
         required=True,
         widget=forms.EmailInput(attrs={
             'type': 'email',
-            'id': 'email'
+            'id': 'email',
+            'placeholder': "johndoe@gmail.com",
         })
     )
+
+    # this is just for demonstration purposes
+    # password1 = forms.CharField(
+    #     label="Password",
+    #     strip=False,
+    #     widget=forms.PasswordInput(attrs={'placeholder': 'Enter your password'}),
+    #     help_text=UserCreationForm.password1.help_text,
+    # )
 
     class Meta:
         model = CustomUser
         fields = (
             "email",
+            "password1",
+            "password2",
         )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password1'].widget.attrs.update({
+            'placeholder': "**********"
+        })
+        self.fields['password2'].widget.attrs.update({
+            'placeholder': "**********"
+        })
+
 
 
 class CustomUserChangeForm(UserChangeForm):

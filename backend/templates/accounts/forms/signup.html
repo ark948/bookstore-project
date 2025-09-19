@@ -8,9 +8,11 @@
     <div class="flex flex-col items-center">
         <form class="m-4" method="post" action="{% url 'accounts:signup' %}">
             {% csrf_token %}
+                <!-- django-widget-tweaks can also be used to edit field attributes -->
+                <!-- {{ form.username|attr:"placeholder:Username" }} -->
                 <div class="m-4">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ایمیل:</label>
-                    {% render_field form.email class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="alikarimi51@gmail.com" autocomplete='email' %}
+                    {{ form.email|add_class:"input" }}
                     {% if form.email.errors %}
                         <label class="label text-error">
                             {{ form.email.errors }}
@@ -19,7 +21,7 @@
                 </div>
                 <div class="m-4">
                     <label for="password1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">رمزعبور:</label>
-                    {% render_field form.password1 class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••••••" autocomplete='password1' %}
+                    {{ form.password1|add_class:"input" }}
                     {% if form.password1.errors %}
                         <label class="label text-error">
                             {{ form.password1.errors }}
@@ -28,7 +30,7 @@
                 </div>
                 <div class="m-4">
                     <label for="password2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">تکرار رمزعبور:</label>
-                    {% render_field form.password2 class+="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••••••" %}
+                    {{ form.password2|add_class:"input" }}
                     {% if form.password2.errors %}
                         <label class="label text-error">
                             {{ form.password2.errors }}
@@ -36,9 +38,7 @@
                     {% endif %}
                 </div>
                 <div class="m-4">
-                    <button 
-                        type="submit" 
-                        class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                    <button type="submit" class="btn btn-success w-full">
                         ثبت نام
                     </button>
                 </div>
