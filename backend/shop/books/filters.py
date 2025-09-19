@@ -5,7 +5,8 @@ from shop.models import (
 
 class BookFilter(django_filters.FilterSet):
     genres = django_filters.ModelChoiceFilter(
-        queryset=Genre.objects.all()
+        queryset=Genre.objects.all(),
+        
     )
 
     class Meta:

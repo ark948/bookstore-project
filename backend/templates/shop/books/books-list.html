@@ -33,7 +33,7 @@
           <form action="#" method="GET">
             <div class="mb-2 form-control">
                 {{ filter.form.genres|add_label_class:"label text-white" }}
-                {% render_field filter.form.genres %}
+                {{ filter.form.genres|attr:"class:select" }}
             </div>
             <button class="btn btn-xs">
               filter
