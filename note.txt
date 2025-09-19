@@ -414,6 +414,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     unused forms also to be deleted
     template links require update
     also edit book views require update
+    filters for employee section
 
 51. Users need to submit their address
     Adding Province and City models to accounts
