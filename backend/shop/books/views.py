@@ -52,6 +52,8 @@ def provide_books_list(request: HttpRequest) -> HttpResponse:
         queryset=Book.objects.all()
     )
     # books: QuerySet = Book.objects.all()
+    if request.htmx:
+        return redirect(reverse('shop:books-list'))
     return render(request, "shop/books/partials/books-list-container.html", { 'filter': books_filter })
 
 

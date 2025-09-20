@@ -22,6 +22,8 @@
       <button class="btn btn-primary btn-xs"
             hx-get="{% url 'shop:prvd-books-list' %}"
             hx-target="#books_list_container"
+            hx-swap="innerHTML"
+            hx-push-url="true"
           >
         بروزرسانی
       </button>

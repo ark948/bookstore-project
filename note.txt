@@ -423,6 +423,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 51. Users need to submit their address
     Adding Province and City models to accounts
 
+52. Need to compbine books-list and books-list-container
+    there should only be one queryset
+
 
 stuff to add:
 (i keep these things here so that i don't forget them)
