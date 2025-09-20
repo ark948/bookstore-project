@@ -143,7 +143,16 @@
             </span>
     
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <!-- <a href="?page={{ page_obj.next_page_number }}">next</a> -->
+                <a
+                  class="btn btn-outline btn-xs"
+                  hx-get="{% url 'shop:get_books' %}?page={{ page_obj.next_page_number }}"
+                  hx-target="#books_list_container"
+                  hx-swap="innerHTML"
+                  hx-trigger="click"
+                >
+                NEXT_PAGE
+                </a>
                 <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
