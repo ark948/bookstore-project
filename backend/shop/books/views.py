@@ -42,6 +42,8 @@ def books_list(request: HttpRequest) -> HttpResponse:
         data=request.GET,
         queryset=Book.objects.all()
     )
+    if request.htmx:
+        return render(request, "shop/books/partials/books-list-container.html", { 'filter': books_filter })
     return render(request, "shop/books/books-list.html", context={ 'filter': books_filter })
 
 
@@ -51,9 +53,6 @@ def provide_books_list(request: HttpRequest) -> HttpResponse:
         data=request.GET,
         queryset=Book.objects.all()
     )
-    # books: QuerySet = Book.objects.all()
-    if request.htmx:
-        return redirect(reverse('shop:books-list'))
     return render(request, "shop/books/partials/books-list-container.html", { 'filter': books_filter })
 
 

@@ -20,7 +20,7 @@
     <div class="overflow-x-auto">
 
       <button class="btn btn-primary btn-xs"
-            hx-get="{% url 'shop:prvd-books-list' %}"
+            hx-get="{% url 'shop:books-list' %}"
             hx-target="#books_list_container"
             hx-swap="innerHTML"
             hx-push-url="true"
@@ -32,7 +32,11 @@
           {% include "shop/books/partials/books-list-container.html" %}
         </div>
         <div>
-          <form action="#" method="GET">
+          <form
+            hx-get="{% url 'shop:books-list' %}"
+            hx-target="#books_list_container"
+            hx-swap="innerHTML"
+            >
             <div class="mb-2 form-control">
                 {{ filter.form.genres|add_label_class:"label text-white" }}
                 {{ filter.form.genres|attr:"class:select" }}
