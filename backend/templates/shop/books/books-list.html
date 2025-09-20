@@ -28,10 +28,10 @@
         بروزرسانی
       </button>
       <div class="flex">
-        <div class="w-4/5" id="books_list_container">
+        <div class="w-5/6" id="books_list_container">
           {% include "shop/books/partials/books-list-container.html" %}
         </div>
-        <div class="w-1/5 m-4">
+        <div class="w-1/6 m-4">
           <aside class="bg-white p-4 rounded shadow">
             <form
                 hx-get="{% url 'shop:books-list' %}"
@@ -40,7 +40,11 @@
               >
               <div class="mb-2 form-control">
                   {{ filter.form.genres|add_label_class:"label text-white" }}
-                  {{ filter.form.genres|attr:"class:select" }}
+                  {{ filter.form.genres|attr:"class:select select-sm" }}
+              </div>
+              <div class="mb-2 form-control">
+                {{ filter.form.language|add_label_class:"label text-white" }}
+                {{ filter.form.language|attr:"class:select select-sm" }}
               </div>
               <button class="btn btn-xs">
                 فیلتر
