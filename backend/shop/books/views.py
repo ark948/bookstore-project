@@ -8,6 +8,8 @@ from django.contrib import messages
 from django.forms.models import model_to_dict
 from typing import List
 from django.db.models import QuerySet
+from django.core.paginator import Paginator
+from django.conf import settings
 
 from http import HTTPStatus
 
@@ -37,14 +39,12 @@ def secret_view_v2(request):
 
 @role_required("employee")
 def books_list(request: HttpRequest) -> HttpResponse:
-    # books_list_obj: QuerySet = Book.objects.all()
-    books_filter = BookFilter(
-        data=request.GET,
-        queryset=Book.objects.all()
-    )
+    books_filter = BookFilter( data=request.GET, queryset=Book.objects.all() )
+    paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
+    page_obj = paginator.page(1)
     if request.htmx:
-        return render(request, "shop/books/partials/books-list-container.html", { 'filter': books_filter })
-    return render(request, "shop/books/books-list.html", context={ 'filter': books_filter })
+        return render(request, "shop/books/partials/books-list-container.html", { 'page_obj': page_obj })
+    return render(request, "shop/books/books-list.html", context={ 'page_obj': page_obj })
 
 
 @role_required("employee")

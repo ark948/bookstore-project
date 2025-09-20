@@ -34,6 +34,7 @@
         <div class="w-1/6 m-4">
           <aside class="bg-white p-4 rounded shadow">
             <form
+                id="filterForm"
                 hx-get="{% url 'shop:books-list' %}"
                 hx-target="#books_list_container"
                 hx-swap="innerHTML"
