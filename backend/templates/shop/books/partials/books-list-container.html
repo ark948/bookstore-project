@@ -153,6 +153,16 @@
                 >
                 NEXT_PAGE
                 </a>
+              {% elif page_obj.has_previous %}
+                <a
+                  class="btn btn-outline btn-xs"
+                  hx-get="{% url 'shop:get_books' %}?page={{ page_obj.previous_page_number }}"
+                  hx-target="#books_list_container"
+                  hx-swap="innerHTML"
+                  hx-trigger="click"
+                >
+                PREVIOUS_PAGE
+                </a>
                 <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
