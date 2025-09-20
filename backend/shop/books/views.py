@@ -39,9 +39,10 @@ def secret_view_v2(request):
 
 @role_required("employee")
 def books_list(request: HttpRequest) -> HttpResponse:
+    page = request.GET.get('page', 1)
     books_filter = BookFilter( data=request.GET, queryset=Book.objects.all() )
     paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
-    page_obj = paginator.page(1)
+    page_obj = paginator.page(page)
     if request.htmx:
         return render(request, "shop/books/partials/books-list-container.html", { 'page_obj': page_obj })
     return render(request, "shop/books/books-list.html", context={ 'page_obj': page_obj })
@@ -54,6 +55,15 @@ def provide_books_list(request: HttpRequest) -> HttpResponse:
         queryset=Book.objects.all()
     )
     return render(request, "shop/books/partials/books-list-container.html", { 'filter': books_filter })
+
+
+@role_required("employee")
+def get_books(request: HttpRequest) -> HttpResponse:
+    page = request.GET.get('page', 1)
+    books_filter = BookFilter( data=request.GET, queryset=Book.objects.all() )
+    paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
+    page_obj = paginator.page(page)
+    return render(request, "shop/books/partials/books-list-container.html", { 'page_obj': page_obj })
 
 
 @role_required("employee")

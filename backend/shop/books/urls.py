@@ -20,6 +20,7 @@ urlpatterns = [
 
     # partials
     path("provide-books-list/", views.provide_books_list, name='prvd-books-list'),
+    path("get-books/", views.get_books, name='get_books'),
 
     # Autocomplete routes (django-autocomplete-light)
     path("authors-autocomplete/", views.AuthorsAutoComplete.as_view(), name='authors-autocomplete'),
