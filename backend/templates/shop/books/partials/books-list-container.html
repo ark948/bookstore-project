@@ -1,5 +1,6 @@
 {% load static %}
 
+<div class="bg-white rounded shadow">
 <table class="table table-sm">
   <thead class="text-xs uppercase">
     <tr class="text-gray-900 text-center">
@@ -96,7 +97,7 @@
           {% if book.available %} 
             {{ book.price|floatformat:"0g" }} &nbsp تومان 
           {% else %} 
-              {{ book.price }} (آخرین قیمت ثبت شده)
+              {{ book.price }} (آخرین قیمت)
           {% endif %}
         </td>
         <td>
@@ -138,7 +139,7 @@
     </tr>
   </tfoot>
 </table>
-
+</div>
 <script>
   $('#id_genres').select2();
 </script>

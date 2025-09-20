@@ -28,23 +28,25 @@
         بروزرسانی
       </button>
       <div class="flex">
-        <div id="books_list_container">
+        <div class="w-4/5" id="books_list_container">
           {% include "shop/books/partials/books-list-container.html" %}
         </div>
-        <div>
-          <form
-            hx-get="{% url 'shop:books-list' %}"
-            hx-target="#books_list_container"
-            hx-swap="innerHTML"
-            >
-            <div class="mb-2 form-control">
-                {{ filter.form.genres|add_label_class:"label text-white" }}
-                {{ filter.form.genres|attr:"class:select" }}
-            </div>
-            <button class="btn btn-xs">
-              filter
-            </button>
-          </form>
+        <div class="w-1/5 m-4">
+          <aside class="bg-white p-4 rounded shadow">
+            <form
+                hx-get="{% url 'shop:books-list' %}"
+                hx-target="#books_list_container"
+                hx-swap="innerHTML"
+              >
+              <div class="mb-2 form-control">
+                  {{ filter.form.genres|add_label_class:"label text-white" }}
+                  {{ filter.form.genres|attr:"class:select" }}
+              </div>
+              <button class="btn btn-xs">
+                فیلتر
+              </button>
+            </form>
+          </aside>
         </div>
       </div>
     </div>
