@@ -131,57 +131,6 @@
         </td>
       </tr>
       {% endfor %}
-      <div class="pagination">
-        <span class="step-links">
-            <a
-                class="btn btn-outline btn-info btn-xs"
-                hx-get="{% url 'shop:get_books' %}?page=1"
-                hx-target="#books_list_container"
-                hx-swap="innerHTML"
-                hx-trigger="click"
-                hx-include="#filterForm"
-              >
-              صفحه اول
-            </a>
-            <span class="current">
-                صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}.
-            </span>
-    
-            {% if page_obj.has_next %}
-                <a
-                  class="btn btn-outline btn-info btn-xs"
-                  hx-get="{% url 'shop:get_books' %}?page={{ page_obj.next_page_number }}"
-                  hx-target="#books_list_container"
-                  hx-swap="innerHTML"
-                  hx-trigger="click"
-                  hx-include="#filterForm"
-                >
-                صفحه بعد
-                </a>
-              {% elif page_obj.has_previous %}
-                <a
-                    class="btn btn-outline btn-info btn-xs"
-                    hx-get="{% url 'shop:get_books' %}?page={{ page_obj.previous_page_number }}"
-                    hx-target="#books_list_container"
-                    hx-swap="innerHTML"
-                    hx-trigger="click"
-                    hx-include="#filterForm"
-                  >
-                  صفحه قبل
-                </a>
-            {% endif %}
-            <a
-                class="btn btn-outline btn-info btn-xs"
-                hx-get="{% url 'shop:get_books' %}?page={{ page_obj.paginator.num_pages }}"
-                hx-target="#books_list_container"
-                hx-swap="innerHTML"
-                hx-trigger="click"
-                hx-include="#filterForm"
-              >
-              صفحه آخر
-            </a>
-        </span>
-      </div>
     {% endif %}
   </tbody>
   <tfoot>
@@ -190,6 +139,57 @@
     </tr>
   </tfoot>
 </table>
+<div class="pagination">
+  <span class="step-links">
+      <a
+          class="btn btn-outline btn-info btn-xs"
+          hx-get="{% url 'shop:get_books' %}?page=1"
+          hx-target="#books_list_container"
+          hx-swap="innerHTML"
+          hx-trigger="click"
+          hx-include="#filterForm"
+        >
+        صفحه اول
+      </a>
+      <span class="current">
+          صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+          <a
+            class="btn btn-outline btn-info btn-xs"
+            hx-get="{% url 'shop:get_books' %}?page={{ page_obj.next_page_number }}"
+            hx-target="#books_list_container"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+            hx-include="#filterForm"
+          >
+          صفحه بعد
+          </a>
+        {% elif page_obj.has_previous %}
+          <a
+              class="btn btn-outline btn-info btn-xs"
+              hx-get="{% url 'shop:get_books' %}?page={{ page_obj.previous_page_number }}"
+              hx-target="#books_list_container"
+              hx-swap="innerHTML"
+              hx-trigger="click"
+              hx-include="#filterForm"
+            >
+            صفحه قبل
+          </a>
+      {% endif %}
+      <a
+          class="btn btn-outline btn-info btn-xs"
+          hx-get="{% url 'shop:get_books' %}?page={{ page_obj.paginator.num_pages }}"
+          hx-target="#books_list_container"
+          hx-swap="innerHTML"
+          hx-trigger="click"
+          hx-include="#filterForm"
+        >
+        صفحه آخر
+      </a>
+  </span>
+</div>
 <script>
   $('#id_genres').select2();
 </script>
