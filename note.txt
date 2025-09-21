@@ -429,7 +429,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 53. Adding pagination
 
 54. Need to add django-template-partials
-    and combine books_list and get_books
+    only get_books must use template partials
     cmd> pip install django-template-partials
     cmd> pip freeze > requirements.txt
     add "template_partials", to installed_apps

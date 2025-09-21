@@ -1,4 +1,5 @@
 {% load static %}
+{% load partials %}
 
 <div class="bg-white rounded shadow">
 <table class="table table-sm">
@@ -26,163 +27,165 @@
     </tr>
   </thead>
   <tbody>
-    {% if page_obj %}
-      {% for book in page_obj %}
-      <tr class="text-center">
-        <th>{{ forloop.counter }}</th>
-        <th>{{ book.pk }}</th>
-        <td>
-          <a href="{% url 'shop:book-details' book.id %}">
-            {{ book.title }}
-          </a>
-        </td>
-        <td>
-          {% for i in book.authors.all %} 
-            {% if i.fa_name %} 
-              [{{ i.fa_name }}] 
-            {% else %} [{{ i.en_name }}] 
-          {% endif %} {% endfor %}
-        </td>
-        <td>{{ book.publisher }}</td>
-        <td>
-          {% for i in book.genres.all %} 
-            [{{ i.title }}] 
-          {% endfor %}
-        </td>
-        <td>{{ book.language }}</td>
-        <td>{{ book.original_language }}</td>
-        <td>
-          {% if book.edition %} 
-            {{ book.edition }} 
-          {% else %} 
-            یافت نشد 
-          {% endif %}
-        </td>
-        <td>{{ book.page_count }}</td>
-        <td>{{ book.pub_date }}</td>
-        <td>{{ book.format }}</td>
-        <td>
-          {% if book.ISBN %} 
-            {{ book.ISBN }} 
-          {% else %} 
-            یافت نشد 
-          {% endif %}
-        </td>
-        <td>
-          {% for i in book.translator.all %} 
-            {% if i %} 
-              {{ i.name }} 
+    {% partialdef books_list inline %}
+      {% if page_obj %}
+        {% for book in page_obj %}
+        <tr class="text-center">
+          <th>{{ forloop.counter }}</th>
+          <th>{{ book.pk }}</th>
+          <td>
+            <a href="{% url 'shop:book-details' book.id %}">
+              {{ book.title }}
+            </a>
+          </td>
+          <td>
+            {% for i in book.authors.all %} 
+              {% if i.fa_name %} 
+                [{{ i.fa_name }}] 
+              {% else %} [{{ i.en_name }}] 
+            {% endif %} {% endfor %}
+          </td>
+          <td>{{ book.publisher }}</td>
+          <td>
+            {% for i in book.genres.all %} 
+              [{{ i.title }}] 
+            {% endfor %}
+          </td>
+          <td>{{ book.language }}</td>
+          <td>{{ book.original_language }}</td>
+          <td>
+            {% if book.edition %} 
+              {{ book.edition }} 
+            {% else %} 
+              یافت نشد 
+            {% endif %}
+          </td>
+          <td>{{ book.page_count }}</td>
+          <td>{{ book.pub_date }}</td>
+          <td>{{ book.format }}</td>
+          <td>
+            {% if book.ISBN %} 
+              {{ book.ISBN }} 
+            {% else %} 
+              یافت نشد 
+            {% endif %}
+          </td>
+          <td>
+            {% for i in book.translator.all %} 
+              {% if i %} 
+                {{ i.name }} 
+              {% else %} 
+                -
+              {% endif %}
+            {% empty %} 
+              -
+            {% endfor %}
+          </td>
+          <td>
+            {% if book.rating %} 
+              {{ book.rating }} 
             {% else %} 
               -
             {% endif %}
-          {% empty %} 
-            -
-          {% endfor %}
-        </td>
-        <td>
-          {% if book.rating %} 
-            {{ book.rating }} 
-          {% else %} 
-            -
-          {% endif %}
-        </td>
-        <td>
-          {% if book.available %}
-            <span>&#10003;</span>
-          {% else %}
-            <span>&#10007;</span>
-          {% endif %}
-        </td>
-        <td>
-          {% if book.available %} 
-            {{ book.price|floatformat:"0g" }} &nbsp تومان 
-          {% else %} 
-              {{ book.price }} (آخرین قیمت)
-          {% endif %}
-        </td>
-        <td>
-          {% if book.available %} 
-            {{ book.copies_available }} 
-          {% endif %}
-        </td>
-        <td>
-          <div class="flex items-center justify-center space-x-4">
-            <a href="{% url 'shop:edit_book' pk=book.pk %}" class="btn btn-info btn-outline btn-xs">
-              ویرایش
-            </a>
-            <!-- <button
-              class="btn btn-primary btn-outline btn-xs"
-              hx-on:click="edit_book_modal_container.showModal();"
-              hx-get="#"
-              hx-target="#edit_response_holder"
-              hx-swap="innerHTML">
-                ویرایش modal
-            </button> -->
-            <form
-              id="delete_form"
-              hx-delete="{% url 'shop:delete-book' book.id %}"
-              hx-target="#books_list_container"
-              hx-on="htmx:responseError: if(event.detail.xhr.status === 404) { alert('آیتم پیدا نشد یا قبلا حذف شده.'); }"
-              hx-confirm="آیا مطمئنید؟">
-                {% csrf_token %}
-              <button class="btn btn-error btn-outline btn-xs">حذف</button>
-            </form>
-          </div>
-        </td>
-      </tr>
-      {% endfor %}
-      <div class="pagination">
-        <span class="step-links">
-            <a
-                class="btn btn-outline btn-info btn-xs"
-                hx-get="{% url 'shop:get_books' %}?page=1"
+          </td>
+          <td>
+            {% if book.available %}
+              <span>&#10003;</span>
+            {% else %}
+              <span>&#10007;</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if book.available %} 
+              {{ book.price|floatformat:"0g" }} &nbsp تومان 
+            {% else %} 
+                {{ book.price }} (آخرین قیمت)
+            {% endif %}
+          </td>
+          <td>
+            {% if book.available %} 
+              {{ book.copies_available }} 
+            {% endif %}
+          </td>
+          <td>
+            <div class="flex items-center justify-center space-x-4">
+              <a href="{% url 'shop:edit_book' pk=book.pk %}" class="btn btn-info btn-outline btn-xs">
+                ویرایش
+              </a>
+              <!-- <button
+                class="btn btn-primary btn-outline btn-xs"
+                hx-on:click="edit_book_modal_container.showModal();"
+                hx-get="#"
+                hx-target="#edit_response_holder"
+                hx-swap="innerHTML">
+                  ویرایش modal
+              </button> -->
+              <form
+                id="delete_form"
+                hx-delete="{% url 'shop:delete-book' book.id %}"
                 hx-target="#books_list_container"
-                hx-swap="innerHTML"
-                hx-trigger="click"
-                hx-include="#filterForm"
-              >
-              صفحه اول
-            </a>
-            <span class="current">
-                صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}.
-            </span>
-    
-            {% if page_obj.has_next %}
-                <a
+                hx-on="htmx:responseError: if(event.detail.xhr.status === 404) { alert('آیتم پیدا نشد یا قبلا حذف شده.'); }"
+                hx-confirm="آیا مطمئنید؟">
+                  {% csrf_token %}
+                <button class="btn btn-error btn-outline btn-xs">حذف</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+        <div class="pagination">
+          <span class="step-links">
+              <a
                   class="btn btn-outline btn-info btn-xs"
-                  hx-get="{% url 'shop:get_books' %}?page={{ page_obj.next_page_number }}"
+                  hx-get="{% url 'shop:get_books' %}?page=1"
                   hx-target="#books_list_container"
                   hx-swap="innerHTML"
                   hx-trigger="click"
                   hx-include="#filterForm"
                 >
-                صفحه بعد
-                </a>
-              {% elif page_obj.has_previous %}
-                <a
+                صفحه اول
+              </a>
+              <span class="current">
+                  صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}.
+              </span>
+      
+              {% if page_obj.has_next %}
+                  <a
                     class="btn btn-outline btn-info btn-xs"
-                    hx-get="{% url 'shop:get_books' %}?page={{ page_obj.previous_page_number }}"
+                    hx-get="{% url 'shop:get_books' %}?page={{ page_obj.next_page_number }}"
                     hx-target="#books_list_container"
                     hx-swap="innerHTML"
                     hx-trigger="click"
                     hx-include="#filterForm"
                   >
-                  صفحه قبل
-                </a>
-            {% endif %}
-            <a
-                class="btn btn-outline btn-info btn-xs"
-                hx-get="{% url 'shop:get_books' %}?page={{ page_obj.paginator.num_pages }}"
-                hx-target="#books_list_container"
-                hx-swap="innerHTML"
-                hx-trigger="click"
-                hx-include="#filterForm"
-              >
-              صفحه آخر
-            </a>
-        </span>
-      </div>
-    {% endif %}
+                  صفحه بعد
+                  </a>
+                {% elif page_obj.has_previous %}
+                  <a
+                      class="btn btn-outline btn-info btn-xs"
+                      hx-get="{% url 'shop:get_books' %}?page={{ page_obj.previous_page_number }}"
+                      hx-target="#books_list_container"
+                      hx-swap="innerHTML"
+                      hx-trigger="click"
+                      hx-include="#filterForm"
+                    >
+                    صفحه قبل
+                  </a>
+              {% endif %}
+              <a
+                  class="btn btn-outline btn-info btn-xs"
+                  hx-get="{% url 'shop:get_books' %}?page={{ page_obj.paginator.num_pages }}"
+                  hx-target="#books_list_container"
+                  hx-swap="innerHTML"
+                  hx-trigger="click"
+                  hx-include="#filterForm"
+                >
+                صفحه آخر
+              </a>
+          </span>
+        </div>
+      {% endif %}
+    {% endpartialdef %}
   </tbody>
   <tfoot>
     <tr>

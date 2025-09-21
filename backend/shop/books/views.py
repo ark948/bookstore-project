@@ -10,6 +10,7 @@ from typing import List
 from django.db.models import QuerySet
 from django.core.paginator import Paginator
 from django.conf import settings
+from django_htmx.http import retarget
 
 from http import HTTPStatus
 
@@ -59,12 +60,9 @@ def get_books(request: HttpRequest) -> HttpResponse:
     paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
     page_obj = paginator.page(page)
     context = {
-        'page_obj': page_obj,
-        'filter': books_filter
+        'page_obj': page_obj
     }
-    if request.htmx:
-        return render(request, "shop/books/partials/books-list-container.html", context)
-    return render(request, "shop/books/partials/books-list-container.html", context)
+    return render(request, "shop/books/partials/books-list-container.html#", context)
 
 
 @role_required("employee")
