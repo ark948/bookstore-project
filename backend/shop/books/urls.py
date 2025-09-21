@@ -19,7 +19,6 @@ urlpatterns = [
     # path("<int:pk>/edit-with-modal/", views.load_edit_form_for_modal_container, name='load-for-edit'),
 
     # partials
-    path("provide-books-list/", views.provide_books_list, name='prvd-books-list'),
     path("get-books/", views.get_books, name='get_books'),
 
     # Autocomplete routes (django-autocomplete-light)
