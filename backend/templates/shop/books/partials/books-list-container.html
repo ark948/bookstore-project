@@ -1,7 +1,15 @@
 {% load static %}
+{% load widget_tweaks %}
 {% load partials %}
 
 <div class="bg-white rounded shadow">
+  <button class="btn btn-success btn-xs"
+    hx-get="{% url 'shop:get_books' %}"
+    hx-swap="innerHTML"
+    hx-target="#books_list"
+  >
+  بروزرسانیinternal
+  </button>
 <table class="table table-sm">
   <thead class="text-xs uppercase">
     <tr class="text-gray-900 text-center">
@@ -193,6 +201,26 @@
     </tr>
   </tfoot>
 </table>
+<aside>
+  <form
+        id="filterForm"
+        hx-get="{% url 'shop:books-list' %}"
+        hx-target="#books_list_container"
+        hx-swap="innerHTML"
+      >
+    <div class="mb-2 form-control">
+       {{ filter.form.genres|add_label_class:"label" }}
+       {% render_field filter.form.genres class="select select-sm" %}
+    </div>
+    <div class="mb-2 form-control">
+      {{ filter.form.language|add_label_class:"label" }}
+      {% render_field filter.form.language class="select select-sm" %}
+    </div>
+    <button class="btn btn-xs">
+      فیلتر
+    </button>
+  </form>
+</aside>
 <script>
   $('#id_genres').select2();
 </script>

@@ -62,7 +62,7 @@ def get_books(request: HttpRequest) -> HttpResponse:
     context = {
         'page_obj': page_obj
     }
-    return render(request, "shop/books/partials/books-list-container.html#", context)
+    return render(request, "shop/books/partials/books-list-container.html#books_list", context)
 
 
 @role_required("employee")
