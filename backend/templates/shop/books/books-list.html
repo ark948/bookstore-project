@@ -4,8 +4,6 @@
 {% load widget_tweaks %}
 
 {% block content %}
-  {% include "shop/books/modals/edit-book-modal-container.html" %}
-  {% include "shop/books/modals/new-book-modal-container.html" %}
     لیست کتاب ها
     <p>
         <a href="{% url 'shop:add_book' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline btn btn-info btn-xs">افزودن +</a>
@@ -27,12 +25,11 @@
           >
         بروزرسانی
       </button>
-      <div class="flex">
-        <div class="w-5/6" id="books_list_container">
+      <div>
+        <div id="books_list_container">
           {% include "shop/books/partials/books-list-container.html" %}
         </div>
-        <div class="w-1/6 m-4">
-          <aside class="bg-white p-4 rounded shadow">
+          <aside>
             <form
                 id="filterForm"
                 hx-get="{% url 'shop:books-list' %}"
@@ -52,7 +49,6 @@
               </button>
             </form>
           </aside>
-        </div>
       </div>
     </div>
 {% endblock content %}
