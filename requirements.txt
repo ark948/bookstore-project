@@ -13,6 +13,7 @@ django-filter==25.1
 django-htmx==1.23.1
 django-redis==6.0.0
 django-select2==8.4.1
+django-template-partials==25.2
 django-widget-tweaks==1.5.0
 executing==2.2.0
 factory_boy==3.3.3

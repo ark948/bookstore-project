@@ -62,6 +62,8 @@ def get_books(request: HttpRequest) -> HttpResponse:
         'page_obj': page_obj,
         'filter': books_filter
     }
+    if request.htmx:
+        return render(request, "shop/books/partials/books-list-container.html", context)
     return render(request, "shop/books/partials/books-list-container.html", context)
 
 

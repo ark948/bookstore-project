@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # "django_select2",
     "crispy_forms",
     "crispy_tailwind",
+    "template_partials",
 
     'accounts',
     'home',
