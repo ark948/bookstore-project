@@ -133,38 +133,53 @@
       {% endfor %}
       <div class="pagination">
         <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
-    
+            <a
+                class="btn btn-outline btn-info btn-xs"
+                hx-get="{% url 'shop:get_books' %}?page=1"
+                hx-target="#books_list_container"
+                hx-swap="innerHTML"
+                hx-trigger="click"
+                hx-include="#filterForm"
+              >
+              صفحه اول
+            </a>
             <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}.
             </span>
     
             {% if page_obj.has_next %}
-                <!-- <a href="?page={{ page_obj.next_page_number }}">next</a> -->
                 <a
-                  class="btn btn-outline btn-xs"
+                  class="btn btn-outline btn-info btn-xs"
                   hx-get="{% url 'shop:get_books' %}?page={{ page_obj.next_page_number }}"
                   hx-target="#books_list_container"
                   hx-swap="innerHTML"
                   hx-trigger="click"
+                  hx-include="#filterForm"
                 >
-                NEXT_PAGE
+                صفحه بعد
                 </a>
               {% elif page_obj.has_previous %}
                 <a
-                  class="btn btn-outline btn-xs"
-                  hx-get="{% url 'shop:get_books' %}?page={{ page_obj.previous_page_number }}"
-                  hx-target="#books_list_container"
-                  hx-swap="innerHTML"
-                  hx-trigger="click"
-                >
-                PREVIOUS_PAGE
+                    class="btn btn-outline btn-info btn-xs"
+                    hx-get="{% url 'shop:get_books' %}?page={{ page_obj.previous_page_number }}"
+                    hx-target="#books_list_container"
+                    hx-swap="innerHTML"
+                    hx-trigger="click"
+                    hx-include="#filterForm"
+                  >
+                  صفحه قبل
                 </a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
+            <a
+                class="btn btn-outline btn-info btn-xs"
+                hx-get="{% url 'shop:get_books' %}?page={{ page_obj.paginator.num_pages }}"
+                hx-target="#books_list_container"
+                hx-swap="innerHTML"
+                hx-trigger="click"
+                hx-include="#filterForm"
+              >
+              صفحه آخر
+            </a>
         </span>
       </div>
     {% endif %}
