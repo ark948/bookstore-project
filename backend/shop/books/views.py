@@ -43,9 +43,13 @@ def books_list(request: HttpRequest) -> HttpResponse:
     books_filter = BookFilter( data=request.GET, queryset=Book.objects.all() )
     paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
     page_obj = paginator.page(page)
+    context = {
+        'page_obj': page_obj,
+        'filter': books_filter
+    }
     if request.htmx:
-        return render(request, "shop/books/partials/books-list-container.html", { 'page_obj': page_obj })
-    return render(request, "shop/books/books-list.html", context={ 'page_obj': page_obj })
+        return render(request, "shop/books/partials/books-list-container.html", context)
+    return render(request, "shop/books/books-list.html", context)
 
 
 @role_required("employee")
@@ -63,7 +67,11 @@ def get_books(request: HttpRequest) -> HttpResponse:
     books_filter = BookFilter( data=request.GET, queryset=Book.objects.all() )
     paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
     page_obj = paginator.page(page)
-    return render(request, "shop/books/partials/books-list-container.html", { 'page_obj': page_obj })
+    context = {
+        'page_obj': page_obj,
+        'filter': books_filter
+    }
+    return render(request, "shop/books/partials/books-list-container.html", context)
 
 
 @role_required("employee")
