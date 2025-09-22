@@ -2,22 +2,7 @@
 {% load widget_tweaks %}
 {% load partials %}
 
-<button class="btn btn-primary btn-xs"
-    hx-get="{% url 'shop:get_books' %}"
-    hx-target="#books_list_container"
-    hx-swap="innerHTML"
-    >
-    بروزرسانی
-</button>
-
 <div class="bg-white rounded shadow">
-  <button class="btn btn-success btn-xs"
-    hx-get="{% url 'shop:get_books' %}"
-    hx-swap="innerHTML"
-    hx-target="#books_list"
-  >
-  بروزرسانیinternal
-  </button>
 <table class="table table-sm">
   <thead class="text-xs uppercase">
     <tr class="text-gray-900 text-center">
@@ -128,14 +113,6 @@
               <a href="{% url 'shop:edit_book' pk=book.pk %}" class="btn btn-info btn-outline btn-xs">
                 ویرایش
               </a>
-              <!-- <button
-                class="btn btn-primary btn-outline btn-xs"
-                hx-on:click="edit_book_modal_container.showModal();"
-                hx-get="#"
-                hx-target="#edit_response_holder"
-                hx-swap="innerHTML">
-                  ویرایش modal
-              </button> -->
               <form
                 id="delete_form"
                 hx-delete="{% url 'shop:delete-book' book.id %}"
@@ -205,7 +182,7 @@
   </tbody>
   <tfoot>
     <tr>
-      <td>تعداد کل: {{ books|length }}</td>
+      <td>تعداد کل: {{ page_obj|length }}</td>
     </tr>
   </tfoot>
 </table>

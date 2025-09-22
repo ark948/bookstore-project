@@ -4,9 +4,6 @@
 
 {% block content %}
     لیست کتاب ها
-    <div>
-        <a href="{% url 'shop:add_book' %}" class="hover:underline btn btn-info btn-xs">افزودن +</a>
-    </div>
 
     <div id="books_list_container">
       {% include "shop/books/partials/books-list-container.html" %}
