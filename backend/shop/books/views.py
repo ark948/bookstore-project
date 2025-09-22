@@ -42,9 +42,11 @@ def secret_view_v2(request):
 def books_list(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
     books_filter = BookFilter( data=request.GET, queryset=Book.objects.all() )
+    total = books_filter.qs.count()
     paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
     page_obj = paginator.page(page)
     context = {
+        'total': total,
         'page_obj': page_obj,
         'filter': books_filter
     }
@@ -57,9 +59,11 @@ def books_list(request: HttpRequest) -> HttpResponse:
 def get_books(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
     books_filter = BookFilter( data=request.GET, queryset=Book.objects.all() )
+    total = books_filter.qs.count()
     paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
     page_obj = paginator.page(page)
     context = {
+        'total': total,
         'page_obj': page_obj,
         'filter': books_filter
     }
