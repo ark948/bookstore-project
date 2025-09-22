@@ -2,6 +2,14 @@
 {% load widget_tweaks %}
 {% load partials %}
 
+<button class="btn btn-primary btn-xs"
+    hx-get="{% url 'shop:get_books' %}"
+    hx-target="#books_list_container"
+    hx-swap="innerHTML"
+    >
+    بروزرسانی
+</button>
+
 <div class="bg-white rounded shadow">
   <button class="btn btn-success btn-xs"
     hx-get="{% url 'shop:get_books' %}"
@@ -35,7 +43,7 @@
     </tr>
   </thead>
   <tbody>
-    {% partialdef books_list inline %}
+    {% partialdef inline-partial inline %}
       {% if page_obj %}
         {% for book in page_obj %}
         <tr class="text-center">

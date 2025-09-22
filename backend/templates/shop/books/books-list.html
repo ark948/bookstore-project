@@ -14,20 +14,8 @@
       </a>
     </p>
 
-    <div class="overflow-x-auto">
-
-      <button class="btn btn-primary btn-xs"
-            hx-get="{% url 'shop:get_books' %}"
-            hx-target="#books_list_container"
-            hx-swap="innerHTML"
-          >
-        بروزرسانی
-      </button>
-      <div>
-        <div id="books_list_container">
-          {% include "shop/books/partials/books-list-container.html" %}
-        </div>
-      </div>
+    <div id="books_list_container">
+      {% include "shop/books/partials/books-list-container.html" %}
     </div>
 {% endblock content %}
 

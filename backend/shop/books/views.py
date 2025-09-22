@@ -60,9 +60,10 @@ def get_books(request: HttpRequest) -> HttpResponse:
     paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
     page_obj = paginator.page(page)
     context = {
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'filter': books_filter
     }
-    return render(request, "shop/books/partials/books-list-container.html#books_list", context)
+    return render(request, "shop/books/partials/books-list-container.html#inline-partial", context)
 
 
 @role_required("employee")
