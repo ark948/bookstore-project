@@ -186,26 +186,6 @@
     </tr>
   </tfoot>
 </table>
-<aside>
-  <form
-        id="filterForm"
-        hx-get="{% url 'shop:books-list' %}"
-        hx-target="#books_list_container"
-        hx-swap="innerHTML"
-      >
-    <div class="mb-2 form-control">
-       {{ filter.form.genres|add_label_class:"label" }}
-       {% render_field filter.form.genres class="select select-sm" %}
-    </div>
-    <div class="mb-2 form-control">
-      {{ filter.form.language|add_label_class:"label" }}
-      {% render_field filter.form.language class="select select-sm" %}
-    </div>
-    <button class="btn btn-xs">
-      فیلتر
-    </button>
-  </form>
-</aside>
 <script>
   $('#id_genres').select2();
 </script>
