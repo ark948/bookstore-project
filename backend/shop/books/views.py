@@ -63,7 +63,8 @@ def get_books(request: HttpRequest) -> HttpResponse:
         'page_obj': page_obj,
         'filter': books_filter
     }
-    return render(request, "shop/books/partials/books-list-container.html#inline-partial", context)
+    # removed django-template-partial suffix from render statement and pagination was fixed
+    return render(request, "shop/books/partials/books-list-container.html", context)
 
 
 @role_required("employee")
