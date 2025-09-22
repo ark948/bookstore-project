@@ -149,10 +149,6 @@
           >
           صفحه اول
         </a>
-        <span class="current">
-            صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}.
-        </span>
-
         {% if page_obj.has_next %}
             <a
               class="btn btn-outline btn-info btn-xs"
@@ -167,7 +163,11 @@
             </svg>            
             صفحه بعد
             </a>
-          {% elif page_obj.has_previous %}
+          {% endif %}
+          <span class="current">
+            صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}.
+          </span>
+          {% if page_obj.has_previous %}
             <a
                 class="btn btn-outline btn-info btn-xs"
                 hx-get="{% url 'shop:get_books' %}?page={{ page_obj.previous_page_number }}"
@@ -181,17 +181,17 @@
               </svg>
               صفحه قبل
             </a>
-        {% endif %}
-        <a
-            class="btn btn-outline btn-info btn-xs"
-            hx-get="{% url 'shop:get_books' %}?page={{ page_obj.paginator.num_pages }}"
-            hx-target="#books_list_container"
-            hx-swap="innerHTML"
-            hx-trigger="click"
-            hx-include="#filterForm"
-          >
-          صفحه آخر
-        </a>
+          {% endif %}
+            <a
+              class="btn btn-outline btn-info btn-xs"
+              hx-get="{% url 'shop:get_books' %}?page={{ page_obj.paginator.num_pages }}"
+              hx-target="#books_list_container"
+              hx-swap="innerHTML"
+              hx-trigger="click"
+              hx-include="#filterForm"
+            >
+            صفحه آخر
+          </a>
     </span>
   </div>
 
