@@ -217,19 +217,33 @@
   <!-- FilterSet -->
   <div class="m-2 p-2 basis-2/8 rounded shadow">
       <h3>فیلتر ها</h3>
+      <div class="flex flex-col space-y-4 w-full max-w-md">
       <form>
           <div class="mb-2 form-control">
-              {{ filter.form.genres|add_label_class:"label" }}
-              {% render_field filter.form.genres class="select select-sm" %}
+            {{ filter.form.publisher|add_label_class:"label" }}
+            {% render_field filter.form.publisher class="select select-sm" %}
           </div>
           <div class="mb-2 form-control">
             {{ filter.form.language|add_label_class:"label" }}
             {% render_field filter.form.language class="select select-sm" %}
           </div>
-          <button class="btn btn-xs">
+          <div class="mb-2 form-control">
+            {{ filter.form.genres|add_label_class:"label" }}
+            {% render_field filter.form.genres class="select select-sm" %}
+          </div>
+          <div class="mb-2 form-control">
+            {{ filter.form.tags|add_label_class:"label" }}
+            {% render_field filter.form.tags class="select select-sm" %}
+          </div>
+          <div class="mb-2 form-control">
+            <label for="is_available">موجودی؟</label>
+            <input type="checkbox" class="checkbox checkbox-success" id="is_available" name="available">
+          </div>
+          <button class="btn btn-outline btn-success btn-xs w-32">
             اعمال
           </button>
-      </form>
+        </form>
+    </div>
   </div>
 
 </div>

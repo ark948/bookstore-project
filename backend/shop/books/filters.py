@@ -1,13 +1,14 @@
 import django_filters
+import django_filters.widgets
 from shop.models import (
-    Book, Genre, Language
+    Book, Genre, Language, Publication, Tag
 )
 
 class BookFilter(django_filters.FilterSet):
-    genres = django_filters.ModelChoiceFilter(
-        queryset=Genre.objects.all(),
+    publisher = django_filters.ModelChoiceFilter(
+        queryset=Publication.objects.all(),
         empty_label="Any",
-        label="ژانر"
+        label="انتشارات"
     )
 
     language = django_filters.ModelChoiceFilter(
@@ -16,9 +17,21 @@ class BookFilter(django_filters.FilterSet):
         label="زبان"
     )
 
+    genres = django_filters.ModelChoiceFilter(
+        queryset=Genre.objects.all(),
+        empty_label="Any",
+        label="ژانر"
+    )
+
+    tags = django_filters.ModelMultipleChoiceFilter(
+        queryset=Tag.objects.all(),
+    )
+
     class Meta:
         model = Book
         fields = (
-            "genres",
+            "publisher",
             "language",
+            "genres",
+            "tags",
         )
