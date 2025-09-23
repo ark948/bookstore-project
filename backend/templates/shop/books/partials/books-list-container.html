@@ -6,13 +6,13 @@
 <!-- [BookTable, Pagination] and FilterSet -->
 <div class="flex">
   <!-- BookTable and Pagination -->
-  <div>
+  <div class="m-2 p-2 basis-6/8 rounded shadow overflow-x-auto">
     <!-- Books table -->
-      <div class="bg-white rounded shadow">
-        <table class="table table-sm">
+      <div class="bg-white overflow-x-auto">
+        <table class="table table-auto table-xs">
           <thead class="text-xs uppercase">
             <tr class="text-gray-900 text-center">
-              <th>#</th>
+              <th class="w-16">#</th>
               <th>شناسه</th>
               <th>عنوان</th>
               <th>نویسنده</th>
@@ -38,7 +38,7 @@
               {% if page_obj %}
                 {% for book in page_obj %}
                 <tr class="text-center">
-                  <th>{{ forloop.counter }}</th>
+                  <th class="w-16">{{ forloop.counter }}</th>
                   <th>{{ book.pk }}</th>
                   <td>
                     <a href="{% url 'shop:book-details' book.id %}">
@@ -215,7 +215,7 @@
 
 
   <!-- FilterSet -->
-    <div class="flex flex-col">
+  <div class="m-2 p-2 basis-2/8 rounded shadow">
       <h3>فیلتر ها</h3>
       <form>
           <div class="mb-2 form-control">
@@ -230,7 +230,7 @@
             اعمال
           </button>
       </form>
-    </div>
+  </div>
 
 </div>
 

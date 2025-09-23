@@ -436,6 +436,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 55. insalled django-browser-reload
 
+- new book form errors do not display properly
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar
