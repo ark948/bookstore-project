@@ -17,14 +17,14 @@ class BookFilter(django_filters.FilterSet):
         label="زبان"
     )
 
-    genres = django_filters.ModelChoiceFilter(
+    genres = django_filters.ModelMultipleChoiceFilter(
         queryset=Genre.objects.all(),
-        empty_label="Any",
         label="ژانر"
     )
 
     tags = django_filters.ModelMultipleChoiceFilter(
         queryset=Tag.objects.all(),
+        label="برچسب"
     )
 
     class Meta:
