@@ -220,7 +220,12 @@
       <div class="flex flex-col space-y-4 w-full max-w-md">
       <form id="filter_form"
             hx-get="{% url 'shop:load_filter' %}"
-            hx-target="#books_records">
+            hx-target="#books_records"
+            >
+          <div class="mb-2 form-control">
+            {{ filter.form.authors|add_label_class:"label" }}
+            {% render_field filter.form.authors class="select select-sm" %}
+          </div>
           <div class="mb-2 form-control">
             {{ filter.form.publisher|add_label_class:"label" }}
             {% render_field filter.form.publisher class="select select-sm" %}
@@ -251,6 +256,7 @@
 </div>
 
 <script>
+  $('#id_authors').select2();
   $('#id_genres').select2();
   $('#id_tags').select2();
 </script>
