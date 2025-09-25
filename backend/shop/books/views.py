@@ -41,7 +41,7 @@ def secret_view_v2(request):
 @role_required("employee")
 def books_list(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
-    books_filter = BookFilter( request.GET, queryset=Book.objects.all() )
+    books_filter = BookFilter( request.GET, queryset=Book.objects.all().order_by('created_at') )
     total = books_filter.qs.count()
     paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
     page_obj = paginator.page(page)
@@ -77,7 +77,7 @@ def load_filtered_books(request: HttpRequest) -> HttpResponse:
 @role_required("employee")
 def get_books(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
-    books_filter = BookFilter( data=request.GET, queryset=Book.objects.all() )
+    books_filter = BookFilter( data=request.GET, queryset=Book.objects.all().order_by('created_at') )
     total = books_filter.qs.count()
     paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
     page_obj = paginator.page(page)
