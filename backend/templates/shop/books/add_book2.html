@@ -14,7 +14,14 @@
                     {{ field.label }}
                     {{ field|add_class:"input" }}
                     {% if field.help_text %}
-                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             {% elif field.field.widget.input_type == 'select' %}
@@ -22,7 +29,14 @@
                     {{ field.label }}
                     {{ field|add_class:"select" }}
                     {% if field.help_text %}
-                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             {% elif field.field.widget.input_type == 'number' %}
@@ -30,7 +44,14 @@
                     {{ field.label }}
                     {{ field|add_class:"input" }}
                     {% if field.help_text %}
-                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             {% elif field.field.widget.input_type == 'checkbox' %}
@@ -38,7 +59,14 @@
                     {{ field.label }}
                     {{ field|add_class:"checkbox" }}
                     {% if field.help_text %}
-                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             {% elif field.field.widget.input_type == 'file' %}
@@ -46,7 +74,14 @@
                     {{ field.label }}
                     {{ field|add_class:"file-input" }}
                     {% if field.help_text %}
-                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             {% endif %}
@@ -54,15 +89,29 @@
         <div class="m-4">
             <label for="id_description">توضیحات</label>
             {{ form.description|add_class:"textarea" }}
-            {% if field.help_text %}
-            <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% if form.description.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+            {% if form.description.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.description.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
             {% endif %}
         </div>
         <div class="m-4">
             <label for="id_summary">خلاصه</label>
             {{ form.summary|add_class:"textarea" }}
-            {% if field.help_text %}
-            <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% if form.summary.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+            {% if form.summary.errors %}
+                <div class="alert alert-danger">
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
             {% endif %}
         </div>
 
