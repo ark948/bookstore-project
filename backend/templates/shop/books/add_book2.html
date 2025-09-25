@@ -5,7 +5,7 @@
 
 {% block content %}
 {% if form %}
-    <form>
+    <form method="post" action="{% url 'shop:add_book' %}">
         {% csrf_token %}
 
         {% for field in form %}
@@ -116,7 +116,10 @@
         </div>
 
         <div>
-            <button class="btn btn-primary btn-xs w-24">تبت</button>
+            <button type="submit" class="btn btn-primary btn-xs w-24">تبت</button>
+            <a class="btn btn-error btn-xs w-24 mr-4" href="{% url 'shop:books-list' %}">
+                لغو
+            </a>
         </div>
     </form>
 {% endif %}
