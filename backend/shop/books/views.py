@@ -118,8 +118,16 @@ def book_details(request: HttpRequest, pk: int) -> HttpResponse:
 
 @role_required("employee")
 def add_book(request: HttpRequest) -> HttpRequest:
+    if request.method == "POST":
+        form = forms.BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "کتاب با موفقیت افزوده شد.")
+            return redirect(reverse("shop:books-list"))
+        else:
+            return render(request, "shop/books/add_book2.html", { 'form': form })
     form = forms.BookForm()
-    return render(request, "shop/books/add_book2.html", {'form': form })
+    return render(request, "shop/books/add_book2.html", { 'form': form })
 
 
 @role_required("employee")
