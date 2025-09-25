@@ -125,9 +125,9 @@ def add_book(request: HttpRequest) -> HttpRequest:
             messages.success(request, "کتاب با موفقیت افزوده شد.")
             return redirect(reverse("shop:books-list"))
         else:
-            return render(request, "shop/books/add_book2.html", { 'form': form })
+            return render(request, "shop/books/add_book.html", { 'form': form })
     form = forms.BookForm()
-    return render(request, "shop/books/add_book2.html", { 'form': form })
+    return render(request, "shop/books/add_book.html", { 'form': form })
 
 
 @role_required("employee")
