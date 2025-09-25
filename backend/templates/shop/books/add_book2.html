@@ -13,36 +13,57 @@
                 <div class="m-4">
                     {{ field.label }}
                     {{ field|add_class:"input" }}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
                 </div>
             {% elif field.field.widget.input_type == 'select' %}
                 <div class="m-4">
                     {{ field.label }}
                     {{ field|add_class:"select" }}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
                 </div>
             {% elif field.field.widget.input_type == 'number' %}
                 <div class="m-4">
                     {{ field.label }}
                     {{ field|add_class:"input" }}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
                 </div>
             {% elif field.field.widget.input_type == 'checkbox' %}
                 <div class="m-4">
                     {{ field.label }}
                     {{ field|add_class:"checkbox" }}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
                 </div>
             {% elif field.field.widget.input_type == 'file' %}
                 <div class="m-4">
                     {{ field.label }}
                     {{ field|add_class:"file-input" }}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
                 </div>
             {% endif %}
         {% endfor %}
         <div class="m-4">
             <label for="id_description">توضیحات</label>
             {{ form.description|add_class:"textarea" }}
+            {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
         </div>
         <div class="m-4">
             <label for="id_summary">خلاصه</label>
             {{ form.summary|add_class:"textarea" }}
+            {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
         </div>
 
         <div>
@@ -57,5 +78,9 @@
     <script>
         $("#id_authors").select2();
         $("#id_genres").select2();
+        $("#id_tags").select2();
+        $("#id_keywords").select2();
+        $("#id_translators").select2();
+        $("#id_illustrators").select2();
     </script>
 {% endblock script %}
