@@ -43,18 +43,16 @@
         });
 
         function toggleFilter() {
+          let filter_box_container = document.getElementById('filter_box_container');
+          let books_list = document.getElementById('books_list_container_inner');
           if (document.getElementById('id_filter_box_toggle').checked)
           {
             // console.log('checked');
-            let books_list = document.getElementById('books_list_container_inner');
             books_list.className = "m-2 p-2 basis-6/8 rounded shadow overflow-x-auto";
-            let t = document.getElementById('filter_box_container');
-            t.style.display = "block";
+            filter_box_container.style.display = "block";
           } else {
             // console.log('unchecked');
-            let t = document.getElementById('filter_box_container');
-            t.style.display = "none";
-            let books_list = document.getElementById('books_list_container_inner');
+            filter_box_container.style.display = "none"
             books_list.className = "m-2 p-2 basis-8/8 rounded shadow overflow-x-auto";
           }
         }
