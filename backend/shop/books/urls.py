@@ -6,17 +6,9 @@ urlpatterns = [
     # CRUD Actions
     path("details/<int:pk>/", views.book_details, name='book-details'),
     path("delete/<int:pk>/", views.delete_book, name='delete-book'),
-
     path("list/", views.books_list, name='books-list'),
     path("create/", views.add_book, name='add_book'),
-
     path("edit/<int:pk>/", views.edit_book, name='edit_book'),
-
-    # edit views
-    # path("<int:pk>/edit-process/", views.edit_book_process, name='edit-process'),
-    # path("edit-request/", views.request_book_for_editing, name='edit-request'),
-    # path("<int:pk>/edit-with-modal-process/", views.process_edit_form_from_modal, name='edit-modal-process'),
-    # path("<int:pk>/edit-with-modal/", views.load_edit_form_for_modal_container, name='load-for-edit'),
 
     # partials
     path("get-books/", views.get_books, name='get_books'),
