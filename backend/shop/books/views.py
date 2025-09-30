@@ -108,12 +108,8 @@ def delete_book(request: HttpRequest, pk: int) -> HttpResponse:
 
 @role_required("employee")
 def book_details(request: HttpRequest, pk: int) -> HttpResponse:
-    try:
-        item: Book = Book.objects.get(pk=pk)
-    except Book.DoesNotExist:
-        pass
-    response = render(request, "shop/books/book-details.html", {'item': item})
-    return response
+    book: Book = get_object_or_404(Book, pk=pk)
+    return render(request, "shop/books/book-details.html", { 'item': book })
 
 
 @role_required("employee")
@@ -132,7 +128,7 @@ def add_book(request: HttpRequest) -> HttpRequest:
 
 @role_required("employee")
 def edit_book(request: HttpRequest, pk: int) -> HttpResponse:
-    book = get_object_or_404(Book, pk=pk)
+    book: Book = get_object_or_404(Book, pk=pk)
     if request.method == "POST":
         form = forms.BookForm(request.POST, instance=book)
         if form.is_valid():
