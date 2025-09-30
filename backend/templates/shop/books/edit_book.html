@@ -4,53 +4,53 @@
 
 
 {% block content %}
-{% if form %}
-    <form>
-        {% csrf_token %}
+    {% if form %}
+        <form action="{% url 'shop:edit_book' pk=item_id %}" method="post">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                {% if field.field.widget.input_type == 'text' %}
+                    <div class="m-4">
+                        {{ field.label }}
+                        {{ field|add_class:"input" }}
+                    </div>
+                {% elif field.field.widget.input_type == 'select' %}
+                    <div class="m-4">
+                        {{ field.label }}
+                        {{ field|add_class:"select" }}
+                    </div>
+                {% elif field.field.widget.input_type == 'number' %}
+                    <div class="m-4">
+                        {{ field.label }}
+                        {{ field|add_class:"input" }}
+                    </div>
+                {% elif field.field.widget.input_type == 'checkbox' %}
+                    <div class="m-4">
+                        {{ field.label }}
+                        {{ field|add_class:"checkbox" }}
+                    </div>
+                {% elif field.field.widget.input_type == 'file' %}
+                    <div class="m-4">
+                        {{ field.label }}
+                        {{ field|add_class:"file-input" }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="m-4">
+                <label for="id_description">توضیحات</label>
+                {{ form.description|add_class:"textarea" }}
+            </div>
+            <div class="m-4">
+                <label for="id_summary">خلاصه</label>
+                {{ form.summary|add_class:"textarea" }}
+            </div>
 
-        {% for field in form %}
-            {% if field.field.widget.input_type == 'text' %}
-                <div class="m-4">
-                    {{ field.label }}
-                    {{ field|add_class:"input" }}
-                </div>
-            {% elif field.field.widget.input_type == 'select' %}
-                <div class="m-4">
-                    {{ field.label }}
-                    {{ field|add_class:"select" }}
-                </div>
-            {% elif field.field.widget.input_type == 'number' %}
-                <div class="m-4">
-                    {{ field.label }}
-                    {{ field|add_class:"input" }}
-                </div>
-            {% elif field.field.widget.input_type == 'checkbox' %}
-                <div class="m-4">
-                    {{ field.label }}
-                    {{ field|add_class:"checkbox" }}
-                </div>
-            {% elif field.field.widget.input_type == 'file' %}
-                <div class="m-4">
-                    {{ field.label }}
-                    {{ field|add_class:"file-input" }}
-                </div>
-            {% endif %}
-        {% endfor %}
-        <div class="m-4">
-            <label for="id_description">توضیحات</label>
-            {{ form.description|add_class:"textarea" }}
-        </div>
-        <div class="m-4">
-            <label for="id_summary">خلاصه</label>
-            {{ form.summary|add_class:"textarea" }}
-        </div>
-
-        <div>
-            <button class="btn btn-primary btn-xs w-24 m-4">تبت</button>
-            <a class="btn btn-outline btn-error btn-xs w-24 m-4" href="{% url 'shop:books-list' %}">لغو</a>
-        </div>
-    </form>
-{% endif %}
+            <div>
+                <button class="btn btn-primary btn-xs w-24 m-4">تبت</button>
+                <a class="btn btn-outline btn-error btn-xs w-24 m-4" href="{% url 'shop:books-list' %}">لغو</a>
+            </div>
+        </form>
+    {% endif %}
 {% endblock content %}
 
 
