@@ -6,7 +6,7 @@
 <!-- [BookTable, Pagination] and FilterSet -->
 <div class="flex">
   <!-- BookTable and Pagination -->
-  <div class="m-2 p-2 basis-6/8 rounded shadow overflow-x-auto">
+  <div class="m-2 p-2 basis-6/8 rounded shadow overflow-x-auto" id="books_list_container_inner">
     <!-- Books table -->
       <div class="bg-white overflow-x-auto">
         <table class="table table-auto table-xs">
@@ -215,42 +215,41 @@
 
 
   <!-- FilterSet -->
-  <div class="m-2 p-2 basis-2/8 rounded shadow">
-      <h3>فیلتر ها</h3>
+  <div class="m-2 p-2 basis-2/8 rounded shadow" id="filter_box_container">
       <div class="flex flex-col space-y-4 w-full max-w-md">
-      <form id="filter_form"
-            hx-get="{% url 'shop:load_filter' %}"
-            hx-target="#books_records"
-            >
-          <div class="mb-2 form-control">
-            {{ filter.form.authors|add_label_class:"label" }}
-            {% render_field filter.form.authors class="select select-sm" %}
-          </div>
-          <div class="mb-2 form-control">
-            {{ filter.form.publisher|add_label_class:"label" }}
-            {% render_field filter.form.publisher class="select select-sm" %}
-          </div>
-          <div class="mb-2 form-control">
-            {{ filter.form.language|add_label_class:"label" }}
-            {% render_field filter.form.language class="select select-sm" %}
-          </div>
-          <div class="mb-2 form-control">
-            {{ filter.form.genres|add_label_class:"label" }}
-            {% render_field filter.form.genres class="select select-sm" %}
-          </div>
-          <div class="mb-2 form-control">
-            {{ filter.form.tags|add_label_class:"label" }}
-            {% render_field filter.form.tags class="select select-sm" %}
-          </div>
-          <div class="mb-2 form-control">
-            <label for="id_available">موجودی؟</label>
-            <input type="checkbox" class="checkbox checkbox-success" id="id_available" name="available">
-          </div>
-          <button class="btn btn-outline btn-success btn-xs w-32">
-            اعمال
-          </button>
-        </form>
-    </div>
+        <form id="filter_form"
+              hx-get="{% url 'shop:load_filter' %}"
+              hx-target="#books_records"
+              >
+            <div class="mb-2 form-control">
+              {{ filter.form.authors|add_label_class:"label" }}
+              {% render_field filter.form.authors class="select select-sm" %}
+            </div>
+            <div class="mb-2 form-control">
+              {{ filter.form.publisher|add_label_class:"label" }}
+              {% render_field filter.form.publisher class="select select-sm" %}
+            </div>
+            <div class="mb-2 form-control">
+              {{ filter.form.language|add_label_class:"label" }}
+              {% render_field filter.form.language class="select select-sm" %}
+            </div>
+            <div class="mb-2 form-control">
+              {{ filter.form.genres|add_label_class:"label" }}
+              {% render_field filter.form.genres class="select select-sm" %}
+            </div>
+            <div class="mb-2 form-control">
+              {{ filter.form.tags|add_label_class:"label" }}
+              {% render_field filter.form.tags class="select select-sm" %}
+            </div>
+            <div class="mb-2 form-control">
+              <label for="id_available">موجودی؟</label>
+              <input type="checkbox" class="checkbox checkbox-success" id="id_available" name="available">
+            </div>
+            <button class="btn btn-outline btn-success btn-xs w-32">
+              اعمال
+            </button>
+          </form>
+      </div>
   </div>
 
 </div>

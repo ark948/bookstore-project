@@ -6,13 +6,24 @@
     لیست کتاب ها
 
 
-    <div class="m-4">
-      <a class="btn btn-outline btn-success btn-xs" href="{% url 'shop:add_book' %}">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-          <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
-        </svg>        
-        افزودن
-      </a>
+    <div class="flex flex-row justify-between items-center">
+      <!-- right -->
+       <div>
+        <div class="m-4">
+          <a class="btn btn-outline btn-success btn-xs" href="{% url 'shop:add_book' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+              <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+            </svg>        
+            افزودن
+          </a>
+        </div>
+       </div>
+
+      <!-- left -->
+       <div class="ml-6">
+        <label for="id_available">فیلتر ها</label>
+        <input type="checkbox" class="checkbox checkbox-success" id="id_filter_box_toggle" name="toggle_filter_box" onclick="toggleFilter();" checked>
+       </div>
     </div>
 
 
@@ -30,5 +41,22 @@
           // Initialize select2 after modal visible
           $("#id_authors").select2(); // This does not work
         });
+
+        function toggleFilter() {
+          if (document.getElementById('id_filter_box_toggle').checked)
+          {
+            // console.log('checked');
+            let books_list = document.getElementById('books_list_container_inner');
+            books_list.className = "m-2 p-2 basis-6/8 rounded shadow overflow-x-auto";
+            let t = document.getElementById('filter_box_container');
+            t.style.display = "block";
+          } else {
+            // console.log('unchecked');
+            let t = document.getElementById('filter_box_container');
+            t.style.display = "none";
+            let books_list = document.getElementById('books_list_container_inner');
+            books_list.className = "m-2 p-2 basis-8/8 rounded shadow overflow-x-auto";
+          }
+        }
       </script>
 {% endblock script %}
