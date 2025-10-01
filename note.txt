@@ -437,6 +437,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 55. insalled django-browser-reload
 
 - new book form errors do not display properly
+- select2 fields get duplicated upon navigating pagination using htmx
+    (need to cleanup those fielsd and re-initalize them, using htmx's afterSwap or afterSettle events)
 
 stuff to add:
 (i keep these things here so that i don't forget them)

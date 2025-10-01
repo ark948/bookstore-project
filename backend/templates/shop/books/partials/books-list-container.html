@@ -162,7 +162,7 @@
                 hx-target="#books_list_container"
                 hx-swap="innerHTML"
                 hx-trigger="click"
-                hx-include="#filterForm"
+                hx-include="#filter_form"
               >
               صفحه اول
             </a>
@@ -173,7 +173,7 @@
                   hx-target="#books_list_container"
                   hx-swap="innerHTML"
                   hx-trigger="click"
-                  hx-include="#filterForm"
+                  hx-include="#filter_form"
                 >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z" />
@@ -191,7 +191,7 @@
                     hx-target="#books_list_container"
                     hx-swap="innerHTML"
                     hx-trigger="click"
-                    hx-include="#filterForm"
+                    hx-include="#filter_form"
                   >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061A1.125 1.125 0 0 1 21 8.689v8.122ZM11.25 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061a1.125 1.125 0 0 1 1.683.977v8.122Z" />
@@ -205,7 +205,7 @@
                   hx-target="#books_list_container"
                   hx-swap="innerHTML"
                   hx-trigger="click"
-                  hx-include="#filterForm"
+                  hx-include="#filter_form"
                 >
                 صفحه آخر
               </a>
@@ -217,38 +217,40 @@
   <!-- FilterSet -->
   <div class="m-2 p-2 basis-2/8 rounded shadow" id="filter_box_container">
       <div class="flex flex-col space-y-4 w-full max-w-md">
-        <form id="filter_form"
-              hx-get="{% url 'shop:load_filter' %}"
-              hx-target="#books_records"
-              >
-            <div class="mb-2 form-control">
-              {{ filter.form.authors|add_label_class:"label" }}
-              {% render_field filter.form.authors class="select select-sm" %}
-            </div>
-            <div class="mb-2 form-control">
-              {{ filter.form.publisher|add_label_class:"label" }}
-              {% render_field filter.form.publisher class="select select-sm" %}
-            </div>
-            <div class="mb-2 form-control">
-              {{ filter.form.language|add_label_class:"label" }}
-              {% render_field filter.form.language class="select select-sm" %}
-            </div>
-            <div class="mb-2 form-control">
-              {{ filter.form.genres|add_label_class:"label" }}
-              {% render_field filter.form.genres class="select select-sm" %}
-            </div>
-            <div class="mb-2 form-control">
-              {{ filter.form.tags|add_label_class:"label" }}
-              {% render_field filter.form.tags class="select select-sm" %}
-            </div>
-            <div class="mb-2 form-control">
-              <label for="id_available">موجودی؟</label>
-              <input type="checkbox" class="checkbox checkbox-success" id="id_available" name="available">
-            </div>
-            <button class="btn btn-outline btn-success btn-xs w-32">
-              اعمال
-            </button>
-          </form>
+        {% if filter %}
+          <form id="filter_form"
+                hx-get="{% url 'shop:load_filter' %}"
+                hx-target="#books_records"
+                >
+              <div class="mb-2 form-control">
+                {{ filter.form.authors|add_label_class:"label" }}
+                {% render_field filter.form.authors class="select select-sm" %}
+              </div>
+              <div class="mb-2 form-control">
+                {{ filter.form.publisher|add_label_class:"label" }}
+                {% render_field filter.form.publisher class="select select-sm" %}
+              </div>
+              <div class="mb-2 form-control">
+                {{ filter.form.language|add_label_class:"label" }}
+                {% render_field filter.form.language class="select select-sm" %}
+              </div>
+              <div class="mb-2 form-control">
+                {{ filter.form.genres|add_label_class:"label" }}
+                {% render_field filter.form.genres class="select select-sm" %}
+              </div>
+              <div class="mb-2 form-control">
+                {{ filter.form.tags|add_label_class:"label" }}
+                {% render_field filter.form.tags class="select select-sm" %}
+              </div>
+              <div class="mb-2 form-control">
+                <label for="id_available">موجودی؟</label>
+                <input type="checkbox" class="checkbox checkbox-success" id="id_available" name="available">
+              </div>
+              <button class="btn btn-outline btn-success btn-xs w-32">
+                اعمال
+              </button>
+            </form>
+          {% endif %}
       </div>
   </div>
 
