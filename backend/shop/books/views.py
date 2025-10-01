@@ -90,6 +90,17 @@ def get_books(request: HttpRequest) -> HttpResponse:
     return render(request, "shop/books/partials/books-list-container.html", context)
 
 
+@role_required('employee')
+def get_books_only(request: HttpRequest) -> HttpResponse:
+    page = request.GET.get('page', 1)
+    books_filter = BookFilter( data=request.GET, queryset=Book.objects.all().order_by('created_at') )
+    total = books_filter.qs.count()
+    paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
+    page_obj = paginator.page(page)
+    context = { 'total': total, 'page_obj': page_obj }
+    return render(request, "shop/books/partials/books-query.html", context)
+
+
 @role_required("employee")
 def delete_book(request: HttpRequest, pk: int) -> HttpResponse:
     try:

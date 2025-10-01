@@ -158,8 +158,8 @@
         <span class="step-links">
             <a
                 class="btn btn-outline btn-info btn-xs"
-                hx-get="{% url 'shop:get_books' %}?page=1"
-                hx-target="#books_list_container"
+                hx-get="{% url 'shop:get_books_only' %}?page=1"
+                hx-target="#books_list_container_inner"
                 hx-swap="innerHTML"
                 hx-trigger="click"
                 hx-include="#filter_form"
@@ -169,8 +169,8 @@
             {% if page_obj.has_next %}
                 <a
                   class="btn btn-outline btn-info btn-xs"
-                  hx-get="{% url 'shop:get_books' %}?page={{ page_obj.next_page_number }}"
-                  hx-target="#books_list_container"
+                  hx-get="{% url 'shop:get_books_only' %}?page={{ page_obj.next_page_number }}"
+                  hx-target="#books_list_container_inner"
                   hx-swap="innerHTML"
                   hx-trigger="click"
                   hx-include="#filter_form"
@@ -187,8 +187,8 @@
               {% if page_obj.has_previous %}
                 <a
                     class="btn btn-outline btn-info btn-xs"
-                    hx-get="{% url 'shop:get_books' %}?page={{ page_obj.previous_page_number }}"
-                    hx-target="#books_list_container"
+                    hx-get="{% url 'shop:get_books_only' %}?page={{ page_obj.previous_page_number }}"
+                    hx-target="#books_list_container_inner"
                     hx-swap="innerHTML"
                     hx-trigger="click"
                     hx-include="#filter_form"
@@ -201,8 +201,8 @@
               {% endif %}
                 <a
                   class="btn btn-outline btn-info btn-xs"
-                  hx-get="{% url 'shop:get_books' %}?page={{ page_obj.paginator.num_pages }}"
-                  hx-target="#books_list_container"
+                  hx-get="{% url 'shop:get_books_only' %}?page={{ page_obj.paginator.num_pages }}"
+                  hx-target="#books_list_container_inner"
                   hx-swap="innerHTML"
                   hx-trigger="click"
                   hx-include="#filter_form"
