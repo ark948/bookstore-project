@@ -98,7 +98,7 @@ def get_books_only(request: HttpRequest) -> HttpResponse:
     paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
     page_obj = paginator.page(page)
     context = { 'total': total, 'page_obj': page_obj }
-    return render(request, "shop/books/partials/books-query.html", context)
+    return render(request, "shop/books/partials/books_list_only.html", context)
 
 
 @role_required("employee")

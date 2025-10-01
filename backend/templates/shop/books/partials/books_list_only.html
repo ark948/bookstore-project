@@ -1,0 +1,208 @@
+{% load static %}
+{% load widget_tweaks %}
+{% load partials %}
+
+<div class="bg-white overflow-x-auto">
+    <table class="table table-auto table-xs">
+      <thead class="text-xs uppercase">
+        <tr class="text-gray-900 text-center">
+          <th class="w-16">#</th>
+          <th>شناسه</th>
+          <th>عنوان</th>
+          <th>نویسنده</th>
+          <th>انتشارات</th>
+          <th>ژانر</th>
+          <th>زبان</th>
+          <th>زبان اصلی</th>
+          <th>چاپ</th>
+          <th>تعداد صفحه</th>
+          <th>تاریخ انتشار</th>
+          <th>فرمت چاپ</th>
+          <th>ISBN</th>
+          <th>مترجم</th>
+          <th>امتیاز</th>
+          <th>موجود</th>
+          <th>قیمت</th>
+          <th>تعداد موجودی</th>
+          <th>عملیات</th>
+        </tr>
+      </thead>
+      <tbody id="books_records">
+        {% partialdef bklist inline %}
+          {% if page_obj %}
+            {% for book in page_obj %}
+            <tr class="text-center">
+              <th class="w-16">{{ forloop.counter0|add:page_obj.start_index }}</th>
+              <th>{{ book.pk }}</th>
+              <td>
+                <a href="{% url 'shop:book-details' book.id %}">
+                  {{ book.title }}
+                </a>
+              </td>
+              <td>
+                {% for i in book.authors.all %} 
+                  {% if i.fa_name %} 
+                    [{{ i.fa_name }}] 
+                  {% else %} [{{ i.en_name }}] 
+                {% endif %} {% endfor %}
+              </td>
+              <td>{{ book.publisher }}</td>
+              <td>
+                {% for i in book.genres.all %} 
+                  [{{ i.title }}] 
+                {% endfor %}
+              </td>
+              <td>{{ book.language }}</td>
+              <td>{{ book.original_language }}</td>
+              <td>
+                {% if book.edition %} 
+                  {{ book.edition }} 
+                {% else %} 
+                  یافت نشد 
+                {% endif %}
+              </td>
+              <td>{{ book.page_count }}</td>
+              <td>{{ book.pub_date }}</td>
+              <td>{{ book.format }}</td>
+              <td>
+                {% if book.ISBN %} 
+                  {{ book.ISBN }} 
+                {% else %} 
+                  یافت نشد 
+                {% endif %}
+              </td>
+              <td>
+                {% for i in book.translator.all %} 
+                  {% if i %} 
+                    {{ i.name }} 
+                  {% else %} 
+                    -
+                  {% endif %}
+                {% empty %} 
+                  -
+                {% endfor %}
+              </td>
+              <td>
+                {% if book.rating %} 
+                  {{ book.rating }} 
+                {% else %} 
+                  -
+                {% endif %}
+              </td>
+              <td>
+                {% if book.available %}
+                  <span class="text-xl text-green-500">&#10003;</span>
+                {% else %}
+                  <span class="text-xl text-red-600">&#10007;</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if book.available %} 
+                  {{ book.price|floatformat:"0g" }} &nbsp تومان 
+                {% else %} 
+                    {{ book.price }} (آخرین قیمت)
+                {% endif %}
+              </td>
+              <td>
+                {% if book.available %} 
+                  {{ book.copies_available }} 
+                {% endif %}
+              </td>
+              <td>
+                <div class="flex items-center justify-center space-x-4">
+                  <a href="{% url 'shop:edit_book' pk=book.pk %}" class="btn btn-info btn-outline btn-xs">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                    </svg>                  
+                    ویرایش
+                  </a>
+                  <form
+                    id="delete_form"
+                    hx-delete="{% url 'shop:delete-book' book.id %}"
+                    hx-target="#books_list_container"
+                    hx-on="htmx:responseError: if(event.detail.xhr.status === 404) { alert('آیتم پیدا نشد یا قبلا حذف شده.'); }"
+                    hx-confirm="آیا مطمئنید؟">
+                      {% csrf_token %}
+                    <button class="btn btn-error btn-outline btn-xs">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                        </svg>                    
+                      حذف
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          {% endif %}
+        {% endpartialdef %}
+      </tbody>
+      <tfoot>
+        <tr class="h-16 text-lg">
+          <td>تعداد کل: {{ total }}</td>
+          <td>تعداد در صفحه: {{ page_obj|length }}</td>
+          <td>صفحه فعلی: {{ page_obj.number }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="flex justify-center m-8">
+    <span class="step-links">
+        <a
+            class="btn btn-outline btn-info btn-xs"
+            hx-get="{% url 'shop:get_books_only' %}?page=1"
+            hx-target="#books_list_container_inner"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+            hx-include="#filter_form"
+          >
+          صفحه اول
+        </a>
+        {% if page_obj.has_next %}
+            <a
+              class="btn btn-outline btn-info btn-xs"
+              hx-get="{% url 'shop:get_books_only' %}?page={{ page_obj.next_page_number }}"
+              hx-target="#books_list_container_inner"
+              hx-swap="innerHTML"
+              hx-trigger="click"
+              hx-include="#filter_form"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z" />
+            </svg>            
+            صفحه بعد
+            </a>
+          {% endif %}
+          <span class="current">
+            صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}.
+          </span>
+          {% if page_obj.has_previous %}
+            <a
+                class="btn btn-outline btn-info btn-xs"
+                hx-get="{% url 'shop:get_books_only' %}?page={{ page_obj.previous_page_number }}"
+                hx-target="#books_list_container_inner"
+                hx-swap="innerHTML"
+                hx-trigger="click"
+                hx-include="#filter_form"
+              >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061A1.125 1.125 0 0 1 21 8.689v8.122ZM11.25 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061a1.125 1.125 0 0 1 1.683.977v8.122Z" />
+              </svg>
+              صفحه قبل
+            </a>
+          {% endif %}
+            <a
+              class="btn btn-outline btn-info btn-xs"
+              hx-get="{% url 'shop:get_books_only' %}?page={{ page_obj.paginator.num_pages }}"
+              hx-target="#books_list_container_inner"
+              hx-swap="innerHTML"
+              hx-trigger="click"
+              hx-include="#filter_form"
+            >
+            صفحه آخر
+          </a>
+    </span>
+  </div>
+</div>
