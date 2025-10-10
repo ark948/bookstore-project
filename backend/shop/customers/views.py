@@ -16,6 +16,7 @@ ic.configureOutput(
 from shop.models import (
     Book, Genre, Comment, Favorite
 )
+from accounts.models import CustomUser, UserProfile
 from .cart import Cart
 from .forms import (
     ItemAddForm,
@@ -222,3 +223,9 @@ def is_book_in_user_favorites(request: HttpRequest) -> HttpResponse:
         return response
     else:
         return HttpResponse("خطا")
+    
+
+@role_required('employee')
+def customers_list(request: HttpRequest) -> HttpResponse:
+    customers = CustomUser.objects.filter(role='user').order_by('email')
+    return render(request, "shop/customers/customers/list.html", {'customers': customers})

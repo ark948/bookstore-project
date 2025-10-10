@@ -3,6 +3,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # routes for employees
+    path("list/", views.customers_list, name='customers_list'),
+
     # cart actions
     path("cart-update/<int:product_id>/", views.cart_update, name='cart_update'),
     path("cart-detail/", views.cart_detail, name='cart_detail'),
