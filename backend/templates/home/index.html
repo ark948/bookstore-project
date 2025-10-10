@@ -29,6 +29,11 @@
                     لیست کتاب ها
                 </a>
             </p>
+            <p>
+                <a href="{% url 'shop:employee' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                    dashboard
+                </a>
+            </p>
         {% endif %}
 
         {% if user.role == "user" %}
