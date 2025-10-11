@@ -21,6 +21,18 @@ class MyForm(forms.Form):
         self.helper.add_input(Submit('submit', 'Submit', css_class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'))
 
 
+class UserProfileAddressForm(forms.ModelForm):
+    
+    class Meta:
+        model = UserProfile
+        fields = (
+            "postal_code",
+            "province",
+            "city",
+            "landline",
+            "address",
+        )
+
 class CustomerAddressForm_widget_tweaks(forms.Form):
     postal_code = forms.CharField(label="کد پستی", min_length=5, required=True)
     province = forms.ModelChoiceField(label="استان", queryset=Province.objects.all(), empty_label="Select province")

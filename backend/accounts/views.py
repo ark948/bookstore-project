@@ -14,6 +14,7 @@ from typing import Optional, Dict, Any
 # Create your views here.
 
 from .models import (
+    UserProfile,
     Province,
     City
 )
@@ -28,6 +29,7 @@ from .forms import (
     CustomUserSignUpForm,
     EmailLoginForm,
     CustomerAddressForm_widget_tweaks,
+    UserProfileAddressForm
 )
 
 # signup
@@ -92,23 +94,21 @@ def profile(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def add_address(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        form = CustomerAddressForm_widget_tweaks(request.POST)
+        # form = CustomerAddressForm_widget_tweaks(request.POST)
+        form = UserProfileAddressForm(request.POST)
         if form.is_valid():
-            print("OK")
-            user_profile = request.user.profile
-            user_profile.postal_code = form.cleaned_data['postal_code']
-            user_profile.address = form.cleaned_data['address']
-            user_profile.province = form.cleaned_data['province']
-            user_profile.city = form.cleaned_data['city']
-            user_profile.save()
+            profile_obj: UserProfile = form.save(commit=False)
+            profile_obj.user = request.user
+            profile_obj.save()
             messages.success(request, "آدرس با موفقیت ثبت شد.")
             return redirect(reverse("accounts:profile"))
         else:
             for field, message in form.errors.items():
                 print(f"ERROR: {field} , {message}")
-            messages.error(request, "خططای رخ داده است. لطفا دوباره امتحان کنید.")
+            messages.error(request, "خطایی رخ داده است. لطفا دوباره امتحان کنید.")
             return render(request, "accounts/forms/add_address.html", {'form': form})
-    form = CustomerAddressForm_widget_tweaks()
+    # form = CustomerAddressForm_widget_tweaks()
+    form = UserProfileAddressForm()
     return render(request, "accounts/forms/add_address.html", {'form': form})
 
 
@@ -147,5 +147,3 @@ def load_cities(request: HttpRequest) -> HttpResponse:
     province_id = request.GET.get('province')
     cities: QuerySet = City.objects.filter(province_id=province_id).order_by('name')
     return render(request, 'accounts/partials/city_dropdown_list.html', { 'cities': cities })
-
-
