@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit
 
-from .models import CustomUser, Province, City
+from .models import CustomUser, Province, City, UserProfile
 
 # THIS IS JUST AN EXAMPLE (how to crispy forms and tailwind together)
 class MyForm(forms.Form):

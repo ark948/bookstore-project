@@ -94,6 +94,7 @@ def add_address(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = CustomerAddressForm_widget_tweaks(request.POST)
         if form.is_valid():
+            print("OK")
             user_profile = request.user.profile
             user_profile.postal_code = form.cleaned_data['postal_code']
             user_profile.address = form.cleaned_data['address']
@@ -103,7 +104,8 @@ def add_address(request: HttpRequest) -> HttpResponse:
             messages.success(request, "آدرس با موفقیت ثبت شد.")
             return redirect(reverse("accounts:profile"))
         else:
-            print("\n->", form.errors)
+            for field, message in form.errors.items():
+                print(f"ERROR: {field} , {message}")
             messages.error(request, "خططای رخ داده است. لطفا دوباره امتحان کنید.")
             return render(request, "accounts/forms/add_address.html", {'form': form})
     form = CustomerAddressForm_widget_tweaks()
