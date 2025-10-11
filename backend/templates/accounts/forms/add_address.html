@@ -3,6 +3,11 @@
 {% load static %}
 
 {% block content %}
+    <div>
+        <a href="{% url 'accounts:add_address' %}" class="btn btn-primary btn-outline btn-xs">
+            Reload
+        </a>
+    </div>
     {% if form %}
         <form method="post" action="{% url 'accounts:add_address' %}" class="m-4">
             {% csrf_token %}
