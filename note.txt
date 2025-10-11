@@ -447,7 +447,18 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     we'll be using django-fernet-encrypted-fields
     cmd> pip install django-fernet-encrypted-fields
     add a SALT_KEY (needs to be added to env file, then imported in settings.py)
+    (SALT_KEY is different from SECRET_KEY)
+    upate settings.py to read SALT_KEY as well
     (i just now realized that i haven't yet set up envionment keys)
+    after env stuff were added, we can continue with this...
+    we'll start with less important fields just to test the functionality of this package
+    (starting with user profile fields)
+    Also need to update user profile fields (City and Province to reference City and Province model instead of CharFields)
+    after updating fields, we'll attempt to makemigrations and migrate
+    now we need to register a new user to test the profile fields
+    (there is a small problem with the City field when attempting to add user's address)
+    (we can continue this using django shell)
+    tested the postal_code field and it is encrypted in database. OK
 
 57. Setting up environment variables
     using django-environ package

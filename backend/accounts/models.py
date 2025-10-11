@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser # for AbstracUser
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin # for AbstractBaseUser
 
+from encrypted_fields.fields import EncryptedTextField, EncryptedIntegerField, EncryptedEmailField
+
 # Create your models here.
 
 from .managers import CustomUserManager
@@ -40,11 +42,14 @@ class UserProfile(models.Model):
         related_name="profile"
     )
 
-    postal_code = models.CharField("Postal Code", null=True, blank=True)
+    # postal_code = models.CharField("Postal Code", null=True, blank=True)
+    postal_code = EncryptedIntegerField("Postal Code", null=True, blank=True)
     province = models.CharField("Province", null=True, blank=True)
     city = models.CharField("City", null=True, blank=True)
-    landline = models.CharField("Landline", null=True, blank=True)
-    address = models.CharField("Address", max_length=500, null=True)
+    # landline = models.CharField("Landline", null=True, blank=True)
+    landline = EncryptedIntegerField("Landline", null=True, blank=True)
+    # address = models.CharField("Address", max_length=500, null=True)
+    address = EncryptedTextField("Address", max_length=500, null=True)
 
 
     def __str__(self) -> str:
