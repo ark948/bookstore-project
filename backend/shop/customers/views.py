@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseRedirect
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 
@@ -66,7 +66,7 @@ def item_detail(request: HttpRequest, id) -> HttpResponse:
     )
 
 @require_POST
-def cart_add(request: HttpRequest, product_id):
+def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
     if request.htmx:
         return HttpResponse("OK")
     cart = Cart(request)
@@ -86,7 +86,7 @@ def cart_add(request: HttpRequest, product_id):
 
 
 @require_POST
-def cart_remove(request, product_id):
+def cart_remove(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
     cart = Cart(request)
     product = get_object_or_404(Book, id=product_id)
     cart.remove(product)
@@ -100,7 +100,7 @@ def cart_detail(request):
 
 
 @require_POST
-def cart_update(request: HttpRequest, product_id):
+def cart_update(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
     cart = Cart(request)
     new_quantity = int(request.POST.get('quantity', 1))
     book = get_object_or_404(Book, id=product_id)
