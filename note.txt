@@ -441,6 +441,24 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     (need to cleanup those fielsd and re-initalize them, using htmx's afterSwap or afterSettle events)
 - pagination is temporarily broken
 
+56. Some database fields need to be secured
+    such as user's email addresses,
+    user profile's information
+    we'll be using django-fernet-encrypted-fields
+    cmd> pip install django-fernet-encrypted-fields
+    add a SALT_KEY (needs to be added to env file, then imported in settings.py)
+    (i just now realized that i haven't yet set up envionment keys)
+
+57. Setting up environment variables
+    using django-environ package
+    cmd> python -m pip install django-environ
+    NOTE: it does not need to be added to INSTALLED_APPS
+    (add .env file to project root directory, add this file to .gitignore promptly)
+    now move secret_key (and later other sensitive config variables) to .env file
+    update settings.py to read the corresponding config variables from .env file
+    (later we'll update the settings.py structure to include multiple files for different environments)
+    (such as production, development and testing)
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar
