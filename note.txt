@@ -476,6 +476,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     to run only one test file using pytest, specify its full path
     example:
     cmd> pytest shop/tests/test_book_forms.py
+    Update: all tests OK
 
 there may be something wrong with profile creation mechanism (notify if creation failed)
 
