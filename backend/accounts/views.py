@@ -23,6 +23,7 @@ from shop.models import (
     Book,
     Favorite,
     Order,
+    Comment,
 )
 from accounts.decorators import role_required
 from .forms import (
@@ -121,6 +122,17 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
             context = { 'items': items, 'total': items.count() }
         return render( request, "accounts/partials/favorites.html", context or {})
     
+
+@role_required('user')
+def comments_list(request: HttpRequest) -> HttpResponse:
+    if request.htmx:
+        items: QuerySet = Comment.objects.filter(user_id=request.user).all().order_by('date_created')
+        context: Optional[Dict[str, Any]] = None
+        if items.exists():
+            context['items'] = items
+            context['total'] = items.count()
+        return render(request, "accounts/partials/comments.html", context or {})
+
 
 @role_required('user')
 def orders_list(request: HttpRequest) -> HttpResponse:
