@@ -120,7 +120,7 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
         context: Optional[Dict[str, Any]] = {}
         if items.exists():
             context['items'] = items
-            context['total'] = items.count()
+        context['total'] = items.count()
         return render( request, "accounts/partials/favorites.html", context)
     
 
