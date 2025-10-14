@@ -126,11 +126,13 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def comments_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
-        items: QuerySet = Comment.objects.filter(user_id=request.user).all().order_by('date_created')
+        items: QuerySet = Comment.objects.filter(user_id=request.user).all().order_by('created_at')
         context: Optional[Dict[str, Any]] = None
         if items.exists():
-            context['items'] = items
-            context['total'] = items.count()
+            context = {
+                'items': items,
+                'total': items.count()
+            }
         return render(request, "accounts/partials/comments.html", context or {})
 
 

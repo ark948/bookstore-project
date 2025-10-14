@@ -1,0 +1,11 @@
+<div>
+    <ul>
+    {% if items %}
+        {% for item in items %}
+            <li>{{ forloop.counter }}: {{ item.body }}</li>
+        {% endfor %}
+    {% else %}
+        <span>نظری ثبت نشده است.</span>
+    {% endif %}
+    </ul>
+</div>

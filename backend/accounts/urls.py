@@ -12,6 +12,7 @@ urlpatterns = [
     # loaders
     path("favorites-list/", views.favorites_list, name='fav_list'),
     path("orders-list/", views.orders_list, name='orders_list'),
+    path("comments-list/", views.comments_list, name='comments_list'),
 
     # Profile routes
     path("profile/", views.profile, name='profile'),

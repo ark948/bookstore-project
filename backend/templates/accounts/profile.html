@@ -64,7 +64,12 @@
             />
             <div class="tab-content border-base-300 bg-base-100 p-10" id="favorites_list_container"></div>
 
-            <input type="radio" name="my_tabs_2" class="tab" aria-label="نظرات" />
+            <input type="radio" name="my_tabs_2" class="tab" aria-label="نظرات" 
+                hx-get="{% url 'accounts:comments_list' %}"
+                hx-target="#comments_list_container"
+                hx-swap="innerHTML"
+                hx-trigger="click"
+            />
             <div class="tab-content border-base-300 bg-base-100 p-10" id="comments_list_container">
                 نظری ثبت نشده است.
             </div>
