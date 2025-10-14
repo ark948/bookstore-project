@@ -472,6 +472,13 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 58. New form for Customers Profile address
 
+59. Fixing old tests
+    to run only one test file using pytest, specify its full path
+    example:
+    cmd> pytest shop/tests/test_book_forms.py
+
+there may be something wrong with profile creation mechanism (notify if creation failed)
+
 stuff to add:
 (i keep these things here so that i don't forget them)
 django-debug-toolbar

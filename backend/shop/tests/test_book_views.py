@@ -7,7 +7,7 @@ from pytest_django.asserts import assertTemplateUsed
 from accounts.tests.conftest import user, custom_employee, custom_admin, custom_manager
 from shop.models import Book
 from shop.books.forms import (
-    NewBookForm
+    BookForm
 )
 
 # Capturing logs inside test functions does not work
@@ -28,7 +28,7 @@ def test_books_list(client, custom_employee, book_obj):
 
     assert response.status_code == 200
     assertTemplateUsed(response, 'shop/books/books-list.html')
-    assert response.context['books'][0] == book_obj['book']
+    assert response.context['page_obj'][0] == book_obj['book']
 
 
 @pytest.mark.django_db
@@ -56,11 +56,16 @@ def test_books_add_book(client, custom_employee, book_obj):
         'original_language': book_obj['language'].pk,
         'page_count': 200,
         'genres': [book_obj['genre'].pk],
+        'pub_date': '2020',
+        'format': 'paperback',
+        'price': 200,
+        'age_recommendation': 'Unavailable',
     }
 
-    url = reverse('shop:add-book')
+    url = reverse('shop:add_book')
     response = client.post(url, form_data)
-    assert response.status_code == 200
+    assert response.status_code == 302
+    assert response.url == reverse('shop:books-list')
 
     book = Book.objects.filter(title='A new book').first()
     assert book is not None
