@@ -8,10 +8,8 @@
 * [Tech Stack](#tech-stack)
 * [Features](#features)
 * Project structure
-* Tests
+* [Testing](#testing)
 * How to run?
-* Some notes
-
 
 
 ## Description:
@@ -42,3 +40,20 @@ Simple online bookstore project used to demonstrate common aspects and features 
 * **Database Relationships**
 * **Custom Permissions**
 * **Tests & Test Fixtures**
+
+## Testing
+```
+# clone repository
+git clone https://github.com/ark948/bookstore-project.git
+
+# create a virtual environment and activate it (may differ according to your OS)
+python -m venv .venv
+.venv/Scripts/activate
+
+# install requirements
+pip install -r requirements.txt
+
+# navigate to backend folder and run tests using pytest
+cd backend
+pytest
+```
