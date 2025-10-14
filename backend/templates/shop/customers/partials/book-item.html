@@ -58,10 +58,10 @@
             {% endif %}
             <div id="add_comment_section">
                 {% if comment_form %}
-                    <form 
-                            hx-post="{% url 'shop:add_comment' %}"
-                            hx-target="#comments_section"
-                            hx-swap="innerHTML"
+                    <form
+                        hx-post="{% url 'shop:add_comment' %}"
+                        hx-target="#comments_section"
+                        hx-swap="innerHTML"
                         >
                         <label for="comment_body_id" class="text">متن نظر</label>
                         {{ comment_form.body }}

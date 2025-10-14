@@ -2,7 +2,7 @@ import pytest
 
 from accounts.tests.conftest import custom_employee
 from shop.books.forms import (
-    NewBookForm
+    BookForm
 )
 
 
@@ -19,5 +19,5 @@ def test_books_forms_new_book_form(client, custom_employee, book_obj):
         'page_count': 200
     }
 
-    form = NewBookForm(data=form_data)
+    form = BookForm(data=form_data)
     assert not form.is_valid()
