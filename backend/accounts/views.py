@@ -117,23 +117,22 @@ def add_address(request: HttpRequest) -> HttpResponse:
 def favorites_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         items: QuerySet = Favorite.objects.filter(user_id=request.user).all()
-        context: Optional[Dict[str, Any]] = None
+        context: Optional[Dict[str, Any]] = {}
         if items.exists():
-            context = { 'items': items, 'total': items.count() }
-        return render( request, "accounts/partials/favorites.html", context or {})
+            context['items'] = items
+            context['total'] = items.count()
+        return render( request, "accounts/partials/favorites.html", context)
     
 
 @role_required('user')
 def comments_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         items: QuerySet = Comment.objects.filter(user_id=request.user).all().order_by('created_at')
-        context: Optional[Dict[str, Any]] = None
+        context: Optional[Dict[str, Any]] = {}
         if items.exists():
-            context = {
-                'items': items,
-                'total': items.count()
-            }
-        return render(request, "accounts/partials/comments.html", context or {})
+            context['items'] = items
+            context['total'] = items.count()
+        return render(request, "accounts/partials/comments.html", context)
 
 
 @role_required('user')
