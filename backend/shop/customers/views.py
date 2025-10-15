@@ -120,7 +120,8 @@ def add_comment(request: HttpRequest) -> HttpResponse:
         comment_obj = Comment(
             body=form.cleaned_data['body'],
             book=get_object_or_404(Book, id=int(request.POST['book_id'])),
-            user=request.user
+            user=request.user,
+            anonymous=form.cleaned_data['anonymous']
         )
         comment_obj.save()
         return HttpResponse("نظر با موفقیت ثبت شد.")

@@ -13,9 +13,9 @@ class AddCommentForm(forms.Form):
             'cols': 40
         })
     )
-    anonymous = forms.BooleanField(label="ناشناس؟", required=False, widget=forms.CheckboxInput(
+    anonymous = forms.BooleanField(required=False, widget=forms.CheckboxInput(
         attrs={
-            'class': "checkbox checkbox-lg checkbox-accent"
+            'class': "checkbox checkbox-md checkbox-accent"
         }
     ))
 
