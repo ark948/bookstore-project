@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseRedirect
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from django.db.models import QuerySet
 
 from accounts.decorators import role_required
 
@@ -225,6 +226,17 @@ def is_book_in_user_favorites(request: HttpRequest) -> HttpResponse:
     else:
         return HttpResponse("خطا")
     
+
+@role_required('user')
+def load_book_comments(request: HttpRequest) -> HttpResponse:
+    if request.htmx:
+        book_id: str = request.GET.get('book_id')
+        try:
+            comments = Comment.objects.filter(book=int(book_id))
+        except Exception as error:
+            return JsonResponse("متاسفانه خطایی رخ داده است. لطفا صفحه را مججدا رفرش کنید.")
+    return render(request, "shop/customers/partials/book_item_comments.html", {'items': comments})
+
 
 @role_required('employee')
 def customers_list(request: HttpRequest) -> HttpResponse:
