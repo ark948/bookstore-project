@@ -478,6 +478,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     cmd> pytest shop/tests/test_book_forms.py
     Update: all tests OK
 
+60. Added feature to allow users to make their comments anonymous
+
 there may be something wrong with profile creation mechanism (notify if creation failed)
 
 stuff to add:

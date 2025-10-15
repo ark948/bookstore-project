@@ -65,6 +65,8 @@
                         >
                         <label for="comment_body_id" class="text">متن نظر</label>
                         {{ comment_form.body }}
+                        <label for="comment_anonymous_id" class="text">ناشناس ثبت شود؟</label>
+                        {{ comment_form.anonymous }}
                         <input type="hidden" name="book_id" value="{{ item.id }}">
                         {% csrf_token %}
                         <input type="submit" class="btn btn-success btn-xs" value="ثبت نظر">

@@ -317,6 +317,7 @@ class Comment(TimeStampModel):
     body = models.CharField("Body", max_length=500)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="comments") # <BookObj>.comments.all()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="comments") # <CustomUserObj>.comments.all()
+    anonymous = models.BooleanField("َAnonymous Comment", default=False, null=True)
 
 
 # should items_count be removed?
