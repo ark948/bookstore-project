@@ -6,25 +6,50 @@
         <span>مجموع: {{ total }}</span>
     </div>
     {% for item in items %}
-        <div class="max-w-xs bg-white rounded-lg shadow-md overflow-hidden mr-4">
-            <img class="w-24 h-24 mx-auto mt-4 object-cover rounded" src="{{ item.book_id.cover_image.url }}" alt="Product Image" />
-            <div class="p-4 text-center">
-            <h2 class="text-lg font-semibold text-gray-800">{{ item.book_id.title }}</h2>
-            <p class="mt-2 text-gray-600">{{ item.book_id.price|floatformat:"g" }} تومان</p>
-            <p class="mt-2 text-gray-600">
-                <a class="btn btn-success btn-outline btn-xs" href="{% url 'shop:item_detail' id=item.book_id.id %}">مشاهده</a>
-            </p>
-            <p>
-                <a class="btn btn-error btn-outline btn-xs w-14 mt-2"
-                    hx-get="{% url 'accounts:remove_favorite' %}"
-                    hx-trigger="click"
-                    hx-target="#favorites_list_container"
-                    hx-vals='{"item_id": "{{ item.book_id.id }}"}'>
-                    حذف
-                </a>
-            </p>
+        {% if item.book_id.cover_image %}
+            <div class="max-w-xs bg-white rounded-lg shadow-md overflow-hidden mr-4">
+                <img class="w-24 h-24 mx-auto mt-4 object-cover rounded" src="{{ item.book_id.cover_image.url }}" alt="Product Image" />
+                <div class="p-4 text-center">
+                <h2 class="text-lg font-semibold text-gray-800">{{ item.book_id.title }}</h2>
+                <p class="mt-2 text-gray-600">{{ item.book_id.price|floatformat:"g" }} تومان</p>
+                <p class="mt-2 text-gray-600">
+                    <a class="btn btn-success btn-outline btn-xs" href="{% url 'shop:item_detail' id=item.book_id.id %}">مشاهده</a>
+                </p>
+                <p>
+                    <a class="btn btn-error btn-outline btn-xs w-14 mt-2"
+                        hx-get="{% url 'accounts:remove_favorite' %}"
+                        hx-trigger="click"
+                        hx-target="#favorites_list_container"
+                        hx-vals='{"item_id": "{{ item.book_id.id }}"}'>
+                        حذف
+                    </a>
+                </p>
+                </div>
             </div>
-        </div>
+        {% else %}
+            <div class="max-w-xs bg-white rounded-lg shadow-md overflow-hidden mr-4">
+                <span>تصویر ثبت نشده است.</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 0 1-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 0 1-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584ZM12 18a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                </svg>                  
+                <div class="p-4 text-center">
+                <h2 class="text-lg font-semibold text-gray-800">{{ item.book_id.title }}</h2>
+                <p class="mt-2 text-gray-600">{{ item.book_id.price|floatformat:"g" }} تومان</p>
+                <p class="mt-2 text-gray-600">
+                    <a class="btn btn-success btn-outline btn-xs" href="{% url 'shop:item_detail' id=item.book_id.id %}">مشاهده</a>
+                </p>
+                <p>
+                    <a class="btn btn-error btn-outline btn-xs w-14 mt-2"
+                        hx-get="{% url 'accounts:remove_favorite' %}"
+                        hx-trigger="click"
+                        hx-target="#favorites_list_container"
+                        hx-vals='{"item_id": "{{ item.book_id.id }}"}'>
+                        حذف
+                    </a>
+                </p>
+                </div>
+            </div>
+        {% endif %}
     {% empty %}
         <div class="m-2">
             <span>لیست شما خالی می‌باشد.</span>
