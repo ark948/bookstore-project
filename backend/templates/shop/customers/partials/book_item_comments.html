@@ -1,11 +1,6 @@
 {% for comment in item.comments.all %}
     <div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
         <div class="flex items-center space-x-4 mb-4">
-          <img
-            class="w-12 h-12 rounded-full object-cover"
-            src="{{ comment.user.first_name }}"
-            alt="User avatar"
-          />
           <div>
             <h3 class="text-lg font-semibold text-gray-900">{{ comment.user }}</h3>
             <time class="text-sm text-gray-500">{{ comment.created_at }}</time>
