@@ -125,7 +125,9 @@ def add_comment(request: HttpRequest) -> HttpResponse:
             anonymous=form.cleaned_data['anonymous']
         )
         comment_obj.save()
-        return HttpResponse("نظر با موفقیت ثبت شد.")
+        response = HttpResponse("نظر با موفقیت ثبت شد.")
+        response['HX-Trigger'] = "comment_successfully_submitted"
+        return response
     else:
         return HttpResponse(form.errors)
     
@@ -235,7 +237,7 @@ def load_book_comments(request: HttpRequest) -> HttpResponse:
             comments = Comment.objects.filter(book=int(book_id))
         except Exception as error:
             return JsonResponse("متاسفانه خطایی رخ داده است. لطفا صفحه را مججدا رفرش کنید.")
-    return render(request, "shop/customers/partials/book_item_comments.html", {'items': comments})
+        return render(request, "shop/customers/partials/book_item_comments.html", {'items': comments})
 
 
 @role_required('employee')

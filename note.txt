@@ -480,6 +480,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 60. Added feature to allow users to make their comments anonymous
 
+need to add image and thumbnail handling for books cover image
+
 there may be something wrong with profile creation mechanism (notify if creation failed)
 
 stuff to add:

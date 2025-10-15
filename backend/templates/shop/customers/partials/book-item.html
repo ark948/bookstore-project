@@ -59,9 +59,11 @@
             <div id="add_comment_section">
                 {% if comment_form %}
                     <form
+                        id="comment_form"
                         hx-post="{% url 'shop:add_comment' %}"
                         hx-target="#comments_section"
                         hx-swap="innerHTML"
+                        hx-on:comment_successfully_submitted="clean_comment_form();"
                         >
                         <label for="comment_body_id" class="text">متن نظر</label>
                         {{ comment_form.body }}
@@ -79,7 +81,7 @@
                 hx-swap="innerHTML"
                 hx-trigger="click"
                 hx-vals='{"book_id": "{{ item.id }}"}'
-                hx-on:click="console.log('refresh comments');">
+                >
                 بروزرسانی نظرات
             </button>
             <div id="comments_section">
@@ -88,3 +90,11 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block script %}
+    <script>
+        function clean_comment_form() {
+            document.getElementById('comment_form').reset();
+        }
+    </script>
+{% endblock script %}
