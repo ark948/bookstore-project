@@ -1,6 +1,12 @@
 {% load static %}
 
-
+<button class="btn btn-outline btn-info btn-xs"
+        hx-get="{% url 'accounts:fav_list' %}"
+        hx-target="#favorites_list_container"
+        hx-swap="innerHTML"
+        hx-trigger="click">
+    بروزرسانی
+</button>
 <div class="flex">
     <div class="m-2">
         <span>مجموع: {{ total }}</span>
