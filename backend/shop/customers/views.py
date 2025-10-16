@@ -241,6 +241,16 @@ def load_book_comments(request: HttpRequest) -> HttpResponse:
         except Exception as error:
             return JsonResponse("متاسفانه خطایی رخ داده است. لطفا صفحه را مججدا رفرش کنید.")
         return render(request, "shop/customers/partials/book_item_comments.html", {'items': comments})
+    
+
+@role_required('user')
+def load_book_comments2(request: HttpRequest, book_id: int) -> HttpResponse:
+    if request.htmx:
+        try:
+            comments = Comment.objects.filter(book=book_id)
+        except Exception as error:
+            return JsonResponse("متاسفانه خطایی رخ داده است. لطفا صفحه را مجددا رفرش کنید.")
+        return render(request, "shop/customers/partials/book_item_comments.html", {'items': comments})
 
 
 @role_required('employee')

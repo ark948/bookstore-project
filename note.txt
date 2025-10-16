@@ -482,6 +482,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 61. current method of submitting comments is not secure and needs to be updated.
     added a more secure version of add_comment view
+    update: any mechanism using hx-vals is not safely handled here, all of them need updating
 
 need to add image and thumbnail handling for books cover image
 
