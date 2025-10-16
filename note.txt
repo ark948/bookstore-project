@@ -480,7 +480,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 60. Added feature to allow users to make their comments anonymous
 
-current method of submitting comments is not secure and needs to be updated.
+61. current method of submitting comments is not secure and needs to be updated.
+    added a more secure version of add_comment view
 
 need to add image and thumbnail handling for books cover image
 

@@ -133,6 +133,30 @@ def add_comment(request: HttpRequest) -> HttpResponse:
         messages.error(request, "خطایی در درج نظر رخ داد. لطفا دوباره تلاش کنید.")
         return HttpResponse(form.errors)    
 
+
+@require_POST
+@role_required('user')
+def add_comment2(request: HttpRequest, book_id) -> HttpResponse:
+    print("\n", book_id , "\n")
+    book = get_object_or_404(Book, id=book_id)
+    form = AddCommentForm(request.POST)
+    if form.is_valid():
+        comment = Comment(
+            body = form.cleaned_data['body'],
+            book = book,
+            user = request.user,
+            anonymous = form.cleaned_data['anonymous']
+        )
+        comment.save()
+        # return a single comment item
+        response = render(request, "shop/customers/partials/comment_item.html", {'comment': comment})
+        response['HX-Trigger'] = "comment_successfully_submitted"
+        return response
+    else:
+        # this needs to be upated with comment_form template
+        messages.error(request, "خطایی در درج نظر رخ داد. لطفا دوباره تلاش کنید.")
+        return HttpResponse(form.errors)    
+
 @role_required('user')
 def get_number_of_cart_items(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
