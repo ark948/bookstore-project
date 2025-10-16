@@ -118,19 +118,20 @@ def cart_update(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
 def add_comment(request: HttpRequest) -> HttpResponse:
     form = AddCommentForm(request.POST)
     if form.is_valid():
-        comment_obj = Comment(
+        Comment.objects.create(
             body=form.cleaned_data['body'],
-            book=get_object_or_404(Book, id=int(request.POST['book_id'])),
+            book=Book.objects.get(
+                pk=int(request.POST.get('book_id'))
+            ),
             user=request.user,
             anonymous=form.cleaned_data['anonymous']
         )
-        comment_obj.save()
         response = HttpResponse("نظر با موفقیت ثبت شد.")
         response['HX-Trigger'] = "comment_successfully_submitted"
         return response
     else:
-        return HttpResponse(form.errors)
-    
+        messages.error(request, "خطایی در درج نظر رخ داد. لطفا دوباره تلاش کنید.")
+        return HttpResponse(form.errors)    
 
 @role_required('user')
 def get_number_of_cart_items(request: HttpRequest) -> HttpResponse:
