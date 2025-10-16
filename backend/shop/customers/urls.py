@@ -13,8 +13,7 @@ urlpatterns = [
     path("cart-remove/<int:product_id>/", views.cart_remove, name='cart_remove'),
 
     # other
-    path("add-comment/<int:book_id>/", views.add_comment2, name='add_comment2'),
-    path("item-add-comment/", views.add_comment, name='add_comment'),
+    path("add-comment/<int:book_id>/", views.add_comment, name='add_comment'),
     path("remove-from-favorites/", views.remove_book_from_favorites, name='remove_favorite'),
     path("add-to-favorite/", views.add_book_to_favorites, name='add_favorite'),
     path("item-detail/<int:id>/", views.item_detail, name='item_detail'),

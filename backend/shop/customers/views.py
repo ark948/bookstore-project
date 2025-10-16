@@ -115,39 +115,17 @@ def cart_update(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
 
 @require_POST
 @role_required('user')
-def add_comment(request: HttpRequest) -> HttpResponse:
-    form = AddCommentForm(request.POST)
-    if form.is_valid():
-        Comment.objects.create(
-            body=form.cleaned_data['body'],
-            book=Book.objects.get(
-                pk=int(request.POST.get('book_id'))
-            ),
-            user=request.user,
-            anonymous=form.cleaned_data['anonymous']
-        )
-        response = HttpResponse("نظر با موفقیت ثبت شد.")
-        response['HX-Trigger'] = "comment_successfully_submitted"
-        return response
-    else:
-        messages.error(request, "خطایی در درج نظر رخ داد. لطفا دوباره تلاش کنید.")
-        return HttpResponse(form.errors)    
-
-
-@require_POST
-@role_required('user')
-def add_comment2(request: HttpRequest, book_id) -> HttpResponse:
-    print("\n", book_id , "\n")
+def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
     book = get_object_or_404(Book, id=book_id)
     form = AddCommentForm(request.POST)
     if form.is_valid():
-        comment = Comment(
+        # if all data is available and no aciton is needed before saving object, use create()
+        comment = Comment.objects.create(
             body = form.cleaned_data['body'],
             book = book,
             user = request.user,
             anonymous = form.cleaned_data['anonymous']
         )
-        comment.save()
         # return a single comment item
         response = render(request, "shop/customers/partials/comment_item.html", {'comment': comment})
         response['HX-Trigger'] = "comment_successfully_submitted"

@@ -60,7 +60,7 @@
                 {% if comment_form %}
                     <form
                         id="comment_form"
-                        hx-post="{% url 'shop:add_comment2' item.id %}"
+                        hx-post="{% url 'shop:add_comment' item.id %}"
                         hx-target="#comments_section"
                         hx-swap="beforeend"
                         hx-on:comment_successfully_submitted="clean_comment_form();"
