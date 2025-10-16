@@ -75,7 +75,7 @@
                 {% endif %}
             </div>
             <button class="btn btn-outline btn-accent btn-xs"
-                hx-get="{% url 'shop:load_book_comments2' item.id %}"
+                hx-get="{% url 'shop:load_book_comments' item.id %}"
                 hx-target="#comments_section"
                 hx-swap="innerHTML"
                 hx-trigger="click"
