@@ -1,10 +1,9 @@
 <form
-        hx-get="{% url 'shop:add_favorite' %}"
-        hx-target="#favorite_response_holder"
-        hx-swap="innerHTML"
+    hx-get="{% url 'shop:add_favorite' book_id %}"
+    hx-target="#favorite_response_holder"
+    hx-swap="innerHTML"
     >
   {% csrf_token %}
-  <input type="hidden" name="book_id" value="{{ book_id }}" />
   <button class="btn btn-accent btn-outline btn-xs" type="submit">
     افزودن به علاقه‌مندی ها
   </button>

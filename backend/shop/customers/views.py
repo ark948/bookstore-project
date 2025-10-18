@@ -191,7 +191,6 @@ def load_books(request: HttpRequest) -> HttpResponse:
 
 @role_required('user')
 def add_book_to_favorites(request: HttpRequest) -> HttpResponse:
-    print("\nAdd To Favorite CALLED")
     if request.htmx:
         book_id = request.GET.get('book_id')
         book_item = get_object_or_404(Book, id=book_id)
@@ -202,6 +201,18 @@ def add_book_to_favorites(request: HttpRequest) -> HttpResponse:
             return response
     else:
         return HttpResponse("add favorite ERROR")
+    
+
+@role_required('user')
+def add_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
+    if request.htmx:
+        book_obj = get_object_or_404(Book, pk=book_id)
+        try:
+            Favorite.objects.create( user_id=request.user, book_id = book_obj )
+        except Exception as error:
+            print("\nERROR:", error, "\n")
+            return HttpResponse("خطا")
+        return render(request, "shop/customers/partials/remove_from_favorite_partial.html", {'book_id': book_id})
     
 
 @role_required('user')
@@ -223,8 +234,8 @@ def is_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
     if request.htmx:
         favorite: QuerySet = Favorite.objects.filter( user_id=request.user, book_id=book_id ).first()
         if favorite:
-            return render(request, "shop/customers/partials/remove_from_favorite_partialshtml")
-        return render(request, "shop/customers/partials/add_to_favorite_partial.html")
+            return render(request, "shop/customers/partials/remove_from_favorite_partial.html")
+        return render(request, "shop/customers/partials/add_to_favorite_partial.html", {'book_id': book_id})
 
 
 @role_required('user')
