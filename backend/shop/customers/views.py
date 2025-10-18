@@ -188,19 +188,6 @@ def load_books(request: HttpRequest) -> HttpResponse:
     books = Book.objects.all()
     return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
 
-
-@role_required('user')
-def add_book_to_favorites(request: HttpRequest) -> HttpResponse:
-    if request.htmx:
-        book_id = request.GET.get('book_id')
-        book_item = get_object_or_404(Book, id=book_id)
-        if book_item:
-            favorite = Favorite(user_id=request.user, book_id=book_item)
-            favorite.save()
-            response = render(request, "shop/customers/partials/remove_from_favorite_partial.html", {'book_id': book_id})
-            return response
-    else:
-        return HttpResponse("add favorite ERROR")
     
 
 @role_required('user')
