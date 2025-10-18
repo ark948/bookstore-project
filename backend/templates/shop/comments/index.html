@@ -1,0 +1,25 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block content %}
+    <div>
+        <div>
+            <span>تعداد کل نظرات: {{ total }}</span>
+        </div>
+
+        <div>
+            <span>تعداد نظرات در انتظار بررسی {{ total_waiting }}</span>
+            <div>
+                <a class="link" href="#">لیست</a>
+            </div>
+        </div>
+
+        <div>
+            <span>تعداد نظرات ثبت شده {{ total_approved }}</span>
+        </div>
+
+        <div>
+            <span>تعداد نظرات رد شده {{ total_rejected }}</span>
+        </div>
+    </div>
+{% endblock content %}
