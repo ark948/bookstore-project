@@ -1,7 +1,7 @@
 from typing import Any
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.db.models import QuerySet
@@ -14,6 +14,11 @@ from shop.models import Comment, Book
 
 class IndexView(TemplateView):
     template_name = "shop/comments/index.html"
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not request.user.is_authenticated or request.user.role != "employee":
+            return HttpResponseForbidden()
+        return super().get(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
