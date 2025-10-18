@@ -127,9 +127,12 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
             anonymous = form.cleaned_data['anonymous']
         )
         # return a single comment item
-        response = render(request, "shop/customers/partials/comment_item.html", {'comment': comment})
-        response['HX-Trigger'] = "comment_successfully_submitted"
-        return response
+        # response = render(request, "shop/customers/partials/comment_item.html", {'comment': comment})
+        # response['HX-Trigger'] = "comment_successfully_submitted"
+        # in template, use hx-on:comment_successfully_submitted and hx-swap='beforeend' to listen to this event
+        # and add the returned comment to the end of the list
+        # return response
+        return HttpResponse("نظر شما دریافت شد و پس از تایید نمایش داده خواهد شد.")
     else:
         # this needs to be upated with comment_form template
         messages.error(request, "خطایی در درج نظر رخ داد. لطفا دوباره تلاش کنید.")
