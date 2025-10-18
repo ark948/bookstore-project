@@ -314,10 +314,16 @@ class Discount(TimeStampModel):
 
 
 class Comment(TimeStampModel):
+    STATUS_CHOICES = {
+        "P": "Pending",
+        "A": "Approved",
+        "R": "Rejected"
+    }
     body = models.CharField("Body", max_length=500)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="comments") # <BookObj>.comments.all()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="comments") # <CustomUserObj>.comments.all()
     anonymous = models.BooleanField("َAnonymous Comment", default=False, null=True)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES['P'])
 
 
 # should items_count be removed?
