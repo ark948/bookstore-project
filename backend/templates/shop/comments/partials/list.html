@@ -1,5 +1,5 @@
 {% for item in comments %}
-<div>
+<div id="list_item">
     <ul class="list bg-base-100 rounded-box shadow-md">
         <!-- <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Most played songs this week</li> -->
         <li class="list-row">
@@ -17,7 +17,11 @@
           <p class="list-col-wrap text-xs">
             {{ item.body }}
           </p>
-          <button class="btn btn-square btn-ghost">
+          <button class="btn btn-square btn-ghost"
+            hx-post="{% url 'shop:approve_comment' item.id %}"
+            hx-target="#list_item"
+            hx-swap="delete"
+            >
             <span class="text-xl text-green-500">&#10003;</span>
           </button>
           <button class="btn btn-square btn-ghost">
