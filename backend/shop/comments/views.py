@@ -6,7 +6,7 @@ from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.db.models import QuerySet
 from django.views.generic import TemplateView
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, require_POST
 
 from http import HTTPStatus
 
@@ -37,12 +37,14 @@ class IndexView(TemplateView):
 @role_required('employee')
 def load_comments(request: HttpRequest, status: str) -> HttpResponse:
     comments: QuerySet = services.load_comments(status.capitalize())
+    if not comments.exists():
+        return HttpResponse("لیست خالی میباشد.")
     if request.htmx:
         return render(request, "shop/comments/partials/list.html", {'comments': comments})
     return render(request, "shop/comments/partials/list.html", {'comments': comments})
 
 
-# @require_http_methods(["GET", "POST"])
+@require_POST
 @role_required('employee')
 def approve_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
     # if request.headers.get("HX-Request") == "true": # to check if request is htmx without django-htmx package

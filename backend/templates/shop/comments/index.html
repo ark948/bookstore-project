@@ -9,28 +9,46 @@
 
         <div>
             <span>تعداد نظرات در انتظار بررسی {{ total_waiting }}</span>
-            <div>
-                <a class="link"
-                    hx-get="{% url 'shop:load_comments' 'pending' %}"
-                    hx-target="#comments"
-                    hx-trigger="click"
-                    hx-swap="innerHTML"
-                    >
+            <a class="link"
+                hx-get="{% url 'shop:load_comments' 'pending' %}"
+                hx-target="#comments"
+                hx-trigger="click"
+                hx-swap="innerHTML"
+                >
                 لیست
             </a>
-            </div>
         </div>
 
         <div>
             <span>تعداد نظرات تایید شده {{ total_approved }}</span>
+            <a class="link"
+                hx-get="{% url 'shop:load_comments' 'approved' %}"
+                hx-target="#comments"
+                hx-trigger="click"
+                hx-swap="innerHTML"
+                >
+                لیست
+            </a>
         </div>
 
         <div>
             <span>تعداد نظرات رد شده {{ total_rejected }}</span>
+            <a class="link"
+                hx-get="{% url 'shop:load_comments' 'rejected' %}"
+                hx-target="#comments"
+                hx-trigger="click"
+                hx-swap="innerHTML"
+                >
+                لیست
+            </a>
         </div>
 
         <div id="comments">
 
         </div>
+
+        <a href="{% url 'shop:comments_index' %}" class="btn btn-outline btn-info btn-xs">
+            Refresh
+        </a>
     </div>
 {% endblock content %}
