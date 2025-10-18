@@ -55,34 +55,51 @@
                     این کتاب در حال حاظر موجود نیست.
                 </h2>
             {% endif %}
-            <div id="add_comment_section">
-                {% if comment_form %}
-                    <form
-                        id="comment_form"
-                        hx-post="{% url 'shop:add_comment' item.id %}"
+            <div>
+                <!-- name of each tab group should be unique -->
+                <div class="tabs tabs-lift">
+                    <input type="radio" name="my_tabs_3" class="tab" aria-label="ثبت نظر" checked="checked" />
+                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                        <div id="add_comment_section">
+                            {% if comment_form %}
+                                <form
+                                    id="comment_form"
+                                    hx-post="{% url 'shop:add_comment' item.id %}"
+                                    hx-target="#comments_section"
+                                    hx-swap="beforeend"
+                                    hx-on:comment_successfully_submitted="clean_comment_form();"
+                                    >
+                                    <label for="comment_body_id" class="text">متن نظر</label>
+                                    {{ comment_form.body }}
+                                    <label for="comment_anonymous_id" class="text">ناشناس ثبت شود؟</label>
+                                    {{ comment_form.anonymous }}
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-success btn-xs" value="ثبت نظر">
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                
+                    <input type="radio" name="my_tabs_3" class="tab" aria-label="نظرات"
+                        hx-get="{% url 'shop:load_book_comments' item.id %}"
                         hx-target="#comments_section"
-                        hx-swap="beforeend"
-                        hx-on:comment_successfully_submitted="clean_comment_form();"
-                        >
-                        <label for="comment_body_id" class="text">متن نظر</label>
-                        {{ comment_form.body }}
-                        <label for="comment_anonymous_id" class="text">ناشناس ثبت شود؟</label>
-                        {{ comment_form.anonymous }}
-                        {% csrf_token %}
-                        <input type="submit" class="btn btn-success btn-xs" value="ثبت نظر">
-                    </form>
-                {% endif %}
-            </div>
-            <button class="btn btn-outline btn-accent btn-xs"
-                hx-get="{% url 'shop:load_book_comments' item.id %}"
-                hx-target="#comments_section"
-                hx-swap="innerHTML"
-                hx-trigger="click"
-                >
-                بروزرسانی نظرات
-            </button>
-            <div id="comments_section">
-                {% include "shop/customers/partials/book_item_comments.html" %}
+                        hx-swap="innerHTML"
+                        hx-trigger="click"
+                    />
+                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                        <button class="btn btn-outline btn-accent btn-xs"
+                            hx-get="{% url 'shop:load_book_comments' item.id %}"
+                            hx-target="#comments_section"
+                            hx-swap="innerHTML"
+                            hx-trigger="click"
+                            >
+                            بروزرسانی نظرات
+                        </button>
+                        <div id="comments_section">
+                            {% include "shop/customers/partials/book_item_comments.html" %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
