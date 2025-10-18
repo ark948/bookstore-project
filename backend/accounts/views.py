@@ -116,7 +116,7 @@ def add_address(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def favorites_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
-        items: QuerySet = Favorite.objects.filter(user_id=request.user).all()
+        items: QuerySet = Favorite.objects.filter(user_id=request.user)
         context: Optional[Dict[str, Any]] = {}
         if items.exists():
             context['items'] = items
@@ -127,7 +127,7 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def comments_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
-        items: QuerySet = Comment.objects.filter(user_id=request.user).all().order_by('created_at')
+        items: QuerySet = Comment.objects.filter(user_id=request.user).order_by('created_at')
         context: Optional[Dict[str, Any]] = {}
         if items.exists():
             context['items'] = items
@@ -138,22 +138,10 @@ def comments_list(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def orders_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
-        items = Order.objects.filter(customer_id=request.user).all()
+        items = Order.objects.filter( customer_id=request.user )
         if items.exists():
             return render( request, "accounts/partials/orders.html", { 'items': items } )
     return render( request, "accounts/partials/orders.html" )
-
-
-@role_required('user')
-def remove_favorite(request: HttpRequest) -> HttpResponse:
-    if request.htmx:
-        item_id = request.GET.get('item_id')
-        favorite = Favorite.objects.filter(user_id=request.user, book_id=get_object_or_404(Book, id=int(item_id)))
-        if favorite:
-            favorite.delete()
-        items = Favorite.objects.filter(user_id=request.user).all()
-        return render( request, "accounts/partials/favorites.html", { 'items': items } )
-    return HttpResponse("ok")
 
 
 @role_required('user')
