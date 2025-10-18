@@ -14,7 +14,7 @@ urlpatterns = [
 
     # other
     path("add-comment/<int:book_id>/", views.add_comment, name='add_comment'),
-    path("remove-from-favorites/", views.remove_book_from_favorites, name='remove_favorite'),
+    path("remove-from-favorites/<int:book_id>/", views.remove_book_favorite, name='remove_favorite'),
     path("add-to-favorite/<int:book_id>/", views.add_book_favorite, name='add_favorite'),
     path("item-detail/<int:id>/", views.item_detail, name='item_detail'),
     path("browse/", views.browse, name='customers_browse'),

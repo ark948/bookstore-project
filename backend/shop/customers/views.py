@@ -203,17 +203,13 @@ def add_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
     
 
 @role_required('user')
-def remove_book_from_favorites(request: HttpRequest) -> HttpResponse:
+def remove_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
     if request.htmx:
-        book_id = request.GET.get('book_id')
-        book_item = get_object_or_404(Book, id=book_id)
-        favorite = Favorite.objects.filter(user_id=request.user, book_id=book_item)
-        if favorite:
-            favorite.delete()
-            response = render(request, "shop/customers/partials/add_to_favorite_partial.html", {'book_id': book_id})
-            return response
-    else:
-        return HttpResponse("remvoe favorite ERROR")
+        book_obj = get_object_or_404(Book, pk=book_id)
+        # using delete() is more efficient, than acquiring the obj with first() and the deleting it
+        # delete() reuturns a tuple of num_deleted, deleted_details
+        Favorite.objects.filter( user_id=request.user, book_id=book_obj ).delete()
+        return render(request, "shop/customers/partials/add_to_favorite_partial.html", {'book_id': book_id})
     
 
 @role_required('user')
@@ -221,7 +217,7 @@ def is_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
     if request.htmx:
         favorite: QuerySet = Favorite.objects.filter( user_id=request.user, book_id=book_id ).first()
         if favorite:
-            return render(request, "shop/customers/partials/remove_from_favorite_partial.html")
+            return render(request, "shop/customers/partials/remove_from_favorite_partial.html", {'book_id': book_id})
         return render(request, "shop/customers/partials/add_to_favorite_partial.html", {'book_id': book_id})
 
 
