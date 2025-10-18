@@ -488,6 +488,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 # if no verbose_name is provided, django will auto generate one by converting underscores to spaces and captializing
 # e.g. published_date -> Published date
 
+Going to separate the loading of book comments with a separate request after page load
+
 since there were two different ways to delete a favorited object,
 one from book detail page and one from user profile favorites list
 both needs to be updated.

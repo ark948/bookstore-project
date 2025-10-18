@@ -20,23 +20,7 @@
         <p>هنوز نظری برای این کالا ثبت نشده است.</p>
     {% endfor %}
 {% else %}
-    {% for comment in item.comments.all %}
-        <div class="max-w-md mx-auto bg-white shadow-md rounded-md p-2">
-            <div class="flex items-center space-x-4 mb-4">
-              <div>
-                  {% if comment.anonymous %}
-                    <h3 class="text-md font-semibold text-gray-900">ناشناس</h3>
-                  {% else %}
-                    <h3 class="text-md font-semibold text-gray-900">{{ comment.user.first_name }}</h3>
-                  {% endif %}
-                <time class="text-sm text-gray-500">{{ comment.created_at }}</time>
-              </div>
-            </div>
-            <div class="text-gray-700">
-              {{ comment.body }}
-            </div>
-          </div>
-      {% empty %}
-        <p>هنوز نظری برای این کالا ثبت نشده است.</p>
-    {% endfor %}
+    <div>
+      <span>هنوز نظری برای این کالا ثبت نشده است.</span>
+    </div>
 {% endif %}

@@ -9,10 +9,10 @@ from accounts.decorators import role_required
 
 from decimal import Decimal
 
-from icecream import ic
-ic.configureOutput(
-    includeContext=False
-)
+# from icecream import ic
+# ic.configureOutput(
+#     includeContext=False
+# )
 
 from shop.models import (
     Book, Genre, Comment, Favorite
@@ -50,7 +50,7 @@ def provide_only_available_books(request: HttpRequest) -> HttpResponse:
 
 
 def item_detail(request: HttpRequest, id) -> HttpResponse:
-    item = get_object_or_404(Book, id=id)
+    item: Book = get_object_or_404(Book, id=id)
     item_form = ItemAddForm()
     add_comment_form = AddCommentForm()
     is_favorited = False
@@ -60,7 +60,7 @@ def item_detail(request: HttpRequest, id) -> HttpResponse:
             is_favorited = True
     return render(request, "shop/customers/partials/book-item.html", {
             'is_fav': is_favorited,
-            'item': item, 
+            'item': item,
             'item_form': item_form, 
             'comment_form': add_comment_form
         }
@@ -225,7 +225,7 @@ def is_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
 def load_book_comments(request: HttpRequest, book_id: int) -> HttpResponse:
     if request.htmx:
         try:
-            comments = Comment.objects.filter(book=book_id)
+            comments = Comment.objects.filter(book=book_id, status="Approved")
         except Exception as error:
             return JsonResponse("متاسفانه خطایی رخ داده است. لطفا صفحه را مجددا رفرش کنید.")
         return render(request, "shop/customers/partials/book_item_comments.html", {'items': comments})
