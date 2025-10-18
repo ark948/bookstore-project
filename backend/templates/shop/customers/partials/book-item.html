@@ -35,11 +35,10 @@
             <div id="favorite_response_holder">
                 {% if user.is_authenticated %}
                     <div
+                        hx-get="{% url 'shop:is_book_favorite' item.id %}"
                         hx-trigger="load"
                         hx-target="this"
-                        hx-get="{% url 'shop:is_book_favorite' %}"
                         hx-swap="innerHTML"
-                        hx-vals='{"book_id": "{{ item.id }}"}'
                     >
                     </div>
                 {% endif %}
