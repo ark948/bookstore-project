@@ -156,6 +156,16 @@ def remove_favorite(request: HttpRequest) -> HttpResponse:
     return HttpResponse("ok")
 
 
+@role_required('user')
+def remove_item_from_favorites(request: HttpRequest, book_id: int) -> HttpResponse:
+    if request.htmx:
+        book_obj = get_object_or_404(Book, pk=book_id)
+        Favorite.objects.filter( user_id=request.user, book_id=book_id ).delete()
+        # no need to call all() after filter()
+        items = Favorite.objects.filter( user_id=request.user )
+        return render(request, "accounts/partials/favorites.html", { 'items': items })
+
+
 def load_cities(request: HttpRequest) -> HttpResponse:
     province_id = request.GET.get('province')
     cities: QuerySet = City.objects.filter(province_id=province_id).order_by('name')
