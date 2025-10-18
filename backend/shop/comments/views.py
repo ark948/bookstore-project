@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 from accounts.decorators import role_required
 from accounts.models import CustomUser, UserProfile
 from shop.models import Comment, Book
+from . import services
 
 
 class IndexView(TemplateView):
@@ -28,3 +29,8 @@ class IndexView(TemplateView):
         context['total_rejected'] = all_comments.filter(status="Rejected").count()
         context['total_approved'] = all_comments.filter(status="Approved").count()
         return context
+    
+
+def load_comments(request: HttpRequest, status: str) -> HttpResponse:
+    comments = services.load_comments(status.capitalize())
+    return render(request, "shop/comments/partials/list.html", {'comments': comments})
