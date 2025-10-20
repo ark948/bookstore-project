@@ -109,5 +109,13 @@
         function clean_comment_form() {
             document.getElementById('comment_form').reset();
         }
+
+        document.body.addEventListener('htmx:responseError', function(evt) {
+            // this can also be done as follows:
+            // hx-on="htmx:responseError: this.innerHTML = event.detail.xhr.responseText" (ACTUALLY this did not work for me)
+            if (evt.detail.xhr.status === 403) {
+                $("#add_comment_section").replaceWith(evt.detail.xhr.responseText);
+            }
+        });
     </script>
 {% endblock script %}

@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.db.models import QuerySet
+from django.db.utils import IntegrityError
+from django.template.loader import render_to_string
 
 from accounts.decorators import role_required
 
@@ -120,12 +122,18 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
     form = AddCommentForm(request.POST)
     if form.is_valid():
         # if all data is available and no aciton is needed before saving object, use create()
-        comment = Comment.objects.create(
-            body = form.cleaned_data['body'],
-            book = book,
-            user = request.user,
-            anonymous = form.cleaned_data['anonymous']
-        )
+        try:
+            Comment.objects.create(
+                body = form.cleaned_data['body'],
+                book = book,
+                user = request.user,
+                anonymous = form.cleaned_data['anonymous']
+            )
+        except IntegrityError as unique_error:
+            html = render_to_string('shop/customers/errors/forbidden.html', {
+                'message': "شما قبلا برای این کتاب نظر ثبت کرده اید. در صورت نیاز لطفا آن را ویرایش کنید."
+            })
+            return HttpResponseForbidden(html)
         # return a single comment item
         # response = render(request, "shop/customers/partials/comment_item.html", {'comment': comment})
         # response['HX-Trigger'] = "comment_successfully_submitted"

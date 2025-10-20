@@ -325,6 +325,11 @@ class Comment(TimeStampModel):
     anonymous = models.BooleanField("َAnonymous Comment", default=False, null=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES['P'])
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['book', 'user'], name='unique_book_user_comment')
+        ]
+
 
 # should items_count be removed?
 class OrderItem(TimeStampModel):
