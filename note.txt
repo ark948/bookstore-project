@@ -492,6 +492,7 @@ Going to separate the loading of book comments with a separate request after pag
 users can only comment once on every book item, but the can access and edit their comment from their profile
 UPDATE: added a unique constraint to Comment model. (Not entirely sure if this is going to work)
 IMPORTANT: before applying this migration, i need to delete all current comments
+also added title field to comment model
 since there were two different ways to delete a favorited object,
 one from book detail page and one from user profile favorites list
 both needs to be updated.

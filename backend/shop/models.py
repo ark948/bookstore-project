@@ -319,6 +319,7 @@ class Comment(TimeStampModel):
         "A": "Approved",
         "R": "Rejected"
     }
+    title = models.CharField("Title", max_length=60, null=True, blank=True)
     body = models.CharField("Body", max_length=500)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="comments") # <BookObj>.comments.all()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="comments") # <CustomUserObj>.comments.all()

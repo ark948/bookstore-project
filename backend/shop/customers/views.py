@@ -124,6 +124,7 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
         # if all data is available and no aciton is needed before saving object, use create()
         try:
             Comment.objects.create(
+                title = form.cleaned_data['title'],
                 body = form.cleaned_data['body'],
                 book = book,
                 user = request.user,

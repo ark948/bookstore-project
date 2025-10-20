@@ -66,14 +66,17 @@
                                     id="comment_form"
                                     hx-post="{% url 'shop:add_comment' item.id %}"
                                     hx-target="#add_comment_section"
-                                    hx-swap="innerHTML"
-                                    >
-                                    <label for="comment_body_id" class="text">متن نظر</label>
-                                    {{ comment_form.body }}
-                                    <label for="comment_anonymous_id" class="text">ناشناس ثبت شود؟</label>
-                                    {{ comment_form.anonymous }}
-                                    {% csrf_token %}
-                                    <input type="submit" class="btn btn-success btn-xs" value="ثبت نظر">
+                                    hx-swap="innerHTML">
+                                    <div class="flex flex-col m-2">
+                                        <label for="comment_title_id" class="text">عنوان متن</label>
+                                        {{ comment_form.title }}
+                                        <label for="comment_body_id" class="text">متن نظر</label>
+                                        {{ comment_form.body }}
+                                        <label for="comment_anonymous_id" class="text">ناشناس ثبت شود؟</label>
+                                        {{ comment_form.anonymous }}
+                                        {% csrf_token %}
+                                        <input type="submit" class="btn btn-success btn-xs" value="ثبت نظر">
+                                    </div>
                                 </form>
                             {% endif %}
                         </div>
