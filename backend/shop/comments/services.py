@@ -19,12 +19,3 @@ def update_comment(id: int, action: str) -> bool:
         print("\n-->[ Error in modifying Comment obj ]<--\n", error)
         return False
     return True
-
-
-def remove_comment(id: int) -> bool:
-    try:
-        Comment.objects.filter(id=id).delete()
-    except Exception as error:
-        print("\n-->[ Error in deleting Comment obj ]<--\n", error)
-        return False
-    return True
