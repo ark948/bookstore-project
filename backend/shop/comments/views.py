@@ -52,6 +52,15 @@ def approve_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
         if not services.update_comment(comment_id, 'A'):
             return HttpResponseServerError()
         return HttpResponse(status=HTTPStatus.OK)
+    
+
+@require_POST
+@role_required('employee')
+def reject_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
+    if request.htmx:
+        if not services.update_comment(comment_id, 'R'):
+            return HttpResponseServerError()
+        return HttpResponse(status=HTTPStatus.OK)
 
 
 @role_required('employee')

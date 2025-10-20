@@ -13,10 +13,7 @@ def update_comment(id: int, action: str) -> bool:
         return False
     item: Comment = get_object_or_404(Comment, pk=id)
     try:
-        if action == "A":
-            item.status = "Approved"
-        elif action == "R":
-            item.status = "Rejected"
+        item.status = Comment.STATUS_CHOICES[action]
         item.save()    
     except Exception as error:
         print("\n-->[ Error in modifying Comment obj ]<--\n", error)
