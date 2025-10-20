@@ -7,6 +7,7 @@ from shop.models import Comment
 def load_comments(status: str) -> QuerySet:
     return Comment.objects.filter(status=status).order_by('-created_at')
 
+
 def update_comment(id: int, action: str) -> bool:
     if action not in ('A', 'R'):
         return False
@@ -19,5 +20,14 @@ def update_comment(id: int, action: str) -> bool:
         item.save()    
     except Exception as error:
         print("\n-->[ Error in modifying Comment obj ]<--\n", error)
+        return False
+    return True
+
+
+def remove_comment(id: int) -> bool:
+    try:
+        Comment.objects.filter(id=id).delete()
+    except Exception as error:
+        print("\n-->[ Error in deleting Comment obj ]<--\n", error)
         return False
     return True
