@@ -18,7 +18,7 @@
                 <span class="text-xl text-green-500">&#10003;</span>
             </button>
             <button class="btn btn-square btn-ghost"
-                hx-delete="{% url 'shop:reject_comment' item.id %}"
+                hx-post="{% url 'shop:reject_comment' item.id %}"
                 hx-target="#list_item"
                 hx-swap="delete"
                 >

@@ -485,6 +485,12 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     update: any mechanism using hx-vals is not safely handled here, all of them need updating
     add mechanism to review comments by employees before they are accepted and displayed
 
+
+62. user's can edit their comments, especially the rejected ones
+    upon selecting a comment from their profile
+    a modal will be opened, that will render the form partial
+
+
 # if no verbose_name is provided, django will auto generate one by converting underscores to spaces and captializing
 # e.g. published_date -> Published date
 

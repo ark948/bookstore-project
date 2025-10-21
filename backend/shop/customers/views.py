@@ -145,7 +145,8 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
     else:
         # this needs to be upated with comment_form template
         messages.error(request, "خطایی در درج نظر رخ داد. لطفا دوباره تلاش کنید.")
-        return HttpResponse(form.errors)    
+        return HttpResponse(form.errors)
+
 
 @role_required('user')
 def get_number_of_cart_items(request: HttpRequest) -> HttpResponse:

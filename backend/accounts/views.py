@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, require_POST
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.db.models import QuerySet
+from django.forms import model_to_dict
 
 from typing import Optional, Dict, Any
 
@@ -32,6 +33,8 @@ from .forms import (
     CustomerAddressForm_widget_tweaks,
     UserProfileAddressForm
 )
+
+from shop.customers.forms import AddCommentForm
 
 # signup
 # login
@@ -153,6 +156,30 @@ def remove_item_from_favorites(request: HttpRequest, book_id: int) -> HttpRespon
         items = Favorite.objects.filter( user_id=request.user )
         context = { 'items': items, 'total': items.count() }
         return render(request, "accounts/partials/favorites.html", context)
+
+@role_required('user')
+def load_comment_form_partial(request: HttpRequest, comment_id: int) -> HttpResponse:
+    comment_obj = get_object_or_404(Comment, pk=comment_id)
+    form = AddCommentForm(initial=model_to_dict(comment_obj))
+    if request.htmx:
+        if comment_obj.user != request.user:
+            return HttpResponseForbidden()
+        return render(request, "accounts/forms/comment_form.html", {'form': form})
+
+
+
+@require_POST
+@role_required('user')
+def edit_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
+    comment_obj = get_object_or_404(Comment, pk=comment_id)
+    if request.htmx:
+        if comment_obj.user != request.user:
+            return HttpResponseForbidden()
+        form = AddCommentForm(request.POST, instance=comment_obj)
+        if form.is_valid():
+            return HttpResponse("OK")
+        else:
+            return HttpResponse("ERROR")
 
 
 def load_cities(request: HttpRequest) -> HttpResponse:
