@@ -36,3 +36,13 @@
   </ul>
 </div>
 {% endfor %}
+
+
+{% block script %}
+    <script>
+        function clean_comment_form() {
+            document.getElementById('comment_form').reset();
+            edit_comment_modal.close();
+        }
+    </script>
+{% endblock script %}

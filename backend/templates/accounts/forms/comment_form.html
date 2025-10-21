@@ -1,11 +1,13 @@
 <form
+    id="comment_form"
     hx-post="{% url 'accounts:edit_comment' item_id %}"
     hx-target="#response_holder"
     hx-swap="innerHMTL"
->
+    hx-on:edit_comment_success="clean_comment_form();"
+    >
     {% csrf_token %}
     {{ form.as_div }}
     <button class="btn btn-primary btn-outline btn-xs">
-        submit
+        ثبت
     </button>
 </form>

@@ -181,7 +181,9 @@ def edit_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
             comment_obj.title = form.cleaned_data['title']
             comment_obj.status = "Pending"
             comment_obj.save()
-            return HttpResponse("OK")
+            response = HttpResponse()
+            response['HX-Trigger'] = "edit_comment_success"
+            return response
         else:
             return HttpResponse("ERROR")
 
