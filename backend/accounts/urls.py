@@ -9,6 +9,8 @@ urlpatterns = [
 
     path("favorite-remove/<int:book_id>/", views.remove_item_from_favorites, name='remove_favorite'),
 
+    path("edit-comment/<int:comment_id>/", views.edit_user_comment, name='edit_comment'),
+
     # loaders
     path("load-comment-form/<int:comment_id>/", views.load_comment_form_partial, name='load_comment_form'),
     path("favorites-list/", views.favorites_list, name='fav_list'),

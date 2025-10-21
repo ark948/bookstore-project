@@ -157,6 +157,7 @@ def remove_item_from_favorites(request: HttpRequest, book_id: int) -> HttpRespon
         context = { 'items': items, 'total': items.count() }
         return render(request, "accounts/partials/favorites.html", context)
 
+
 @role_required('user')
 def load_comment_form_partial(request: HttpRequest, comment_id: int) -> HttpResponse:
     comment_obj = get_object_or_404(Comment, pk=comment_id)
@@ -164,8 +165,7 @@ def load_comment_form_partial(request: HttpRequest, comment_id: int) -> HttpResp
     if request.htmx:
         if comment_obj.user != request.user:
             return HttpResponseForbidden()
-        return render(request, "accounts/forms/comment_form.html", {'form': form})
-
+        return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
 
 
 @require_POST
@@ -175,8 +175,12 @@ def edit_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
     if request.htmx:
         if comment_obj.user != request.user:
             return HttpResponseForbidden()
-        form = AddCommentForm(request.POST, instance=comment_obj)
+        form = AddCommentForm(request.POST)
         if form.is_valid():
+            comment_obj.body = form.cleaned_data['body']
+            comment_obj.title = form.cleaned_data['title']
+            comment_obj.status = "Pending"
+            comment_obj.save()
             return HttpResponse("OK")
         else:
             return HttpResponse("ERROR")
