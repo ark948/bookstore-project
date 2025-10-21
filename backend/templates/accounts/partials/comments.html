@@ -22,9 +22,11 @@
             </button>
             <div>
             {% if item.status == 'Approved' %}
-                <h5>تایید شده</h5>
+                <h6>تایید شده</h6>
+            {% elif item.status == 'Rejected' %}
+                <h6 class="text-red-700">رد شده</h6>
             {% else %}
-                <h5 class="text-red-700">رد شده</h5>
+                <h6 class="text-red-700">در انتظار تایید</h6>
             {% endif %}
             </div>
           </div>
