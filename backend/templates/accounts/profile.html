@@ -73,6 +73,14 @@
                     hx-trigger="click"
                 />
                 <div class="tab-content border-base-300 bg-base-100 p-10" id="comments_list_container">
+                    <button class="btn btn-outline btn-info btn-xs"
+                        hx-get="{% url 'accounts:comments_list' %}"
+                        hx-target="#comments_list_container"
+                        hx-swap="innerHTML"
+                        hx-trigger="click"
+                    >
+                        بروزرسانی
+                    </button>
                     نظری ثبت نشده است.
                 </div>
             
