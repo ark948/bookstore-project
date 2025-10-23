@@ -17,7 +17,7 @@ from typing import Optional, Dict, Any
 from .models import (
     UserProfile,
     Province,
-    City
+    City,
 )
 
 from shop.models import (
@@ -92,14 +92,11 @@ def profile(request: HttpRequest) -> HttpResponse:
     return render(request, "accounts/profile.html")
 
 
-# add_address uses crispy_forms (this one deleted)
-# add_address_v2 uses django_widget_tweaks
-# to use cripsy_forms add {{ form|crispy }} to template inside the form tag
 @role_required('user')
-def add_address(request: HttpRequest) -> HttpResponse:
+def add_address(request: HttpRequest, profile_id: int) -> HttpResponse:
+    profile_obj = UserProfile.objects.get(pk=profile_id)
     if request.method == "POST":
-        # form = CustomerAddressForm_widget_tweaks(request.POST)
-        form = UserProfileAddressForm(request.POST)
+        form = UserProfileAddressForm(request.POST, instance=profile_obj)
         if form.is_valid():
             profile_obj: UserProfile = form.save(commit=False)
             profile_obj.user = request.user
@@ -111,9 +108,8 @@ def add_address(request: HttpRequest) -> HttpResponse:
                 print(f"ERROR: {field} , {message}")
             messages.error(request, "خطایی رخ داده است. لطفا دوباره امتحان کنید.")
             return render(request, "accounts/forms/add_address.html", {'form': form})
-    # form = CustomerAddressForm_widget_tweaks()
-    form = UserProfileAddressForm()
-    return render(request, "accounts/forms/add_address.html", {'form': form})
+    form = UserProfileAddressForm(instance=profile_obj)
+    return render(request, "accounts/forms/add_address.html", {'form': form, 'profile_obj': profile_obj})
 
 
 @role_required('user')

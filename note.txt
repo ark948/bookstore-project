@@ -490,6 +490,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     upon selecting a comment from their profile
     a modal will be opened, that will render the form partial
 
+63. something is wrong with editing user profile info such as address
+
 
 # if no verbose_name is provided, django will auto generate one by converting underscores to spaces and captializing
 # e.g. published_date -> Published date

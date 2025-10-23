@@ -19,7 +19,7 @@ urlpatterns = [
 
     # Profile routes
     path("profile/", views.profile, name='profile'),
-    path("address/", views.add_address, name='add_address'),
+    path("address/<int:profile_id>/", views.add_address, name='add_address'),
     path('ajax/load-cities/', views.load_cities, name='load_cities'),
 
     # Authentication routes
