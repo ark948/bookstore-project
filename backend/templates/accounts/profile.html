@@ -7,46 +7,65 @@
 
 {% block content %}
     {% include 'accounts/modals/comment_form_modal.html' %}
-    <h1>
-        حساب کاربری
-    </h1>
+    
+    <div class="bg-white max-w-2xl shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                حساب کاربری
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                اطلاعات حساب کاربری
+            </p>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        نام و نام خانوادگی
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </dd>
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        شماره تماس
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        -
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        آدرس ایمیل
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ user.email }}
+                    </dd>
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        نوع حساب
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {% if user.role == 'user' %}
+                            عادی
+                        {% endif %}
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        نشانی
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ user.profile.province }}, {{ user.profile.city }}, {{ user.profile.address }}
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
 
     <div>
-        <p>
-            آدرس ایمیل شما: {{ user.email }}
-        </p>
-        <p>
-            نوع حساب شما: {{ user.role }}
-        </p>
-        {% if user.profile.postal_code %}
-            <div>
-                <p>آدرس شما: {{ user.profile.address }}</p>
-                <p>کد پستی شما: {{ user.profile.postal_code }}</p>
-            </div>
-            <p>
-                <a href="{% url 'accounts:add_address' %}" class="link link-primary">
-                    ویرایش
-                </a>
-            </p>
-        {% else %}
-            <div>
-                <p>آدرسی ثبت نشده است.</p>
-                <p>
-                    <a href="{% url 'accounts:add_address' %}" class="link link-primary">
-                        ثبت آدرس
-                    </a>
-                </p>
-            </div>
-        {% endif %}
-
-        <div>
-            <div>سفارشات</div>
-            <div>لیست علاقه مندی ها</div>
-            <div>نظرات و امتیاز ها</div>
-            <div>آدرس ها</div>
-            <div>بازدید ها</div>
-        </div>
-
         <!-- name of each tab group should be unique -->
         {% if user.role == 'user' %}
             <div class="tabs tabs-border">
