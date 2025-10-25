@@ -494,6 +494,18 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     (fixed, prepopulating fields remains)
 
 64. Book cover_image validation
+    upload images of any size
+    thumbnails must all have a consistent size
+    file type and aspect ratio needs to be checked
+
+
+other features to implement:
+voting on comments
+rating on books
+reporting comments
+reminder on books (via email and background tasks)
+account recovery via email and background tasks
+
 
 
 # if no verbose_name is provided, django will auto generate one by converting underscores to spaces and captializing

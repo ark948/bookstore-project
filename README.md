@@ -13,7 +13,7 @@
 
 
 ## Description:
-Simple online bookstore project used to demonstrate common aspects and features of an e-commerce project. Focusing mainly on the backend.
+Simple bookstore project to demonstrate common aspects and features of an e-commerce project. Focusing mainly on the backend.
 
 
 
