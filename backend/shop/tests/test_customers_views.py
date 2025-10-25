@@ -41,7 +41,7 @@ def test_customers_add_comment(client, book_obj, user):
         'book_id': book_obj['book'].pk
     }
 
-    url = reverse('shop:add_comment')
+    url = reverse('shop:add_comment', kwargs={'book_id': book_obj['book'].pk})
     response = client.post(url, data=comment)
     assert response.status_code == 200
 
@@ -61,7 +61,7 @@ def test_customers_add_to_favorite(client, book_obj, user):
     data = {
         'book_id': book_obj['book'].pk
     }
-    url = reverse('shop:add_favorite')
+    url = reverse('shop:add_favorite', kwargs={'book_id': book_obj['book'].pk})
     response = client.get(url, data=data, headers=headers)
     assert response.status_code == 200
     total = Favorite.objects.all().count()
