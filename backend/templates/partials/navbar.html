@@ -1,0 +1,36 @@
+<nav class="flex flex-row justify-between items-center px-4 py-2 bg-gray-800 text-white rounded-sm m-8">
+    <div>
+      <!-- right -->
+      <ul class="flex space-x-4">
+        <li><a href="{% url 'home:index' %}" class="btn btn-ghost text-white hover:text-black-400">خانه</a></li>
+        <li><a href="{% url 'shop:customers_browse' %}" class="btn btn-ghost text-white hover:text-black-400">فروشگاه</a></li>
+      </ul>
+    </div>
+    <div>
+      <!-- left -->
+      <ul class="flex space-x-4 items-center">
+        <li>
+          {% if user.role == "admin" %}
+            <a href="{% url 'admin:index' %}">Panel</a>
+          {% elif user.role == 'user' %}
+          <a class="btn btn-sm" href="{% url 'shop:cart_detail' %}">
+            سبد
+            <div 
+                class="badge badge-sm"
+                hx-get="{% url 'shop:cart_count' %}"
+                hx-trigger="load"
+                hx-target="this"
+                hx-swap="innerHTML"
+              >
+            </div>
+          </a>
+          {% elif user.role == "employee" %}
+            <a class="btn btn-ghost text-white hover:text-black-400" href="{% url 'shop:books-list' %}">پنل</a>
+          {% else %}
+            <a class="btn btn-ghost text-white hover:text-black-400" href="{% url 'accounts:login' %}">ورود</a>
+          {% endif %}
+        </li>
+        <li><a href="{% url 'accounts:profile' %}" class="btn btn-ghost text-white hover:text-black-400">حساب کاربری</a></li>
+      </ul>
+    </div>
+</nav>
