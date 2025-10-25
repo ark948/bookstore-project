@@ -1,6 +1,6 @@
 # Online Bookstore Project
 
-## Work in progress... Not at all ready for production
+## Work in progress...
 
 ## Contents:
 * [Description](#description)
@@ -19,17 +19,17 @@ Simple online bookstore project used to demonstrate common aspects and features 
 
 ## Tech Stack
 * **Backend**: 
-    * Django version 5.2
+    * Django v5.2
 
 * **Frontend**: 
     * TailwindCSS v4.1
     * DaisyUI v5.0
-    * HTMX
-    * JQuery
+    * HTMX v2.0.5
+    * JQuery v3.7.1
 
 * **Database**:
-    * SQLite (should be sufficient for development)
-    * PostgreSQL (production)
+    * SQLite (dev)
+    * PostgreSQL (prod)
 
 
 ### Concepts implemented

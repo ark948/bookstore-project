@@ -491,13 +491,14 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     a modal will be opened, that will render the form partial
 
 63. something is wrong with editing user profile info such as address
+    (fixed, prepopulating fields remains)
+
+64. Book cover_image validation
 
 
 # if no verbose_name is provided, django will auto generate one by converting underscores to spaces and captializing
 # e.g. published_date -> Published date
 
-
-need to add image and thumbnail handling for books cover image
 
 there may be something wrong with profile creation mechanism (notify if creation failed)
 
