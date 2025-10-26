@@ -498,6 +498,12 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     thumbnails must all have a consistent size
     file type and aspect ratio needs to be checked
 
+65. Simulating purchase flow
+    (without actually integrating any payment gateway)
+    We'll be needing a checkout view that will display the total and asks for confirmation
+    a payment that fakes the payment step
+    a purchase complete page, showing order confirmation/placement
+
 
 other features to implement:
 voting on comments
