@@ -6,6 +6,7 @@ app_name = "shop"
 urlpatterns = [
     path("customers/", include("shop.customers.urls")),
     path("books/", include("shop.books.urls")),
+    path("orders/", include("shop.orders.urls")),
     path("comments/", include("shop.comments.urls")),
 
     # dashboard views
