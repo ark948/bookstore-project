@@ -10,4 +10,19 @@
     </ul>
 
     <h3>Total: {{ total_price }}</h3>
+
+    <div>
+        <form action="{% url 'shop:checkout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline btn-primary btn-xs">
+                ثبت
+            </button>
+        </form>
+    </div>
+
+    {% if order %}
+        <div>
+            <h3>Order Placed - Pending payment</h3>
+        </div>
+    {% endif %}
 {% endblock content %}

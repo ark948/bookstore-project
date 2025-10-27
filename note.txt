@@ -503,6 +503,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     We'll be needing a checkout view that will display the total and asks for confirmation
     a payment that fakes the payment step
     a purchase complete page, showing order confirmation/placement
+    Update: There may be a structural problem with Order and OrderItem
 
 
 other features to implement:

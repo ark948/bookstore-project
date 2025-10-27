@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+    <h2>Fake Payment Page</h2>
+    <div>
+        Total price: {{ total_price }}
+    </div>
+
+    <form action="#" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-xs">Pay (fake)</button>
+    </form>
+{% endblock content %}
