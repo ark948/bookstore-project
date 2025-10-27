@@ -42,7 +42,7 @@ def checkout(request: HttpRequest) -> HttpResponse:
         order = Order.objects.create(
             customer_id = request.user,
             order_items_id = order_item,
-            status = "Pending Payment"
+            status = Order.ORDER_STATUSES["PENDING"]
         )
         return render(request, "shop/orders/checkout.html", {'order': order})
     return render(request, "shop/orders/checkout.html", {

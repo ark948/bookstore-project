@@ -504,6 +504,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     a payment that fakes the payment step
     a purchase complete page, showing order confirmation/placement
     Update: There may be a structural problem with Order and OrderItem
+    the order number definitly needs to be updated, can't be just primary key
+    added order_number field to Order model, but it is uuid and not human friendly at all
 
 
 other features to implement:

@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 import time
+import uuid
 import datetime
 from accounts.models import CustomUser, UserProfile
 
@@ -343,16 +344,17 @@ class OrderItem(TimeStampModel):
 
 
 class Order(TimeStampModel):
-    ORDER_STATUSES = (
-        ("pending payment", "Pending Payment"),
-        ("confirmed", "Confirmed"),
-        ("processing", "Processing"),
-        ("shipped", "Shipped"),
-        ("cancelled", "Cancelled")
-    )
+    ORDER_STATUSES = {
+        "PENDING": "Pending Payment",
+        "CONFIRM": "Confirmed",
+        "PROCESS": "Processing",
+        "SHIPPED": "Shipped",
+        "CANCELLED": "Cancelled"
+    }
     customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders') # <CustomUserObj>.orders.all()
     order_items_id = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
-    status = models.CharField("Status of order", max_length=32, choices=ORDER_STATUSES, default=ORDER_STATUSES[2])
+    status = models.CharField("Status of order", max_length=32, choices=ORDER_STATUSES, default=ORDER_STATUSES['PENDING'])
+    order_number = models.UUIDField(primary_key=False, max_length=12, default=uuid.uuid4, editable=False)
 
     class Meta:
         unique_together = (
