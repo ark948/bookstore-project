@@ -28,6 +28,9 @@ from shop.models import (
 @role_required('user')
 def checkout(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
+    if len(cart) <= 0:
+        messages.error(request, "سبد شما خالی میباشد.")
+        return redirect(reverse('shop:customers_browse'))
     for i in cart:
         print(i)
     total_price = 0
