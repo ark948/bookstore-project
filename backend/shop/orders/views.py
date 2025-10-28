@@ -16,14 +16,6 @@ from shop.models import (
 
 @role_required('user')
 def checkout(request: HttpRequest) -> HttpResponse:
-    # cart is in session
-    # get the products from cart
-    # calculate the total price
-    # if request is post...
-    # create an order object
-    # use Order.prodcuts.set() to set the products items
-    # redirect to fake payment page
-    # display items and their count and individual prices
     cart = Cart(request)
     items = []
     for item in cart:
@@ -56,11 +48,6 @@ def checkout(request: HttpRequest) -> HttpResponse:
 @require_POST
 @role_required('user')
 def fake_payment(request: HttpRequest, order_number: str) -> HttpResponse:
-    # get the order object
-    # if request is post, 
-    # set the is_paid of order to True
-    # clear the cart
-    # redirect to purchase placed page
     order_object = get_object_or_404(Order, order_number=order_number)
     if not order_object.customer_id == request.user:
         return HttpResponseForbidden()
@@ -68,6 +55,7 @@ def fake_payment(request: HttpRequest, order_number: str) -> HttpResponse:
         order_object.status = Order.ORDER_STATUSES['CONFIRM']
         order_object.save()
     messages.success(request, "Order payment was successful. Thank you very much.")
+    # redirect to purchase placed (confirmation) page?
     return redirect(reverse('accounts:profile'))
 
 
