@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, HttpResponseForbidden
+from django.contrib import messages
 from icecream import ic
 
 from accounts.decorators import role_required
@@ -53,18 +54,20 @@ def checkout(request: HttpRequest) -> HttpResponse:
 
 @require_POST
 @role_required('user')
-def fake_payment(request: HttpRequest, order_id: int) -> HttpResponse:
+def fake_payment(request: HttpRequest, order_number: str) -> HttpResponse:
     # get the order object
     # if request is post, 
     # set the is_paid of order to True
     # clear the cart
     # redirect to purchase placed page
-    order_object = get_object_or_404(Order, pk=order_id)
+    order_object = get_object_or_404(Order, order_number=order_number)
     if not order_object.customer_id == request.user:
         return HttpResponseForbidden()
     if order_object.status == Order.ORDER_STATUSES['PENDING']:
         order_object.status = Order.ORDER_STATUSES['CONFIRM']
-    return HttpResponse('ok')
+        order_object.save()
+    messages.success(request, "Order payment was successful. Thank you very much.")
+    return redirect(reverse('accounts:profile'))
 
 
 @role_required('user')

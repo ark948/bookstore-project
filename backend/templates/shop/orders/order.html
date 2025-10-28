@@ -8,6 +8,22 @@
                 <div>
                     {{ item.order_number }}
                 </div>
+                <div>
+                    {% if item.status == "Pending Payment" %}
+                        <div>
+                            <div>
+                                پرداخت نهایی سفارش شماره: {{ item.order_number }}
+                                به مبلغ کل {{ item.order_items_id.total_price }}
+                            </div>
+                            <form action="{% url 'shop:fake_payment' item.order_number %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline btn-primary btn-xs w-32">
+                                    پرداخت نهایی
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         {% endif %}
     </div>
