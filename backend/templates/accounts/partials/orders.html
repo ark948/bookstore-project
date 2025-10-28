@@ -10,11 +10,16 @@
                             <div class="mb-4 md:mb-0">
                                 <div class="flex items-center space-x-4">
                                     <span class="text-md font-medium text-gray-900">شماره سفارش {{ item.order_number }}</span>
-                                    <span class="px-3 py-1 rounded-full text-sm font-medium">
+                                    <div class="px-3 py-1 rounded-full text-sm font-medium">
                                         {% if item.status == "Pending Payment" %}
-                                            وضعیت: در انتظار پرداخت
+                                            <div class="flex">
+                                                <span class="ml-2">وضعیت: در انتظار پرداخت</span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                  </svg>
+                                            </div>
                                         {% endif %}
-                                    </span>
+                                    </div>
                                 </div>
                                 <div class="flex flex-col">
                                     <p class="text-sm text-gray-500 mt-1">{{ item.created_at }} تاریخ</p>
