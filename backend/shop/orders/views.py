@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseForbidden
 from icecream import ic
 
 from accounts.decorators import role_required
@@ -59,7 +59,12 @@ def fake_payment(request: HttpRequest, order_id: int) -> HttpResponse:
     # set the is_paid of order to True
     # clear the cart
     # redirect to purchase placed page
-    return render(request, "shop/orders/fake_payment.html", {})
+    order_object = get_object_or_404(Order, pk=order_id)
+    if not order_object.customer_id == request.user:
+        return HttpResponseForbidden()
+    if order_object.status == Order.ORDER_STATUSES['PENDING']:
+        order_object.status = Order.ORDER_STATUSES['CONFIRM']
+    return HttpResponse('ok')
 
 
 def purchase_complete(request: HttpRequest, order_id: int) -> HttpResponse:
