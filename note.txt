@@ -506,7 +506,19 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     Update: There may be a structural problem with Order and OrderItem
     the order number definitly needs to be updated, can't be just primary key
     added order_number field to Order model, but it is uuid and not human friendly at all
-
+    no matter what i do, i keep getthing this error:
+    "Callable default on unique field mymodel.uuid will not generate unique values upon migrating."
+    apparently this error only shows up if model already has existing data.
+    steps taken (according to some tutorial):
+    added field,
+    ran makemigrations (knowing that it will raise error),
+    chose option 1,
+    a migration file was generated,
+    created the migrate.py file in shop (this is the migration_helper.py),
+    imported the code from this helper file into the migration file and used it there
+    (in migration class)
+    ran migrte command (no initial problem)
+    
 
 other features to implement:
 voting on comments

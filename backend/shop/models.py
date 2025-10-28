@@ -343,6 +343,10 @@ class OrderItem(TimeStampModel):
     total_price = models.DecimalField("Total Price", decimal_places=3, max_digits=12)
 
 
+def generate_order_number():
+    return uuid.uuid4().hex[:12].upper()
+
+
 class Order(TimeStampModel):
     ORDER_STATUSES = {
         "PENDING": "Pending Payment",
@@ -354,7 +358,7 @@ class Order(TimeStampModel):
     customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders') # <CustomUserObj>.orders.all()
     order_items_id = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
     status = models.CharField("Status of order", max_length=32, choices=ORDER_STATUSES, default=ORDER_STATUSES['PENDING'])
-    order_number = models.UUIDField(primary_key=False, max_length=12, default=uuid.uuid4, editable=False)
+    order_number = models.CharField(unique=True, editable=False, default=generate_order_number)
 
     class Meta:
         unique_together = (
