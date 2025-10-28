@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+    <div>
+        {% if item %}
+            <div class="flex flex-col">
+                <div>
+                    {{ item.order_number }}
+                </div>
+                <div>
+                    <div>
+                        لغو سفارش {{ item.order_number }}
+                        به مبلغ کل {{ item.order_items_id.total_price }}
+                    </div>
+                    <form action="{% url 'shop:cancel_order' item.order_number %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline btn-error btn-xs w-32">
+                            لغو
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}
