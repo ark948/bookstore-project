@@ -45,6 +45,7 @@ def checkout(request: HttpRequest) -> HttpResponse:
             order_items_id = order_item,
             status = Order.ORDER_STATUSES["PENDING"]
         )
+        cart.clear()
         return render(request, "shop/orders/checkout.html", {'order': order})
     return render(request, "shop/orders/checkout.html", {
         'total_price': total_price,

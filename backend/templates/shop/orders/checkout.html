@@ -4,21 +4,21 @@
 {% block content %}
     <h2>Checkout</h2>
     <ul>
-        {% for item in items %}
-            <li>{{ item.title }} - {{ item.price }}</li>
-        {% endfor %}
+        {% if items %}
+            {% for item in items %}
+                <li>{{ item.title }} - {{ item.price }}</li>
+            {% endfor %}
+            <div>
+                <form action="{% url 'shop:checkout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline btn-primary btn-xs">
+                        ثبت
+                    </button>
+                </form>
+            </div>
+            <h3>Total: {{ total_price }}</h3>
+        {% endif %}
     </ul>
-
-    <h3>Total: {{ total_price }}</h3>
-
-    <div>
-        <form action="{% url 'shop:checkout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-outline btn-primary btn-xs">
-                ثبت
-            </button>
-        </form>
-    </div>
 
     {% if order %}
         <div>
