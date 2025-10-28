@@ -1,0 +1,76 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+<div class="h-screen py-8">
+    <div class="container mx-auto px-4">
+        <h1 class="text-2xl font-semibold mb-4">تایید سفارش</h1>
+        <div class="flex flex-col md:flex-row gap-4">
+            <div class="md:w-3/4">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+                    <table class="table w-full">
+                        <thead>
+                            <tr class="text-center">
+                                <th>کالا</th>
+                                <th>قیمت</th>
+                                <th>تعداد</th>
+                                <th>مجموع</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr class="text-center">
+                                <td>
+                                    <div class="flex items-center">
+                                        <img class="h-16 w-10" src="{{ item.product.cover_image.url }}" alt="Product image">
+                                        <span>{{ item.product.title }}</span>
+                                    </div>
+                                </td>
+                                <td class="py-4">{{ item.product.price }}</td>
+                                <td class="py-4">
+                                    <div>
+                                        <button class="border rounded-md py-2 px-4 m-1">-</button>
+                                        <span class="text-center w-8">{{ item.quantity }}</span>
+                                        <button class="border rounded-md py-2 px-4 m-1">+</button>
+                                    </div>
+                                </td>
+                                <td class="py-4">{{ item.total_price }}</td>
+                            </tr>
+                            <!-- More product rows -->
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="md:w-1/4">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-lg font-semibold mb-4">Summary</h2>
+                    <div class="flex justify-between mb-2">
+                        <span>مجموع کالا ها</span>
+                        <span>{{ total_price }}</span>
+                    </div>
+                    <div class="flex justify-between mb-2">
+                        <span>هزینه ارسال</span>
+                        <span>رایگان</span>
+                    </div>
+                    <div class="flex justify-between mb-2">
+                        <span>مالیات</span>
+                        <span>0</span>
+                    </div>
+                    <hr class="my-2">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">مجموع</span>
+                        <span class="font-semibold">{{ total_price }}</span>
+                    </div>
+                    <form action="{% url 'shop:checkout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-info btn-md w-full mt-4">
+                            ثبت
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -518,6 +518,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     imported the code from this helper file into the migration file and used it there
     (in migration class)
     ran migrte command (no initial problem)
+
+66. There is a problem with the data modeling (Order and OrderItem)
+    and possibly the item_count (or quantity)
     
 
 other features to implement:

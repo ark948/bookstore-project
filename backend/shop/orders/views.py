@@ -14,22 +14,35 @@ from shop.models import (
     OrderItem
 )
 
+
+# ic| i: {'price': Decimal('300000.000'),
+#         'product': <Book: shit_2>,
+#         'quantity': 2,
+#         'total_price': Decimal('600000.000')}
+# ic| i: {'price': Decimal('150000.000'),
+#         'product': <Book: کتاب دیگر_8>,
+#         'quantity': 1,
+#         'total_price': Decimal('150000.000')}
+
+
 @role_required('user')
 def checkout(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
-    items = []
-    for item in cart:
-        items.append(item)
-    total_price = 0
-    for i in items:
+    for i in cart:
         print(i)
-        total_price += i['price']
+    total_price = 0
+    for i in cart:
+        total_price += i['total_price']
+    total_items_count = 0
+    for i in cart:
+        total_items_count += i['quantity']
+    items = [i for i in cart]
     if request.method == "POST":
         order_item = OrderItem.objects.create(
             total_price = total_price,
-            items_count = len(items)
+            items_count = total_items_count
         )
-        for i in items:
+        for i in cart:
             order_item.books.add(i['product'])
         order_item.save()
         order = Order.objects.create(
@@ -39,7 +52,7 @@ def checkout(request: HttpRequest) -> HttpResponse:
         )
         cart.clear()
         return render(request, "shop/orders/checkout.html", {'order': order})
-    return render(request, "shop/orders/checkout.html", {
+    return render(request, "shop/orders/checkout2.html", {
         'total_price': total_price,
         'items': items,
     })
