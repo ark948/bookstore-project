@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q, CheckConstraint
 from django.core.validators import MaxValueValidator, MinValueValidator
 import time
 import uuid
@@ -179,9 +180,7 @@ class Language(models.Model):
 
 # OriginalLanguage does not need a separate table
 
-
 # Format does not need a separate table
-
 
 class Size(models.Model):
     BOOK_SIZES = {
@@ -208,7 +207,6 @@ class Organization(models.Model):
 
     def __str__(self) -> str:
         return self.title
-
 
 
 # AgeRecommendation does not need a separate table
@@ -410,7 +408,6 @@ class Favorite(models.Model):
             'user_id',
             'book_id'
         )
-
 
 # Association tables
 # NOTE: Objects need to ba creatd explicitly
