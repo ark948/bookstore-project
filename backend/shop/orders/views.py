@@ -67,6 +67,14 @@ def fake_payment(request: HttpRequest, order_id: int) -> HttpResponse:
     return HttpResponse('ok')
 
 
+@role_required('user')
+def order_details(request: HttpRequest, order_number: str) -> HttpResponse:
+    order_object = get_object_or_404(Order, order_number=order_number)
+    if not order_object.customer_id == request.user:
+        return HttpResponseForbidden()
+    return render(request, "shop/orders/order.html", {'item': order_object})
+
+
 def purchase_complete(request: HttpRequest, order_id: int) -> HttpResponse:
     # get order
     # display purchase complete message

@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+    <div>
+        {% if item %}
+            <div class="flex flex-col">
+                <div>
+                    {{ item.order_number }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}
