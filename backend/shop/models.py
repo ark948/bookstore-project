@@ -331,16 +331,6 @@ class Comment(TimeStampModel):
         ]
 
 
-# should items_count be removed?
-class OrderItem(TimeStampModel):
-    books = models.ManyToManyField(Book) # a book can be in more than one cart, as long as copies_available > 1
-    items_count = models.PositiveSmallIntegerField(
-        "Total Number of Items",
-        validators=[MaxValueValidator(50)]
-    )
-    total_price = models.DecimalField("Total Price", decimal_places=3, max_digits=12)
-
-
 def generate_order_number():
     return uuid.uuid4().hex[:12].upper()
 
@@ -353,19 +343,23 @@ class Order(TimeStampModel):
         "SHIPPED": "Shipped",
         "CANCELLED": "Cancelled"
     }
-    customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders') # <CustomUserObj>.orders.all()
-    order_items_id = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
+    customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders') # <CustomUserObj>.orders.all()
     status = models.CharField("Status of order", max_length=32, choices=ORDER_STATUSES, default=ORDER_STATUSES['PENDING'])
     order_number = models.CharField(unique=True, editable=False, default=generate_order_number)
 
-    class Meta:
-        unique_together = (
-            'customer_id',
-            'order_items_id'
-        )
-
     def __str__(self) -> str:
         return f"[OrderObj] {self.pk}"
+    
+
+class OrderItem(TimeStampModel):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, null=True) # a book can be in more than one cart, as long as copies_available > 1
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
+    item_count = models.PositiveSmallIntegerField(
+        "Total number of this item",
+        validators=[MaxValueValidator(4)],
+        default=1
+    )
+    total_price = models.DecimalField("Total Price", decimal_places=3, max_digits=12)
 
 
 # An order may have more than one payment, for example, if one failed, we still want to keep the record of it
@@ -376,8 +370,8 @@ class Payment(TimeStampModel):
         ('failed', 'Failed'),
         ('expired', 'Expired'),
     )
-    customer_id = models.ForeignKey(CustomUser, related_name='payments', on_delete=models.CASCADE) # <CustomUserObj>.payments.all()
-    order_id = models.ForeignKey(Order, related_name='payments', on_delete=models.CASCADE) # <OrderObj>.payments.all()
+    customer = models.ForeignKey(CustomUser, related_name='payments', on_delete=models.CASCADE) # <CustomUserObj>.payments.all()
+    order = models.ForeignKey(Order, related_name='payments', on_delete=models.CASCADE) # <OrderObj>.payments.all()
     status = models.CharField("Payment's status", choices=PAYMENT_STATUSES, default=PAYMENT_STATUSES[0])
 
     class Meta:

@@ -11,7 +11,8 @@ from shop.customers.cart import Cart
 from shop.models import (
     Book,
     Order,
-    OrderItem
+    OrderItem,
+    Payment
 )
 
 
@@ -53,6 +54,48 @@ def checkout(request: HttpRequest) -> HttpResponse:
         )
         cart.clear()
         return render(request, "shop/orders/checkout.html", {'order': order})
+    return render(request, "shop/orders/checkout2.html", {
+        'total_price': total_price,
+        'items': items,
+    })
+
+@role_required('user')
+def checkout2(request: HttpRequest) -> HttpResponse:
+    cart = Cart(request)
+    if len(cart) <= 0:
+        messages.error(request, "سبد شما خالی میباشد.")
+        return redirect(reverse('shop:customers_browse'))
+    total_price = 0
+    total_items_count = 0
+    items = []
+    for i in cart:
+        total_price += i['total_price']
+        total_items_count += i['quantity']
+        items.append(i)
+    if request.method == "POST":
+        purchase_items = []
+        for i in cart:
+            item = OrderItem(
+                book = i['product'],
+                item_count = i['quantity'],
+                total_price = i['product'].price * i['quantity']
+            )
+            item.save()
+            purchase_items.append(item)
+        order = Order(
+            customer = request.user,
+            status = Order.ORDER_STATUSES['PENDING']
+        )
+        order.save()
+        for i in purchase_items:
+            i.order = order
+            i.save()
+        payment = Payment.objects.create(
+            customer = request.user,
+            order = order,
+        )
+        cart.clear()
+        return render(request, "shop/orders/checkout.html", {'order': order, 'payment': payment})
     return render(request, "shop/orders/checkout2.html", {
         'total_price': total_price,
         'items': items,

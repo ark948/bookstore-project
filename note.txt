@@ -527,6 +527,19 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     to enforce at database level, use constraints
     should write a custom management command to remove all data from orders table
     NOTE: custom command 'erase' is dynamic version of truncate custom command
+    now that Order and OrderItem table is empty, i can modify the structure of database and purchase flow
+    Each Order can have many OrderItems
+    Each OrderItem represents an item in an Order (only ONE book)
+    since any item in Order can be more than one, OrderItem must include a item_count
+    I lowered the item_count from 50 to 4 (users can only buy 4 counts of the same book)
+    Each Order can have more than one Payment (sometimes the first payment is unsuccesful)
+    (invoice can come later)
+    IMPORTANT: remove _id suffix from realtion fields
+    Removed unique_together from Order model (it had customer_id and order_items)
+    (order_number is already uniqe)
+    migration created, book and order fields from OrderItem probably should not be allowed null,
+    but 'existing rows' error from django was persistent even though both Order and OrderItem tables are empty
+    Update: new purchase flow and its database schema is working OK
     
 
 other features to implement:

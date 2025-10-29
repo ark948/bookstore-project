@@ -36,7 +36,7 @@ class Command(BaseCommand):
             
             records_count = model.objects.count()
             if records_count > 0:
-                confirm = input(f"Confirm deletion of {records_count} records in this model ({model._meta.label})? (y/N): ")
+                confirm = input(f"Confirm deletion of {records_count} records in this model ({model._meta.label})? (y/N): [IMPORTANT: related records WILL also be deleted] ")
                 if confirm.lower() in ('y', 'yes'):
                     print("Performing delete...")
                     queryset = model.objects.all().delete()
