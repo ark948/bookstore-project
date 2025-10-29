@@ -31,15 +31,13 @@ def checkout(request: HttpRequest) -> HttpResponse:
     if len(cart) <= 0:
         messages.error(request, "سبد شما خالی میباشد.")
         return redirect(reverse('shop:customers_browse'))
-    for i in cart:
-        print(i)
     total_price = 0
+    total_items_count = 0
+    items = []
     for i in cart:
         total_price += i['total_price']
-    total_items_count = 0
-    for i in cart:
         total_items_count += i['quantity']
-    items = [i for i in cart]
+        items.append(i)
     if request.method == "POST":
         order_item = OrderItem.objects.create(
             total_price = total_price,
