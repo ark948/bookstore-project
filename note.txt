@@ -526,6 +526,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     (as long as max_length is ok)
     to enforce at database level, use constraints
     should write a custom management command to remove all data from orders table
+    NOTE: custom command 'erase' is dynamic version of truncate custom command
     
 
 other features to implement:
