@@ -525,6 +525,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     these choices are not forced on database level. (if access shell, status can be any string value )
     (as long as max_length is ok)
     to enforce at database level, use constraints
+    should write a custom management command to remove all data from orders table
     
 
 other features to implement:
