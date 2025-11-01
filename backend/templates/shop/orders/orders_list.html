@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 
 {% block content %}
-
+{% include 'shop/orders/modals/change_order_status_modal.html' %}
 <table class="table table-xs">
     <thead>
         <tr>
@@ -24,7 +24,8 @@
             <td>{{ item.customer }}</td>
             <td>{{ item.created_at }}</td>
             <td>
-                <a href="#" class="btn btn-xs btn-outline btn-neutral">جزئییات</a>
+                <a href="#" class="mr-1 ml-1 btn btn-xs btn-outline btn-neutral">جزئییات</a>
+                <a href="#" class="mr-1 ml-1 btn btn-xs btn-outline btn-warn" onclick="my_modal_1.showModal()">تغییر وضعیت</a>
             </td>
         </tr>
         {% endfor %}
