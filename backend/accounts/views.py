@@ -140,12 +140,14 @@ def orders_list(request: HttpRequest) -> HttpResponse:
         items = Order.objects.filter( customer=request.user )
         if items.exists():
             total = items.count()
-            total_active = items.filter(Q(status=Order.ORDER_STATUSES['PENDING']) | Q(status=Order.ORDER_STATUSES['CONFIRM'])).count()
-            return render( request, "accounts/partials/orders.html", { 
+            total_active = items.filter(
+                Q(status=Order.ORDER_STATUSES['PENDING']) | Q(status=Order.ORDER_STATUSES['CONFIRM'])
+            ).count()
+            return render(request, "accounts/partials/orders.html", { 
                 'items': items, 
                 'total': total, 
                 'total_active': total_active 
-            } )
+            })
     return render( request, "accounts/partials/orders.html" )
 
 

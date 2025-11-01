@@ -70,12 +70,19 @@ def item_detail(request: HttpRequest, id) -> HttpResponse:
 
 @require_POST
 def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
-    if request.htmx:
-        return HttpResponse("OK")
-    cart = Cart(request)
     product: Book = get_object_or_404(Book, id=product_id)
+    cart = Cart(request)
+    if request.htmx:
+        cart.add(
+            product=product,
+            quantity=1,
+        )
+        return render(request, "shop/customers/partials/remove_from_cart.html", {})
     if not product.available:
         messages.error(request, "این کتاب موجود نیست.")
+        return redirect(reverse("shop:customers_browse"))
+    if not product.copies_available > 0:
+        messages.error(request, "متاسفانه موجودی این کتاب کافی نیست.")
         return redirect(reverse("shop:customers_browse"))
     form = ItemAddForm(request.POST)
     if form.is_valid():

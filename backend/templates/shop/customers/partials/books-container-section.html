@@ -35,9 +35,9 @@
           {% if item.available %}
           <p>
             <div id="quick_add_response_holder">
-              <button class="btn btn-success btn-xs m-4"
+              <button class="btn btn-success btn-outline btn-sm m-4"
                 hx-post="{% url 'shop:cart_add' item.id %}"
-                hx-target="#quick_add_response_holder"
+                hx-target="this"
                 hx-swap="innerHTML">
                 افزودن سریع
               </button>
