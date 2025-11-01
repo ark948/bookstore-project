@@ -25,7 +25,12 @@
             <td>{{ item.created_at }}</td>
             <td>
                 <a href="#" class="mr-1 ml-1 btn btn-xs btn-outline btn-neutral">جزئییات</a>
-                <a href="#" class="mr-1 ml-1 btn btn-xs btn-outline btn-warn" onclick="my_modal_1.showModal()">تغییر وضعیت</a>
+                <a href="#" class="mr-1 ml-1 btn btn-xs btn-outline btn-warn" onclick="order_details_modals.showModal()"
+                    hx-get="{% url 'shop:load_order_details' item.pk %}"
+                    hx-target="#order_details_response_holder"
+                    hx-swap="innerHTML"
+                    hx-trigger="click"
+                >تغییر وضعیت</a>
             </td>
         </tr>
         {% endfor %}

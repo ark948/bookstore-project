@@ -109,3 +109,12 @@ def orders_list(request: HttpRequest) -> HttpResponse:
     orders = Order.objects.all()
     total = orders.count()
     return render(request, "shop/orders/orders_list.html", {'items': orders, 'total': total})
+
+
+@role_required('employee')
+def load_order_details(request: HttpRequest, order_id: int) -> HttpResponse:
+    try:
+        item = Order.objects.get(pk = order_id)
+        return render(request, "shop/orders/partials/order_details.html", {'item': item})
+    except Order.DoesNotExist:
+        return HttpResponse("404 NOT FOUND.")
