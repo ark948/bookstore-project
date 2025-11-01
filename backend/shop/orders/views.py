@@ -85,12 +85,15 @@ def order_details(request: HttpRequest, order_number: str) -> HttpResponse:
 @role_required('user')
 def cancel_order(request: HttpRequest, order_number: str) -> HttpResponse:
     order_object = get_object_or_404(Order, order_number=order_number)
-    if not order_object.customer_id == request.user:
+    if order_object.customer != request.user:
         return HttpResponseForbidden()
     if request.method == "POST":
         order_object.status = Order.ORDER_STATUSES['CANCELLED']
         order_object.save()
-        messages.info(request, "Order cancelled.")
+        payment_object = get_object_or_404(Payment, order=order_object)
+        payment_object.status = Payment.PAYMENT_STATUSES[3]
+        payment_object.save()
+        messages.warning(request, "Order cancelled.")
         return redirect(reverse('accounts:profile'))
     return render(request, "shop/orders/cancel_order.html", {'item': order_object})
 
