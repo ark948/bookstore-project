@@ -38,7 +38,8 @@
               <button class="btn btn-success btn-outline btn-sm m-4"
                 hx-post="{% url 'shop:cart_add' item.id %}"
                 hx-target="this"
-                hx-swap="outerHTML">
+                hx-swap="outerHTML"
+                hx-on:quick_add_success="update_cart();">
                 افزودن سریع
               </button>
             </div>
@@ -49,3 +50,18 @@
     {% endfor %}
     <span id="spinner" class="loading loading-dots loading-xl text-success htmx-indicator"></span>
   </section>
+<script>
+  function update_cart() {
+    $.ajax({
+      url: '{% url "shop:cart_count" %}',
+      type: 'GET',
+      success: function(data) {
+        console.log('cart count update requested');
+        $('#cart_count_badge').html(data);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError);
+      }
+    })
+  }
+</script>

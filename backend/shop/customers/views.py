@@ -77,7 +77,9 @@ def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
             product=product,
             quantity=1,
         )
-        return render(request, "shop/customers/partials/remove_from_cart.html", {})
+        response = render(request, "shop/customers/partials/remove_from_cart.html", {})
+        response['HX-Trigger'] = 'quick_add_success'
+        return response
     if not product.available:
         messages.error(request, "این کتاب موجود نیست.")
         return redirect(reverse("shop:customers_browse"))
