@@ -22,7 +22,11 @@
                             <tr class="text-center">
                                 <td>
                                     <div class="flex items-center">
-                                        <img class="h-16 w-10" src="{{ item.product.cover_image.url }}" alt="Product image">
+                                        {% if item.product.cover_image %}
+                                            <img class="h-16 w-10" src="{{ item.product.cover_image.url }}" alt="Product image">
+                                        {% else %}
+                                            <span>[NO_IMAGE]</span>
+                                        {% endif %}
                                         <span>{{ item.product.title }}</span>
                                     </div>
                                 </td>

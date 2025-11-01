@@ -18,39 +18,6 @@ from shop.models import (
 
 
 @role_required('user')
-def checkout(request: HttpRequest) -> HttpResponse:
-    cart = Cart(request)
-    if len(cart) <= 0:
-        messages.error(request, "سبد شما خالی میباشد.")
-        return redirect(reverse('shop:customers_browse'))
-    total_price = 0
-    total_items_count = 0
-    items = []
-    for i in cart:
-        total_price += i['total_price']
-        total_items_count += i['quantity']
-        items.append(i)
-    if request.method == "POST":
-        order_item = OrderItem.objects.create(
-            total_price = total_price,
-            items_count = total_items_count
-        )
-        for i in cart:
-            order_item.books.add(i['product'])
-        order_item.save()
-        order = Order.objects.create(
-            customer_id = request.user,
-            order_items_id = order_item,
-            status = Order.ORDER_STATUSES["PENDING"]
-        )
-        cart.clear()
-        return render(request, "shop/orders/checkout.html", {'order': order})
-    return render(request, "shop/orders/checkout2.html", {
-        'total_price': total_price,
-        'items': items,
-    })
-
-@role_required('user')
 def checkout2(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
     if len(cart) <= 0:
