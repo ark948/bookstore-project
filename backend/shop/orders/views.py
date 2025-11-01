@@ -54,7 +54,7 @@ def checkout(request: HttpRequest) -> HttpResponse:
         )
         cart.clear()
         return render(request, "shop/orders/order_placed.html", {'order': order, 'payment': payment})
-    return render(request, "shop/orders/checkout2.html", {
+    return render(request, "shop/orders/checkout.html", {
         'total_price': total_price,
         'items': items,
     })
