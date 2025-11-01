@@ -16,15 +16,6 @@ from shop.models import (
 )
 
 
-# ic| i: {'price': Decimal('300000.000'),
-#         'product': <Book: shit_2>,
-#         'quantity': 2,
-#         'total_price': Decimal('600000.000')}
-# ic| i: {'price': Decimal('150000.000'),
-#         'product': <Book: کتاب دیگر_8>,
-#         'quantity': 1,
-#         'total_price': Decimal('150000.000')}
-
 
 @role_required('user')
 def checkout(request: HttpRequest) -> HttpResponse:
