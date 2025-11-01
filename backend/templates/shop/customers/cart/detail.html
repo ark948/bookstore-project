@@ -74,4 +74,12 @@
             اتمام خرید
         </a>
     </p>
+    <div>
+        <form action="{% url 'shop:cart_clear' %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-xs btn-outline btn-neutral m-4">
+                Clear
+            </button>
+        </form>
+    </div>
 {% endblock content %}

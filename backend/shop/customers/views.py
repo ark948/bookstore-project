@@ -126,6 +126,14 @@ def cart_update(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
 
 @require_POST
 @role_required('user')
+def cart_clear(request: HttpRequest) -> HttpResponse:
+    cart = Cart(request)
+    cart.clear()
+    return redirect(reverse("shop:cart_detail"))
+
+
+@require_POST
+@role_required('user')
 def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
     book = get_object_or_404(Book, id=book_id)
     form = AddCommentForm(request.POST)
