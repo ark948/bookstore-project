@@ -118,3 +118,14 @@ def load_order_details(request: HttpRequest, order_id: int) -> HttpResponse:
         return render(request, "shop/orders/partials/order_details.html", {'item': item})
     except Order.DoesNotExist:
         return HttpResponse("404 NOT FOUND.")
+    
+
+@require_POST
+@role_required('employee')
+def update_order_status(request: HttpRequest, order_id: int) -> HttpResponse:
+    item = get_object_or_404(Order, pk=order_id)
+    new_status = request.POST.get('selected_status', None)
+    if new_status:
+        item.status = Order.ORDER_STATUSES[new_status]
+        item.save()
+    return redirect(reverse("shop:orders_list"))

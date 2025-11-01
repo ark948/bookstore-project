@@ -1,3 +1,19 @@
 <div>
-    {{ item.order_number }}
+    <div class="m-2">
+        <span>{{ item.order_number }}</span>
+    </div>
+    <form action="{% url 'shop:update_order' item.pk %}" method="post">
+      {% csrf_token %}
+        <select class="select m-2" name="selected_status">
+            <option disabled selected>{{ item.status }}</option>
+            <option value="PENDING">Pending Payment</option>
+            <option value="CONFIRM">Confirmed</option>
+            <option value="PROCESS">Process</option>
+            <option value="SHIPPED">Shipped</option>
+            <option value="CANCELLED">Cancelled</option>
+          </select>
+          <button type="submit" class="m-2 btn btn-neutral btn-xs btn-outline w-32">
+            Done
+          </button>
+    </form>
 </div>
