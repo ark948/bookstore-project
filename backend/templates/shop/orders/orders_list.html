@@ -1,0 +1,38 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<table class="table table-xs">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>شناسه</th>
+            <th>شماره</th>
+            <th>وضعیت</th>
+            <th>مشتری</th>
+            <th>تاریخ</th>
+            <th>عملکردها</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <th>{{ forloop.counter }}</th>    
+            <td>{{ item.pk }}</td>
+            <td>{{ item.order_number }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.customer }}</td>
+            <td>{{ item.created_at }}</td>
+            <td>
+                <a href="#" class="btn btn-xs btn-outline btn-neutral">جزئییات</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div>
+    <span>total: {{ total }}</span>
+</div>
+
+{% endblock content %}
