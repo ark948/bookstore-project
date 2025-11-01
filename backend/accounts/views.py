@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseForbidden
 from django.contrib import messages
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.forms import model_to_dict
 
 from typing import Optional, Dict, Any
@@ -137,9 +137,15 @@ def comments_list(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def orders_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
-        items = Order.objects.filter( customer_id=request.user )
+        items = Order.objects.filter( customer=request.user )
         if items.exists():
-            return render( request, "accounts/partials/orders.html", { 'items': items } )
+            total = items.count()
+            total_active = items.filter(Q(status=Order.ORDER_STATUSES['PENDING']) | Q(status=Order.ORDER_STATUSES['CONFIRM'])).count()
+            return render( request, "accounts/partials/orders.html", { 
+                'items': items, 
+                'total': total, 
+                'total_active': total_active 
+            } )
     return render( request, "accounts/partials/orders.html" )
 
 

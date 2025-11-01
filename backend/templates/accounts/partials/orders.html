@@ -2,6 +2,7 @@
     <ul>
     {% if items %}
         {% for item in items %}
+            {% if item.status == "Pending Payment" %}
             <div>
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 m-6">
                     <!-- Order Summary -->
@@ -11,28 +12,12 @@
                                 <div class="flex items-center space-x-4">
                                     <span class="text-md font-medium text-gray-900">شماره سفارش {{ item.order_number }}</span>
                                     <div class="px-3 py-1 rounded-full text-sm font-medium">
-                                        {% if item.status == "Pending Payment" %}
-                                            <div class="flex">
-                                                <span class="ml-2">وضعیت: در انتظار پرداخت</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                </svg>
-                                            </div>
-                                        {% elif item.status == "Confirmed" %}
-                                            <div class="flex">
-                                                <span class="ml-2">وضعیت: پرداخت شده</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                                </svg>                                                  
-                                            </div>
-                                        {% elif item.status == "Cancelled" %}
-                                            <div class="flex">
-                                                <span class="ml-2">وضعیت: لغو شده</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                                </svg>                                                  
-                                            </div>
-                                        {% endif %}
+                                        <div class="flex">
+                                            <span class="ml-2">وضعیت: در انتظار پرداخت</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex flex-col">
@@ -52,7 +37,53 @@
                     </div>
                 </div>
             </div>
+            {% elif item.status == "Confirmed" %}
+            <div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 m-6">
+                    <!-- Order Summary -->
+                    <div class="p-6 cursor-pointer hover:bg-gray-50 transition-colors m-4">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                            <div class="mb-4 md:mb-0">
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-md font-medium text-gray-900">شماره سفارش {{ item.order_number }}</span>
+                                    <div class="px-3 py-1 rounded-full text-sm font-medium">
+                                        <div class="flex">
+                                            <span class="ml-2">وضعیت: در انتظار پرداخت</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <p class="text-sm text-gray-500 mt-1">{{ item.created_at }} تاریخ</p>
+                                    <a href="{% url 'shop:order_details' item.order_number %}" class="btn btn-info btn-xs w-32 mt-4">جزئیات</a>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-lg font-semibold text-gray-900">{{ item.order_items_id.total_price }} مبلغ کل</p>
+                                <p class="text-sm text-gray-500">{{ item.order_items_id.items_count }} تعداد آیتم ها</p>
+                                <div class="flex flex-col">
+                                    <button class="btn btn-accent btn-xs w-32 m-2">پرداخت</button>
+                                    <a href="{% url 'shop:cancel_order' item.order_number %}" class="btn btn-warning btn-xs w-32 m-2">لغو</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         {% endfor %}
+        <div>
+            <div>
+                سفارشات در جریان: {{ total_active }}
+            </div>
+            <div class="m-2">
+                <a href="#" class="btn btn-info btn-outline btn-xs w-32">
+                    کل سفارشات
+                </a>
+            </div>
+        </div>
     {% else %}
         <span>سفارشی ثبت نشده است.</span>
     {% endif %}
