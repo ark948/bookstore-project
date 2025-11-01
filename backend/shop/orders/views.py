@@ -18,7 +18,7 @@ from shop.models import (
 
 
 @role_required('user')
-def checkout2(request: HttpRequest) -> HttpResponse:
+def checkout(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
     if len(cart) <= 0:
         messages.error(request, "سبد شما خالی میباشد.")
@@ -53,7 +53,7 @@ def checkout2(request: HttpRequest) -> HttpResponse:
             order = order,
         )
         cart.clear()
-        return render(request, "shop/orders/checkout.html", {'order': order, 'payment': payment})
+        return render(request, "shop/orders/order_placed.html", {'order': order, 'payment': payment})
     return render(request, "shop/orders/checkout2.html", {
         'total_price': total_price,
         'items': items,
