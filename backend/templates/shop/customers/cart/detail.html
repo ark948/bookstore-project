@@ -66,20 +66,14 @@
             </tr>
         </tbody>
     </table>
-    <p>
-        <a href="{% url 'shop:customers_browse' %}" class="btn btn-sm">
-            ادامه خرید
-        </a>
-        <a href="{% url 'shop:checkout' %}" class="btn btn-secondary btn-xs">
-            اتمام خرید
-        </a>
-    </p>
+    <div>
+        <a href="{% url 'shop:customers_browse' %}" class="btn btn-sm">ادامه خرید</a>
+        <a href="{% url 'shop:checkout' %}" class="btn btn-secondary btn-xs">اتمام خرید</a>
+    </div>
     <div>
         <form action="{% url 'shop:cart_clear' %}" method="post">
             {% csrf_token %}
-            <button class="btn btn-xs btn-outline btn-neutral m-4">
-                Clear
-            </button>
+            <button class="btn btn-xs btn-outline btn-neutral m-4">Clear</button>
         </form>
     </div>
 {% endblock content %}
