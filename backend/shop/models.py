@@ -353,7 +353,7 @@ class Order(TimeStampModel):
 
 class OrderItem(TimeStampModel):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, null=True) # a book can be in more than one cart, as long as copies_available > 1
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, related_name='items') # Order.items.all()
     item_count = models.PositiveSmallIntegerField(
         "Total number of this item",
         validators=[MaxValueValidator(4)],
@@ -376,8 +376,8 @@ class Payment(TimeStampModel):
 
     class Meta:
         unique_together = (
-            'customer_id',
-            'order_id'
+            'customer',
+            'order'
         )
 
 # Only successful payments can have invoices

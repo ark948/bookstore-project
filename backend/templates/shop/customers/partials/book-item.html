@@ -14,7 +14,12 @@
         </div>
         <div class="col-span-1">
             {% if item %}
-                {{ item.title }}
+                <div>
+                    {{ item.title }}
+                </div>
+                <div>
+                    {{ item.copies_available }} تعداد موجودی:
+                </div>
                 {% for i in item.authors.all %}
                     {% if i.fa_name %}
                         {{ i.fa_name }},
