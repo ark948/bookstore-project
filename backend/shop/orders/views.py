@@ -64,12 +64,12 @@ def checkout(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def fake_payment(request: HttpRequest, order_number: str) -> HttpResponse:
     order_object = get_object_or_404(Order, order_number=order_number)
-    if not order_object.customer_id == request.user:
+    if not order_object.customer == request.user:
         return HttpResponseForbidden()
     if order_object.status == Order.ORDER_STATUSES['PENDING']:
         order_object.status = Order.ORDER_STATUSES['CONFIRM']
         order_object.save()
-    messages.success(request, "Order payment was successful. Thank you very much.")
+    messages.success(request, "پرداخت با موفقیت انجام شد. با تشکر.")
     # redirect to purchase placed (confirmation) page?
     return redirect(reverse('accounts:profile'))
 
@@ -77,7 +77,7 @@ def fake_payment(request: HttpRequest, order_number: str) -> HttpResponse:
 @role_required('user')
 def order_details(request: HttpRequest, order_number: str) -> HttpResponse:
     order_object = get_object_or_404(Order, order_number=order_number)
-    if not order_object.customer_id == request.user:
+    if not order_object.customer == request.user:
         return HttpResponseForbidden()
     return render(request, "shop/orders/order.html", {'item': order_object})
 
