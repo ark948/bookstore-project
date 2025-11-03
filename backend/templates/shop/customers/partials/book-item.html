@@ -18,7 +18,15 @@
                     {{ item.title }}
                 </div>
                 <div>
-                    {{ item.copies_available }} تعداد موجودی:
+                    {% if item.copies_available %}
+                        <div>
+                            {{ item.copies_available }} 
+                        </div>
+                    {% else %}
+                        <div>
+                            <span class="text-red-600 text-sm">موجود نیست</span>
+                        </div>
+                    {% endif %}
                 </div>
                 {% for i in item.authors.all %}
                     {% if i.fa_name %}
@@ -49,16 +57,16 @@
                 {% endif %}
             </div>
 
-            {% if item_form and item.available %}
+            {% if item_form and item.available and item.copies_available > 0 %}
                 <form action="{% url 'shop:cart_add' item.id %}" method="post">
                     {{ item_form|crispy }}
                     {% csrf_token %}
                     <input type="submit" class="btn btn-primary btn-xs" value="افزودن">
                 </form>
             {% else %}
-                <h2 class="text">
-                    این کتاب در حال حاظر موجود نیست.
-                </h2>
+                <div class="mt-2">
+                    <span class="text-red-600 text-sm">موجود نیست</span>
+                </div>
             {% endif %}
             <div>
                 <!-- name of each tab group should be unique -->

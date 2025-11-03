@@ -32,7 +32,7 @@
               جزئیات
             </a>
           </p>
-          {% if item.available %}
+          {% if item.available and item.copies_available > 0 %}
           <p>
             <div id="quick_add_response_holder">
               <button class="btn btn-success btn-outline btn-sm m-4"
@@ -44,6 +44,10 @@
               </button>
             </div>
           </p>
+          {% else %}
+            <div class="mt-2">
+              <span class="text-red-600 text-sm">موجود نیست</span>
+            </div>
           {% endif %}
         </div>
       </article>
