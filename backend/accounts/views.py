@@ -143,10 +143,10 @@ def orders_list(request: HttpRequest) -> HttpResponse:
             total_active = items.filter(
                 Q(status=Order.ORDER_STATUSES['PENDING']) | Q(status=Order.ORDER_STATUSES['CONFIRM'])
             ).count()
-            return render(request, "accounts/partials/orders2.html", { 
-                'items': items, 
-                'total': total, 
-                'total_active': total_active 
+            return render(request, "accounts/partials/orders.html", { 
+                'items': items,
+                'total': total,
+                'total_active': total_active,
             })
     return HttpResponse("Error")
 
@@ -157,8 +157,15 @@ def load_orders_with_status(request: HttpRequest, status: str) -> HttpResponse:
         items = Order.objects.filter( customer=request.user ).filter( status = Order.ORDER_STATUSES[status] )
         if items.exists():
             total = items.count()
-            return render(request, "accounts/partials/orders_set.html", {'items': items, 'total': total})
-    return render(request, "accounts/partials/orders_set.html", {})
+            return render(request, "accounts/partials/orders_set.html", {
+                'items': items,
+                'total': total,
+                'status': status
+            })
+        else:
+            return render(request, "accounts/partials/orders_set.html", {
+                'status': status
+            })
 
 
 @role_required('user')

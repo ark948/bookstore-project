@@ -71,5 +71,39 @@
                     </div>
                 </div>
         {% endfor %}
+    {% else %}
+        <div class="m-4">
+            {% if status == "PENDING" %}
+                <div>
+                    سفارشی با وضعیت
+                    <span class="text-blue-800 font-medium">در انتظار پرداخت</span>
+                    وجود ندارد.
+                </div>
+            {% elif status == "CONFIRM" %}
+            <div>
+                سفارشی با وضعیت
+                <span class="text-blue-800 font-medium">نهایی شده</span>
+                وجود ندارد.
+            </div>
+            {% elif status == "PROCESS" %}
+            <div>
+                سفارشی با وضعیت
+                <span class="text-blue-800 font-medium">در حال پردازش</span>
+                وجود ندارد.
+            </div>
+            {% elif status == "SHIPPED" %}
+            <div>
+                سفارشی با وضعیت
+                <span class="text-blue-800 font-medium">ارسال شده</span>
+                وجود ندارد.
+            </div>
+            {% elif status == "CANCELLED" %}
+            <div>
+                سفارشی با وضعیت
+                <span class="text-blue-800 font-medium">لغو شده</span>
+                وجود ندارد.
+            </div>
+            {% endif %}
+        </div>
     {% endif %}
 </div>
