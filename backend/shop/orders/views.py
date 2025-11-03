@@ -68,10 +68,10 @@ def fake_payment(request: HttpRequest, order_number: str) -> HttpResponse:
         return HttpResponseForbidden()
     if order_object.status == Order.ORDER_STATUSES['PENDING']:
         order_object.status = Order.ORDER_STATUSES['CONFIRM']
-        for book_item in order_object.orderitem_set.all():
-            print(book_item, "\n")
-            # book_item.copies_avaialble - 1
-            # book_item.save()
+        for order_item in order_object.items.all():
+            book_item: Book = order_item.book
+            book_item.copies_available = book_item.copies_available - order_item.item_count
+            book_item.save()
         order_object.save()
     messages.success(request, "پرداخت با موفقیت انجام شد. با تشکر.")
     # redirect to purchase placed (confirmation) page?
