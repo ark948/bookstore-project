@@ -25,12 +25,20 @@
             <td>{{ item.created_at }}</td>
             <td>
                 <a href="#" class="mr-1 ml-1 btn btn-xs btn-outline btn-neutral">جزئییات</a>
-                <a href="#" class="mr-1 ml-1 btn btn-xs btn-outline btn-warn" onclick="order_details_modals.showModal()"
+                <button class="mr-1 ml-1 btn btn-xs btn-outline btn-warn" onclick="order_details_modals.showModal()"
                     hx-get="{% url 'shop:load_order_details' item.pk %}"
                     hx-target="#order_details_response_holder"
                     hx-swap="innerHTML"
                     hx-trigger="click"
-                >تغییر وضعیت</a>
+                >تغییر وضعیت
+                </button>
+                <button class="mr-1 ml-1 btn btn-xs btn-outline btn-error"
+                    hx-get="{% url 'shop:delete_order_record' item.pk %}"
+                    hx-target="#"
+                    hx-swap="innerHTML"
+                    hx-trigger="click"
+                >حذف رکورد
+                </button>
             </td>
         </tr>
         {% endfor %}

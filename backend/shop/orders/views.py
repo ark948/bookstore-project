@@ -133,3 +133,9 @@ def update_order_status(request: HttpRequest, order_id: int) -> HttpResponse:
         item.status = Order.ORDER_STATUSES[new_status]
         item.save()
     return redirect(reverse("shop:orders_list"))
+
+
+@require_POST
+@role_required('employee')
+def delete_order_record(request: HttpRequest, order_id: int) -> HttpResponse:
+    return redirect(reverse("shop:orders_list"))
