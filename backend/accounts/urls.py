@@ -12,6 +12,7 @@ urlpatterns = [
     path("edit-comment/<int:comment_id>/", views.edit_user_comment, name='edit_comment'),
 
     # loaders
+    path("load-orders/<str:status>", views.load_orders_with_status, name='load_orders_with_status'),
     path("load-comment-form/<int:comment_id>/", views.load_comment_form_partial, name='load_comment_form'),
     path("favorites-list/", views.favorites_list, name='fav_list'),
     path("orders-list/", views.orders_list, name='orders_list'),

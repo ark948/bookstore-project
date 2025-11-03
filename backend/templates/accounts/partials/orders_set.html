@@ -1,0 +1,9 @@
+<div>
+    {% if items %}
+        {% for item in items %}
+            <div>
+                {{ forloop.counter }}: {{ item.pk }} - {{ item.order_number }} - {{ item.status }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
