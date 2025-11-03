@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Required, Any
+from typing import Dict, List, Optional, Required, Any, Tuple
 from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404
 
@@ -25,3 +25,15 @@ def update_order_status(
             'message': error
         }
     return order_obj
+
+
+def delete_order( order_id: int ) -> Tuple | bool:
+    item = Order.objects.get(pk=order_id)
+    if item:
+        try:
+            response = item.delete()
+            return response
+        except Exception as error:
+            print(error)
+            return False
+    

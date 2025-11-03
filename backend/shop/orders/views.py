@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse, HttpResponseForbidden
+from django.http.response import HttpResponse, HttpResponseForbidden, HttpResponseServerError
 from django.contrib import messages
 from icecream import ic
+
+from . import services
 
 from accounts.decorators import role_required
 from shop.customers.cart import Cart
@@ -138,4 +140,8 @@ def update_order_status(request: HttpRequest, order_id: int) -> HttpResponse:
 @require_POST
 @role_required('employee')
 def delete_order_record(request: HttpRequest, order_id: int) -> HttpResponse:
+    response = services.delete_order(order_id)
+    if not response:
+        return HttpResponseServerError()
+    messages.info(request, "item removed.")
     return redirect(reverse("shop:orders_list"))
