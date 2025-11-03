@@ -148,7 +148,7 @@ def orders_list(request: HttpRequest) -> HttpResponse:
                 'total': total, 
                 'total_active': total_active 
             })
-    return render( request, "accounts/partials/orders.html" )
+    return HttpResponse("Error")
 
 
 @role_required('user')
