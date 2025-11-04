@@ -104,12 +104,6 @@ def cancel_order(request: HttpRequest, order_number: str) -> HttpResponse:
     return render(request, "shop/orders/cancel_order.html", {'item': order_object})
 
 
-def purchase_complete(request: HttpRequest, order_id: int) -> HttpResponse:
-    # get order
-    # display purchase complete message
-    pass
-
-
 @role_required('employee')
 def orders_list(request: HttpRequest) -> HttpResponse:
     orders = Order.objects.all()
