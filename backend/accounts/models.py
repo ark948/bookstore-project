@@ -28,6 +28,10 @@ class CustomUser(AbstractUser):
 
     objects = CustomUserManager()
 
+    @property
+    def get_full_name(self) -> str:
+        return super().get_full_name()
+
     def __str__(self):
         return self.email
     

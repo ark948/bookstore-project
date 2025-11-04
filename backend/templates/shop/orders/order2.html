@@ -87,7 +87,9 @@
                 <div class="flex flex-col justify-start items-start flex-shrink-0">
                     <div class="flex justify-center w-full md:justify-start items-center space-x-4 py-8 border-b border-gray-200">
                         <div class="flex justify-start items-start flex-col space-y-2">
-                            <p class="text-base dark:text-white font-semibold leading-4 text-left text-gray-800">{{ user.first_name }} {{ user.last_name }}</p>
+                            <p class="text-base dark:text-white font-semibold leading-4 text-left text-gray-800">
+                                {{ user.get_full_name }}
+                            </p>
                         </div>
                     </div>
 
