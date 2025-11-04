@@ -30,14 +30,15 @@
                     hx-target="#order_details_response_holder"
                     hx-swap="innerHTML"
                     hx-trigger="click"
-                >تغییر وضعیت
+                    >تغییر وضعیت
                 </button>
                 <button class="mr-1 ml-1 btn btn-xs btn-outline btn-error"
                     hx-post="{% url 'shop:delete_order_record' item.pk %}"
                     hx-target="closest tr"
                     hx-swap="delete"
                     hx-trigger="click"
-                >حذف رکورد
+                    hx-confirm="Are you sure?"
+                    >حذف رکورد
                 </button>
             </td>
         </tr>
