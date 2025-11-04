@@ -83,9 +83,12 @@ def fake_payment(request: HttpRequest, order_number: str) -> HttpResponse:
 @role_required('user')
 def order_details(request: HttpRequest, order_number: str) -> HttpResponse:
     order_object = get_object_or_404(Order, order_number=order_number)
+    total_price = 0
+    for item in order_object.items.all():
+        total_price += item.total_price
     if not order_object.customer == request.user:
         return HttpResponseForbidden()
-    return render(request, "shop/orders/order.html", {'item': order_object})
+    return render(request, "shop/orders/order2.html", {'item': order_object, 'total': total_price})
 
 
 @role_required('user')
