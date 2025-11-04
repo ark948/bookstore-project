@@ -163,15 +163,12 @@ def load_orders_with_status(request: HttpRequest, status: str) -> HttpResponse:
                 'status': status
             })
         else:
-            return render(request, "accounts/partials/orders_set.html", {
-                'status': status
-            })
+            return render(request, "accounts/partials/orders_set.html", { 'status': status })
 
 
 @role_required('user')
 def remove_item_from_favorites(request: HttpRequest, book_id: int) -> HttpResponse:
     if request.htmx:
-        book_obj = get_object_or_404(Book, pk=book_id)
         Favorite.objects.filter( user_id=request.user, book_id=book_id ).delete()
         # no need to call all() after filter()
         items = Favorite.objects.filter( user_id=request.user )
