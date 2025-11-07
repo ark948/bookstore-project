@@ -559,6 +559,8 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     I think we may need to remove the unique_together constraint and have it as a simple many-to-one relation between order and payment
     ALSO, the status field in payment model is entirely wrong. it is storing the entire tuple element
     Gonna attempt to remove the Invoice model entirely, make migrations, and then add it again.
+    Only successful payments can have one invoice. and each payment can have only one invoice.
+    
 
 other features to implement:
 voting on comments
