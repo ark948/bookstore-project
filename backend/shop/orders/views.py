@@ -14,7 +14,8 @@ from shop.models import (
     Book,
     Order,
     OrderItem,
-    Payment
+    Payment,
+    Invoice
 )
 
 
@@ -74,7 +75,15 @@ def fake_payment(request: HttpRequest, order_number: str) -> HttpResponse:
             book_item: Book = order_item.book
             book_item.copies_available = book_item.copies_available - order_item.item_count
             book_item.save()
-        order_object.save()
+        try:
+            order_object.save()
+            print(order_object.payment, "\n")
+        except Exception as error:
+            return redirect(reverse('home:index'))
+    else:
+        payment = Payment.objects.filter( customer = request.user, order = order_object )
+        if payment.exists():
+            pass
     messages.success(request, "پرداخت با موفقیت انجام شد. با تشکر.")
     # redirect to purchase placed (confirmation) page?
     return redirect(reverse('accounts:profile'))

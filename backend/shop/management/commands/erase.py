@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.apps import apps
 
 class Command(BaseCommand):
-    help = "Count the number of records from the given model name."
+    help = "Remvoe records from the given model name."
 
     def add_arguments(self, parser):
         parser.add_argument(

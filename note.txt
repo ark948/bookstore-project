@@ -540,7 +540,24 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     migration created, book and order fields from OrderItem probably should not be allowed null,
     but 'existing rows' error from django was persistent even though both Order and OrderItem tables are empty
     Update: new purchase flow and its database schema is working OK
-    
+
+67. Creating pdf invoices
+    according django's official doc, we can use a package called ReportLab (it has a free version called ReportLab toolkit)
+    cmd> pip install reportlab
+    we have an invoice model in shop app, which can be created after customer has paid (fake)
+    IMPORTANT: there maybe something wrong without shop migrations
+    anyway... I had to create two individual migrations.
+    in first, i removed the unique_together constraint and renamed the fields from (order_id, payment_id) to (order, payment)
+    after this migrations was created and migrated with no errors, i made the second migration.
+    in second migration, i added the unique_together constraint again with (order and payment)
+    i had to do this because it was giving me an error that said order and payment fields did not exist.
+    I need to check the creation of invoices before moving on to generating PDF files.
+    While doing that, i discovered another problem. after faking the payment, the payment status must be updated to successful as well.
+    Update: another possible problem, in Payment model, customer and order are uniqe together
+    but initally we intented for every order object to be able to have more than one payment (if one failed for example)
+    (we still want it to be recorded, so we can display user's payment history)
+    I think we may need to remove the unique_together constraint and have it as a simple many-to-one relation between order and payment
+    ALSO, the status field in payment model is entirely wrong. it is storing the entire tuple element
 
 other features to implement:
 voting on comments

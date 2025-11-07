@@ -362,7 +362,6 @@ class OrderItem(TimeStampModel):
     total_price = models.DecimalField("Total Price", decimal_places=3, max_digits=12)
 
 
-# An order may have more than one payment, for example, if one failed, we still want to keep the record of it
 class Payment(TimeStampModel):
     PAYMENT_STATUSES = (
         ('pending', 'Pending'),
@@ -380,16 +379,15 @@ class Payment(TimeStampModel):
             'order'
         )
 
-# Only successful payments can have invoices
-# therefore, payment must have a status field
+
 class Invoice(TimeStampModel):
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
-    payment_id = models.ForeignKey(Payment, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='invoices', null=True)
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name='invoices', null=True)
 
     class Meta:
         unique_together = (
-            'order_id',
-            'payment_id'
+            'order',
+            'payment'
         )
 
 
