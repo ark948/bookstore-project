@@ -15,7 +15,6 @@ from shop.models import (
     Order,
     OrderItem,
     Payment,
-    Invoice
 )
 
 

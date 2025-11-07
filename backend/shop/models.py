@@ -380,15 +380,15 @@ class Payment(TimeStampModel):
         )
 
 
-class Invoice(TimeStampModel):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='invoices', null=True)
-    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name='invoices', null=True)
+# class Invoice(TimeStampModel):
+#     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='invoices', null=True)
+#     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name='invoices', null=True)
 
-    class Meta:
-        unique_together = (
-            'order',
-            'payment'
-        )
+#     class Meta:
+#         unique_together = (
+#             'order',
+#             'payment'
+#         )
 
 
 class Favorite(models.Model):
