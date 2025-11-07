@@ -19,5 +19,4 @@ def manager_dashboard(request: HttpRequest) -> HttpResponse:
 @role_required('employee')
 def employee_dashboard(request: HttpRequest) -> HttpResponse:
     # only accessible to employees
-    # return HttpResponse("دسترسی برای کارمند مجاز شناخته شد.")
     return render(request, "dashboards/employee.html", {})

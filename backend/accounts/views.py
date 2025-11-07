@@ -170,7 +170,6 @@ def load_orders_with_status(request: HttpRequest, status: str) -> HttpResponse:
 def remove_item_from_favorites(request: HttpRequest, book_id: int) -> HttpResponse:
     if request.htmx:
         Favorite.objects.filter( user_id=request.user, book_id=book_id ).delete()
-        # no need to call all() after filter()
         items = Favorite.objects.filter( user_id=request.user )
         context = { 'items': items, 'total': items.count() }
         return render(request, "accounts/partials/favorites.html", context)

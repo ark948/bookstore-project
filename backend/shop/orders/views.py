@@ -88,7 +88,7 @@ def order_details(request: HttpRequest, order_number: str) -> HttpResponse:
         total_price += item.total_price
     if not order_object.customer == request.user:
         return HttpResponseForbidden()
-    return render(request, "shop/orders/order2.html", {'item': order_object, 'total': total_price})
+    return render(request, "shop/orders/order.html", {'item': order_object, 'total': total_price})
 
 
 @role_required('user')
