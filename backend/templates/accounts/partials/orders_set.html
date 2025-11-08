@@ -65,6 +65,7 @@
                                         </button>
                                     </form>
                                     <a href="{% url 'shop:cancel_order' item.order_number %}" class="btn btn-warning btn-xs w-32 m-2">لغو</a>
+                                    <a href="{% url 'shop:download_invoice' item.order_number %}" class="btn btn-xs w-32 m-2">دریافت رسید</a>
                                 </div>
                             </div>
                         </div>

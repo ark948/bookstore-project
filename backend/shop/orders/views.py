@@ -1,10 +1,12 @@
+import io
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse, HttpResponseForbidden, HttpResponseServerError
+from django.http.response import HttpResponse, HttpResponseForbidden, HttpResponseServerError, FileResponse
 from django.contrib import messages
 from icecream import ic
+from reportlab.pdfgen import canvas
 
 from . import services
 
@@ -95,6 +97,18 @@ def fake_payment(request: HttpRequest, order_number: str) -> HttpResponse:
             return redirect(reverse('home:index'))
     messages.success(request, "پرداخت با موفقیت انجام شد. با تشکر.")
     return redirect(reverse('accounts:profile'))
+
+
+@role_required('user')
+def download_invoice(request: HttpRequest, order_number: str) -> FileResponse:
+    content = f"Invoice for order: {order_number}"
+    buffer = io.BytesIO()
+    pdf = canvas.Canvas(buffer)
+    pdf.drawString(100, 750, content)
+    pdf.showPage()
+    pdf.save()
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=f'invoice_{order_number}.pdf')
 
 
 @role_required('user')
