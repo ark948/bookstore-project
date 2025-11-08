@@ -58,12 +58,14 @@
                                 <p class="text-lg font-semibold text-gray-900">{{ item.order_items_id.total_price }} مبلغ کل</p>
                                 <p class="text-sm text-gray-500">{{ item.order_items_id.items_count }} تعداد آیتم ها</p>
                                 <div class="flex flex-col">
+                                    {% if item.status == "Pending Payment" %}
                                     <form action="{% url 'shop:fake_payment' item.order_number %}" method="post">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-accent btn-xs w-32 m-2">
                                             پرداخت
                                         </button>
                                     </form>
+                                    {% endif %}
                                     <a href="{% url 'shop:cancel_order' item.order_number %}" class="btn btn-warning btn-xs w-32 m-2">لغو</a>
                                     <a href="{% url 'shop:download_invoice' item.order_number %}" class="btn btn-xs w-32 m-2">دریافت رسید</a>
                                 </div>
