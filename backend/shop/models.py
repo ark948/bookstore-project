@@ -263,7 +263,7 @@ class Book(TimeStampModel):
     tags = models.ManyToManyField(Tag, blank=True)
     price = models.DecimalField("Price", validators=[MinValueValidator(0)], blank=False, null=False, decimal_places=3, max_digits=12, default=0)
     available = models.BooleanField("Available", default=False)
-    copies_available = models.PositiveSmallIntegerField("In Stock", blank=True, null=True)
+    copies_available = models.PositiveSmallIntegerField("In Stock", blank=True, null=True, default=0)
     description = models.TextField("Description", blank=True, default="")
     summary = models.TextField("Summary", blank=True, default="")
     age_recommendation = models.CharField("Age recommended for", choices=AGE_GROUPS, null=False, default=AGE_GROUPS["Unavailable"])
