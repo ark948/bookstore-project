@@ -363,15 +363,15 @@ class OrderItem(TimeStampModel):
 
 
 class Payment(TimeStampModel):
-    PAYMENT_STATUSES = (
-        ('pending', 'Pending'),
-        ('successful', "Successful"),
-        ('failed', 'Failed'),
-        ('expired', 'Expired'),
-    )
+    PAYMENT_STATUSES = {
+        'PENDING': "Pending",
+        'SUCCESS': "Successful",
+        'FAILED': "Failure",
+        'EXPIRE': "Expired"
+    }
     customer = models.ForeignKey(CustomUser, related_name='payments', on_delete=models.CASCADE) # <CustomUserObj>.payments.all()
     order = models.ForeignKey(Order, related_name='payments', on_delete=models.CASCADE) # <OrderObj>.payments.all()
-    status = models.CharField("Payment's status", choices=PAYMENT_STATUSES, default=PAYMENT_STATUSES[0])
+    status = models.CharField("Payment's status", choices=PAYMENT_STATUSES, default=PAYMENT_STATUSES['PENDING'])
 
     class Meta:
         unique_together = (
