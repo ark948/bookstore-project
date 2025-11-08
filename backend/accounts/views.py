@@ -148,7 +148,8 @@ def orders_list(request: HttpRequest) -> HttpResponse:
                 'total': total,
                 'total_active': total_active,
             })
-    return HttpResponse("Error")
+        else:
+            return HttpResponse("سفارشی ثبت نشده است.")
 
 
 @role_required('user')

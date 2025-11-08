@@ -15,6 +15,7 @@ from shop.models import (
     Order,
     OrderItem,
     Payment,
+    Invoice
 )
 
 
@@ -65,26 +66,34 @@ def checkout(request: HttpRequest) -> HttpResponse:
 @require_POST
 @role_required('user')
 def fake_payment(request: HttpRequest, order_number: str) -> HttpResponse:
-    order_object = get_object_or_404(Order, order_number=order_number)
-    if not order_object.customer == request.user:
+    order = get_object_or_404(Order, order_number=order_number)
+    payment = Payment.objects.filter(customer=request.user, order=order).first()
+    if not order.customer == request.user:
         return HttpResponseForbidden()
-    if order_object.status == Order.ORDER_STATUSES['PENDING']:
-        order_object.status = Order.ORDER_STATUSES['CONFIRM']
-        for order_item in order_object.items.all():
+    if order.status == Order.ORDER_STATUSES['PENDING']:
+        order.status = Order.ORDER_STATUSES['CONFIRM']
+        for order_item in order.items.all():
             book_item: Book = order_item.book
             book_item.copies_available = book_item.copies_available - order_item.item_count
             book_item.save()
         try:
-            order_object.save()
-            print(order_object.payment, "\n")
+            order.save()
+            payment.status = Payment.PAYMENT_STATUSES['SUCCESS']
+            payment.save()
+            invoice = Invoice.objects.create(
+                order = order,
+                payment = payment,
+                customer = request.user
+            )
         except Exception as error:
+            print("\n", error ,"\n")
+            messages.error(request, "خطایی رخ داد.")
             return redirect(reverse('home:index'))
     else:
-        payment = Payment.objects.filter( customer = request.user, order = order_object )
-        if payment.exists():
-            pass
+        if payment and payment.status == "Successful":
+            messages.info(request, "این سفارش قبلا پرداخت شده است.")
+            return redirect(reverse('home:index'))
     messages.success(request, "پرداخت با موفقیت انجام شد. با تشکر.")
-    # redirect to purchase placed (confirmation) page?
     return redirect(reverse('accounts:profile'))
 
 
