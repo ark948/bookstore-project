@@ -18,8 +18,8 @@
       </select>
     </div>
     <div class="mb-4">
-      <label for="filter_only_available">فقط موجود</label>
-      <input type="hidden" name="status" value="off">
+      <!-- <label for="filter_only_available">فقط موجود</label> -->
+      <!-- <input type="hidden" name="status" value="off">
       <input
           hx-trigger="change"
           hx-get="{% url 'shop:only_available' %}"
@@ -33,6 +33,17 @@
           hx-indicator="#spinner"
           onclick="calc();"
         />
+    </div> -->
+    <div class="mb-4">
+      <label for="only_available_checkbox">فقط کالای موجود</label>
+      <input type="checkbox" class="checkbox checkbox-accent checkbox-sm" id="only_available_checkbox" 
+        hx-trigger="change"
+        hx-get="{% url 'shop:only_available_books' %}"
+        name="availability_status_field"
+        hx-target="#books_list"
+        hx-swap="outerHTML"
+        hx-indicator="#spinner"
+      />
     </div>
 
     <div class="mb-4" id="filter_by_price_range">

@@ -51,6 +51,16 @@ def provide_only_available_books(request: HttpRequest) -> HttpResponse:
     })
 
 
+def provide_only_available_books2(request: HttpRequest) -> HttpResponse:
+    if request.htmx:
+        books = Book.objects.all()
+        if request.GET.get('availability_status_field'):
+            books = books.filter(available=True)
+        return render(request, "shop/customers/partials/books-container-section.html", {
+            'items': books
+        })
+
+
 def item_detail(request: HttpRequest, id) -> HttpResponse:
     item: Book = get_object_or_404(Book, id=id)
     item_form = ItemAddForm()

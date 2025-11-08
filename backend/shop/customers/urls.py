@@ -34,4 +34,5 @@ urlpatterns = [
     path("filter-price/", views.filter_by_price, name='filter_price'),
     path("filter-genre/", views.filter_by_genre, name='filter_genre'),
     path("browse-only-available/", views.provide_only_available_books, name='only_available'),
+    path("browse-only-available-books/", views.provide_only_available_books2, name='only_available_books')
 ]
