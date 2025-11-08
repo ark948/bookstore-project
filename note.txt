@@ -562,7 +562,10 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     Only successful payments can have one invoice. and each payment can have only one invoice.
     
 68. Updated copies_available field of Book model to have default of 0
+    only_available filter on customers browse page needs to updated. (there are two routes, remove the old one later)
 
+69. Re-writing book delete view to use post method instead of delete
+    (in a non-RESTful project, best stick to GET and POST)
 
 other features to implement:
 voting on comments

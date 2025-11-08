@@ -1,7 +1,7 @@
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, Http404, HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, require_POST
 from django.contrib.auth.decorators import permission_required, user_passes_test
 from django.urls import reverse
 from django.contrib import messages
@@ -116,6 +116,17 @@ def delete_book(request: HttpRequest, pk: int) -> HttpResponse:
     response['HX-Redirect'] = reverse("shop:books-list")
     return response
 
+
+@require_POST
+@role_required("employee")
+def delete_book_item(request: HttpRequest, pk: int) -> HttpResponse:
+    if request.htmx:
+        book = get_object_or_404(Book, pk=pk)
+        book.delete()
+        response = HttpResponse()
+        response['HX-Trigger'] = 'successful_delete'
+        return response
+    
 
 @role_required("employee")
 def book_details(request: HttpRequest, pk: int) -> HttpResponse:

@@ -6,6 +6,7 @@ urlpatterns = [
     # CRUD Actions
     path("details/<int:pk>/", views.book_details, name='book-details'),
     path("delete/<int:pk>/", views.delete_book, name='delete-book'),
+    path("delete2/<int:pk>/", views.delete_book_item, name='delete_book2'),
     path("list/", views.books_list, name='books-list'),
     path("create/", views.add_book, name='add_book'),
     path("edit/<int:pk>/", views.edit_book, name='edit_book'),
