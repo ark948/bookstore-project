@@ -22,7 +22,7 @@
       <!-- left -->
        <div class="ml-6">
         <label for="id_available">فیلتر ها</label>
-        <input type="checkbox" class="checkbox checkbox-accent" id="id_filter_box_toggle" name="toggle_filter_box" onclick="toggleFilter();" checked>
+        <input type="checkbox" class="checkbox checkbox-accent" id="id_filter_box_toggle" name="toggle_filter_box" onclick="toggleFilter();">
        </div>
     </div>
 
@@ -34,6 +34,12 @@
 
 {% block script %}
       <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let filter_box_container = document.getElementById('filter_box_container');
+          let books_list = document.getElementById('books_list_container_inner');
+          filter_box_container.style.display = "none";
+          books_list.className = "m-2 p-2 basis-8/8 rounded shadow overflow-x-auto";
+        });
         $('#id_genres').select2();
         $('#myBtn').click(function() {
           // Open your modal here (if done via JS)
