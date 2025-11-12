@@ -101,25 +101,10 @@ def get_books_only(request: HttpRequest) -> HttpResponse:
     return render(request, "shop/books/partials/books_list_only.html", context)
 
 
-@role_required("employee")
-def delete_book(request: HttpRequest, pk: int) -> HttpResponse:
-    try:
-        book: Book = Book.objects.get(pk=pk)
-        book.delete()
-    except Book.DoesNotExist:
-        if request.htmx:
-            return HttpResponseNotFound("آیتم پیدا نشد.")
-        else:
-            return HttpResponseNotFound("آیتم پیدا نشد.")
-    messages.info(request, "حذف انجام شد.")
-    response = HttpResponse()
-    response['HX-Redirect'] = reverse("shop:books-list")
-    return response
-
 
 @require_POST
 @role_required("employee")
-def delete_book_item(request: HttpRequest, pk: int) -> HttpResponse:
+def delete_book(request: HttpRequest, pk: int) -> HttpResponse:
     if request.htmx:
         book = get_object_or_404(Book, pk=pk)
         book.delete()
