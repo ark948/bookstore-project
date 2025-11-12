@@ -38,3 +38,18 @@ def test_accounts_secure_page_is_accessed_successfully(client: Client, user):
     assert response.status_code == 200
     assertTemplateUsed(response, 'accounts/private.html')
     assertContains(response, 'This is a secure page.')
+
+
+
+
+@pytest.mark.django_db
+def test_accounts_load_cities(client: Client, province, cities):
+    response = client.get(
+        path=reverse('accounts:load_cities'),
+        query_params={'province': province.pk}
+    )
+
+    response_cities = response.context['cities']
+    assert len(response_cities) == len(cities)
+    for i in response_cities:
+        assert i in cities

@@ -2,7 +2,7 @@ import pytest
 import logging
 
 from accounts.factories import CustomUserFactory, CustomEmployeeFactory, CustomManagerFactory, CustomAdminFactory
-from accounts.models import CustomUser
+from accounts.models import CustomUser, Province, City
 
 
 @pytest.fixture(autouse=True)
@@ -57,3 +57,22 @@ def users(user, employee):
         'admin': admin
     }
     
+
+@pytest.fixture
+def province():
+    return Province.objects.create(
+        name="New York",
+    )
+
+@pytest.fixture
+def cities(province):
+    city_01 =  City.objects.create(
+        province = province,
+        name = "Cold Spring"
+    )
+    city_02 = City.objects.create(
+        province = province,
+        name = "Buffalo"
+    )
+
+    return [city_01, city_02]
