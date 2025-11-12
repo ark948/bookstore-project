@@ -41,7 +41,7 @@
                   <th class="w-16">{{ forloop.counter }}</th>
                   <th>{{ book.pk }}</th>
                   <td>
-                    <a href="{% url 'shop:book-details' book.id %}">
+                    <a href="{% url 'shop:book_details' book.id %}">
                       {{ book.title }}
                     </a>
                   </td>

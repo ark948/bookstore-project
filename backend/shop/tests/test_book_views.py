@@ -17,14 +17,14 @@ from shop.books.forms import (
 def test_books_list_inaccessible(client, user, caplog):
     with caplog.at_level(logging.WARNING, logger='django.request'):
         client.force_login(user)
-        response = client.get(reverse('shop:books-list'))
+        response = client.get(reverse('shop:books_list'))
         assert response.status_code == 403
 
 
 @pytest.mark.django_db
 def test_books_list(client, custom_employee, book_obj):
     client.force_login(custom_employee)
-    response = client.get(reverse('shop:books-list'))
+    response = client.get(reverse('shop:books_list'))
 
     assert response.status_code == 200
     assertTemplateUsed(response, 'shop/books/books-list.html')
@@ -40,7 +40,7 @@ def test_books_list(client, custom_employee, book_obj):
 ])
 def test_books_list_only_accessible_to_employee(client, user_fixtures, expected_status):
     client.force_login(user_fixtures)
-    response = client.get(reverse('shop:books-list'))
+    response = client.get(reverse('shop:books_list'))
     assert response.status_code == expected_status
 
 
@@ -65,7 +65,7 @@ def test_books_add_book(client, custom_employee, book_obj):
     url = reverse('shop:add_book')
     response = client.post(url, form_data)
     assert response.status_code == 302
-    assert response.url == reverse('shop:books-list')
+    assert response.url == reverse('shop:books_list')
 
     book = Book.objects.filter(title='A new book').first()
     assert book is not None
@@ -78,5 +78,5 @@ def test_books_add_book(client, custom_employee, book_obj):
 def test_book_details(client, custom_employee, book_obj):
     client.force_login(custom_employee)
 
-    response = client.get(reverse("shop:book-details", kwargs={'pk': book_obj['book'].id}))
+    response = client.get(reverse("shop:book_details", kwargs={'pk': book_obj['book'].id}))
     assert response.context['item'] == book_obj['book']

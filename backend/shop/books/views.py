@@ -126,7 +126,7 @@ def add_book(request: HttpRequest) -> HttpRequest:
         if form.is_valid():
             form.save()
             messages.success(request, "کتاب با موفقیت افزوده شد.")
-            return redirect(reverse("shop:books-list"))
+            return redirect(reverse("shop:books_list"))
         else:
             return render(request, "shop/books/add_book.html", { 'form': form })
     form = forms.BookForm()
@@ -141,7 +141,7 @@ def edit_book(request: HttpRequest, pk: int) -> HttpResponse:
         if form.is_valid():
             form.save()
             messages.success(request, "ویرایش موفقیت آمیز بود.")
-            return redirect(reverse('shop:books-list'))
+            return redirect(reverse('shop:books_list'))
         else:
             return render(request, "shop/books/edit_book.html", { 'form': form, 'item_id': pk })
     form = forms.BookForm(instance=book)
