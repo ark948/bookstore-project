@@ -203,7 +203,7 @@ def edit_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
             response['HX-Trigger'] = "edit_comment_success"
             return response
         else:
-            return HttpResponse("ERROR")
+            return HttpResponse("ERROR", status=422)
 
 
 def load_cities(request: HttpRequest) -> HttpResponse:

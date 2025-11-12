@@ -3,7 +3,6 @@ from django.test.client import Client
 from django.urls import reverse
 from pytest_django.asserts import assertTemplateUsed, assertContains
 from pytest_django.asserts import assertRedirects
-from django.db.models import QuerySet
 
 from accounts.models import CustomUser
 
@@ -41,7 +40,6 @@ def test_accounts_secure_page_is_accessed_successfully(client: Client, user):
 
 
 
-
 @pytest.mark.django_db
 def test_accounts_load_cities(client: Client, province, cities):
     response = client.get(
@@ -53,3 +51,21 @@ def test_accounts_load_cities(client: Client, province, cities):
     assert len(response_cities) == len(cities)
     for i in response_cities:
         assert i in cities
+
+
+@pytest.mark.django_db
+def test_accounts_edit_user_comment(client: Client, user, comment_obj):
+    client.force_login(user)
+    headers={'HTTP_HX-Request': 'true'}
+    response = client.post(
+        path=reverse('accounts:edit_comment', kwargs={'comment_id': comment_obj.pk}),
+        data={'body': "A new body."},
+        **headers
+    )
+
+    assert response.status_code == 200
+
+    response = client.get(path=reverse('accounts:comments_list'), **headers)
+    response_comment_obj = response.context['comments'][0]
+    assert  response_comment_obj.body == "A new body."
+    assert response_comment_obj.status == "Pending"

@@ -3,7 +3,8 @@ import logging
 
 from accounts.factories import CustomUserFactory, CustomEmployeeFactory, CustomManagerFactory, CustomAdminFactory
 from accounts.models import CustomUser, Province, City
-
+from shop.models import Comment
+from shop.tests.conftest import book_obj
 
 @pytest.fixture(autouse=True)
 def disable_logging_for_forbidden_requests(caplog):
@@ -76,3 +77,16 @@ def cities(province):
     )
 
     return [city_01, city_02]
+
+
+@pytest.fixture
+def comment_obj(user, book_obj):
+    comment = Comment(
+        title = 'comment title',
+        body = 'comment body',
+        book = book_obj['book'],
+        user = user
+    )
+
+    comment.save()
+    return comment
