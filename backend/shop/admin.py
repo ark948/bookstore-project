@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.contrib.admin.widgets import FilteredSelectMultiple, AdminDateWidget
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from django import forms
 
 # Register your models here.

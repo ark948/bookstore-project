@@ -40,17 +40,19 @@ class BookForm(forms.ModelForm):
             "translators": "مترجمین",
             "illustrators": "تصویرپردازان",
             "rating": "امتیاز",
+            "cover_image": "تصویر"
         }
-
-    # there is another way to modify label
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['cover_image'].label = "تصویر"
     
 
 # Unused
 # kept for reference
 class BookForm_v1_unused(forms.ModelForm):
+
+    # there is another way to modify label
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cover_image'].label = "تصویر"
+
     title = forms.CharField(label="عنوان", max_length=256, required=True)
     authors = forms.ModelMultipleChoiceField(
         queryset=Author.objects.all(),
@@ -99,7 +101,8 @@ class BookForm_v1_unused(forms.ModelForm):
             'language',
             'original_language',
             'genres',
-            'page_count'
+            'page_count',
+            'cover_image',
         )
         widgets = {
             # 'authors': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:authors-autocomplete')),

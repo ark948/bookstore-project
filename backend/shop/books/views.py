@@ -25,7 +25,7 @@ from shop.models import (
 )
 from shop.books import forms
 from accounts.decorators import role_required
-from shop.utils import has_custom_permission
+from shop.utils import has_custom_permission, custom_print
 from shop.books.filters import BookFilter
 
 
@@ -122,7 +122,7 @@ def book_details(request: HttpRequest, pk: int) -> HttpResponse:
 @role_required("employee")
 def add_book(request: HttpRequest) -> HttpRequest:
     if request.method == "POST":
-        form = forms.BookForm(request.POST)
+        form = forms.BookForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "کتاب با موفقیت افزوده شد.")
@@ -137,7 +137,7 @@ def add_book(request: HttpRequest) -> HttpRequest:
 def edit_book(request: HttpRequest, pk: int) -> HttpResponse:
     book: Book = get_object_or_404(Book, pk=pk)
     if request.method == "POST":
-        form = forms.BookForm(request.POST, instance=book)
+        form = forms.BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
             messages.success(request, "ویرایش موفقیت آمیز بود.")
