@@ -47,6 +47,14 @@ class BookAuthorsAdminForm(forms.ModelForm):
         )
     )
 
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=FilteredSelectMultiple(
+            verbose_name="Tags",
+            is_stacked=False
+        )
+    )
+
 
 class BookAdmin(admin.ModelAdmin):
     form = BookAuthorsAdminForm
