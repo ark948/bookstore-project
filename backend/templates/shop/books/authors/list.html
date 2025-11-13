@@ -5,12 +5,30 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>Name (en)</th>
+                <th>نام</th>
+                <th>نام کامل</th>
+                <th>تعداد کتاب</th>
+                <th>ملیت</th>
+                <th>عملیات</th>
             </tr>
         </thead>
         <tbody>
             {% for author in authors %}
                 <tr>
                     <td>{{ author.pk }}</td>
+                    <td>{{ author.en_name }}</td>
+                    <td>{{ author.fa_name }}</td>
+                    <td>{{ author.full_name }}</td>
+                    <td>{{ author.books_count }}</td>
+                    <td>{{ author.nationality }}</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-xs btn-outline btn-info m-1">ویرایش</button>
+                            <button class="btn btn-xs btn-outline btn-error m-1">حذف</button>
+                            <button class="btn btn-xs btn-outline btn-neutral">کتاب ها</button>
+                        </div>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
