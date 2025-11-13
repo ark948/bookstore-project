@@ -66,7 +66,7 @@ class AuthorForm(forms.ModelForm):
         fields = "__all__"
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ["full_name", "books_count"]
+    list_display = ["en_name", "fa_name", "pen_name", "full_name", "books_count"]
     form = AuthorForm
 
 

@@ -51,7 +51,7 @@ class Translator(Contributor):
     
     @property
     def books_count(self) -> int:
-        return len(self.books.all())
+        return self.books.count()
 
     @property
     def full_name(self) -> str:
@@ -77,7 +77,7 @@ class Illustrator(Contributor):
 
     @property
     def books_count(self) -> int:
-        return len(self.books.all())
+        return self.books.count()
 
     @property
     def full_name(self) -> str:
@@ -98,7 +98,7 @@ class Author(Contributor):
 
     @property
     def books_count(self) -> int:
-        return len(self.books.all())
+        return self.books.count()
 
     @property
     def full_name(self) -> str:
