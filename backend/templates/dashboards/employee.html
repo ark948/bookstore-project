@@ -12,4 +12,11 @@
     <div>
         <a class="link" href="{% url 'shop:authors_list' %}">لیست نویسندگان</a>
     </div>
+    <div>
+        <button class="btn btn-xs btn-outline btn-neutral"
+            hx-get="{% url 'shop:genres_list' %}"
+            hx-target="#genres_list_response"
+        >لیست ژانر ها</button>
+        <div id="genres_list_response"></div>
+    </div>
 {% endblock content %}

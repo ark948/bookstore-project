@@ -11,6 +11,7 @@ urlpatterns = [
     path("edit/<int:pk>/", views.edit_book, name='edit_book'),
 
     path("authors/list/", views.authors_list, name='authors_list'),
+    path("genres/list/", views.genres_list, name='genres_list'),
 
     # partials
     path("get-books/", views.get_books, name='get_books'),
