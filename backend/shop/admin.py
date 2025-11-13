@@ -60,21 +60,19 @@ class BookAdmin(admin.ModelAdmin):
     form = BookAuthorsAdminForm
 
 
-class AuthorForm(forms.ModelForm):
-    class Meta:
-        model = Author
-        fields = "__all__"
-
+@admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ["en_name", "fa_name", "pen_name", "full_name", "books_count"]
-    form = AuthorForm
+    list_display = ('en_name', 'fa_name', 'pen_name', 'full_name', 'books_count_display')
+    readonly_fields = ('books_count_display',)
+    
+    def books_count_display(self, obj):
+        return obj.books_count
 
 
 admin.site.register(Country)
 admin.site.register(Language)
 admin.site.register(Illustrator)
 admin.site.register(Translator)
-admin.site.register(Author, AuthorAdmin)
 admin.site.register(Genre)
 admin.site.register(Tag)
 admin.site.register(Keyword)
