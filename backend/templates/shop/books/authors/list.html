@@ -1,0 +1,18 @@
+{% extends "_base.html" %}
+
+{% block content %}
+    <table class="table table-xs">
+        <thead>
+            <tr>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+                <tr>
+                    <td>{{ author.pk }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.forms.models import model_to_dict
 from typing import List
-from django.db.models import QuerySet
+from django.db.models import QuerySet, F
 from django.core.paginator import Paginator
 from django.conf import settings
 from django_htmx.http import retarget
@@ -154,6 +154,13 @@ def edit_book(request: HttpRequest, pk: int) -> HttpResponse:
 def load_authors_list(request: HttpRequest) -> HttpResponse:
     authors_list_obj: QuerySet = Author.objects.all().order_by('fa_name', 'en_name')
     return render(request, "shop/books/partials/authors-list.html", {'authors': authors_list_obj})
+
+
+@role_required("employee")
+def authors_list(request: HttpRequest) -> HttpResponse:
+    # items = Author.objects.all().order_by(F('en_name').asc(nulls_last=True))
+    items = Author.objects.all()
+    return render(request, "shop/books/authors/list.html", {'authors': items})
 
 
 class AuthorsAutoComplete(autocomplete.Select2QuerySetView):
