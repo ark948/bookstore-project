@@ -60,11 +60,21 @@ class BookAdmin(admin.ModelAdmin):
     form = BookAuthorsAdminForm
 
 
+class AuthorForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields = "__all__"
+
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ["full_name", "books_count"]
+    form = AuthorForm
+
+
 admin.site.register(Country)
 admin.site.register(Language)
 admin.site.register(Illustrator)
 admin.site.register(Translator)
-admin.site.register(Author)
+admin.site.register(Author, AuthorAdmin)
 admin.site.register(Genre)
 admin.site.register(Tag)
 admin.site.register(Keyword)

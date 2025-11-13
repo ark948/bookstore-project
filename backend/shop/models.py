@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib import admin
 from django.db.models import Q, CheckConstraint
 from django.core.validators import MaxValueValidator, MinValueValidator
 import time
@@ -101,7 +102,14 @@ class Author(Contributor):
 
     @property
     def full_name(self) -> str:
-        return self.fa_name
+        if self.pen_name:
+            return self.pen_name
+        elif self.en_name:
+            return self.en_name
+        elif self.fa_name:
+            return self.fa_name
+        else:
+            return f"[<AuthorObj> {self.pk}]"
 
     def __str__(self) -> str:
         if self.pen_name:
