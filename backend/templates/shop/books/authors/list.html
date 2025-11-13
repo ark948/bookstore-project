@@ -5,6 +5,7 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>PK</th>
                 <th>Name (en)</th>
                 <th>نام</th>
                 <th>نام کامل</th>
@@ -16,6 +17,7 @@
         <tbody>
             {% for author in authors %}
                 <tr>
+                    <td>{{ forloop.counter }}</td>
                     <td>{{ author.pk }}</td>
                     <td>{{ author.en_name }}</td>
                     <td>{{ author.fa_name }}</td>
