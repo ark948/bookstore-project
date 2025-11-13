@@ -1,7 +1,27 @@
 <div>
-    {% for item in items %}
-        <div>
-            {{ item.title }}
-        </div>
-    {% endfor %}
+    <table class="table table-xs">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>PK</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.pk }}</td>
+                    <td>{{ item.title }}</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-xs btn-outline btn-info m-1">ویرایش</button>
+                            <button class="btn btn-xs btn-outline btn-error m-1">حذف</button>
+                            <button class="btn btn-xs btn-outline btn-neutral">کتاب ها</button>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
