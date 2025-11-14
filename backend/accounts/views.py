@@ -123,15 +123,19 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
         return render( request, "accounts/partials/favorites.html", context)
     
 
+import time
 @role_required('user')
 def comments_list(request: HttpRequest) -> HttpResponse:
+    # time.sleep(2) to simulate server resposne delay
     if request.htmx:
         items: QuerySet = Comment.objects.filter(user_id=request.user).order_by('created_at')
         context: Optional[Dict[str, Any]] = {}
         if items.exists():
             context['comments'] = items
             context['total'] = items.count()
-        return render(request, "accounts/partials/comments.html", context)
+            return render(request, "accounts/partials/comments.html", context)
+        else:
+            return HttpResponse(status=204)
 
 
 @role_required('user')
