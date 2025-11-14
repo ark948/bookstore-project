@@ -168,6 +168,13 @@ def genres_list(request: HttpRequest) -> HttpResponse:
     items = Genre.objects.all()
     return render(request, "shop/books/partials/genres_list.html", {'items': items})
 
+
+@role_required("employee")
+def publications_list(request: HttpRequest) -> HttpResponse:
+    items = Publication.objects.all()
+    return render(request, "shop/books/partials/publications_list.html", {'items': items})
+
+
 class AuthorsAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Author.objects.all().order_by('fa_name', 'en_name')
