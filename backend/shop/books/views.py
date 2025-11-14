@@ -11,6 +11,7 @@ from django.db.models import QuerySet, F
 from django.core.paginator import Paginator
 from django.conf import settings
 from django_htmx.http import retarget
+from django.views.generic import ListView
 
 from http import HTTPStatus
 

@@ -204,6 +204,19 @@ def edit_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
             return response
         else:
             return HttpResponse("ERROR", status=422)
+        
+
+@require_POST
+@role_required('user')
+def delete_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
+    comment_obj = get_object_or_404(Comment, pk=comment_id)
+    if request.htmx:
+        if comment_obj.user != request.user:
+            return HttpResponseForbidden()
+        comment_obj.delete()
+        return HttpResponse("نظر حذف شد.")
+    messages.error(request, "خطایی رخ داده است.")
+    return redirect(reverse("accounts:profile"))
 
 
 def load_cities(request: HttpRequest) -> HttpResponse:
