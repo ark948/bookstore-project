@@ -1,0 +1,14 @@
+<div>
+    {% for item in items %}
+        <div>
+            {% if i.fa_name %}
+                <span>{{ i.fa_name }}</span>
+            {% elif i.en_name %}
+                <span>{{ i.en_name }}</span>
+            {% else %}
+                <span>{{ i.pen_name }}</span>
+            {% endif %}
+            <span>{{ i }}</span>
+        </div>
+    {% endfor %}
+</div>

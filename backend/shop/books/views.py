@@ -22,6 +22,7 @@ from shop.models import (
     Publication,
     Genre,
     Language,
+    Translator
 )
 from shop.books import forms
 from accounts.decorators import role_required
@@ -173,6 +174,12 @@ def genres_list(request: HttpRequest) -> HttpResponse:
 def publications_list(request: HttpRequest) -> HttpResponse:
     items = Publication.objects.all()
     return render(request, "shop/books/partials/publications_list.html", {'items': items})
+
+
+@role_required("employee")
+def translators_list(request: HttpRequest) -> HttpResponse:
+    items = Translator.objects.all()
+    return render(request, "shop/books/partials/translators_list.html", {'items': items})
 
 
 class AuthorsAutoComplete(autocomplete.Select2QuerySetView):

@@ -12,6 +12,8 @@ urlpatterns = [
 
     path("authors/list/", views.authors_list, name='authors_list'),
     path("genres/list/", views.genres_list, name='genres_list'),
+    path("publications/list/", views.publications_list, name='publications_list'),
+    path("translators/list/", views.translators_list, name="translators_list"),
 
     # partials
     path("get-books/", views.get_books, name='get_books'),
