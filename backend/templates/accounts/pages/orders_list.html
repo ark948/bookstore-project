@@ -1,0 +1,52 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div>
+    {% if items %}
+    <div class="block w-full overflow-x-auto max-w-xl border">
+        <table class="items-center w-full bg-transparent border-collapse">
+            <thead>
+                <tr>
+                    <th
+                        class="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
+                        شماره</th>
+                    <th
+                        class="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
+                        مبلغ نهایی</th>
+                    <th
+                        class="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
+                        وضعیت</th>
+                    <th
+                        class="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap min-w-140-px">تاریخ
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for item in items %}
+                    <tr class="text-gray-500">
+                        <th class="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
+                            {{ item.order_number }}
+                        </th>
+                        <td class="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
+                            0 تومان</td>
+                        <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
+                            <div class="flex items-center">
+                                <span class="mr-2 text-xs font-medium">30%</span>
+                                <div class="relative w-full">
+                                    <div class="w-full bg-gray-200 rounded-sm h-2">
+                                        <div class="bg-cyan-600 h-2 rounded-sm" style="width: 30%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
+                            {{ item.created_at }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

@@ -7,8 +7,8 @@ app_name = 'accounts'
 urlpatterns = [
     path('protected-page/', views.protected_view, name='prtd-page'),
 
+    # CRUD actions
     path("favorite-remove/<int:book_id>/", views.remove_item_from_favorites, name='remove_favorite'),
-
     path("edit-comment/<int:comment_id>/", views.edit_user_comment, name='edit_comment'),
     path("delete-comment/<int:comment_id>/", views.delete_user_comment, name='delete_comment'),
 

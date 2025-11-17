@@ -577,7 +577,8 @@ rating on books
 reporting comments
 reminder on books (via email and background tasks)
 account recovery via email and background tasks
-
+(htmx is used to load cities and provinces in profile when submitting user address, use cosntants.py to load without ajax)
+add total price field to order model
 
 
 # if no verbose_name is provided, django will auto generate one by converting underscores to spaces and captializing
