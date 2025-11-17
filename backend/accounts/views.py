@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_POST
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse, JsonResponse
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseForbidden
@@ -16,12 +16,10 @@ from typing import Optional, Dict, Any
 
 from .models import (
     UserProfile,
-    Province,
     City,
 )
 
 from shop.models import (
-    Book,
     Favorite,
     Order,
     Comment,
@@ -30,7 +28,6 @@ from accounts.decorators import role_required
 from .forms import (
     CustomUserSignUpForm,
     EmailLoginForm,
-    CustomerAddressForm_widget_tweaks,
     UserProfileAddressForm
 )
 
@@ -126,34 +123,29 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
 import time
 @role_required('user')
 def comments_list(request: HttpRequest) -> HttpResponse:
-    # time.sleep(2) to simulate server resposne delay
+    # time.sleep(2) to simulate server resposne delay/latency
+    items: QuerySet = Comment.objects.filter(user_id=request.user).order_by('created_at')
+    context: Optional[Dict[str, Any]] = {}
+    if items.exists():
+        context['comments'] = items
+        context['total'] = items.count()
     if request.htmx:
-        items: QuerySet = Comment.objects.filter(user_id=request.user).order_by('created_at')
-        context: Optional[Dict[str, Any]] = {}
-        if items.exists():
-            context['comments'] = items
-            context['total'] = items.count()
-            return render(request, "accounts/partials/comments.html", context)
-        else:
-            return HttpResponse(status=204)
+        return render(request, "accounts/partials/comments.html", context)
+    return HttpResponse("ok")
 
 
 @role_required('user')
 def orders_list(request: HttpRequest) -> HttpResponse:
+    items = Order.objects.filter(customer=request.user)
+    if items.exists():
+        total = items.count()
+        total_active = items.filter(
+            Q(status=Order.ORDER_STATUSES['PENDING']) | Q(status=Order.ORDER_STATUSES['CONFIRM'])
+        ).count()
+    context = {'items': items, 'total': total, 'total_active': total_active}
     if request.htmx:
-        items = Order.objects.filter( customer=request.user )
-        if items.exists():
-            total = items.count()
-            total_active = items.filter(
-                Q(status=Order.ORDER_STATUSES['PENDING']) | Q(status=Order.ORDER_STATUSES['CONFIRM'])
-            ).count()
-            return render(request, "accounts/partials/orders.html", { 
-                'items': items,
-                'total': total,
-                'total_active': total_active,
-            })
-        else:
-            return HttpResponse("سفارشی ثبت نشده است.")
+        return render(request, "accounts/partials/orders.html", context)
+    return render(request, "accounts/partials/pages/orders_list.html", context)
 
 
 @role_required('user')
