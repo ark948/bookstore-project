@@ -111,13 +111,14 @@ def add_address(request: HttpRequest, profile_id: int) -> HttpResponse:
 
 @role_required('user')
 def favorites_list(request: HttpRequest) -> HttpResponse:
-    if request.htmx:
-        items: QuerySet = Favorite.objects.filter(user_id=request.user)
-        context: Optional[Dict[str, Any]] = {}
-        if items.exists():
-            context['items'] = items
+    items: QuerySet = Favorite.objects.filter(user_id=request.user)
+    context: Optional[Dict[str, Any]] = {}
+    if items.exists():
+        context['items'] = items
         context['total'] = items.count()
+    if request.htmx:
         return render( request, "accounts/partials/favorites.html", context)
+    return render(request, "accounts/pages/favorites_list.html", context)
     
 
 @role_required('user')
