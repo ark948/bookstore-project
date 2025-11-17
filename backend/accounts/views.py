@@ -120,7 +120,6 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
         return render( request, "accounts/partials/favorites.html", context)
     
 
-import time
 @role_required('user')
 def comments_list(request: HttpRequest) -> HttpResponse:
     # time.sleep(2) to simulate server resposne delay/latency
@@ -131,7 +130,7 @@ def comments_list(request: HttpRequest) -> HttpResponse:
         context['total'] = items.count()
     if request.htmx:
         return render(request, "accounts/partials/comments.html", context)
-    return HttpResponse("ok")
+    return render(request, "accounts/pages/comments_list.html", context)
 
 
 @role_required('user')
@@ -145,7 +144,7 @@ def orders_list(request: HttpRequest) -> HttpResponse:
     context = {'items': items, 'total': total, 'total_active': total_active}
     if request.htmx:
         return render(request, "accounts/partials/orders.html", context)
-    return render(request, "accounts/partials/pages/orders_list.html", context)
+    return render(request, "accounts/pages/orders_list.html", context)
 
 
 @role_required('user')
