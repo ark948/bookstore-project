@@ -49,10 +49,12 @@ def checkout(request: HttpRequest) -> HttpResponse:
             customer = request.user,
             status = Order.ORDER_STATUSES['PENDING']
         )
-        order.save()
+        order_total_price = 0
         for i in purchase_items:
             i.order = order
             i.save()
+            order_total_price += i.total_price
+        order.save()
         payment = Payment.objects.create(
             customer = request.user,
             order = order,
