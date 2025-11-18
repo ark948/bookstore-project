@@ -137,13 +137,15 @@ def comments_list(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def orders_list(request: HttpRequest) -> HttpResponse:
     items = Order.objects.filter(customer=request.user)
+    context = {}
     if items.exists():
         total = items.count()
         total_active = items.filter(
             Q(status=Order.ORDER_STATUSES['PENDING']) | Q(status=Order.ORDER_STATUSES['CONFIRM'])
         ).count()
-        context = {'items': items, 'total': total, 'total_active': total_active}
-    context = {'total': 0}
+        context['items'] = items
+        context['total'] = total
+        context['total_active'] = total_active
     if request.htmx:
         return render(request, "accounts/partials/orders.html", context)
     return render(request, "accounts/pages/orders_list.html", context)
