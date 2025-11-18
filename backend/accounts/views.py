@@ -142,7 +142,8 @@ def orders_list(request: HttpRequest) -> HttpResponse:
         total_active = items.filter(
             Q(status=Order.ORDER_STATUSES['PENDING']) | Q(status=Order.ORDER_STATUSES['CONFIRM'])
         ).count()
-    context = {'items': items, 'total': total, 'total_active': total_active}
+        context = {'items': items, 'total': total, 'total_active': total_active}
+    context = {'total': 0}
     if request.htmx:
         return render(request, "accounts/partials/orders.html", context)
     return render(request, "accounts/pages/orders_list.html", context)
