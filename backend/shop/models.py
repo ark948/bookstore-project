@@ -354,6 +354,7 @@ class Order(TimeStampModel):
     customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders') # <CustomUserObj>.orders.all()
     status = models.CharField("Status of order", max_length=32, choices=ORDER_STATUSES, default=ORDER_STATUSES['PENDING'])
     order_number = models.CharField(unique=True, editable=False, default=generate_order_number)
+    total_price = models.DecimalField(decimal_places=3, max_digits=12, default=0)
 
     def __str__(self) -> str:
         return f"[OrderObj] {self.pk}"

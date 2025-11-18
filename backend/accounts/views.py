@@ -146,6 +146,8 @@ def orders_list(request: HttpRequest) -> HttpResponse:
         context['items'] = items
         context['total'] = total
         context['total_active'] = total_active
+    else:
+        context['total'] = 0
     if request.htmx:
         return render(request, "accounts/partials/orders.html", context)
     return render(request, "accounts/pages/orders_list.html", context)
