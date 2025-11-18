@@ -13,7 +13,7 @@
           </h3>
           <p class="font-bold text-indigo-600">
             {% if item.available %}
-              <span id="item_price">{{ item.price }} تومان</span>
+              <span id="item_price">{{ item.price|floatformat:"0g" }} تومان</span>
             {% else %}
               <span class="text-red-600">موجود نیست</span>
             {% endif %}

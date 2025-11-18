@@ -35,7 +35,7 @@
                                     {{ item.order_number }}
                                 </td>
                                 <td class="items-center text-gray-800 align-middle py-2 text-sm whitespace-normal">
-                                    {{ item.total_price }} تومان
+                                    {{ item.total_price|floatformat:"0g" }} تومان
                                 </td>
                                 <td class="items-center text-gray-800 align-middle py-2 text-sm whitespace-normal">
                                     <div class="flex items-center">
