@@ -116,6 +116,8 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
     if items.exists():
         context['items'] = items
         context['total'] = items.count()
+    else:
+        context['total'] = 0
     if request.htmx:
         return render( request, "accounts/partials/favorites.html", context)
     return render(request, "accounts/pages/favorites_list.html", context)
