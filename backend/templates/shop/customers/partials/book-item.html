@@ -18,9 +18,13 @@
                     {{ item.title }}
                 </div>
                 <div>
-                    {% if item.copies_available %}
+                    {% if item.copies_available >= 5 %}
                         <div>
-                            {{ item.copies_available }} 
+                            موجود در انبار
+                        </div>
+                    {% elif item.copies_available < 5 %}
+                        <div>
+                            <span class="text-red-600 text-sm">تعداد کمی باقی مانده</span>
                         </div>
                     {% else %}
                         <div>
@@ -54,6 +58,12 @@
                         hx-swap="innerHTML"
                     >
                     </div>
+                {% endif %}
+            </div>
+
+            <div>
+                {% if item.available %}
+                    <span>قیمت: {{ item.price|floatformat:"0g" }} تومان</span>
                 {% endif %}
             </div>
 
