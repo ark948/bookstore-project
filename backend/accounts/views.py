@@ -127,11 +127,16 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def comments_list(request: HttpRequest) -> HttpResponse:
     # time.sleep(2) to simulate server resposne delay/latency
-    items: QuerySet = Comment.objects.filter(user_id=request.user, status="Approved").order_by('created_at')
+    total_user_comments: QuerySet = Comment.objects.filter(user_id=request.user).order_by('created_at')
+    approved_items = total_user_comments.filter(status="Approved")
+    pending_items_count = total_user_comments.filter(status="Pending").count()
     context: Optional[Dict[str, Any]] = {}
-    if items.exists():
-        context['items'] = items
-        context['total'] = items.count()
+    if total_user_comments.exists():
+        context['approved_items'] = approved_items
+        if approved_items.exists():
+            context['approved_items_count'] = approved_items.count()
+        context['pending_items_count'] = pending_items_count
+        context['total'] = total_user_comments.count()
     else:
         context['total'] = 0
     if request.htmx:

@@ -12,8 +12,8 @@
 {% if message %}
   {{ message }}
 {% endif %}
-{% if items %}
-  {% for item in items %}
+{% if approved_items %}
+  {% for item in approved_items %}
   <div id="list_item">
     <ul class="list bg-base-100 rounded-box shadow-md m-2 p-2 max-w-xs max-h-xs">
       <li class="card card-compact bg-base-200 shadow" id="comment_card">
@@ -68,9 +68,16 @@
   </div>
   {% endfor %}
 {% else %}
-  نظری ثبت نشده است.
+  {% if pending_items_count > 0 %}
+    <span>تعداد نظرات در انتظار بررسی: {{ pending_items_count }}</span>
+  {% endif %}
 {% endif %}
-
+<div>
+  <span>تعداد کل نظرات: {{ total }}</span>
+  {% if approved_items_count %}
+    <span>تعداد نظرات تایید شده: {{ approved_items_count }}</span>
+  {% endif %}
+</div>
 
 {% block script %}
     <script>
