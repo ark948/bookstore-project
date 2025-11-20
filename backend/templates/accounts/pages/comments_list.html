@@ -15,12 +15,12 @@
             <h6>{{ item.user }}</h6>
           </div>
           <div class="flex flex-col">
-            <button class="btn btn-square btn-ghost">
-                <span class="text-xl text-green-500">&#10003;</span>
-            </button>
-            <button class="btn btn-square btn-ghost">
-                <span class="text-xl text-red-600">&#10007;</span>
-            </button>
+            <a class="btn btn-sm btn-ghost" href="{% url 'accounts:modify_comment' item.pk %}">
+              ویرایش
+            </a>
+            <a class="btn btn-sm btn-ghost">
+                حذف
+            </a>
           </div>
         </div>
       </div>
@@ -28,5 +28,6 @@
   </ul>
 </div>
 {% endfor %}
+<a href="{% url 'accounts:profile' %}" class="btn btn-neutral btn-xs btn-outline w-32">بازگشت به پروفایل</a>
 
 {% endblock content %}

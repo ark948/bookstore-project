@@ -228,8 +228,21 @@ def modify_comment(request: HttpRequest, comment_id: int) -> HttpResponse | Http
                 return HttpResponse(status=204, headers={'HX-Trigger': "edit_comment_success"})
             else:
                 return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
-    form = CommentForm(model_to_dict(comment_obj))
-    return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+        else:
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment_obj.body = form.cleaned_data['body']
+                comment_obj.title = form.cleaned_data['title']
+                comment_obj.status = "Pending"
+                comment_obj.save()
+                messages.success(request, "نظر با موفقیت ویرایش شد و پس از بررسی نمایش داده خواهد شد.")
+                return redirect(reverse("accounts:comments_list"))
+    else:
+        if request.htmx:
+            form = CommentForm(model_to_dict(comment_obj))
+            return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+        form = CommentForm(model_to_dict(comment_obj))
+        return render(request, "accounts/pages/forms/comment_form.html", {'form': form, 'item_id': comment_id})
         
 
 @require_POST
