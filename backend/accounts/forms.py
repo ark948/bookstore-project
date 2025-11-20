@@ -5,6 +5,38 @@ from crispy_forms.layout import Layout, Field, Submit
 
 from .models import CustomUser, Province, City, UserProfile
 
+from shop.models import Comment
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ("title", "body", "anonymous")
+
+    def __init__(self, *args, **kwrags):
+        super().__init__(*args, **kwrags)
+        self.fields['title'].label = "عنوان"
+        self.fields['title'].widget.attrs.update({
+            'class': 'input input-success',
+        })
+
+        self.fields['body'].label = "متن"
+        self.fields['body'].widget.attrs.update({
+            'id': 'comment_body_id',
+            'class': "textarea textarea-success",
+            'rows': 8,
+            'cols': 40
+        })
+
+        self.fields['anonymous'] = forms.BooleanField(
+            label="ناشناس",
+            required=False,
+            widget=forms.CheckboxInput(
+                attrs={
+                    'class': "checkbox checkbox-md checkbox-accent"
+                }
+            )
+        )
+
 # THIS IS JUST AN EXAMPLE (how to crispy forms and tailwind together)
 class MyForm(forms.Form):
     name = forms.CharField(max_length=100)

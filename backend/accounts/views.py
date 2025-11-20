@@ -28,7 +28,8 @@ from accounts.decorators import role_required
 from .forms import (
     CustomUserSignUpForm,
     EmailLoginForm,
-    UserProfileAddressForm
+    UserProfileAddressForm,
+    CommentForm
 )
 
 from shop.customers.forms import AddCommentForm
@@ -209,6 +210,26 @@ def edit_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
             return response
         else:
             return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+        
+
+@role_required('user')
+def modify_comment(request: HttpRequest, comment_id: int) -> HttpResponse | HttpResponseForbidden:
+    comment_obj = get_object_or_404(Comment, pk=comment_id)
+    if comment_obj.user != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        if request.htmx:
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment_obj.body = form.cleaned_data['body']
+                comment_obj.title = form.cleaned_data['title']
+                comment_obj.status = "Pending"
+                comment_obj.save()
+                return HttpResponse(status=204, headers={'HX-Trigger': "edit_comment_success"})
+            else:
+                return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+    form = CommentForm(model_to_dict(comment_obj))
+    return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
         
 
 @require_POST

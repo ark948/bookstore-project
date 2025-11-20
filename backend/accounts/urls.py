@@ -12,6 +12,8 @@ urlpatterns = [
     path("edit-comment/<int:comment_id>/", views.edit_user_comment, name='edit_comment'),
     path("delete-comment/<int:comment_id>/", views.delete_user_comment, name='delete_comment'),
 
+    path("modify-comment/<int:comment_id>/", views.modify_comment, name='modify_comment'),
+
     # loaders
     path("load-orders/<str:status>", views.load_orders_with_status, name='load_orders_with_status'),
     path("load-comment-form/<int:comment_id>/", views.load_comment_form_partial, name='load_comment_form'),
