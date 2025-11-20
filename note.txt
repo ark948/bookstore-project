@@ -581,6 +581,8 @@ account recovery via email and background tasks
 add total price field to order model
 NEVER use floatfield for storing price (introduces rounding issues), use DecimalField
 
+re-writing edit comment process
+
 
 # if no verbose_name is provided, django will auto generate one by converting underscores to spaces and captializing
 # e.g. published_date -> Published date
