@@ -129,7 +129,7 @@ def comments_list(request: HttpRequest) -> HttpResponse:
     items: QuerySet = Comment.objects.filter(user_id=request.user, status="Approved").order_by('created_at')
     context: Optional[Dict[str, Any]] = {}
     if items.exists():
-        context['comments'] = items
+        context['items'] = items
         context['total'] = items.count()
     else:
         context['total'] = 0
