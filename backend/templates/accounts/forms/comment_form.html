@@ -2,7 +2,7 @@
     id="comment_form"
     hx-post="{% url 'accounts:edit_comment' item_id %}"
     hx-target="#response_holder"
-    hx-swap="innerHMTL"
+    hx-swap="this"
     hx-on:edit_comment_success="clean_comment_form();"
     >
     {% csrf_token %}

@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_POST
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseForbidden
@@ -208,7 +208,7 @@ def edit_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
             response['HX-Trigger'] = "edit_comment_success"
             return response
         else:
-            return HttpResponse("ERROR", status=422)
+            return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
         
 
 @require_POST

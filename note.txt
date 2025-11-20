@@ -582,6 +582,8 @@ add total price field to order model
 NEVER use floatfield for storing price (introduces rounding issues), use DecimalField
 
 re-writing edit comment process
+removed empty_comments_partial + all comment_spinner tags
+handle form handling on edit comment form + modal
 
 
 # if no verbose_name is provided, django will auto generate one by converting underscores to spaces and captializing
