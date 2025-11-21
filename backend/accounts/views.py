@@ -33,6 +33,7 @@ from .forms import (
 )
 
 from shop.customers.forms import AddCommentForm
+from . import services
 
 # signup
 # login
