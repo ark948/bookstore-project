@@ -568,6 +568,7 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
     (in a non-RESTful project, best stick to GET and POST)
 
 add hx-boost and fallback behavior
+- Added hx-boost to coments list review by employees shop:comments_list
 consider transition api
 delivery app
 

@@ -41,7 +41,7 @@ def load_comments(request: HttpRequest, status: str) -> HttpResponse:
         return HttpResponse("لیست خالی میباشد.")
     if request.htmx:
         return render(request, "shop/comments/partials/comments.html", {'comments': comments})
-    return render(request, "shop/comments/partials/comments.html", {'comments': comments})
+    return render(request, "shop/comments/pages/comments_list.html", {'comments': comments})
 
 
 @require_POST

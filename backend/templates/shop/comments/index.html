@@ -19,9 +19,10 @@
             </a>
         </div>
 
-        <div>
+        <div hx-boost="true">
             <span>تعداد نظرات تایید شده {{ total_approved }}</span>
             <a class="link"
+                href="{% url 'shop:comments_list' 'approved' %}"
                 hx-get="{% url 'shop:load_comments' 'approved' %}"
                 hx-target="#comments"
                 hx-trigger="click"
