@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.db.models import QuerySet
 from django.views.generic import TemplateView
 from django.views.decorators.http import require_http_methods, require_POST
+from django.forms.models import model_to_dict
 
 from http import HTTPStatus
 
@@ -61,3 +62,8 @@ def reject_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
         if not services.update_comment(comment_id, 'R'):
             return HttpResponseServerError()
         return HttpResponse(status=HTTPStatus.OK)
+    
+
+def get_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
+    obj = get_object_or_404(Comment, pk=comment_id)
+    return JsonResponse(model_to_dict(obj))

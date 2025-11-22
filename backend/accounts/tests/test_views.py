@@ -63,9 +63,22 @@ def test_accounts_edit_user_comment(client: Client, user, comment_obj):
         **headers
     )
 
-    assert response.status_code == 200
+    assert response.status_code == 204
 
-    response = client.get(path=reverse('accounts:comments_list'), **headers)
-    response_comment_obj = response.context['comments'][0]
-    assert  response_comment_obj.body == "A new body."
-    assert response_comment_obj.status == "Pending"
+    response = client.get(path=reverse('shop:get_comment', kwargs={'comment_id': comment_obj.pk}))
+    data = response.json()
+    assert data['body'] == "A new body."
+
+
+@pytest.mark.django_db
+def test_accounts_edit_user_comment_with_fixture_refresh(client: Client, user, comment_obj):
+    client.force_login(user)
+    headers={'HTTP_HX-Request': 'true'}
+    response = client.post(
+        path=reverse('accounts:edit_comment', kwargs={'comment_id': comment_obj.pk}),
+        data={'body': "A new body."},
+        **headers
+    )
+    assert response.status_code == 204
+    comment_obj.refresh_from_db()
+    assert comment_obj.body == "A new body."
