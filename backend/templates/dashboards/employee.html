@@ -9,10 +9,13 @@
     <div class="m-4">
         <a class="link" href="{% url 'shop:orders_list' %}">لیست سفارشات</a>
     </div>
-    <div>
+    <div class="m-4">
         <a class="link" href="{% url 'shop:authors_list' %}">لیست نویسندگان</a>
     </div>
-    <div>
+    <div class="m-4">
+        <a class="link" href="{% url 'shop:customers_list' %}">لیست مشتریان</a>
+    </div>
+    <div class="m-4">
         <button class="btn btn-xs btn-outline btn-neutral"
             hx-get="{% url 'shop:genres_list' %}"
             hx-target="#genres_list_response"

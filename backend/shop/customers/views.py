@@ -274,4 +274,6 @@ def load_book_comments(request: HttpRequest, book_id: int) -> HttpResponse:
 @role_required('employee')
 def customers_list(request: HttpRequest) -> HttpResponse:
     customers = CustomUser.objects.filter(role='user').order_by('email')
-    return render(request, "shop/customers/customers/list.html", {'customers': customers})
+    if request.htmx:
+        return render(request, "shop/customers/customers/list.html", {'customers': customers})
+    return render(request, "shop/customers/customers/pages/customers_list.html", {'customers': customers})

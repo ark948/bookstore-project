@@ -1,0 +1,10 @@
+{% extends "_base.html " %}
+
+{% block content %}
+    <h3>لیست مشتریان</h3>
+    {% for item in customers %}
+        <div>
+            {{ forloop.counter }}: {{ item.email }}
+        </div>
+    {% endfor %}
+{% endblock content %}
