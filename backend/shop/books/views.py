@@ -168,7 +168,9 @@ def authors_list(request: HttpRequest) -> HttpResponse:
 @role_required("employee")
 def genres_list(request: HttpRequest) -> HttpResponse:
     items = Genre.objects.all()
-    return render(request, "shop/books/partials/genres_list.html", {'items': items})
+    if request.htmx:
+        return render(request, "shop/books/partials/genres_list.html", {'items': items})
+    return render(request, "shop/books/pages/genres_list.html", {'items': items})
 
 
 @role_required("employee")

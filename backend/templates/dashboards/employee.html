@@ -15,12 +15,13 @@
     <div class="m-4">
         <a class="link" href="{% url 'shop:customers_list' %}">لیست مشتریان</a>
     </div>
-    <div class="m-4">
-        <button class="btn btn-xs btn-outline btn-neutral"
-            hx-get="{% url 'shop:genres_list' %}"
-            hx-target="#genres_list_response"
-        >لیست ژانر ها
-        </button>
+    <div hx-boost="true" class="m-4">
+        <a href="{% url 'shop:genres_list' %}" 
+           class="btn btn-xs btn-outline btn-neutral"
+           hx-get="{% url 'shop:genres_list' %}" 
+           hx-target="#genres_list_response">
+            لیست ژانر ها
+        </a>
         <div id="genres_list_response"></div>
     </div>
 {% endblock content %}
