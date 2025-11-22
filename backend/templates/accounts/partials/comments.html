@@ -31,7 +31,7 @@
               <button
                 class="btn btn-outline btn-xs"
                 onclick="edit_comment_modal.showModal();"
-                hx-get="{% url 'accounts:modify_comment' item.id %}"
+                hx-get="{% url 'accounts:edit_comment' item.id %}"
                 hx-target="#response_holder"
                 hx-swap="innerHTML"
                 hx-trigger="click"

@@ -3,7 +3,7 @@
 
 {% block content %}
 
-{% for item in items %}
+{% for item in approved_items %}
 <div id="list_item">
   <ul class="list bg-base-100 rounded-box space-y-6 shadow-md m-2 p-4">
     <li class="card card-compact bg-base-200 shadow">
@@ -15,7 +15,7 @@
             <h6>{{ item.user }}</h6>
           </div>
           <div class="flex flex-col">
-            <a class="btn btn-sm btn-ghost" href="{% url 'accounts:modify_comment' item.pk %}">
+            <a class="btn btn-sm btn-ghost" href="{% url 'accounts:edit_comment' item.pk %}">
               ویرایش
             </a>
             <a class="btn btn-sm btn-ghost">

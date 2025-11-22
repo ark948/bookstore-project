@@ -196,58 +196,37 @@ def load_comment_form_partial(request: HttpRequest, comment_id: int) -> HttpResp
         if comment_obj.user != request.user:
             return HttpResponseForbidden()
         return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
-
-
-@require_POST
-@role_required('user')
-def edit_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
-    comment_obj = get_object_or_404(Comment, pk=comment_id)
-    if request.htmx:
-        if comment_obj.user != request.user:
-            return HttpResponseForbidden()
-        form = AddCommentForm(request.POST)
-        if form.is_valid():
-            comment_obj.body = form.cleaned_data['body']
-            comment_obj.title = form.cleaned_data['title']
-            comment_obj.status = "Pending"
-            comment_obj.save()
-            response = HttpResponse()
-            response['HX-Trigger'] = "edit_comment_success"
-            return response
-        else:
-            return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
         
 
 @role_required('user')
-def modify_comment(request: HttpRequest, comment_id: int) -> HttpResponse | HttpResponseForbidden:
+def edit_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
     comment_obj = get_object_or_404(Comment, pk=comment_id)
     if comment_obj.user != request.user:
         return HttpResponseForbidden()
     if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment_obj)
         if request.htmx:
-            form = CommentForm(request.POST)
             if form.is_valid():
-                comment_obj.body = form.cleaned_data['body']
-                comment_obj.title = form.cleaned_data['title']
-                comment_obj.status = "Pending"
+                comment_obj = form.save(commit=False)
+                comment_obj.status = Comment.STATUS_CHOICES['P']
                 comment_obj.save()
                 return HttpResponse(status=204, headers={'HX-Trigger': "edit_comment_success"})
             else:
                 return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
         else:
-            form = CommentForm(request.POST)
             if form.is_valid():
-                comment_obj.body = form.cleaned_data['body']
-                comment_obj.title = form.cleaned_data['title']
-                comment_obj.status = "Pending"
+                comment_obj = form.save(commit=False)
+                comment_obj.status = Comment.STATUS_CHOICES['P']
                 comment_obj.save()
                 messages.success(request, "نظر با موفقیت ویرایش شد و پس از بررسی نمایش داده خواهد شد.")
                 return redirect(reverse("accounts:comments_list"))
+            else:
+                return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
     else:
         if request.htmx:
-            form = CommentForm(model_to_dict(comment_obj))
+            form = CommentForm(instance=comment_obj)
             return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
-        form = CommentForm(model_to_dict(comment_obj))
+        form = CommentForm(instance=comment_obj)
         return render(request, "accounts/pages/forms/comment_form.html", {'form': form, 'item_id': comment_id})
         
 

@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    <form id="comment_form" method="post" action="{% url 'accounts:modify_comment' item_id %}">
+    <form id="comment_form" method="post" action="{% url 'accounts:edit_comment' item_id %}">
         {% csrf_token %}
         {{ form.as_div }}
         <button class="btn btn-primary btn-outline btn-xs w-32" type="submit">
