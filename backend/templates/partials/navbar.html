@@ -28,7 +28,7 @@
             </div>
           </a>
           {% elif user.role == "employee" %}
-            <a class="btn btn-ghost text-white hover:text-black-400" href="{% url 'shop:books_list' %}">پنل</a>
+            <a class="btn btn-ghost text-white hover:text-black-400" href="{% url 'shop:employee' %}">پنل</a>
           {% else %}
             <a class="btn btn-ghost text-white hover:text-black-400" href="{% url 'accounts:login' %}">ورود</a>
           {% endif %}
