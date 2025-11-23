@@ -1,8 +1,8 @@
 # Online Bookstore Project
 
-## Work in progress...
+### Work in progress...
 
-## Contents:
+### Contents:
 * [Description](#description)
 * Screenshots
 * [Tech Stack](#tech-stack)
@@ -12,12 +12,9 @@
 * How to run?
 
 
-## Description:
-Simple bookstore project to demonstrate common aspects and features of an e-commerce project. Focusing mainly on the backend.
+### Description:
 
-
-
-## Tech Stack
+### Tech Stack
 * **Backend**: 
     * Django v5.2
 
@@ -32,7 +29,7 @@ Simple bookstore project to demonstrate common aspects and features of an e-comm
     * PostgreSQL (prod)
 
 
-### Concepts implemented
+### Features
 * **Session-based Authentication**
 * **Custom User Model + Profile model**
 * **Image Upload**
@@ -41,7 +38,7 @@ Simple bookstore project to demonstrate common aspects and features of an e-comm
 * **Custom Permissions**
 * **Tests & Test Fixtures**
 
-## Testing
+### Testing
 ```
 # clone repository
 git clone https://github.com/ark948/bookstore-project.git
