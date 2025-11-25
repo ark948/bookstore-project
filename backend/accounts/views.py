@@ -51,6 +51,7 @@ def signup(request: HttpRequest):
             messages.success(request, "ثبت نام با موفقیت انجام شد. میتوانید وارد شوید.")
             return redirect(reverse("accounts:login"))
         else:
+            print(form.errors.as_text())
             return render(request, 'accounts/forms/signup.html', {'form': form})
     form = CustomUserSignUpForm()
     return render(request, 'accounts/forms/signup.html', {'form': form})

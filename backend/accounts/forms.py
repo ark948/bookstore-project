@@ -104,7 +104,10 @@ class CustomUserSignUpForm(UserCreationForm):
             'id': 'email',
             'placeholder': "johndoe@gmail.com",
             'autocomplete': "off"
-        })
+        }),
+        error_messages={
+            'unique': "این ایمیل قبلا ثبت شده است."
+        }
     )
 
     # this is just for demonstration purposes
@@ -122,6 +125,13 @@ class CustomUserSignUpForm(UserCreationForm):
             "password1",
             "password2",
         )
+
+        error_messages = {
+            "email": {
+                "unique": "این ایمیل قبلا ثبت شده است."
+            }
+        }
+
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
