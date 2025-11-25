@@ -1,7 +1,6 @@
 import uuid
 from django.db import migrations
 
-from shop.models import Order
 
 class GenerateUUID(migrations.RunPython):
     def __init__(self, app_label, model_name, reverse_code=None, **kwargs):

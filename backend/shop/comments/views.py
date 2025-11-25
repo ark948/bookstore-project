@@ -1,19 +1,16 @@
 from typing import Any
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
-from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseRedirect, HttpResponseForbidden, HttpResponseServerError
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseForbidden, HttpResponseServerError
 from django.views.decorators.http import require_POST
-from django.contrib import messages
 from django.db.models import QuerySet
 from django.views.generic import TemplateView
-from django.views.decorators.http import require_http_methods, require_POST
+from django.views.decorators.http import require_POST
 from django.forms.models import model_to_dict
 
 from http import HTTPStatus
 
 from accounts.decorators import role_required
-from accounts.models import CustomUser, UserProfile
-from shop.models import Comment, Book
+from shop.models import Comment
 from . import services
 
 

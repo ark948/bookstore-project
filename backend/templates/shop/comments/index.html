@@ -7,9 +7,10 @@
             <span>تعداد کل نظرات: {{ total }}</span>
         </div>
 
-        <div>
+        <div hx-boost="true">
             <span>تعداد نظرات در انتظار بررسی {{ total_waiting }}</span>
             <a class="link"
+                href="{% url 'shop:comments_list' 'pending' %}"
                 hx-get="{% url 'shop:load_comments' 'pending' %}"
                 hx-target="#comments"
                 hx-trigger="click"
@@ -32,9 +33,10 @@
             </a>
         </div>
 
-        <div>
+        <div hx-boost="true">
             <span>تعداد نظرات رد شده {{ total_rejected }}</span>
             <a class="link"
+                href="{% url 'shop:comments_list' 'rejected' %}"
                 hx-get="{% url 'shop:load_comments' 'rejected' %}"
                 hx-target="#comments"
                 hx-trigger="click"
