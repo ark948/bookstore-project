@@ -1,7 +1,7 @@
 from typing import Any
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseForbidden, HttpResponseServerError
-from django.views.decorators.http import require_POST
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
+from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseForbidden, HttpResponseServerError, HttpResponseBadRequest
 from django.db.models import QuerySet
 from django.views.generic import TemplateView
 from django.views.decorators.http import require_POST
@@ -64,3 +64,19 @@ def reject_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
 def get_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
     obj = get_object_or_404(Comment, pk=comment_id)
     return JsonResponse(model_to_dict(obj))
+
+
+@require_POST
+@role_required('user')
+def vote_comment(request: HttpRequest, comment_id: int, action: str) -> HttpResponse:
+    obj = get_object_or_404(Comment, comment_id)
+    if request.htmx:
+        if action == "upvote":
+            obj.positive_votes += 1
+        elif action == "downvote":
+            obj.negative_votes += 1
+        else:
+            return HttpResponseBadRequest("invalid action")
+        obj.save()
+        return HttpResponse(status=204)
+    return redirect(reverse('shop:item_detail', kwargs={'id': obj.book.pk}))
