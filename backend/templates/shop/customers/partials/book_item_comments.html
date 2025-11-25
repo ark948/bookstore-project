@@ -17,8 +17,8 @@
             </div>
             <div class="flex">
               <div class="m-2">
-                {% if positive_vote %}
-                  <span>{{ positive_vote }}</span>
+                {% if comment.positive_votes %}
+                  <span>{{ comment.positive_votes }}</span>
                 {% else %}
                   <span>0</span>
                 {% endif %}
@@ -32,8 +32,8 @@
                 </button>
               </div>
               <div class="m-2">
-                {% if negative_vote %}
-                  <span>{{ negative_vote }}</span>
+                {% if comment.negative_votes %}
+                  <span>{{ comment.negative_votes }}</span>
                 {% else %}
                   <span>0</span>
                 {% endif %}
