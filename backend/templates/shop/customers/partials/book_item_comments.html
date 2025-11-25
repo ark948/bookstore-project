@@ -15,6 +15,9 @@
             <div class="text-gray-700">
               {{ comment.body }}
             </div>
+            <div>
+              <span>{{ comment.positive_vote }} - {{ comment.negative_vote }}</span>
+            </div>
           </div>
       {% empty %}
         <p>هنوز نظری برای این کالا ثبت نشده است.</p>
