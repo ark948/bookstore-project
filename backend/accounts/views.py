@@ -48,7 +48,10 @@ def signup(request: HttpRequest):
         form = CustomUserSignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'accounts/messages/signup_success.html')
+            messages.success(request, "ثبت نام با موفقیت انجام شد. میتوانید وارد شوید.")
+            return redirect(reverse("accounts:login"))
+        else:
+            return render(request, 'accounts/forms/signup.html', {'form': form})
     form = CustomUserSignUpForm()
     return render(request, 'accounts/forms/signup.html', {'form': form})
 
