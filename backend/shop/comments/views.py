@@ -69,7 +69,7 @@ def get_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
 @require_POST
 @role_required('user')
 def vote_comment(request: HttpRequest, comment_id: int, action: str) -> HttpResponse:
-    obj = get_object_or_404(Comment, comment_id)
+    obj = get_object_or_404(Comment, pk=comment_id)
     if request.htmx:
         if action == "upvote":
             obj.positive_votes += 1
