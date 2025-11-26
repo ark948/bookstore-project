@@ -8,6 +8,7 @@ urlpatterns = [
     path("books/", include("shop.books.urls")),
     path("orders/", include("shop.orders.urls")),
     path("comments/", include("shop.comments.urls")),
+    path("deliveries/", include("shop.deliveries.urls")),
 
     # dashboard views
     path("dashboard/admin/", dashboards.admin_dashboard, name='admin'),
