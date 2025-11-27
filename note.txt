@@ -567,6 +567,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 69. Re-writing book delete view to use post method instead of delete
     (in a non-RESTful project, best stick to GET and POST)
 
+
+70. Rw-writing book details page
+
 add hx-boost and fallback behavior
 - Added hx-boost to coments list review by employees shop:comments_list
 consider transition api

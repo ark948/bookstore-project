@@ -70,13 +70,30 @@ def item_detail(request: HttpRequest, id) -> HttpResponse:
         favorite = Favorite.objects.filter(user_id=request.user, book_id=item)
         if favorite:
             is_favorited = True
-    return render(request, "shop/customers/partials/book-item.html", {
+    return render(request, "shop/customers/item_details.html", {
             'is_fav': is_favorited,
             'item': item,
             'item_form': item_form, 
             'comment_form': add_comment_form
-        }
-    )
+        })
+
+
+def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
+    item = Book = get_object_or_404(Book, pk=book_id)
+    item_form = ItemAddForm()
+    add_comment_form = AddCommentForm()
+    is_favorite = False
+    context = {}
+    if request.user.is_authenticated and request.user.role == "user":
+        favorite = Favorite.objects.filter(user_id=request.user, book_id=item)
+        if favorite.exists():
+            context['is_fav'] = is_favorite
+        context['comment_form'] = add_comment_form
+    context['item'] = item
+    context['item_form'] = item_form
+    return render(request, "shop/customers/item_details.html", context)
+    
+
 
 @require_POST
 def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:

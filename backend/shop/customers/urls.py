@@ -3,6 +3,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # main feature
+    path("book-details/<int:book_id>/", views.book_details, name='book_details'),
+
     # routes for employees
     path("list/", views.customers_list, name='customers_list'),
 
