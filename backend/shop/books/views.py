@@ -1,19 +1,13 @@
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse, Http404, HttpResponseNotFound
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.http import require_http_methods, require_POST
-from django.contrib.auth.decorators import permission_required, user_passes_test
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse
 from django.contrib import messages
-from django.forms.models import model_to_dict
-from typing import List
-from django.db.models import QuerySet, F
+from django.db.models import QuerySet
 from django.core.paginator import Paginator
 from django.conf import settings
-from django_htmx.http import retarget
-from django.views.generic import ListView
-
-from http import HTTPStatus
 
 from dal import autocomplete
 
@@ -27,7 +21,7 @@ from shop.models import (
 )
 from shop.books import forms
 from accounts.decorators import role_required
-from shop.utils import has_custom_permission, custom_print
+from shop.utils import has_custom_permission
 from shop.books.filters import BookFilter
 
 

@@ -1,26 +1,24 @@
+from decimal import Decimal
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.db.models import QuerySet
 from django.db.utils import IntegrityError
 from django.template.loader import render_to_string
+from django.conf import settings
 
 from accounts.decorators import role_required
-
-from decimal import Decimal
-
-# from icecream import ic
-# ic.configureOutput(
-#     includeContext=False
-# )
 
 from shop.models import (
     Book, Genre, Comment, Favorite
 )
-from accounts.models import CustomUser, UserProfile
+from accounts.models import CustomUser
 from .cart import Cart
+from shop.customers import filters
 from .forms import (
     ItemAddForm,
     AddCommentForm
@@ -41,9 +39,13 @@ def browse(request: HttpRequest) -> HttpResponse:
 
 
 def browse_books(request: HttpRequest) -> HttpResponse:
-    books = Book.objects.all()
+    page = request.GET.get('page', 1)
+    books_filter = filters.BooksFilter(request.GET, queryset=Book.objects.all().order_by('created_at'))
+    paginator = Paginator(books_filter.qs, settings.PAGE_SIZE)
+    page_obj = paginator.page(page)
     return render(request, "shop/customers/browse_books.html", {
-        'books': books,
+        'page_obj': page_obj,
+        'filter': books_filter
     })
 
 
