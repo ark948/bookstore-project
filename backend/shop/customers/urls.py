@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     # main feature
     path("book-details/<int:book_id>/", views.book_details, name='book_details'),
+    path("browse-books/", views.browse_books, name='browse_books'),
 
     # routes for employees
     path("list/", views.customers_list, name='customers_list'),

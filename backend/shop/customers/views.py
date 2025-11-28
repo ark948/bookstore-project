@@ -40,6 +40,13 @@ def browse(request: HttpRequest) -> HttpResponse:
     })
 
 
+def browse_books(request: HttpRequest) -> HttpResponse:
+    books = Book.objects.all()
+    return render(request, "shop/customers/browse_books.html", {
+        'books': books,
+    })
+
+
 def provide_only_available_books(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         if request.GET.get('status'):

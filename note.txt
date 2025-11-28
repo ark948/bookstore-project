@@ -569,6 +569,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 
 
 70. Rw-writing book details page
+and books list for customers
+
+Update current tailwind setup to django-vite
 
 add hx-boost and fallback behavior
 - Added hx-boost to coments list review by employees shop:comments_list
