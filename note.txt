@@ -575,6 +575,11 @@ i will move them out of shop app and into its own app
 
 Update current tailwind setup to django-vite
 
+WARNING:
+url endpoints are a mess, they are starting to conflict with each other
+there are multiple books details page
+and redundant views in customers
+
 add hx-boost and fallback behavior
 - Added hx-boost to coments list review by employees shop:comments_list
 consider transition api

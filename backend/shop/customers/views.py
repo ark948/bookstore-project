@@ -101,13 +101,14 @@ def item_detail(request: HttpRequest, id) -> HttpResponse:
         })
 
 
+@role_required('user')
 def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
-    item = Book = get_object_or_404(Book, pk=book_id)
+    item: Book = get_object_or_404(Book, pk=book_id)
     item_form = ItemAddForm()
     add_comment_form = AddCommentForm()
     is_favorite = False
     context = {}
-    if request.user.is_authenticated and request.user.role == "user":
+    if request.user.is_authenticated:
         favorite = Favorite.objects.filter(user_id=request.user, book_id=item)
         if favorite.exists():
             context['is_fav'] = is_favorite
