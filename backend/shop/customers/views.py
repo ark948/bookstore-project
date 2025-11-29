@@ -43,9 +43,23 @@ def browse_books(request: HttpRequest) -> HttpResponse:
     books_filter = filters.BooksFilter(request.GET, queryset=Book.objects.all().order_by('created_at'))
     paginator = Paginator(books_filter.qs, settings.PAGE_SIZE)
     page_obj = paginator.page(page)
+    total = books_filter.qs.count()
     return render(request, "shop/customers/browse_books.html", {
         'page_obj': page_obj,
-        'filter': books_filter
+        'filter': books_filter,
+        'total': total
+    })
+
+def browse_books_only_available(request: HttpRequest) -> HttpResponse:
+    page = request.GET.get('page', 1)
+    books_filter = filters.BooksFilter(request.GET, queryset=Book.objects.filter(available=True).order_by('created_at'))
+    paginator = Paginator(books_filter.qs, settings.PAGE_SIZE)
+    page_obj = paginator.page(page)
+    total = books_filter.qs.count()
+    return render(request, "shop/customers/browse_books.html", {
+        'page_obj': page_obj,
+        'filter': books_filter,
+        'total': total
     })
 
 

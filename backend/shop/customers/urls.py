@@ -6,6 +6,7 @@ urlpatterns = [
     # main feature
     path("book-details/<int:book_id>/", views.book_details, name='book_details'),
     path("browse-books/", views.browse_books, name='browse_books'),
+    path("browse-books-only-available/", views.browse_books_only_available, name="browse_books_only_available"),
 
     # routes for employees
     path("list/", views.customers_list, name='customers_list'),

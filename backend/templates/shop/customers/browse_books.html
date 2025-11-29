@@ -33,23 +33,30 @@
                     {{ filter.form.tags|add_label_class:"label" }}
                     {% render_field filter.form.tags class="select select-sm" %}
                   </div>
-                  <div class="mb-2 form-control">
-                    <label for="id_available">موجودی؟</label>
-                    <input type="checkbox" class="checkbox checkbox-accent" id="id_available" name="available">
-                  </div>
                   <div class="filter-actions">
-                    <button class="btn btn-outline btn-accent btn-xs w-32 m-1" type="submit">
+                    <button class="btn btn-outline btn-accent btn-xs w-full m-1" type="submit">
                       اعمال
                     </button>
-                    <button class="btn btn-outline btn-neutral btn-xs w-32 m-1">
+                    <button class="btn btn-outline btn-neutral btn-xs w-full m-1">
                       جستجوی پیشرفته
                     </button>
                   </div>
                 </form>
-                <a href="{% url 'shop:browse_books' %}" class="btn btn-outline btn-warning btn-xs w-32 m-1">
+                <!-- Displaying available items must be done without django-filter, it is terrible at it -->
+                <form action="{% url 'shop:browse_books_only_available' %}" method="get">
+                  <div class="mb-2 form-control">
+                    <label for="id_available">موجودی؟</label>
+                    <input type="checkbox" class="checkbox checkbox-accent" id="id_available" name="available">
+                    <button class="btn btn-outline btn-accent btn-xs w-28">نمایش</button>
+                  </div>
+                </form>
+                <a href="{% url 'shop:browse_books' %}" class="btn btn-outline btn-warning btn-xs w-full m-1">
                   حذف فیلترها
                 </a>
               {% endif %}
+          </div>
+          <div class="m-2">
+            <span>تعداد کتاب ها: {{ total }}</span>
           </div>
         </div>
 
