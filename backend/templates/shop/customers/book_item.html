@@ -1,7 +1,8 @@
+{% load static %}
 <div class="w-68 m-2 bg-white rounded shadow overflow-hidden transition-all duration-300 transform hover:shadow-xl hover:-translate-y-1">
   <!-- Product Image Section -->
   <div class="relative h-64 overflow-hidden bg-gray-100">
-      <img src="{% if book.cover_image %}{{ book.cover_image.url }}{% endif %}" alt="Book Cover Image" class="w-64 h-64 object-cover transition-transform duration-700 ease-in-out transform hover:scale-110">
+      <img src="{% if book.cover_image %}{{ book.cover_image.url }}{% else %}{% static 'img/no_cover.jpg' %}{% endif %}" alt="Book Cover Image" class="w-64 h-64 object-cover transition-transform duration-700 ease-in-out transform hover:scale-110">
       
       <!-- Badge -->
       <div class="absolute top-4 left-4 bg-pink-600 text-white px-3 py-1.5 rounded text-xs font-bold uppercase tracking-wider">
