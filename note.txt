@@ -570,6 +570,9 @@ django-htmx package can be used + the regular way of downloading a copy of htmx.
 70. Rw-writing book details page
 and books list for customers
 
+71. Since deliveries are done by other services such as post office or private delivery companies...
+i will move them out of shop app and into its own app
+
 Update current tailwind setup to django-vite
 
 add hx-boost and fallback behavior
