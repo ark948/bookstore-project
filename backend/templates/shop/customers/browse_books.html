@@ -57,26 +57,14 @@
                     </div>
                 </div>
                 <button class="btn btn-xs btn-info btn-outline w-full" id="range_action_btn"
-                  hx-get="{% url 'shop:filter_price' %}"
-                  hx-target="#books_list_container"
-                  hx-trigger="click"
-                  hx-swap="innerHTML"
-                  hx-include="[name='priceRange']"
-                >
+                    hx-get="{% url 'shop:filter_price' %}"
+                    hx-target="#books_list_container"
+                    hx-trigger="click"
+                    hx-swap="innerHTML"
+                    hx-include="[name='priceRange']"
+                  >
                   اعمال قیمت
                 </button>
-                <!-- <script>
-                  $("#range_action_btn").on('click', function () {
-                    const value = $("#level").val();
-                    $.get(
-                      "{% url 'shop:filter_price' %}",
-                      { 'term': value },
-                      function (data) {
-                          console.log(data);
-                      }
-                    );
-                  });
-                </script> -->
                 <!-- Displaying available items must be done without django-filter, it is terrible at it -->
                 <form action="{% url 'shop:browse_books_only_available' %}" method="get">
                   <div class="mb-2 form-control">
