@@ -213,16 +213,23 @@ def filter_by_genre(request: HttpRequest) -> HttpResponse:
         books = Book.objects.all()
         return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
     
-    
+
 @role_required('user')
 def filter_by_price(request: HttpRequest) -> HttpResponse:
+    term = request.GET.get('priceRange')
+    books_filter = filters.BooksFilter(
+        request.GET,
+        queryset=Book.objects.filter(price__range=(0, Decimal(term)))
+    )
+    paginator = Paginator(books_filter.qs, settings.PAGE_SIZE)
+    page_obj = paginator.page(1)
     if request.htmx:
-        term = request.GET.get('priceRange')
-        books = Book.objects.filter(price__range=(0, Decimal(term))).all()
-        return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
-    else:
-        books = Book.objects.all()
-        return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
+        return render(request, "shop/customers/browse_books.html", {'page_obj': page_obj, 'filter': books_filter})
+    return render(request, "shop/customers/browse_books.html", {
+        'page_obj': page_obj,
+        'filter': books_filter,
+        'filtered_items_count': books_filter.qs.count()
+    })
     
 
 @role_required('user')
