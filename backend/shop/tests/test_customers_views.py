@@ -21,7 +21,7 @@ def test_customers_index_page(client):
 
 
 @pytest.mark.django_db
-def test_customers_browse_page(client):
+def test_customers_browse_books_page(client):
     response = client.get(reverse("shop:browse_books"))
 
     assert response.status_code == 200
