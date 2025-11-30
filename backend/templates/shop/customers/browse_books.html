@@ -56,6 +56,16 @@
                       </script>
                     </div>
                 </div>
+                <div>
+                  <label class="floating-label mb-1">
+                    <span>حداقل قیمت</span>
+                    <input type="number" placeholder="حداقل قیمت" class="input input-xs w-full" />
+                  </label>
+                  <label class="floating-label mt-1">
+                    <span>حداکثر قیمت</span>
+                    <input type="number" placeholder="حداکثر قیمت" class="input input-xs w-full" />
+                  </label>
+                </div>
                 <button class="btn btn-xs btn-info btn-outline w-full" id="range_action_btn"
                     hx-get="{% url 'shop:filter_price' %}"
                     hx-target="#books_list_container"
