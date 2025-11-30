@@ -115,6 +115,8 @@ def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
         context['comment_form'] = add_comment_form
     context['item'] = item
     context['item_form'] = item_form
+    if request.htmx:
+        return render(request, "shop/customers/item_details_partial.html", context)
     return render(request, "shop/customers/item_details.html", context)
     
 
