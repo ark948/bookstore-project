@@ -580,6 +580,22 @@ url endpoints are a mess, they are starting to conflict with each other
 there are multiple books details page
 and redundant views in customers
 
+--------------
+everything has become a mess
+1. removing old browse: view, url, templates, links (customers)
+- it included browse view, browse.html (books-container.html (books-container-section.html, filters.html))
+- and a js script to update the cart after quick add to cart (moved to browse_books.html)
+- included a range to filter by price + a js code -> the view pointing handling this must be updated
+- also included a search bar and refresh button -> both views need to be updated
+- included a <display only available items> -> 2 views for this (filter was pointing to the first one)
+some js scripts were moved to static/js/utils.js
+templates deleted from tempaltes/shop/customers:
+browse.html
+browse-container.html
+browse-container-section.html
+filters.html
+--------------
+
 add hx-boost and fallback behavior
 - Added hx-boost to coments list review by employees shop:comments_list
 consider transition api

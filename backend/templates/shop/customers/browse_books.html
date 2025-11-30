@@ -42,6 +42,29 @@
                     </button>
                   </div>
                 </form>
+                <div class="mb-4" id="filter_by_price_range">
+                  <label class="block mb-1 font-medium">قیمت</label>
+                  <input type="range" min="0" max="1000000" class="range range-xs range-info w-full" id="price_range" name="priceRange" />
+                    <div>
+                      <span id="price_range_value">0 تومان</span>
+                      <script>
+                        $('#price_range').change(function(e) {
+                          var price = Number(e.target.value);
+                          var numstr = price.toLocaleString()
+                          $('#price_range_value').html(`${numstr} تومان`);
+                        });
+                      </script>
+                    </div>
+                </div>
+                <button class="btn btn-xs btn-info btn-outline w-full"
+                  hx-get="{% url 'shop:filter_price' %}"
+                  hx-target="#books_list_container"
+                  hx-trigger="click"
+                  hx-swap="outerHTML"
+                  hx-include="[name='priceRange']"
+                  hx-indicator="#spinner">
+                اعمال قیمت
+                </button>
                 <!-- Displaying available items must be done without django-filter, it is terrible at it -->
                 <form action="{% url 'shop:browse_books_only_available' %}" method="get">
                   <div class="mb-2 form-control">
@@ -63,9 +86,47 @@
 
     <!-- Left -->
     <div class="basis-7/8">
+      <!-- Search and Refresh -->
+      <div class="mb-6 w-full max-w-xl p-4 rounded shadow flex items-center">
+        <form class="flex gap-6 items-center">
+          {% csrf_token %}
+          <label class="input input-accent flex gap-6 items-center" for="search">
+            <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <g
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                  stroke-width="2.5"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </g>
+            </svg>
+            <input name="search" id="search" type="search" placeholder="جستجو عنوان..." required />
+          </label>
+          <button class="btn btn-info btn-sm btn-outline w-20"
+              hx-trigger="click delay:500ms"
+              hx-get="{% url 'shop:search' %}"
+              hx-target="#books_list"
+              hx-swap="outerHTML"
+              hx-indicator="#spinner"
+              hx-include="[name='search']">
+            جستجو
+          </button>
+        </form>
+        <button class="btn btn-default btn-sm btn-outline w-24 mr-42"
+            hx-get="{% url 'shop:load_books' %}"
+            hx-target="#books_list"
+            hx-swap="outerHTML"
+            hx-indicator="#spinner"
+            hx-trigger="click delay:50ms">
+          بارگذاری مجدد
+        </button>
+      </div>
         <!-- Queryset and Pagination -->
                     <!-- queryset -->
-          <div class="grid grid-cols-5 gap-x-2">
+          <div class="grid grid-cols-5 gap-x-2" id="books_list_container">
             {% if page_obj %}
                 {% for book in page_obj %}
                     <div>

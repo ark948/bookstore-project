@@ -29,15 +29,6 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "shop/customers/index.html", {})
 
 
-def browse(request: HttpRequest) -> HttpResponse:
-    books = Book.objects.all()
-    genres = Genre.objects.all()
-    return render(request, "shop/customers/browse.html", {
-        'items': books,
-        'genres': genres
-    })
-
-
 def browse_books(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
     books_filter = filters.BooksFilter(request.GET, queryset=Book.objects.all().order_by('created_at'))
@@ -61,27 +52,6 @@ def browse_books_only_available(request: HttpRequest) -> HttpResponse:
         'filter': books_filter,
         'total': total
     })
-
-
-def provide_only_available_books(request: HttpRequest) -> HttpResponse:
-    if request.htmx:
-        if request.GET.get('status'):
-            books = Book.objects.filter(available=True)
-        else:
-            books = Book.objects.all()
-    return render(request, "shop/customers/partials/books-container-section.html", {
-        'items': books
-    })
-
-
-def provide_only_available_books2(request: HttpRequest) -> HttpResponse:
-    if request.htmx:
-        books = Book.objects.all()
-        if request.GET.get('availability_status_field'):
-            books = books.filter(available=True)
-        return render(request, "shop/customers/partials/books-container-section.html", {
-            'items': books
-        })
 
 
 def item_detail(request: HttpRequest, id) -> HttpResponse:

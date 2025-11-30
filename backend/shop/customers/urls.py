@@ -23,7 +23,6 @@ urlpatterns = [
     path("remove-from-favorites/<int:book_id>/", views.remove_book_favorite, name='remove_favorite'),
     path("add-to-favorite/<int:book_id>/", views.add_book_favorite, name='add_favorite'),
     path("item-detail/<int:id>/", views.item_detail, name='item_detail'),
-    path("browse/", views.browse, name='customers_browse'),
     path("", views.index, name='customers_index'),
 
     # loaders
@@ -37,7 +36,4 @@ urlpatterns = [
 
     # filters
     path("filter-price/", views.filter_by_price, name='filter_price'),
-    path("filter-genre/", views.filter_by_genre, name='filter_genre'),
-    path("browse-only-available/", views.provide_only_available_books, name='only_available'),
-    path("browse-only-available-books/", views.provide_only_available_books2, name='only_available_books')
 ]
