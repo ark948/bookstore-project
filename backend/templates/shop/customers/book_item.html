@@ -54,7 +54,13 @@
           <div class="price-container">
               <div class="flex items-center">
                   <div class="text-xl font-extrabold text-gray-900">
-                      $<span>{{ book.price }}</span>
+                      <span>
+                        {% if book.available %} 
+                            {{ book.price|floatformat:"0g" }}&nbsp تومان 
+                        {% else %} 
+                            {{ book.price }} (آخرین قیمت)
+                        {% endif %}
+                      </span>
                   </div>
                   <div class="ml-3 px-2 py-1 bg-pink-100 text-pink-700 rounded-md font-semibold text-sm">
                       -<span>10</span>%
