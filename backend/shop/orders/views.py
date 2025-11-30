@@ -27,7 +27,7 @@ def checkout(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
     if len(cart) <= 0:
         messages.error(request, "سبد شما خالی میباشد.")
-        return redirect(reverse('shop:customers_browse'))
+        return redirect(reverse('shop:browse_books'))
     total_price = 0
     total_items_count = 0
     items = []

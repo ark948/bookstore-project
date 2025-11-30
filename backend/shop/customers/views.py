@@ -105,10 +105,10 @@ def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
         return response
     if not product.available:
         messages.error(request, "این کتاب موجود نیست.")
-        return redirect(reverse("shop:customers_browse"))
+        return redirect(reverse("shop:browse_books"))
     if not product.copies_available > 0:
         messages.error(request, "متاسفانه موجودی این کتاب کافی نیست.")
-        return redirect(reverse("shop:customers_browse"))
+        return redirect(reverse("shop:browse_books"))
     form = ItemAddForm(request.POST)
     if form.is_valid():
         cd = form.cleaned_data

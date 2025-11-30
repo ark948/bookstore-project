@@ -22,12 +22,13 @@ def test_customers_index_page(client):
 
 @pytest.mark.django_db
 def test_customers_browse_page(client):
-    response = client.get(reverse("shop:customers_browse"))
+    response = client.get(reverse("shop:browse_books"))
 
     assert response.status_code == 200
-    assertTemplateUsed(response, "shop/customers/browse.html")
-    assert "items" in response.context
-    assert list(response.context['items']) == []
+    assertTemplateUsed(response, "shop/customers/browse_books.html")
+    assert 'page_obj' in response.context
+    assert 'filter' in response.context
+    assert 'total' in response.context
 
 
 # customer's comment test
