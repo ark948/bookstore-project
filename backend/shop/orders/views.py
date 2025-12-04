@@ -140,7 +140,7 @@ def cancel_order(request: HttpRequest, order_number: str) -> HttpResponse:
         payment_object = get_object_or_404(Payment, order=order_object)
         payment_object.status = Payment.PAYMENT_STATUSES[3]
         payment_object.save()
-        messages.warning(request, "Order cancelled.")
+        messages.warning(request, "سفارش لغو شد.")
         return redirect(reverse('accounts:profile'))
     return render(request, "shop/orders/cancel_order.html", {'item': order_object})
 
