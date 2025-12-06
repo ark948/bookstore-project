@@ -1,10 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-# Register your models here.
-
-from .models import CustomUser, UserProfile, Province, City
-from .forms import CustomUserSignUpForm, CustomUserChangeForm
+from accounts.models import CustomUser, UserProfile, Province, City
+from accounts.forms import CustomUserSignUpForm, CustomUserChangeForm
 
 
 class UserProfileInline(admin.StackedInline):

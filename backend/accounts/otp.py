@@ -1,6 +1,4 @@
-import requests
-from core import settings
-
+# This module is not used
 
 def send_otp(mobile, otp):
     """

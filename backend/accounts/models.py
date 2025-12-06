@@ -1,12 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser # for AbstracUser
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin # for AbstractBaseUser
+from django.contrib.auth.models import AbstractUser # for Custom AbstracUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin # for Custom AbstractBaseUser
 
-from encrypted_fields.fields import EncryptedTextField, EncryptedIntegerField, EncryptedEmailField
+from encrypted_fields.fields import (
+    EncryptedTextField, 
+    EncryptedIntegerField, 
+    EncryptedEmailField
+)
 
-# Create your models here.
-
-from .managers import CustomUserManager
+from accounts.managers import CustomUserManager
 
 class CustomUser(AbstractUser):
     ROLE_CHOICES = [
@@ -89,11 +91,8 @@ class City(models.Model):
 #     is_staff = models.BooleanField(default=False)
 #     is_active = models.BooleanField(default=True)
 #     date_joined = models.DateTimeField(default=timezone.now)
-
 #     USERNAME_FIELD = "email"
 #     REQUIRED_FIELDS = []
-
 #     objects = CustomUserManager()
-
 #     def __str__(self):
 #         return self.email
