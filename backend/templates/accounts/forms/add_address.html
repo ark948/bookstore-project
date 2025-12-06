@@ -4,12 +4,12 @@
 
 {% block content %}
     <div>
-        <a href="{% url 'accounts:add_address' profile_obj.pk %}" class="btn btn-primary btn-outline btn-xs">
+        <a href="{% url 'accounts:acc_add_address' profile_obj.pk %}" class="btn btn-primary btn-outline btn-xs">
             Reload
         </a>
     </div>
     {% if form %}
-        <form method="post" action="{% url 'accounts:add_address' profile_obj.pk %}" class="m-4">
+        <form method="post" action="{% url 'accounts:acc_add_address' profile_obj.pk %}" class="m-4">
             {% csrf_token %}
 
             <div class="flex flex-col">
@@ -24,7 +24,7 @@
                 <label for="id_province" class="text-sm font-medium text-gray-700">{{ form.province.label }}</label>
                 <select name="province" id="id_province"
                         class="select m-4"
-                        hx-get="{% url 'accounts:load_cities' %}"
+                        hx-get="{% url 'accounts:acc_load_cities' %}"
                         hx-target="#city-select"
                         hx-trigger="change"
                         hx-include="#id_province"

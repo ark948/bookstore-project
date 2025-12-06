@@ -1,5 +1,5 @@
 <button class="btn btn-outline btn-info btn-xs"
-  hx-get="{% url 'accounts:comments_list' %}"
+  hx-get="{% url 'accounts:acc_comments_list' %}"
   hx-target="#comments_list_container"
   hx-swap="innerHTML"
   hx-trigger="click"
@@ -31,7 +31,7 @@
               <button
                 class="btn btn-outline btn-xs"
                 onclick="edit_comment_modal.showModal();"
-                hx-get="{% url 'accounts:edit_comment' item.id %}"
+                hx-get="{% url 'accounts:acc_edit_comment' item.id %}"
                 hx-target="#response_holder"
                 hx-swap="innerHTML"
                 hx-trigger="click"
@@ -42,7 +42,7 @@
                 </svg>
               </button>
               <button class="btn btn-outline btn-error btn-xs"
-                hx-post="{% url 'accounts:delete_comment' item.id %}"
+                hx-post="{% url 'accounts:acc_delete_comment' item.id %}"
                 hx-target="#comment_card"
                 hx-confirm="آیا از حذف این نظر مطمئن هستید؟"
               >

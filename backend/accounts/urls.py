@@ -2,8 +2,8 @@ from django.urls import path
 
 from accounts import views
 
+accounts_endpoints_prefix = 'acc' # this must be applied to all endpoints in this app except the very specific ones
 app_name = 'accounts'
-
 urlpatterns = [
     # CRUD actions
     path("favorite-remove/<int:book_id>/", views.remove_item_from_favorites, name='acc_remove_favorite'),
