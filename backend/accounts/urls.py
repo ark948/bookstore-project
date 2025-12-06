@@ -13,14 +13,11 @@ urlpatterns = [
     # loaders
     path("load-orders/<str:status>", views.load_orders_with_status, name='acc_load_orders_with_status'),
     path("load-comment-form/<int:comment_id>/", views.load_comment_form_partial, name='acc_load_comment_form'),
-    path("favorites-list/", views.favorites_list, name='acc_fav_list'),
-    path("orders-list/", views.orders_list, name='acc_orders_list'),
-    path("comments-list/", views.comments_list, name='acc_comments_list'),
+
     path('ajax/load-cities/', views.load_cities, name='acc_load_cities'),
 
     # Profile routes
-    path("profile/", views.profile, name='acc_profile'),
-    path("address/<int:profile_id>/", views.add_address, name='acc_add_address'),
+    path('profile/', include('accounts.profile.urls')),
 
     # Authentication routes
     path('auth/', include('accounts.auth.urls')),

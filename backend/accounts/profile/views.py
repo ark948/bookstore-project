@@ -1,0 +1,97 @@
+from typing import Optional, Dict, Any
+
+from django.contrib.auth.decorators import login_required
+from django.http.request import HttpRequest
+from django.http.response import HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib import messages
+from django.db.models import QuerySet, Q
+
+from accounts.models import UserProfile
+from accounts.forms import UserProfileAddressForm
+from shop.models import (
+    Favorite,
+    Order,
+    Comment,
+)
+
+from accounts.decorators import role_required
+
+
+@login_required
+def profile(request: HttpRequest) -> HttpResponse:
+    return render(request, "accounts/profile.html")
+
+
+@role_required('user')
+def add_address(request: HttpRequest, profile_id: int) -> HttpResponse:
+    profile_obj = UserProfile.objects.get(pk=profile_id)
+    if request.method == "POST":
+        form = UserProfileAddressForm(request.POST, instance=profile_obj)
+        if form.is_valid():
+            profile_obj: UserProfile = form.save(commit=False)
+            profile_obj.user = request.user
+            profile_obj.save()
+            messages.success(request, "آدرس با موفقیت ثبت شد.")
+            return redirect(reverse("accounts:acc_profile"))
+        else:
+            for field, message in form.errors.items():
+                print(f"Error: {field}:, {message}")
+            messages.error(request, "خطایی رخ داده است. لطفا دوباره امتحان کنید.")
+            return render(request, "accounts/forms/add_address.html", {'form': form})
+    form = UserProfileAddressForm(instance=profile_obj)
+    return render(request, "accounts/forms/add_address.html", {'form': form, 'profile_obj': profile_obj})
+
+
+@role_required('user')
+def favorites_list(request: HttpRequest) -> HttpResponse:
+    items: QuerySet = Favorite.objects.filter(user_id=request.user)
+    context: Optional[Dict[str, Any]] = {}
+    if items.exists():
+        context['items'] = items
+        context['total'] = items.count()
+    else:
+        context['total'] = 0
+    if request.htmx:
+        return render( request, "accounts/partials/favorites.html", context)
+    return render(request, "accounts/pages/favorites_list.html", context)
+    
+
+@role_required('user')
+def comments_list(request: HttpRequest) -> HttpResponse:
+    # time.sleep(2) to simulate server resposne delay/latency
+    total_user_comments: QuerySet = Comment.objects.filter(user_id=request.user).order_by('created_at')
+    approved_items = total_user_comments.filter(status="Approved")
+    pending_items_count = total_user_comments.filter(status="Pending").count()
+    context: Optional[Dict[str, Any]] = {}
+    if total_user_comments.exists():
+        context['approved_items'] = approved_items
+        if approved_items.exists():
+            context['approved_items_count'] = approved_items.count()
+        context['pending_items_count'] = pending_items_count
+        context['total'] = total_user_comments.count()
+    else:
+        context['total'] = 0
+    if request.htmx:
+        return render(request, "accounts/partials/comments.html", context)
+    return render(request, "accounts/pages/comments_list.html", context)
+
+
+@role_required('user')
+def orders_list(request: HttpRequest) -> HttpResponse:
+    items = Order.objects.filter(customer=request.user)
+    context = {}
+    if items.exists():
+        total = items.count()
+        total_active = items.filter(
+            Q(status=Order.ORDER_STATUSES['PENDING']) | Q(status=Order.ORDER_STATUSES['CONFIRM'])
+        ).count()
+        context['items'] = items
+        context['total'] = total
+        context['total_active'] = total_active
+    else:
+        context['total'] = 0
+    if request.htmx:
+        return render(request, "accounts/partials/orders.html", context)
+    return render(request, "accounts/pages/orders_list.html", context)
