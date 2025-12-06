@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
     path('shop/', include('shop.urls')),
     path('', include('home.urls')),
     path("__reload__/", include("django_browser_reload.urls")),

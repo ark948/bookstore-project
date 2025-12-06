@@ -34,48 +34,6 @@ from accounts.decorators import role_required
 from shop.customers.forms import AddCommentForm
 
 
-def signup(request: HttpRequest):
-    if request.user.is_authenticated:
-        return redirect(reverse("home:index"))
-    if request.method == "POST":
-        form = CustomUserSignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "ثبت نام با موفقیت انجام شد. میتوانید وارد شوید.")
-            return redirect(reverse("accounts:login"))
-        else:
-            print(form.errors.as_text())
-            return render(request, 'accounts/forms/signup.html', {'form': form})
-    form = CustomUserSignUpForm()
-    return render(request, 'accounts/forms/signup.html', {'form': form})
-
-
-def login_view(request: HttpRequest):
-    if request.user.is_authenticated:
-        return redirect(reverse("home:index"))
-    if request.method == "POST":
-        form = EmailLoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = authenticate(username = email, password = password)
-            if user != None:
-                login(request, user)
-                return render(request, 'accounts/messages/login_success.html')
-            messages.error(request, "نام کاربری و یا رمز عبور اشتباه است.")
-            return redirect(reverse("accounts:login"))
-    form = EmailLoginForm()
-    return render(request, 'accounts/forms/login.html', {'form': form})
-
-
-@require_http_methods(['POST'])
-def logout_view(request: HttpRequest):
-    if request.user.is_anonymous:
-        return redirect(reverse("home:index"))
-    logout(request)
-    return redirect(reverse("home:index"))
-
-
 # @login_required -> this will redirect user to login page
 def protected_view(request: HttpRequest):
     if request.user.is_authenticated == False:

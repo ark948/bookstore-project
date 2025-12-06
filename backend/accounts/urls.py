@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from accounts import views
 
@@ -23,9 +23,7 @@ urlpatterns = [
     path("address/<int:profile_id>/", views.add_address, name='acc_add_address'),
 
     # Authentication routes
-    path("signup/", views.signup, name='signup'),
-    path("login/", views.login_view, name='login'),
-    path("logout/", views.logout_view, name='logout'),
+    path('auth/', include('accounts.auth.urls')),
 
     path('protected-page/', views.protected_view, name='acc_prtd_page'),
 ]
