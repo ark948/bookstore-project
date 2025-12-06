@@ -1,8 +1,10 @@
+from typing import Optional, Dict, Any
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_POST
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse, HttpResponseBadRequest
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseForbidden
@@ -10,13 +12,16 @@ from django.contrib import messages
 from django.db.models import QuerySet, Q
 from django.forms import model_to_dict
 
-from typing import Optional, Dict, Any
-
-# Create your views here.
-
-from .models import (
+from accounts.models import (
     UserProfile,
     City,
+)
+
+from accounts.forms import (
+    CustomUserSignUpForm,
+    EmailLoginForm,
+    UserProfileAddressForm,
+    CommentForm
 )
 
 from shop.models import (
@@ -24,22 +29,10 @@ from shop.models import (
     Order,
     Comment,
 )
+
 from accounts.decorators import role_required
-from .forms import (
-    CustomUserSignUpForm,
-    EmailLoginForm,
-    UserProfileAddressForm,
-    CommentForm
-)
-
 from shop.customers.forms import AddCommentForm
-from . import services
 
-# signup
-# login
-# logout
-# account recovery
-# profile
 
 def signup(request: HttpRequest):
     if request.user.is_authenticated:
@@ -105,10 +98,10 @@ def add_address(request: HttpRequest, profile_id: int) -> HttpResponse:
             profile_obj.user = request.user
             profile_obj.save()
             messages.success(request, "آدرس با موفقیت ثبت شد.")
-            return redirect(reverse("accounts:profile"))
+            return redirect(reverse("accounts:acc_profile"))
         else:
             for field, message in form.errors.items():
-                print(f"ERROR: {field} , {message}")
+                print(f"Error: {field}:, {message}")
             messages.error(request, "خطایی رخ داده است. لطفا دوباره امتحان کنید.")
             return render(request, "accounts/forms/add_address.html", {'form': form})
     form = UserProfileAddressForm(instance=profile_obj)
@@ -171,24 +164,22 @@ def orders_list(request: HttpRequest) -> HttpResponse:
 @role_required('user')
 def load_orders_with_status(request: HttpRequest, status: str) -> HttpResponse:
     if request.htmx:
-        items = Order.objects.filter( customer=request.user ).filter( status = Order.ORDER_STATUSES[status] )
+        items = Order.objects.filter(customer=request.user ).filter( status = Order.ORDER_STATUSES[status])
         if items.exists():
             total = items.count()
             return render(request, "accounts/partials/orders_set.html", {
-                'items': items,
-                'total': total,
-                'status': status
+                'items': items, 'total': total, 'status': status
             })
         else:
-            return render(request, "accounts/partials/orders_set.html", { 'status': status })
+            return render(request, "accounts/partials/orders_set.html", {'status': status})
 
 
 @role_required('user')
 def remove_item_from_favorites(request: HttpRequest, book_id: int) -> HttpResponse:
     if request.htmx:
-        Favorite.objects.filter( user_id=request.user, book_id=book_id ).delete()
-        items = Favorite.objects.filter( user_id=request.user )
-        context = { 'items': items, 'total': items.count() }
+        Favorite.objects.filter(user_id=request.user, book_id=book_id).delete()
+        items = Favorite.objects.filter(user_id=request.user)
+        context = {'items': items, 'total': items.count()}
         return render(request, "accounts/partials/favorites.html", context)
 
 
@@ -199,7 +190,11 @@ def load_comment_form_partial(request: HttpRequest, comment_id: int) -> HttpResp
     if request.htmx:
         if comment_obj.user != request.user:
             return HttpResponseForbidden()
-        return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+        return render(
+            request, 
+            "accounts/forms/comment_form.html", 
+            {'form': form, 'item_id': comment_id}
+        )
         
 
 @role_required('user')
@@ -223,7 +218,7 @@ def edit_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
                 comment_obj.status = Comment.STATUS_CHOICES['P']
                 comment_obj.save()
                 messages.success(request, "نظر با موفقیت ویرایش شد و پس از بررسی نمایش داده خواهد شد.")
-                return redirect(reverse("accounts:comments_list"))
+                return redirect(reverse("accounts:acc_comments_list"))
             else:
                 return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
     else:
@@ -244,10 +239,10 @@ def delete_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
         comment_obj.delete()
         return HttpResponse("نظر حذف شد.")
     messages.error(request, "خطایی رخ داده است.")
-    return redirect(reverse("accounts:profile"))
+    return redirect(reverse("accounts:acc_profile"))
 
 
 def load_cities(request: HttpRequest) -> HttpResponse:
     province_id = request.GET.get('province')
     cities: QuerySet = City.objects.filter(province_id=province_id).order_by('name')
-    return render(request, 'accounts/partials/city_dropdown_list.html', { 'cities': cities })
+    return render(request, 'accounts/partials/city_dropdown_list.html', {'cities': cities})
