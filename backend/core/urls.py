@@ -23,8 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('accounts.urls')),
     path('shop/', include('shop.urls')),
-    path("__reload__/", include("django_browser_reload.urls")),
     path('', include('home.urls')),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 if settings.DEBUG:
