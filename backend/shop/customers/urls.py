@@ -7,12 +7,11 @@ from shop.customers.favorites import urls as favorites_urls
 from . import views
 
 urlpatterns = [
-    # routes for employees
-
-    path("list/", views.customers_list, name='customers_list'),
     path('books/', include(books_urls)),
     path('comments/', include(comments_urls)),
     path('favorites/', include(favorites_urls)),
     path("cart/", include(cart_urls)),
     path('', views.index, name='customers_index'),
+
+    path("list/", views.customers_list, name='customers_list'),
 ]
