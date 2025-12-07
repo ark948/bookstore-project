@@ -25,7 +25,7 @@ from accounts.decorators import role_required
 
 @login_required
 def profile(request: HttpRequest) -> HttpResponse:
-    return render(request, "accounts/profile.html")
+    return render(request, "accounts/profile/index.html")
 
 
 @role_required('user')
