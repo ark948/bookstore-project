@@ -23,7 +23,7 @@
                   <div>
                     <div>سفارشات</div>
                     <div class="text-xs uppercase font-semibold opacity-60">
-                        <a class="link" href="{% url 'accounts:acc_orders_list' %}">مشاهده لیست</a><br>
+                        <a class="link" href="{% url 'accounts:acc_prf_orders_list' %}">مشاهده لیست</a><br>
                     </div>
                   </div>
                 </li>
@@ -37,7 +37,7 @@
                     <div>
                         <div>علاقه مندی‌ها</div>
                         <div class="text-xs uppercase font-semibold opacity-60">
-                            <a class="link" href="{% url 'accounts:acc_fav_list' %}">مشاهده لیست</a>
+                            <a class="link" href="{% url 'accounts:acc_prf_favorites_list' %}">مشاهده لیست</a>
                         </div>
                     </div>
                 </li>
@@ -51,7 +51,7 @@
                     <div>
                         <div>نظرات</div>
                         <div class="text-xs uppercase font-semibold opacity-60">
-                            <a class="link" href="{% url 'accounts:acc_comments_list' %}">مشاهده لیست</a>
+                            <a class="link" href="{% url 'accounts:acc_prf_comments_list' %}">مشاهده لیست</a>
                         </div>
                     </div>
                 </li>
@@ -66,7 +66,7 @@
                     <div>
                         <div>تنظیمات</div>
                         <div class="text-xs uppercase font-semibold opacity-60">
-                            <a class="link" href="{% url 'accounts:acc_comments_list' %}">بررسی</a>
+                            <a class="link" href="{% url 'accounts:acc_prf_comments_list' %}">بررسی</a>
                         </div>
                     </div>
                 </li>
@@ -136,7 +136,7 @@
         {% if user.role == 'user' %}
             <div class="tabs tabs-border">
                 <input type="radio" name="my_tabs_2" class="tab font-medium" aria-label="سفارشات" checked="checked" 
-                    hx-get="{% url 'accounts:acc_orders_list' %}"
+                    hx-get="{% url 'accounts:acc_prf_orders_list' %}"
                     hx-target="#orders_list_container"
                     hx-swap="innerHTML"
                     hx-trigger="load, click"
@@ -144,7 +144,7 @@
                 <div class="tab-content border-base-300 bg-base-100 p-10" id="orders_list_container"></div>
             
                 <input type="radio" name="my_tabs_2" class="tab font-medium" aria-label="علاقه مندی‌ها" 
-                    hx-get="{% url 'accounts:acc_fav_list' %}"
+                    hx-get="{% url 'accounts:acc_prf_favorites_list' %}"
                     hx-target="#favorites_list_container"
                     hx-swap="innerHTML"
                     hx-trigger="click"
@@ -152,13 +152,13 @@
                 <div class="tab-content border-base-300 bg-base-100 p-10" id="favorites_list_container"></div>
 
                 <input type="radio" name="my_tabs_2" class="tab font-medium" aria-label="نظرات" 
-                    hx-get="{% url 'accounts:acc_comments_list' %}"
+                    hx-get="{% url 'accounts:acc_prf_comments_list' %}"
                     hx-target="#comments_list_container"
                     hx-swap="innerHTML"
                 />
                 <div class="tab-content border-base-300 bg-base-100 p-10" id="comments_list_container">
                     <button class="btn btn-outline btn-info btn-xs"
-                        hx-get="{% url 'accounts:acc_comments_list' %}"
+                        hx-get="{% url 'accounts:acc_prf_comments_list' %}"
                         hx-target="#comments_list_container"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -191,7 +191,7 @@
                                 کدپستی: {{ user.profile.postal_code }}
                             </div>
                         </div>
-                        <a class="btn btn-square btn-ghost" href="{% url 'accounts:acc_add_address' user.id %}">
+                        <a class="btn btn-square btn-ghost" href="{% url 'accounts:acc_prf_add_address' user.id %}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                             </svg>                           

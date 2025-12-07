@@ -58,7 +58,7 @@ def test_accounts_edit_user_comment(client: Client, user, comment_obj):
     client.force_login(user)
     headers={'HTTP_HX-Request': 'true'}
     response = client.post(
-        path=reverse('accounts:acc_edit_comment', kwargs={'comment_id': comment_obj.pk}),
+        path=reverse('accounts:acc_prf_edit_comment', kwargs={'comment_id': comment_obj.pk}),
         data={'body': "A new body."},
         **headers
     )
@@ -75,7 +75,7 @@ def test_accounts_edit_user_comment_with_fixture_refresh(client: Client, user, c
     client.force_login(user)
     headers={'HTTP_HX-Request': 'true'}
     response = client.post(
-        path=reverse('accounts:acc_edit_comment', kwargs={'comment_id': comment_obj.pk}),
+        path=reverse('accounts:acc_prf_edit_comment', kwargs={'comment_id': comment_obj.pk}),
         data={'body': "A new body."},
         **headers
     )

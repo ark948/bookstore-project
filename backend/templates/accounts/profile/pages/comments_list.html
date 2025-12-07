@@ -15,7 +15,7 @@
             <h6>{{ item.user }}</h6>
           </div>
           <div class="flex flex-col">
-            <a class="btn btn-sm btn-ghost" href="{% url 'accounts:acc_edit_comment' item.pk %}">
+            <a class="btn btn-sm btn-ghost" href="{% url 'accounts:acc_prf_edit_comment' item.pk %}">
               ویرایش
             </a>
             <a class="btn btn-sm btn-ghost">
@@ -28,6 +28,6 @@
   </ul>
 </div>
 {% endfor %}
-<a href="{% url 'accounts:acc_profile' %}" class="btn btn-neutral btn-xs btn-outline w-32">بازگشت به پروفایل</a>
+<a href="{% url 'accounts:acc_prf_profile' %}" class="btn btn-neutral btn-xs btn-outline w-32">بازگشت به پروفایل</a>
 
 {% endblock content %}

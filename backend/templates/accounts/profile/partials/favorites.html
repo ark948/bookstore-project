@@ -1,7 +1,7 @@
 {% load static %}
 
 <button class="btn btn-outline btn-info btn-xs"
-        hx-get="{% url 'accounts:acc_fav_list' %}"
+        hx-get="{% url 'accounts:acc_prf_favorites_list' %}"
         hx-target="#favorites_list_container"
         hx-swap="innerHTML"
         hx-trigger="click">
@@ -26,7 +26,7 @@
                 </p>
                 <p>
                     <a class="btn btn-error btn-outline btn-xs w-14 mt-2"
-                        hx-get="{% url 'accounts:remove_favorite' item.book_id.id %}"
+                        hx-get="{% url 'accounts:acc_prf_remove_favorite' item.book_id.id %}"
                         hx-trigger="click"
                         hx-target="#favorites_list_container"
                         hx-vals='{"item_id": "{{ item.book_id.id }}"}'>
@@ -49,7 +49,7 @@
                 </p>
                 <p>
                     <a class="btn btn-error btn-outline btn-xs w-14 mt-2"
-                        hx-get="{% url 'accounts:remove_favorite' item.book_id.id %}"
+                        hx-get="{% url 'accounts:acc_prf_remove_favorite' item.book_id.id %}"
                         hx-trigger="click"
                         hx-target="#favorites_list_container">
                         حذف

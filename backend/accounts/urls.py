@@ -12,12 +12,12 @@ def protected_view(request: HttpRequest):
     return render(request, 'accounts/private.html')
 
 
-accounts_endpoints_prefix = 'acc'
+accounts_endpoints_prefix = 'acc_'
 app_name = 'accounts'
 urlpatterns = [
-    path('ajax/load-cities/', loaders.load_cities, name='acc_load_cities'),
+    path('ajax/load-cities/', loaders.load_cities, name=accounts_endpoints_prefix+'load_cities'),
+    path('protected-page/', protected_view, name=accounts_endpoints_prefix+'prtd_page'),
+    
     path('profile/', include('accounts.profile.urls')),
     path('auth/', include('accounts.auth.urls')),
-
-    path('protected-page/', protected_view, name='acc_prtd_page'),
 ]

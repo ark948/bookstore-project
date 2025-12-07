@@ -3,7 +3,7 @@
     <ul class="menu bg-base-200 rounded-box w-56">
       <li class="m-4">
         <a
-          hx-get="{% url 'accounts:acc_load_orders_with_status' 'PENDING' %}"
+          hx-get="{% url 'accounts:acc_prf_load_orders_with_status' 'PENDING' %}"
           hx-target="#orders_with_status_response_holder"
           hx-swap="innerHTML"
         >
@@ -15,7 +15,7 @@
       </li>
       <li class="m-4">
         <a
-          hx-get="{% url 'accounts:acc_load_orders_with_status' 'CONFIRM' %}"
+          hx-get="{% url 'accounts:acc_prf_load_orders_with_status' 'CONFIRM' %}"
           hx-target="#orders_with_status_response_holder"
           hx-swap="innerHTML"
         >
@@ -27,7 +27,7 @@
       </li>
       <li class="m-4">
         <a
-          hx-get="{% url 'accounts:acc_load_orders_with_status' 'PROCESS' %}"
+          hx-get="{% url 'accounts:acc_prf_load_orders_with_status' 'PROCESS' %}"
           hx-target="#orders_with_status_response_holder"
           hx-swap="innerHTML"
         >
@@ -39,7 +39,7 @@
       </li>
       <li class="m-4">
         <a
-          hx-get="{% url 'accounts:acc_load_orders_with_status' 'SHIPPED' %}"
+          hx-get="{% url 'accounts:acc_prf_load_orders_with_status' 'SHIPPED' %}"
           hx-target="#orders_with_status_response_holder"
           hx-swap="innerHTML"
         >
@@ -51,7 +51,7 @@
       </li>
       <li class="m-4">
         <a
-          hx-get="{% url 'accounts:acc_load_orders_with_status' 'CANCELLED' %}"
+          hx-get="{% url 'accounts:acc_prf_load_orders_with_status' 'CANCELLED' %}"
           hx-target="#orders_with_status_response_holder"
           hx-swap="innerHTML"
         >

@@ -38,7 +38,7 @@ def add_address(request: HttpRequest, profile_id: int) -> HttpResponse:
             profile_obj.user = request.user
             profile_obj.save()
             messages.success(request, "آدرس با موفقیت ثبت شد.")
-            return redirect(reverse("accounts:acc_profile"))
+            return redirect(reverse("accounts:acc_prf_profile"))
         else:
             for field, message in form.errors.items():
                 print(f"Error: {field}:, {message}")
@@ -112,7 +112,7 @@ def delete_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
         comment_obj.delete()
         return HttpResponse("نظر حذف شد.")
     messages.error(request, "خطایی رخ داده است.")
-    return redirect(reverse("accounts:acc_profile"))
+    return redirect(reverse("accounts:acc_prf_profile"))
 
 
 @role_required('user')
@@ -136,7 +136,7 @@ def edit_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
                 comment_obj.status = Comment.STATUS_CHOICES['P']
                 comment_obj.save()
                 messages.success(request, "نظر با موفقیت ویرایش شد و پس از بررسی نمایش داده خواهد شد.")
-                return redirect(reverse("accounts:acc_comments_list"))
+                return redirect(reverse("accounts:acc_prf_comments_list"))
             else:
                 return render(request, "accounts/profile/forms/comment_form.html", {'form': form, 'item_id': comment_id})
     else:
@@ -163,11 +163,7 @@ def load_comment_form_partial(request: HttpRequest, comment_id: int) -> HttpResp
     if request.htmx:
         if comment_obj.user != request.user:
             return HttpResponseForbidden()
-        return render(
-            request, 
-            "accounts/forms/comment_form.html", 
-            {'form': form, 'item_id': comment_id}
-        )
+        return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
         
 
 @role_required('user')
