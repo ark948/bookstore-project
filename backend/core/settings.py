@@ -157,8 +157,8 @@ AUTHENTICATION_BACKENDS = [
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-LOGIN_URL = 'accounts:login'
-LOGOUT_URL = 'accounts:logout'
+LOGIN_URL = 'accounts:acc_auth_login'
+LOGOUT_URL = 'accounts:acc_auth_logout'
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

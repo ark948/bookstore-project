@@ -25,7 +25,7 @@ def my_view(request: HttpRequest) -> HttpResponse:
     return HttpResponse("You have access to this view!")
 
 
-@user_passes_test(lambda user: user.is_authenticated, login_url='accounts:login')
+@user_passes_test(lambda user: user.is_authenticated, login_url='accounts:acc_auth_login')
 def secret_view_test(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Secret view.")
 
@@ -42,7 +42,7 @@ def origin_view(request: HttpRequest) -> HttpResponse:
 
 
 class CustomPermissionMixin:
-    @method_decorator(user_passes_test(lambda user: user.is_authenticated, login_url='accounts:login'))
+    @method_decorator(user_passes_test(lambda user: user.is_authenticated, login_url='accounts:acc_auth_login'))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
     

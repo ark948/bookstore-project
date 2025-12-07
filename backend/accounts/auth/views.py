@@ -42,7 +42,7 @@ def login_view(request: HttpRequest) -> HttpResponse:
                 messages.success(request, "خوش آمدید.")
                 return redirect(reverse("home:index"))
             messages.error(request, "نام کاربری و یا رمز عبور اشتباه است.")
-            return redirect(reverse("accounts:login"))
+            return redirect(reverse("accounts:acc_auth_login"))
     form = EmailLoginForm()
     return render(request, 'accounts/auth/forms/login.html', {'form': form})
 

@@ -9,23 +9,23 @@ from accounts.models import CustomUser
 
 @pytest.mark.django_db
 def test_accounts_signup(client: Client):
-    response = client.get(reverse("accounts:signup"))
+    response = client.get(reverse("accounts:acc_auth_signup"))
     assert response.status_code == 200
-    assertTemplateUsed(response, "accounts/forms/signup.html")
+    assertTemplateUsed(response, "accounts/auth/forms/signup.html")
 
 
 
 @pytest.mark.django_db
 def test_accounts_signup_redirect_if_logged_in(client: Client, user):
     client.force_login(user)
-    response = client.get(reverse("accounts:signup"))
+    response = client.get(reverse("accounts:acc_auth_signup"))
     assert response.status_code == 302
 
 
 
 @pytest.mark.django_db
 def test_accounts_secure_page_is_inaccessible(client: Client):
-    response = client.get(reverse('accounts:prtd-page'))
+    response = client.get(reverse('accounts:acc_prtd_page'))
     assert response.status_code == 403
 
 
@@ -33,7 +33,7 @@ def test_accounts_secure_page_is_inaccessible(client: Client):
 @pytest.mark.django_db
 def test_accounts_secure_page_is_accessed_successfully(client: Client, user):
     client.force_login(user)
-    response = client.get(reverse('accounts:prtd-page'))
+    response = client.get(reverse('accounts:acc_prtd_page'))
     assert response.status_code == 200
     assertTemplateUsed(response, 'accounts/private.html')
     assertContains(response, 'This is a secure page.')
@@ -43,7 +43,7 @@ def test_accounts_secure_page_is_accessed_successfully(client: Client, user):
 @pytest.mark.django_db
 def test_accounts_load_cities(client: Client, province, cities):
     response = client.get(
-        path=reverse('accounts:load_cities'),
+        path=reverse('accounts:acc_load_cities'),
         query_params={'province': province.pk}
     )
 
@@ -58,7 +58,7 @@ def test_accounts_edit_user_comment(client: Client, user, comment_obj):
     client.force_login(user)
     headers={'HTTP_HX-Request': 'true'}
     response = client.post(
-        path=reverse('accounts:edit_comment', kwargs={'comment_id': comment_obj.pk}),
+        path=reverse('accounts:acc_edit_comment', kwargs={'comment_id': comment_obj.pk}),
         data={'body': "A new body."},
         **headers
     )
@@ -75,7 +75,7 @@ def test_accounts_edit_user_comment_with_fixture_refresh(client: Client, user, c
     client.force_login(user)
     headers={'HTTP_HX-Request': 'true'}
     response = client.post(
-        path=reverse('accounts:edit_comment', kwargs={'comment_id': comment_obj.pk}),
+        path=reverse('accounts:acc_edit_comment', kwargs={'comment_id': comment_obj.pk}),
         data={'body': "A new body."},
         **headers
     )

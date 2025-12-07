@@ -5,7 +5,7 @@
 <div class="min-h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-sm">
       <h2 class="text-2xl font-bold mb-6 text-center">ثبت نام</h2>
-            <form class="space-y-5" method="post" action="{% url 'accounts:signup' %}">
+            <form class="space-y-5" method="post" action="{% url 'accounts:acc_auth_signup' %}">
                 {% csrf_token %}
                     <div class="m-4">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ایمیل:</label>
@@ -42,7 +42,7 @@
             </form>
             <p class="mt-4 text-center text-sm text-gray-600">
                 قبلا ثبت نام کرده‌اید؟
-                <a href="{% url 'accounts:login' %}" class="text-indigo-600 hover:underline">ورود</a>
+                <a href="{% url 'accounts:acc_auth_login' %}" class="text-indigo-600 hover:underline">ورود</a>
             </p>
     </div>
 </div>

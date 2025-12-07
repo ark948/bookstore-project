@@ -7,7 +7,7 @@
     {% if user.is_authenticated %}
 
         <p>
-            <form action="{% url 'accounts:logout' %}" method="post">
+            <form action="{% url 'accounts:acc_auth_logout' %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline btn-error btn-xs w-24 m-4">
                     خروج
@@ -50,11 +50,11 @@
     {% else %}
 
         <p>
-            <a href="{% url 'accounts:signup' %}">ثبت نام</a>
+            <a href="{% url 'accounts:acc_auth_signup' %}">ثبت نام</a>
         </p>
 
         <p>
-            <a href="{% url 'accounts:login' %}">ورود</a>
+            <a href="{% url 'accounts:acc_auth_login' %}">ورود</a>
         </p>
 
         <p>

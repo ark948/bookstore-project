@@ -25,11 +25,11 @@ from shop.utils import has_custom_permission
 from shop.books.filters import BookFilter
 
 
-@user_passes_test(has_custom_permission, login_url='accounts:login')
+@user_passes_test(has_custom_permission, login_url='accounts:acc_auth_login')
 def secret_view(request):
     return HttpResponse("Secret stuff")
 
-@user_passes_test(lambda user: user.is_authenticated, login_url='accounts:login')
+@user_passes_test(lambda user: user.is_authenticated, login_url='accounts:acc_auth_login')
 def secret_view_v2(request):
     return HttpResponse("Secret stuff 2")
 
