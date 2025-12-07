@@ -1,6 +1,8 @@
 from django.urls import path
 
-from . import views
+from shop.books import views
+
+shop_books_endpoint_prefix = "shop_books_"
 
 urlpatterns = [
     # CRUD Actions
