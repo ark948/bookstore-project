@@ -1,18 +1,23 @@
+from django.http import HttpRequest, HttpResponseForbidden
+from django.shortcuts import render
 from django.urls import path, include
 
-from accounts import views
+from accounts import loaders
+
+
+# @login_required -> this will redirect user to login page
+def protected_view(request: HttpRequest):
+    if request.user.is_authenticated == False:
+        return HttpResponseForbidden()
+    return render(request, 'accounts/private.html')
+
 
 accounts_endpoints_prefix = 'acc'
 app_name = 'accounts'
 urlpatterns = [
-    # loaders
-    path('ajax/load-cities/', views.load_cities, name='acc_load_cities'),
-
-    # Profile routes
+    path('ajax/load-cities/', loaders.load_cities, name='acc_load_cities'),
     path('profile/', include('accounts.profile.urls')),
-
-    # Authentication routes
     path('auth/', include('accounts.auth.urls')),
 
-    path('protected-page/', views.protected_view, name='acc_prtd_page'),
+    path('protected-page/', protected_view, name='acc_prtd_page'),
 ]
