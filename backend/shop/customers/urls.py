@@ -1,34 +1,22 @@
 from django.urls import path, include
 
 from shop.customers.cart import urls as cart_urls
+from shop.customers.books import urls as books_urls
 from . import views
 
 urlpatterns = [
-    # main feature
-    path("book-details/<int:book_id>/", views.book_details, name='customers_book_details'),
-    path("browse-books/", views.browse_books, name='browse_books'),
-    path("browse-books-only-available/", views.browse_books_only_available, name="browse_books_only_available"),
+    # favorite related controls
+    path("remove-from-favorites/<int:book_id>/", views.remove_book_favorite, name='remove_favorite'),
+    path("add-to-favorite/<int:book_id>/", views.add_book_favorite, name='add_favorite'),
+    path('is-book-favorite/<int:book_id>/', views.is_book_favorite, name='is_book_favorite'),
+
+    # comments
+    path("add-comment/<int:book_id>/", views.add_comment, name='add_comment'),
+    path('load-book-comments/<int:book_id>/', views.load_book_comments, name='load_book_comments'),
 
     # routes for employees
     path("list/", views.customers_list, name='customers_list'),
-
-    # other
-    path("add-comment/<int:book_id>/", views.add_comment, name='add_comment'),
-    path("remove-from-favorites/<int:book_id>/", views.remove_book_favorite, name='remove_favorite'),
-    path("add-to-favorite/<int:book_id>/", views.add_book_favorite, name='add_favorite'),
-    path("item-detail/<int:id>/", views.item_detail, name='item_detail'),
-    path("", views.index, name='customers_index'),
-
-    # loaders
-    path('load-book-comments/<int:book_id>/', views.load_book_comments, name='load_book_comments'),
-    path('is-book-favorite/<int:book_id>/', views.is_book_favorite, name='is_book_favorite'),
-    path("load-books/", views.load_books, name='load_books'),
-
-    # search
-    path("search/", views.search_books, name='search'),
-
-    # filters
-    path("filter-price/", views.filter_by_price, name='filter_price'),
-
+    path('books/', include(books_urls)),
     path("cart/", include(cart_urls)),
+    path("", views.index, name='customers_index'),
 ]
