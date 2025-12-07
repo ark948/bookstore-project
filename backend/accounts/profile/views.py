@@ -43,9 +43,9 @@ def add_address(request: HttpRequest, profile_id: int) -> HttpResponse:
             for field, message in form.errors.items():
                 print(f"Error: {field}:, {message}")
             messages.error(request, "خطایی رخ داده است. لطفا دوباره امتحان کنید.")
-            return render(request, "accounts/forms/add_address.html", {'form': form})
+            return render(request, "accounts/profile/forms/add_address.html", {'form': form})
     form = UserProfileAddressForm(instance=profile_obj)
-    return render(request, "accounts/forms/add_address.html", {'form': form, 'profile_obj': profile_obj})
+    return render(request, "accounts/profile/forms/add_address.html", {'form': form, 'profile_obj': profile_obj})
 
 
 @role_required('user')
@@ -58,7 +58,7 @@ def favorites_list(request: HttpRequest) -> HttpResponse:
     else:
         context['total'] = 0
     if request.htmx:
-        return render( request, "accounts/partials/favorites.html", context)
+        return render( request, "accounts/profile/partials/favorites.html", context)
     return render(request, "accounts/pages/favorites_list.html", context)
     
 
@@ -78,7 +78,7 @@ def comments_list(request: HttpRequest) -> HttpResponse:
     else:
         context['total'] = 0
     if request.htmx:
-        return render(request, "accounts/partials/comments.html", context)
+        return render(request, "accounts/profile/partials/comments.html", context)
     return render(request, "accounts/pages/comments_list.html", context)
 
 
@@ -97,8 +97,8 @@ def orders_list(request: HttpRequest) -> HttpResponse:
     else:
         context['total'] = 0
     if request.htmx:
-        return render(request, "accounts/partials/orders.html", context)
-    return render(request, "accounts/pages/orders_list.html", context)
+        return render(request, "accounts/profile/partials/orders.html", context)
+    return render(request, "accounts/profile/pages/orders_list.html", context)
 
 
 
@@ -129,7 +129,7 @@ def edit_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
                 comment_obj.save()
                 return HttpResponse(status=204, headers={'HX-Trigger': "edit_comment_success"})
             else:
-                return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+                return render(request, "accounts/profile/forms/comment_form.html", {'form': form, 'item_id': comment_id})
         else:
             if form.is_valid():
                 comment_obj = form.save(commit=False)
@@ -138,13 +138,13 @@ def edit_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
                 messages.success(request, "نظر با موفقیت ویرایش شد و پس از بررسی نمایش داده خواهد شد.")
                 return redirect(reverse("accounts:acc_comments_list"))
             else:
-                return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+                return render(request, "accounts/profile/forms/comment_form.html", {'form': form, 'item_id': comment_id})
     else:
         if request.htmx:
             form = CommentForm(instance=comment_obj)
-            return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+            return render(request, "accounts/profile/forms/comment_form.html", {'form': form, 'item_id': comment_id})
         form = CommentForm(instance=comment_obj)
-        return render(request, "accounts/pages/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+        return render(request, "accounts/profile/pages/forms/comment_form.html", {'form': form, 'item_id': comment_id})
     
 
 @role_required('user')
@@ -168,3 +168,17 @@ def load_comment_form_partial(request: HttpRequest, comment_id: int) -> HttpResp
             "accounts/forms/comment_form.html", 
             {'form': form, 'item_id': comment_id}
         )
+        
+
+@role_required('user')
+def load_orders_by_status(request: HttpRequest, status: str) -> HttpResponse:
+    items = Order.objects.filter(customer=request.user).filter(status=Order.ORDER_STATUSES[status])
+    context = {}
+    if items.exists():
+        context['items'] = items
+        context['total'] = items.count()
+        context['status'] = status
+        if request.htmx:
+            return render(request, "accounts/profile/partials/orders_by_status.html", context)
+    context['status'] = status
+    return render(request, "accounts/profile/partials/orders_by_status.html", context)

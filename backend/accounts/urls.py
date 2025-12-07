@@ -6,7 +6,6 @@ accounts_endpoints_prefix = 'acc'
 app_name = 'accounts'
 urlpatterns = [
     # loaders
-    path("load-orders/<str:status>", views.load_orders_with_status, name='acc_load_orders_with_status'),
     path('ajax/load-cities/', views.load_cities, name='acc_load_cities'),
 
     # Profile routes

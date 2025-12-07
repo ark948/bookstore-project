@@ -10,6 +10,7 @@ urlpatterns = [
     path("orders-list/", views.orders_list, name='acc_orders_list'),
     path("comments-list/", views.comments_list, name='acc_comments_list'),
     path("load-comment-form/<int:comment_id>/", views.load_comment_form_partial, name='acc_load_comment_form'),
+    path("load-orders/<str:status>", views.load_orders_by_status, name='acc_load_orders_with_status'),
     path("profile/", views.profile, name='acc_profile'),
     path("address/<int:profile_id>/", views.add_address, name='acc_add_address'),
 ]

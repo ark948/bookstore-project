@@ -17,19 +17,6 @@ def protected_view(request: HttpRequest):
     return render(request, 'accounts/private.html')
 
 
-@role_required('user')
-def load_orders_with_status(request: HttpRequest, status: str) -> HttpResponse:
-    if request.htmx:
-        items = Order.objects.filter(customer=request.user ).filter( status = Order.ORDER_STATUSES[status])
-        if items.exists():
-            total = items.count()
-            return render(request, "accounts/partials/orders_set.html", {
-                'items': items, 'total': total, 'status': status
-            })
-        else:
-            return render(request, "accounts/partials/orders_set.html", {'status': status})
-
-
 def load_cities(request: HttpRequest) -> HttpResponse:
     province_id = request.GET.get('province')
     cities: QuerySet = City.objects.filter(province_id=province_id).order_by('name')
