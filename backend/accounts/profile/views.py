@@ -1,15 +1,19 @@
 from typing import Optional, Dict, Any
 
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.db.models import QuerySet, Q
+from django.forms import model_to_dict
 
 from accounts.models import UserProfile
-from accounts.forms import UserProfileAddressForm
+from accounts.forms import UserProfileAddressForm, CommentForm
+from shop.customers.forms import AddCommentForm
 from shop.models import (
     Favorite,
     Order,
@@ -95,3 +99,72 @@ def orders_list(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         return render(request, "accounts/partials/orders.html", context)
     return render(request, "accounts/pages/orders_list.html", context)
+
+
+
+@require_POST
+@role_required('user')
+def delete_user_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
+    comment_obj = get_object_or_404(Comment, pk=comment_id)
+    if request.htmx:
+        if comment_obj.user != request.user:
+            return HttpResponseForbidden()
+        comment_obj.delete()
+        return HttpResponse("نظر حذف شد.")
+    messages.error(request, "خطایی رخ داده است.")
+    return redirect(reverse("accounts:acc_profile"))
+
+
+@role_required('user')
+def edit_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
+    comment_obj = get_object_or_404(Comment, pk=comment_id)
+    if comment_obj.user != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment_obj)
+        if request.htmx:
+            if form.is_valid():
+                comment_obj = form.save(commit=False)
+                comment_obj.status = Comment.STATUS_CHOICES['P']
+                comment_obj.save()
+                return HttpResponse(status=204, headers={'HX-Trigger': "edit_comment_success"})
+            else:
+                return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+        else:
+            if form.is_valid():
+                comment_obj = form.save(commit=False)
+                comment_obj.status = Comment.STATUS_CHOICES['P']
+                comment_obj.save()
+                messages.success(request, "نظر با موفقیت ویرایش شد و پس از بررسی نمایش داده خواهد شد.")
+                return redirect(reverse("accounts:acc_comments_list"))
+            else:
+                return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+    else:
+        if request.htmx:
+            form = CommentForm(instance=comment_obj)
+            return render(request, "accounts/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+        form = CommentForm(instance=comment_obj)
+        return render(request, "accounts/pages/forms/comment_form.html", {'form': form, 'item_id': comment_id})
+    
+
+@role_required('user')
+def remove_item_from_favorites(request: HttpRequest, book_id: int) -> HttpResponse:
+    if request.htmx:
+        Favorite.objects.filter(user_id=request.user, book_id=book_id).delete()
+        items = Favorite.objects.filter(user_id=request.user)
+        context = {'items': items, 'total': items.count()}
+        return render(request, "accounts/partials/favorites.html", context)
+
+
+@role_required('user')
+def load_comment_form_partial(request: HttpRequest, comment_id: int) -> HttpResponse:
+    comment_obj = get_object_or_404(Comment, pk=comment_id)
+    form = AddCommentForm(initial=model_to_dict(comment_obj))
+    if request.htmx:
+        if comment_obj.user != request.user:
+            return HttpResponseForbidden()
+        return render(
+            request, 
+            "accounts/forms/comment_form.html", 
+            {'form': form, 'item_id': comment_id}
+        )
