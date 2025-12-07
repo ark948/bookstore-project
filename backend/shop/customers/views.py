@@ -17,10 +17,10 @@ from shop.models import (
     Book, Genre, Comment, Favorite
 )
 from accounts.models import CustomUser
-from .cart import Cart
+from shop.customers.cart.cart import Cart
 from shop.customers import filters
-from .forms import (
-    ItemAddForm,
+from shop.customers.cart.forms import ItemAddForm
+from shop.customers.forms import (
     AddCommentForm
 )
 
@@ -89,71 +89,6 @@ def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
         return render(request, "shop/customers/item_details_partial.html", context)
     return render(request, "shop/customers/item_details.html", context)
     
-
-
-@require_POST
-def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
-    product: Book = get_object_or_404(Book, id=product_id)
-    cart = Cart(request)
-    if request.htmx:
-        cart.add(
-            product=product,
-            quantity=1,
-        )
-        response = render(request, "shop/customers/partials/remove_from_cart.html", {})
-        response['HX-Trigger'] = 'quick_add_success'
-        return response
-    if not product.available:
-        messages.error(request, "این کتاب موجود نیست.")
-        return redirect(reverse("shop:browse_books"))
-    if not product.copies_available > 0:
-        messages.error(request, "متاسفانه موجودی این کتاب کافی نیست.")
-        return redirect(reverse("shop:browse_books"))
-    form = ItemAddForm(request.POST)
-    if form.is_valid():
-        cd = form.cleaned_data
-        cart.add(
-            product=product, 
-            quantity=cd['quantity'], 
-            override_quantity=cd['override']
-        )
-    return redirect(reverse("shop:cart_detail"))
-
-
-@require_POST
-def cart_remove(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
-    cart = Cart(request)
-    product = get_object_or_404(Book, id=product_id)
-    cart.remove(product)
-    return redirect(reverse("shop:cart_detail"))
-
-
-def cart_detail(request):
-    cart = Cart(request)
-    quantity_form = ItemAddForm()
-    return render(request, "shop/customers/cart/detail.html", {'cart': cart, 'form': quantity_form})
-
-
-@require_POST
-def cart_update(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
-    cart = Cart(request)
-    new_quantity = int(request.POST.get('quantity', 1))
-    book = get_object_or_404(Book, id=product_id)
-    cart.add(
-        product=book,
-        quantity=new_quantity,
-        override_quantity=True
-    )
-    return redirect(reverse('shop:cart_detail'))
-
-
-@require_POST
-@role_required('user')
-def cart_clear(request: HttpRequest) -> HttpResponse:
-    cart = Cart(request)
-    cart.clear()
-    return redirect(reverse("shop:cart_detail"))
-
 
 @require_POST
 @role_required('user')

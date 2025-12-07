@@ -11,7 +11,7 @@ from reportlab.pdfgen import canvas
 from . import services
 
 from accounts.decorators import role_required
-from shop.customers.cart import Cart
+from shop.customers.cart.cart import Cart
 from shop.models import (
     Book,
     Order,

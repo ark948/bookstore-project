@@ -1,5 +1,6 @@
-from django.urls import path
+from django.urls import path, include
 
+from shop.customers.cart import urls as cart_urls
 from . import views
 
 urlpatterns = [
@@ -10,13 +11,6 @@ urlpatterns = [
 
     # routes for employees
     path("list/", views.customers_list, name='customers_list'),
-
-    # cart actions
-    path("cart-update/<int:product_id>/", views.cart_update, name='cart_update'),
-    path("cart-detail/", views.cart_detail, name='cart_detail'),
-    path("cart-add/<int:product_id>/", views.cart_add, name='cart_add'),
-    path("cart-remove/<int:product_id>/", views.cart_remove, name='cart_remove'),
-    path("cart-clear/", views.cart_clear, name='cart_clear'),
 
     # other
     path("add-comment/<int:book_id>/", views.add_comment, name='add_comment'),
@@ -36,4 +30,6 @@ urlpatterns = [
 
     # filters
     path("filter-price/", views.filter_by_price, name='filter_price'),
+
+    path("cart/", include(cart_urls)),
 ]
