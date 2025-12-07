@@ -25,7 +25,7 @@ def test_customers_browse_books_page(client):
     response = client.get(reverse("shop:browse_books"))
 
     assert response.status_code == 200
-    assertTemplateUsed(response, "shop/customers/browse_books.html")
+    assertTemplateUsed(response, "shop/customers/books/browse.html")
     assert 'page_obj' in response.context
     assert 'filter' in response.context
     assert 'total' in response.context

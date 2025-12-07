@@ -14,11 +14,14 @@ from shop.customers.forms import AddCommentForm
 
 def browse_books(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
-    books_filter = filters.BooksFilter(request.GET, queryset=Book.objects.all().order_by('created_at'))
+    books_filter = filters.BooksFilter(
+        request.GET, 
+        queryset=Book.objects.all().order_by('created_at')
+    )
     paginator = Paginator(books_filter.qs, settings.PAGE_SIZE)
     page_obj = paginator.page(page)
     total = books_filter.qs.count()
-    return render(request, "shop/customers/browse_books.html", {
+    return render(request, "shop/customers/books/browse.html", {
         'page_obj': page_obj,
         'filter': books_filter,
         'total': total
