@@ -20,7 +20,7 @@ def signup(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             form.save()
             messages.success(request, "ثبت نام با موفقیت انجام شد. میتوانید وارد شوید.")
-            return redirect(reverse("accounts:login"))
+            return render(request, 'accounts/auth/messages/successful_signup.html')
         else:
             print(form.errors.as_text())
             return render(request, 'accounts/auth/forms/signup.html', {'form': form})
@@ -39,7 +39,8 @@ def login_view(request: HttpRequest) -> HttpResponse:
             user = authenticate(username = email, password = password)
             if user != None:
                 login(request, user)
-                return render(request, 'accounts/messages/login_success.html')
+                messages.success(request, "خوش آمدید.")
+                return redirect(reverse("home:index"))
             messages.error(request, "نام کاربری و یا رمز عبور اشتباه است.")
             return redirect(reverse("accounts:login"))
     form = EmailLoginForm()
