@@ -1,6 +1,7 @@
 from django.urls import path
 
 from shop.books import views
+from shop.books import loaders
 
 shop_books_endpoint_prefix = "shop_books_"
 
@@ -23,10 +24,10 @@ urlpatterns = [
     path("get-books-only/", views.get_books_only, name='get_books_only'),
 
     # Autocomplete routes (django-autocomplete-light)
-    path("authors-autocomplete/", views.AuthorsAutoComplete.as_view(), name='authors-autocomplete'),
-    path("publishers-autocomplete/", views.PublishersAutoComplete.as_view(), name='publishers-autocomplete'),
-    path("genres-autocomplete/", views.GenresAutoComplete.as_view(), name='genres-autocomplete'),
-    path("languages-autocomplete/", views.LanguageAutoComplete.as_view(), name='languages-autocomplete'),
+    path("authors-autocomplete/", loaders.AuthorsAutoComplete.as_view(), name='authors-autocomplete'),
+    path("publishers-autocomplete/", loaders.PublishersAutoComplete.as_view(), name='publishers-autocomplete'),
+    path("genres-autocomplete/",loaders.GenresAutoComplete.as_view(), name='genres-autocomplete'),
+    path("languages-autocomplete/", loaders.LanguageAutoComplete.as_view(), name='languages-autocomplete'),
 
     # Secret/Test routes
     path("test-view/", views.secret_view, name='secret'),

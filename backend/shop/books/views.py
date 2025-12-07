@@ -9,8 +9,6 @@ from django.db.models import QuerySet
 from django.core.paginator import Paginator
 from django.conf import settings
 
-from dal import autocomplete
-
 from shop.models import (
     Book,
     Author,
@@ -179,30 +177,3 @@ def translators_list(request: HttpRequest) -> HttpResponse:
     return render(request, "shop/books/partials/translators_list.html", {'items': items})
 
 
-class AuthorsAutoComplete(autocomplete.Select2QuerySetView):
-    def get_queryset(self):
-        qs = Author.objects.all().order_by('fa_name', 'en_name')
-        if self.q:
-            qs = qs.filter(en_name__istartswith=self.q)
-        return qs
-    
-class PublishersAutoComplete(autocomplete.Select2QuerySetView):
-    def get_queryset(self):
-        qs = Publication.objects.all().order_by('title')
-        if self.q:
-            qs = qs.filter(title__istartswith=self.q)
-        return qs
-    
-class GenresAutoComplete(autocomplete.Select2QuerySetView):
-    def get_queryset(self):        
-        qs = Genre.objects.all()
-        if self.q:
-            qs = qs.filter(title__istartswith=self.q)
-        return qs
-    
-class LanguageAutoComplete(autocomplete.Select2QuerySetView):
-    def get_queryset(self):
-        qs = Language.objects.all()
-        if self.q:
-            qs = qs.filter(name__istartswith=self.q)
-        return qs
