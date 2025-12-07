@@ -1,14 +1,10 @@
 from django import forms
-from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
-
 from dal import autocomplete
-
-# Create your forms here
 
 from shop.models import Book, Author, Publication, Language, Genre
 
@@ -58,14 +54,14 @@ class BookForm_v1_unused(forms.ModelForm):
         queryset=Author.objects.all(),
         label='نویسندگان',
         widget=autocomplete.ModelSelect2Multiple(
-            url=reverse_lazy("shop:authors-autocomplete"),
+            url=reverse_lazy("shop:authors_autocomplete"),
         )
     )
     publisher = forms.ModelChoiceField(
         queryset=Publication.objects.all(),
         label="انتشارات",
         widget=autocomplete.ModelSelect2(
-            url=reverse_lazy("shop:publishers-autocomplete"),
+            url=reverse_lazy("shop:publishers_autocomplete"),
         )
     )
     language = forms.ModelChoiceField(
@@ -104,13 +100,6 @@ class BookForm_v1_unused(forms.ModelForm):
             'page_count',
             'cover_image',
         )
-        widgets = {
-            # 'authors': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:authors-autocomplete')),
-            # 'publisher': autocomplete.ModelSelect2(url=reverse_lazy('shop:publishers-autocomplete')),
-            # 'language': autocomplete.ModelSelect2(url=reverse_lazy('shop:languages-autocomplete')),
-            # 'original_language': autocomplete.ModelSelect2(url=reverse_lazy('shop:languages-autocomplete')),
-            # 'genres': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:genres-autocomplete')),
-        }
 
 
 # Unused
@@ -173,7 +162,7 @@ class BookForm_v4_unused(forms.ModelForm):
         )
         widgets = {
             'authors': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:authors-autocomplete')),
-            'publisher': autocomplete.ModelSelect2(url=reverse_lazy('shop:publishers-autocomplete')),
+            'publisher': autocomplete.ModelSelect2(url=reverse_lazy('shop:publishers_autocomplete')),
             'language': autocomplete.ModelSelect2(url=reverse_lazy('shop:languages-autocomplete')),
             'original_language': autocomplete.ModelSelect2(url=reverse_lazy('shop:languages-autocomplete')),
             'genres': autocomplete.ModelSelect2Multiple(url=reverse_lazy('shop:genres-autocomplete')),

@@ -14,7 +14,6 @@ from shop.models import (
     Author,
     Publication,
     Genre,
-    Language,
     Translator
 )
 from shop.books import forms

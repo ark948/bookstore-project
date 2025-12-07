@@ -1,3 +1,4 @@
+from django.urls import path
 from dal import autocomplete
 
 from shop.models import Author, Publication, Genre, Language
@@ -30,3 +31,11 @@ class LanguageAutoComplete(autocomplete.Select2QuerySetView):
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
         return qs
+    
+
+urlpatterns = [
+    path("authors/", AuthorsAutoComplete.as_view(), name='authors_autocomplete'),
+    path("publishers/", PublishersAutoComplete.as_view(), name='publishers_autocomplete'),
+    path("genres/", GenresAutoComplete.as_view(), name='genres_autocomplete'),
+    path("languages/", LanguageAutoComplete.as_view(), name='languages_autocomplete'),
+]
