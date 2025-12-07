@@ -73,3 +73,12 @@ def cart_clear(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
     cart.clear()
     return redirect(reverse("shop:cart_detail"))
+
+
+@role_required('user')
+def get_number_of_cart_items(request: HttpRequest) -> HttpResponse:
+    cart = Cart(request)
+    total = 0
+    for i in cart:
+        total += i['quantity']
+    return HttpResponse(str(total))

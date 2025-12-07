@@ -1,7 +1,6 @@
 from decimal import Decimal
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
@@ -121,15 +120,6 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
         # this needs to be upated with comment_form template
         messages.error(request, "خطایی در درج نظر رخ داد. لطفا دوباره تلاش کنید.")
         return HttpResponse(form.errors)
-
-
-@role_required('user')
-def get_number_of_cart_items(request: HttpRequest) -> HttpResponse:
-    cart = Cart(request)
-    total = 0
-    for i in cart:
-        total += i['quantity']
-    return HttpResponse(str(total))
 
 
 @role_required('user')
