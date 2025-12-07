@@ -23,9 +23,9 @@ def signup(request: HttpRequest) -> HttpResponse:
             return redirect(reverse("accounts:login"))
         else:
             print(form.errors.as_text())
-            return render(request, 'accounts/forms/signup.html', {'form': form})
+            return render(request, 'accounts/auth/forms/signup.html', {'form': form})
     form = CustomUserSignUpForm()
-    return render(request, 'accounts/forms/signup.html', {'form': form})
+    return render(request, 'accounts/auth/forms/signup.html', {'form': form})
 
 
 def login_view(request: HttpRequest) -> HttpResponse:
@@ -43,7 +43,7 @@ def login_view(request: HttpRequest) -> HttpResponse:
             messages.error(request, "نام کاربری و یا رمز عبور اشتباه است.")
             return redirect(reverse("accounts:login"))
     form = EmailLoginForm()
-    return render(request, 'accounts/forms/login.html', {'form': form})
+    return render(request, 'accounts/auth/forms/login.html', {'form': form})
 
 
 @require_http_methods(['POST'])
