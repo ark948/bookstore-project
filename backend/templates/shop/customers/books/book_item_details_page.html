@@ -1,5 +1,5 @@
 {% extends "_base.html" %}
-
+{% load widget_tweaks %}
 
 {% block content %}
 <div>
@@ -78,7 +78,7 @@
                 تعداد: <span class="text-xs text-gray-400">{{ item.copies_available }}</span>
               </label>
               <div class="flex items-center gap-3">
-                <div class="flex items-center justify-center">
+                <!-- <div class="flex items-center justify-center">
                   <button id="decrement-btn"
                       class="flex justify-center items-center w-10 h-10 rounded-full text-white focus:outline-none bg-gray-400 hover:bg-gray-500">
                       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -94,9 +94,17 @@
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12M6 12h12"></path>
                       </svg>
                   </button>
-              </div>
+              </div> -->
   
-                <button id="addToCart" class="btn btn-success btn-sm w-32 mb-1">افزودن</button>
+              {% if item_form %}
+                  <form action="{% url 'shop:cart_add' item.id %}" method="post">
+                      {% csrf_token %}
+                      <div class="form-control m-2">
+                        {% render_field item_form.quantity class='input' %}
+                      </div>
+                      <button id="addToCart" class="btn btn-success btn-sm w-32 mb-1">افزودن</button>
+                  </form>
+              {% endif %}
               </div>
               <p class="text-xs text-gray-400 mt-2">حداکثر تعداد قابل سفارش<strong class="text-gray-700">5 عدد به ازای هر نفر</strong></p>
             </div>

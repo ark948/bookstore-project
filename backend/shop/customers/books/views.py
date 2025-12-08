@@ -45,18 +45,20 @@ def browse_books_only_available(request: HttpRequest) -> HttpResponse:
 
 
 def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
+    context = {}
     item: Book = get_object_or_404(Book, pk=book_id)
-    item_form = ItemAddForm()
+    if item.available:
+        if item.copies_available >= 1:
+            item_form = ItemAddForm()
+            context['item_form'] = item_form
     add_comment_form = AddCommentForm()
     is_favorite = False
-    context = {}
     if request.user.is_authenticated and request.user.role == 'user':
         context['comment_form'] = add_comment_form
         favorite = Favorite.objects.filter(user_id=request.user, book_id=item)
         if favorite.exists():
             context['is_fav'] = is_favorite
     context['item'] = item
-    context['item_form'] = item_form
     return render(request, "shop/customers/books/book_item_details_page.html", context)
 
     
