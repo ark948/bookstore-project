@@ -27,13 +27,13 @@
                   </div>
                 {% endif %}
               </div>
-              <div class="text-sm text-gray-500">High-resolution images • 4 views</div>
+              <!-- <div class="text-sm text-gray-500">High-resolution images • 4 views</div> -->
             </div>
           </div>
   
           <div class="bg-white rounded-xl p-4 shadow-sm">
             <h3 class="text-sm font-semibold text-gray-700 mb-2">درباره این محصول</h3>
-            <p class="text-sm text-gray-600 leading-relaxed">{{ item.description }} or {{ item.summary }}</p>
+            <!-- <p class="text-sm text-gray-600 leading-relaxed">{{ item.description }} or {{ item.summary }}</p> -->
           </div>
         </div>
   
@@ -46,8 +46,8 @@
               <div>
                 <div class="text-3xl lg:text-4xl font-extrabold price-shadow">{{ item.price }}</div>
                 <div class="text-sm text-gray-400 line-through">{{ item.price }}</div>
-                <div class="text-sm text-green-600 font-medium mt-1">You save ₹30</div>
-                <div class="text-xs text-gray-400 mt-1">Inclusive of all taxes</div>
+                <!-- <div class="text-sm text-green-600 font-medium mt-1">You save ₹30</div> -->
+                <!-- <div class="text-xs text-gray-400 mt-1">Inclusive of all taxes</div> -->
               </div>
   
               <div class="ml-auto text-right">
@@ -61,7 +61,7 @@
             <div class="mt-5 border rounded-lg p-4 bg-gray-50 flex items-center gap-4">
               <div class="flex-1 text-sm">
                 <div class="font-medium">ارسال 2-5 روز کاری</div>
-                <div class="text-xs text-gray-500">Shipment of 1 item</div>
+                <!-- <div class="text-xs text-gray-500">Shipment of 1 item</div> -->
               </div>
               <div class="text-sm font-medium text-green-600">
                 {% if item.available %}
@@ -74,24 +74,38 @@
   
             <!-- Quantity & Add -->
             <div class="mt-5">
-              <label for="qty" class="block text-sm font-medium text-gray-700 mb-2">تعداد: <span class="text-xs text-gray-400">{{ item.copies_available }}</span></label>
+              <label for="qty" class="block text-sm font-medium text-gray-700 mb-2">
+                تعداد: <span class="text-xs text-gray-400">{{ item.copies_available }}</span>
+              </label>
               <div class="flex items-center gap-3">
-                <div class="flex items-center rounded-lg border overflow-hidden">
-                  <button id="dec" class="px-4 py-2 text-lg bg-white hover:bg-gray-100">−</button>
-                  <input id="qty" type="number" value="1" min="1" max="10" class="w-16 text-center outline-none p-2" aria-label="Quantity" />
-                  <button id="inc" class="px-4 py-2 text-lg bg-white hover:bg-gray-100">+</button>
-                </div>
-  
-                <button id="addToCart" class="btn btn-success">افزودن</button>
+                <div class="flex items-center justify-center">
+                  <button id="decrement-btn"
+                      class="flex justify-center items-center w-10 h-10 rounded-full text-white focus:outline-none bg-gray-400 hover:bg-gray-500">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                      </svg>
+                  </button>
+                    <span id="counter" class="text-4xl font-bold mx-4">1</span>
+                  <button id="increment-btn"
+                      class="flex justify-center items-center w-10 h-10 rounded-full text-white focus:outline-none bg-indigo-500 hover:bg-indigo-600">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12M6 12h12"></path>
+                      </svg>
+                  </button>
               </div>
-              <p class="text-xs text-gray-400 mt-2">Max order limit: <strong class="text-gray-700">5 per customer</strong></p>
+  
+                <button id="addToCart" class="btn btn-success btn-sm w-32 mb-1">افزودن</button>
+              </div>
+              <p class="text-xs text-gray-400 mt-2">حداکثر تعداد قابل سفارش<strong class="text-gray-700">5 عدد به ازای هر نفر</strong></p>
             </div>
   
             <hr class="my-6" />
   
             <dl class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-600">
               <div>
-                <dt class="text-xs text-gray-500">Origin</dt>
+                <dt class="text-xs text-gray-500">زبان</dt>
                 <dd class="mt-1">{{ item.original_language }}</dd>
               </div>
               <div>
@@ -99,11 +113,11 @@
                 <dd class="mt-1">Store in dry place</dd>
               </div>
               <div>
-                <dt class="text-xs text-gray-500">Shipment</dt>
-                <dd class="mt-1">1 item</dd>
+                <dt class="text-xs text-gray-500">ارسال</dt>
+                <dd class="mt-1">1 عدد</dd>
               </div>
               <div>
-                <dt class="text-xs text-gray-500">Tags</dt>
+                <dt class="text-xs text-gray-500">برچسب ها</dt>
                 <dd class="mt-1">
                   {% for t in item.tags.all %}
                     <span class="inline-block px-3 py-1 rounded-full text-xs bg-green-50 text-green-700">{{ t.name }}</span>
@@ -122,9 +136,9 @@
             </button>
             <div id="detailsPanel" class="mt-3 hidden text-sm text-gray-600">
               <ul class="list-disc pl-5 space-y-1">
-                <li>Calories: 46 kcal per 100g</li>
-                <li>Rich in vitamins A & C</li>
-                <li>Keep refrigerated for longer shelf life</li>
+                <li>نویسنده: {% for a in item.authors.all %}{{ a }},{% endfor %}</li>
+                <li>انتشارات: {{ item.publisher }}</li>
+                <li>زبان: {{ item.language }}</li>
               </ul>
             </div>
           </div>
@@ -152,6 +166,24 @@
       toggle.setAttribute('aria-expanded', String(!expanded));
       panel.classList.toggle('hidden');
       chev.classList.toggle('rotate-180');
-    })
+    });
+    var counterEl = document.getElementById('counter');
+    var decrementBtn = document.getElementById('decrement-btn');
+    var incrementBtn = document.getElementById('increment-btn');
+    let count = 1;
+
+    decrementBtn.addEventListener('click', () => {
+        if (count > 1) {
+            count--;
+            counterEl.textContent = count;
+        }
+    });
+
+    incrementBtn.addEventListener('click', () => {
+      if (count < 5) {
+        count++;
+        counterEl.textContent = count;
+      }
+    });
   </script>
 {% endblock script %}
