@@ -102,4 +102,4 @@ def refresh(request: HttpRequest) -> HttpResponse:
             "shop/customers/books/partials/book_cards_section_partial.html",
             {'page_obj': page_obj}
         )
-
+    return redirect(reverse('shop:browse_books'))
