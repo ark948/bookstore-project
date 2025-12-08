@@ -45,9 +45,12 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
 
 @role_required('user')
 def load_book_comments(request: HttpRequest, book_id: int) -> HttpResponse:
+    context = {}
+    comments = Comment.objects.filter(book=book_id, status="Approved")
+    if comments.exists():
+            context['items'] = comments
     if request.htmx:
-        try:
-            comments = Comment.objects.filter(book=book_id, status="Approved")
-        except Exception as error:
-            return JsonResponse("متاسفانه خطایی رخ داده است. لطفا صفحه را مجددا رفرش کنید.")
-        return render(request, "shop/customers/partials/book_item_comments.html", {'items': comments})
+        return render(
+             request, 
+            "shop/customers/comments/partials/book_item_comments_partial.html", 
+            context)
