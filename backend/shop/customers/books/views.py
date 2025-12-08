@@ -1,6 +1,7 @@
 from decimal import Decimal
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator
 from django.conf import settings
@@ -65,8 +66,8 @@ def filter_by_price(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         term = request.GET.get('priceRange')
         page = request.GET.get('page', 1)
-        items: QuerySet = Book.objects.filter(price__range=(0, Decimal(term)))
-        paginator = Paginator(items, settings.PAGE_SIZE)
+        books: QuerySet = Book.objects.filter(price__range=(0, Decimal(term)))
+        paginator = Paginator(books, settings.PAGE_SIZE)
         page_obj = paginator.page(page)
         return render(
             request, 
@@ -81,17 +82,25 @@ def search_books(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         term = request.GET.get('search')
         page = request.GET.get('page', 1)
-        items: QuerySet = Book.objects.filter(title__icontains=term).all()
-        paginator = Paginator(items, settings.PAGE_SIZE)
+        books: QuerySet = Book.objects.filter(title__icontains=term).all()
+        paginator = Paginator(books, settings.PAGE_SIZE)
         page_obj = paginator.page(page)
         return render(
             request, 
             "shop/customers/books/partials/book_cards_section_partial.html", 
-            { 'page_obj': page_obj }
+            {'page_obj': page_obj}
         )
     
-
+# OK
 @role_required('user')
-def load_books(request: HttpRequest) -> HttpResponse:
-    books = Book.objects.all()
-    return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
+def refresh(request: HttpRequest) -> HttpResponse:
+    page = request.GET.get('page', 1)
+    books: QuerySet = Book.objects.all()
+    paginator = Paginator(books, settings.PAGE_SIZE)
+    page_obj = paginator.page(page)
+    if request.htmx:
+        return render(request,
+            "shop/customers/books/partials/book_cards_section_partial.html",
+            {'page_obj': page_obj}
+        )
+
