@@ -35,7 +35,7 @@ def browse_books_only_available(request: HttpRequest) -> HttpResponse:
     paginator = Paginator(books_filter.qs, settings.PAGE_SIZE)
     page_obj = paginator.page(page)
     total = books_filter.qs.count()
-    return render(request, "shop/customers/browse_books.html", {
+    return render(request, "shop/customers/books/browse.html", {
         'page_obj': page_obj, 'filter': books_filter, 'total': total
     })
 

@@ -10,5 +10,4 @@ urlpatterns = [
     path("load-books/", views.load_books, name='load_books'),
     path("search/", views.search_books, name='search'),
     path("filter-price/", views.filter_by_price, name='filter_price'),
-
 ]
