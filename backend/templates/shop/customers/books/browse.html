@@ -128,7 +128,7 @@
           <div class="grid grid-cols-5 gap-x-2" id="books_list_container">
             {% if page_obj %}
                 {% for book in page_obj %}
-                    {% include "shop/customers/book_item.html" %}
+                    {% include "shop/customers/books/partials/book_card.html" %}
                 {% endfor %}
             {% endif %}
           </div>

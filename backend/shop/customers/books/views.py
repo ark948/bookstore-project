@@ -40,19 +40,6 @@ def browse_books_only_available(request: HttpRequest) -> HttpResponse:
     })
 
 
-def item_detail(request: HttpRequest, id: int) -> HttpResponse:
-    item: Book = get_object_or_404(Book, id=id)
-    item_form = ItemAddForm()
-    add_comment_form = AddCommentForm()
-    is_favorited = False
-    if request.user.is_authenticated and request.user.role == 'user':
-        favorite = Favorite.objects.filter(user_id=request.user, book_id=item)
-        if favorite:
-            is_favorited = True
-    return render(request, "shop/customers/item_details.html", {
-            'is_fav': is_favorited, 'item': item, 'item_form': item_form,  'comment_form': add_comment_form
-        })
-
 
 def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
     item: Book = get_object_or_404(Book, pk=book_id)
@@ -60,16 +47,14 @@ def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
     add_comment_form = AddCommentForm()
     is_favorite = False
     context = {}
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.role == 'user':
         context['comment_form'] = add_comment_form
         favorite = Favorite.objects.filter(user_id=request.user, book_id=item)
         if favorite.exists():
             context['is_fav'] = is_favorite
     context['item'] = item
     context['item_form'] = item_form
-    if request.htmx:
-        return render(request, "shop/customers/item_details_partial.html", context)
-    return render(request, "shop/customers/item_details.html", context)
+    return render(request, "shop/customers/books/book_item_details_page.html", context)
 
 
 @role_required('user')
