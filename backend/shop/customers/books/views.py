@@ -13,7 +13,7 @@ from shop.customers import filters
 from shop.customers.cart.forms import ItemAddForm
 from shop.customers.forms import AddCommentForm
 
-# OK
+
 def browse_books(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
     books_filter = filters.BooksFilter(
@@ -28,7 +28,7 @@ def browse_books(request: HttpRequest) -> HttpResponse:
     })
 
 
-# OK
+
 def browse_books_only_available(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
     books_filter = filters.BooksFilter(
@@ -43,7 +43,7 @@ def browse_books_only_available(request: HttpRequest) -> HttpResponse:
     })
 
 
-# OK
+
 def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
     item: Book = get_object_or_404(Book, pk=book_id)
     item_form = ItemAddForm()
@@ -60,7 +60,7 @@ def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
     return render(request, "shop/customers/books/book_item_details_page.html", context)
 
     
-# OK
+
 @role_required('user')
 def filter_by_price(request: HttpRequest) -> HttpResponse:
     if request.htmx:
@@ -76,7 +76,6 @@ def filter_by_price(request: HttpRequest) -> HttpResponse:
         )
     
 
-# OK
 @role_required('user')
 def search_books(request: HttpRequest) -> HttpResponse:
     if request.htmx:
@@ -91,7 +90,7 @@ def search_books(request: HttpRequest) -> HttpResponse:
             {'page_obj': page_obj}
         )
     
-# OK
+
 @role_required('user')
 def refresh(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
