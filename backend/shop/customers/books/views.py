@@ -11,7 +11,7 @@ from shop.customers import filters
 from shop.customers.cart.forms import ItemAddForm
 from shop.customers.forms import AddCommentForm
 
-
+# OK
 def browse_books(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
     books_filter = filters.BooksFilter(
@@ -26,6 +26,7 @@ def browse_books(request: HttpRequest) -> HttpResponse:
     })
 
 
+# OK
 def browse_books_only_available(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
     books_filter = filters.BooksFilter(
@@ -40,7 +41,7 @@ def browse_books_only_available(request: HttpRequest) -> HttpResponse:
     })
 
 
-
+# OK
 def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
     item: Book = get_object_or_404(Book, pk=book_id)
     item_form = ItemAddForm()
@@ -56,22 +57,6 @@ def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
     context['item_form'] = item_form
     return render(request, "shop/customers/books/book_item_details_page.html", context)
 
-
-@role_required('user')
-def filter_by_genre(request: HttpRequest) -> HttpResponse:
-    if request.htmx:
-        term = request.GET.get('genreSelect')
-        genres_list = list(Genre.objects.all())
-        genres_list = [item.title for item in genres_list]
-        if term and term in genres_list:
-            books = Book.objects.filter(genres__title__exact=term).all()
-            return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
-        else:
-            books = Book.objects.all()
-            return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
-    else:
-        books = Book.objects.all()
-        return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
     
 
 @role_required('user')
