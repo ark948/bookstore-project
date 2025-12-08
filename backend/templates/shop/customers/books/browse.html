@@ -102,14 +102,13 @@
           {% csrf_token %}
           <label class="floating-label">
             <span>جستجو عنوان</span>
-            <input type="text" placeholder="جستجو عنوان" class="input input-sm w-full" />
+            <input type="text" placeholder="جستجو عنوان" class="input input-sm w-full" name="search" />
           </label>
           <button class="btn btn-info btn-sm btn-outline w-20"
               hx-trigger="click delay:500ms"
               hx-get="{% url 'shop:search' %}"
-              hx-target="#books_list"
-              hx-swap="outerHTML"
-              hx-indicator="#spinner"
+              hx-target="#books_list_container"
+              hx-swap="innerHTML"
               hx-include="[name='search']">
             جستجو
           </button>

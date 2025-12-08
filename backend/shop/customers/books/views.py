@@ -59,7 +59,7 @@ def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
     return render(request, "shop/customers/books/book_item_details_page.html", context)
 
     
-
+# OK
 @role_required('user')
 def filter_by_price(request: HttpRequest) -> HttpResponse:
     if request.htmx:
@@ -75,15 +75,20 @@ def filter_by_price(request: HttpRequest) -> HttpResponse:
         )
     
 
+# OK
 @role_required('user')
 def search_books(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         term = request.GET.get('search')
-        books = Book.objects.filter(title__icontains=term).all()
-        return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
-    else:
-        books = Book.objects.all()
-        return render(request, "shop/customers/partials/books-container-section.html", { 'items': books })
+        page = request.GET.get('page', 1)
+        items: QuerySet = Book.objects.filter(title__icontains=term).all()
+        paginator = Paginator(items, settings.PAGE_SIZE)
+        page_obj = paginator.page(page)
+        return render(
+            request, 
+            "shop/customers/books/partials/book_cards_section_partial.html", 
+            { 'page_obj': page_obj }
+        )
     
 
 @role_required('user')
