@@ -127,9 +127,7 @@
                     <!-- queryset -->
           <div class="grid grid-cols-5 gap-x-2" id="books_list_container">
             {% if page_obj %}
-                {% for book in page_obj %}
-                    {% include "shop/customers/books/partials/book_card.html" %}
-                {% endfor %}
+                {% include 'shop/customers/books/partials/book_cards_section_partial.html' %}
             {% endif %}
           </div>
 

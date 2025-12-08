@@ -4,9 +4,10 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator
 from django.conf import settings
+from django.db.models import QuerySet
 
 from accounts.decorators import role_required
-from shop.models import Book, Genre, Favorite
+from shop.models import Book, Favorite
 from shop.customers import filters
 from shop.customers.cart.forms import ItemAddForm
 from shop.customers.forms import AddCommentForm
@@ -61,9 +62,17 @@ def book_details(request: HttpRequest, book_id: int) -> HttpResponse:
 
 @role_required('user')
 def filter_by_price(request: HttpRequest) -> HttpResponse:
-    term = request.GET.get('priceRange')
-    items = Book.objects.filter(price__range=(0, Decimal(term)))
-    return render(request, "shop/customers/items.html", {'items': items})
+    if request.htmx:
+        term = request.GET.get('priceRange')
+        page = request.GET.get('page', 1)
+        items: QuerySet = Book.objects.filter(price__range=(0, Decimal(term)))
+        paginator = Paginator(items, settings.PAGE_SIZE)
+        page_obj = paginator.page(page)
+        return render(
+            request, 
+            "shop/customers/books/partials/book_cards_section_partial.html", 
+            {'page_obj': page_obj}
+        )
     
 
 @role_required('user')
