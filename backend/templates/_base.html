@@ -16,7 +16,7 @@
     <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
     <script src="{% static 'js/select2.min.js' %}"></script>
 </head>
-<body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
+<body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}' class="bg-gray-50">
   
     {% include "partials/navbar.html" %}
 
@@ -41,9 +41,8 @@
           {% endblock content %}
         </main>
         
-        {% include "partials/footer.html" %}
-        
      </div>
+     {% include "partials/footer.html" %}
     <script src="{% static 'js/htmx.min.js' %}" defer></script>
     {% block script %}
     {% endblock script %}
