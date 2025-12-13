@@ -7,6 +7,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('contact-us/', views.contact_us, name='contact'),
     path('', views.index, name='index'),
+    path('landing/', views.landing, name='landing'),
 
     # routes for development and testing
     path('secret/', views.secret_view_test, name='secret_1'),

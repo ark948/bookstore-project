@@ -8,6 +8,10 @@ def index(request):
     return render(request, 'home/index.html')
 
 
+def landing(request: HttpRequest) -> HttpResponse:
+    return render(request, "home/landing.html")
+
+
 def about(request):
     return render(request, "home/about.html")
 
