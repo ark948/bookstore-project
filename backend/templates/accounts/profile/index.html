@@ -131,6 +131,19 @@
         </div>
     </div>
 
+    <div>
+        {% if user.is_authenticated %}
+            <div>
+                <span>کاربر فعلی: {{ user.email }}</span>
+            </div>
+            <div>
+                <form action="{% url 'accounts:acc_auth_logout' %}">
+                    <button type="submit" class="btn btn-xs btn-outline btn-error w-32">خروج</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
     <div class="m-8">
         <!-- name of each tab group should be unique -->
         {% if user.role == 'user' %}

@@ -22,9 +22,6 @@
 
     <div class="m-12 flex flex-col min-h-screen">
         <div id="navbar">
-            {% if user.is_authenticated %}
-                <p>کاربر فعلی {{ user.email }}</p>
-            {% endif %}
             {% if messages %}
             <ul class="messages">
               {% for message in messages %}
