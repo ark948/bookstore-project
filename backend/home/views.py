@@ -27,7 +27,11 @@ def contact_us(request: HttpRequest) -> HttpResponse:
             form.save()
             messages.success(request, "پیام شما ثبت شد. در صورت نیاز با شما تماس میگیریم.")
             return redirect(reverse('home:index'))
-    return render(request, "home/contact.html")
+        else:
+            messages.error(request, "متاسفانه خطایی در ثبت پیام رخ داده است.")
+            redirect(reverse('home:contact'))
+    form = PublicMessageForm()
+    return render(request, "home/contact.html", {'form': form})
 
 
 def has_custom_permission(user):

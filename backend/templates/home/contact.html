@@ -1,7 +1,11 @@
 {% extends "_base.html" %}
+{% load widget_tweaks %}
+
 
 {% block content %}
+{% if form %}
 <div>
+
     <!-- Contact Section -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <section class="contact-section">
@@ -15,39 +19,32 @@
                         ثبت پیام
                         <span class="absolute bottom-0 right-0 w-20 h-0.5 bg-blue-500"></span>
                     </h2>
-                    <form class="space-y-6">
+                    <form class="space-y-6" method="post" action="{% url 'home:contact' %}">
+                        {% csrf_token %}
                         <!-- Name -->
                         <div>
                             <label for="name" class="block mb-2 font-medium">نام و نام خانوادگی</label>
-                            <input type="text" id="name"
-                                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
-                                required />
+                            {% render_field form.name class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 transition" %}
                         </div>
                         <!-- Email -->
                         <div>
                             <label for="email" class="block mb-2 font-medium">آدرس ایمیل</label>
-                            <input type="email" id="email"
-                                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
-                                required />
+                            {% render_field form.email class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 transition" %}
                         </div>
                         <!-- Phone -->
                         <div>
                             <label for="phone" class="block mb-2 font-medium">شماره تماس</label>
-                            <input type="tel" id="phone"
-                                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 transition" />
+                            {% render_field form.phone class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 transition" %}
                         </div>
                         <!-- Subject -->
                         <div>
                             <label for="subject" class="block mb-2 font-medium">موضوع</label>
-                            <input type="text" id="subject"
-                                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 transition" />
+                            {% render_field form.subject class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 transition" %}
                         </div>
                         <!-- Message -->
                         <div>
-                            <label for="message" class="block mb-2 font-medium">متن پیام شما</label>
-                            <textarea id="message"
-                                class="w-full p-3 border border-gray-300 rounded-md min-h-[150px] resize-y focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
-                                required></textarea>
+                            <label for="id_body" class="block mb-2 font-medium">متن پیام</label>
+                            {% render_field form.body class="w-full p-3 border border-gray-300 rounded-md min-h-[150px] resize-y focus:outline-none focus:ring-2 focus:ring-blue-300 transition" %}
                         </div>
 
                         <!-- Submit Button -->
@@ -55,6 +52,7 @@
                             class="flex items-center gap-2 bg-gradient-to-br from-blue-500 to-blue-400 text-white font-semibold py-3 px-6 rounded-full hover:scale-105 hover:shadow-lg transition duration-300">
                             <i class="fas fa-paper-plane"></i> ارسال
                         </button>
+
                     </form>
                 </div>
 
@@ -134,4 +132,5 @@
         </div>
     </section>
 </div>
+{% endif %}
 {% endblock content %}

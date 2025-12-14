@@ -5,4 +5,4 @@ from home.models import PublicMessage
 class PublicMessageForm(ModelForm):
     class Meta:
         model = PublicMessage
-        fields = "__all__"
+        fields = ("name", "email", "phone", "subject", "body")
