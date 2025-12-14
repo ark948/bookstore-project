@@ -46,9 +46,11 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
 @role_required('user')
 def load_book_comments(request: HttpRequest, book_id: int) -> HttpResponse:
     context = {}
+    form = AddCommentForm()
     comments = Comment.objects.filter(book=book_id, status="A")
     if comments.exists():
         context['items'] = comments
+        context['comment_form'] = form
     if request.htmx:
         return render(
             request, 

@@ -1,6 +1,4 @@
 from django import forms
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit
 
 ITEM_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 21)]
 
