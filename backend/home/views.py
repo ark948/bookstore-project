@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, permission_required
 from django.http import HttpResponse, HttpRequest
 from django.views import View
 from django.utils.decorators import method_decorator
+
+from home.forms import PublicMessageForm
 
 def index(request):
     return render(request, 'home/index.html')
@@ -16,7 +20,13 @@ def about(request):
     return render(request, "home/about.html")
 
 
-def contact_us(request):
+def contact_us(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        form = PublicMessageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "پیام شما ثبت شد. در صورت نیاز با شما تماس میگیریم.")
+            return redirect(reverse('home:index'))
     return render(request, "home/contact.html")
 
 
