@@ -46,11 +46,12 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
 @role_required('user')
 def load_book_comments(request: HttpRequest, book_id: int) -> HttpResponse:
     context = {}
-    comments = Comment.objects.filter(book=book_id, status="Approved")
+    comments = Comment.objects.filter(book=book_id, status="A")
     if comments.exists():
-            context['items'] = comments
+        context['items'] = comments
     if request.htmx:
         return render(
-             request, 
+            request, 
             "shop/customers/comments/partials/book_item_comments_partial.html", 
-            context)
+            context
+        )

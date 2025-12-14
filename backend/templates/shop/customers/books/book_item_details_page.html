@@ -44,7 +44,7 @@
               hx-trigger="click"
               aria-expanded="false" class="w-full flex items-center justify-between py-2 px-1" id="toggleCommentsButton">
                 <span class="font-medium">نظرات</span>
-                <svg id="chev" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06-.02L10 10.88l3.71-3.69a.75.75 0 111.06 1.06l-4.24 4.22a.75.75 0 01-1.06 0L5.25 8.25a.75.75 0 01-.02-1.06z" clip-rule="evenodd"/></svg>
+                <svg id="comments_chev" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06-.02L10 10.88l3.71-3.69a.75.75 0 111.06 1.06l-4.24 4.22a.75.75 0 01-1.06 0L5.25 8.25a.75.75 0 01-.02-1.06z" clip-rule="evenodd"/></svg>
             </button>
             <div id="commentsDetailsPanel" class="mt-3 hidden text-sm text-gray-600">
               
@@ -93,8 +93,8 @@
                 تعداد: <span class="text-xs text-gray-400">{{ item.copies_available }}</span>
               </label>
               <div class="flex items-center gap-3">
-                <!-- <div class="flex items-center justify-center">
-                  <button id="decrement-btn"
+                <div class="flex items-center justify-center">
+                  <!-- <button id="decrement-btn"
                       class="flex justify-center items-center w-10 h-10 rounded-full text-white focus:outline-none bg-gray-400 hover:bg-gray-500">
                       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg">
@@ -108,8 +108,8 @@
                           xmlns="http://www.w3.org/2000/svg">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12M6 12h12"></path>
                       </svg>
-                  </button>
-              </div> -->
+                  </button> -->
+              </div>
   
               {% if item_form %}
                   <form action="{% url 'shop:cart_add' item.id %}" method="post">
@@ -190,23 +190,34 @@
       panel.classList.toggle('hidden');
       chev.classList.toggle('rotate-180');
     });
-    var counterEl = document.getElementById('counter');
-    var decrementBtn = document.getElementById('decrement-btn');
-    var incrementBtn = document.getElementById('increment-btn');
-    let count = 1;
 
-    decrementBtn.addEventListener('click', () => {
-        if (count > 1) {
-            count--;
-            counterEl.textContent = count;
-        }
-    });
+    const toggleBtn = document.getElementById('toggleCommentsButton');
+    const commentsDetailsPanel = document.getElementById('commentsDetailsPanel');
+    const commentsChev = document.getElementById('comments_chev');
+    toggleBtn.addEventListener('click', () => {
+      const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!expanded));
+      commentsDetailsPanel.classList.toggle('hidden');
+      commentsChev.classList.toggle('rotate-180');
+    })
 
-    incrementBtn.addEventListener('click', () => {
-      if (count < 5) {
-        count++;
-        counterEl.textContent = count;
-      }
-    });
+    // var counterEl = document.getElementById('counter');
+    // var decrementBtn = document.getElementById('decrement-btn');
+    // var incrementBtn = document.getElementById('increment-btn');
+    // let count = 1;
+
+    // decrementBtn.addEventListener('click', () => {
+    //     if (count > 1) {
+    //         count--;
+    //         counterEl.textContent = count;
+    //     }
+    // });
+
+    // incrementBtn.addEventListener('click', () => {
+    //   if (count < 5) {
+    //     count++;
+    //     counterEl.textContent = count;
+    //   }
+    // });
   </script>
 {% endblock script %}
