@@ -35,6 +35,7 @@
             <h3 class="text-sm font-semibold text-gray-700 mb-2">درباره این محصول</h3>
             <!-- <p class="text-sm text-gray-600 leading-relaxed">{{ item.description }} or {{ item.summary }}</p> -->
           </div>
+
           <!-- Collapsible card for comments -->
           <div class="mt-6 bg-white rounded-xl p-4 shadow-sm">
             <button
@@ -59,8 +60,24 @@
               <svg id="commentFormChev" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06-.02L10 10.88l3.71-3.69a.75.75 0 111.06 1.06l-4.24 4.22a.75.75 0 01-1.06 0L5.25 8.25a.75.75 0 01-.02-1.06z" clip-rule="evenodd"/>
               </svg>
             </button>
-            <div>
-              
+            <div id="commentFormPanel" class="mt-3 hidden text-sm text-gray-600">
+              <form>
+                <div id="form-control m-2">
+                  <label for="id_title">عنوان:</label>
+                  {% render_field comment_form.title %}
+                </div>
+                <div class="form-control m-2">
+                  <label for="id_body">متن:</label>
+                  {% render_field comment_form.body %}
+                </div>
+                <div class="form-control m-2">
+                  <label for="id_anonymous">نظر ناشناس؟</label>
+                  {% render_field comment_form.anonymous %}
+                </div>
+                <button class="btn btn-outline btn-xs btn-neutral w-32">
+                  ثبت
+                </button>
+              </form>
             </div>
           </div>
 
@@ -215,6 +232,16 @@
       toggleBtn.setAttribute('aria-expanded', String(!expanded));
       commentsDetailsPanel.classList.toggle('hidden');
       commentsChev.classList.toggle('rotate-180');
+    })
+
+    const commentFormBtn = document.getElementById('commentFormToggler');
+    const commentFormPanel = document.getElementById('commentFormPanel');
+    const commentFormChev = document.getElementById('commentFormChev');
+    commentFormBtn.addEventListener('click', () => {
+      const expanded = commentFormBtn.getAttribute('aria-expanded') === 'true';
+      commentFormBtn.setAttribute('aria-expanded', String(!expanded));
+      commentFormPanel.classList.toggle('hidden');
+      commentFormChev.classList.toggle('rotate-180');
     })
 
     // var counterEl = document.getElementById('counter');
