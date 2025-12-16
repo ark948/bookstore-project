@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseForbidden
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
+from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.db.utils import IntegrityError
@@ -13,10 +14,11 @@ from shop.models import Book, Comment
 @require_POST
 @role_required('user')
 def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
+    print("CALLED")
     book = get_object_or_404(Book, id=book_id)
     form = AddCommentForm(request.POST)
     if form.is_valid():
-        # if all data is available and no aciton is needed before saving object, use create()
+        print("FORM OK")
         try:
             Comment.objects.create(
                 title = form.cleaned_data['title'],
@@ -26,19 +28,13 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
                 anonymous = form.cleaned_data['anonymous']
             )
         except IntegrityError as unique_error:
-            html = render_to_string('shop/customers/errors/forbidden.html', {
-                'message': "شما قبلا برای این کتاب نظر ثبت کرده اید. در صورت نیاز لطفا آن را ویرایش کنید."
-            })
-            return HttpResponseForbidden(html)
-        # return a single comment item
-        # response = render(request, "shop/customers/partials/comment_item.html", {'comment': comment})
-        # response['HX-Trigger'] = "comment_successfully_submitted"
-        # in template, use hx-on:comment_successfully_submitted and hx-swap='beforeend' to listen to this event
-        # and add the returned comment to the end of the list
-        # return response
-        return HttpResponse("نظر شما دریافت شد و پس از تایید نمایش داده خواهد شد.")
+            print('EXCEPTION')
+            return HttpResponse("شما قبلا برای این کتاب نظر ثبت کرده اید، لطفا در صورت نیاز آن را ویرایش کنید.")
+        if request.htmx:
+            return HttpResponse("نظر شما دریافت شد و پس از تایید نمایش داده خواهد شد.")
+        messages.success(request, "نظر ثبت شد و بعد از بررسی نمایش داده خواهد شد.")
+        return HttpResponseRedirect(request.path_info)
     else:
-        # this needs to be upated with comment_form template
         messages.error(request, "خطایی در درج نظر رخ داد. لطفا دوباره تلاش کنید.")
         return HttpResponse(form.errors)
     

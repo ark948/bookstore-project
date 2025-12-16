@@ -61,7 +61,12 @@
               </svg>
             </button>
             <div id="commentFormPanel" class="mt-3 hidden text-sm text-gray-600">
-              <form>
+              <form 
+                hx-post="{% url 'shop:add_comment' item.pk %}"
+                hx-target="this"
+                hx-swap="innerHTML"
+              >
+                {% csrf_token %}
                 <div id="form-control m-2">
                   <label for="id_title">عنوان:</label>
                   {% render_field comment_form.title %}
@@ -74,7 +79,7 @@
                   <label for="id_anonymous">نظر ناشناس؟</label>
                   {% render_field comment_form.anonymous %}
                 </div>
-                <button class="btn btn-outline btn-xs btn-neutral w-32">
+                <button class="btn btn-outline btn-xs btn-neutral w-32" type="submit">
                   ثبت
                 </button>
               </form>
