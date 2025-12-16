@@ -1,6 +1,8 @@
 from django.urls import path
 
-from . import views
+from shop.comments import views
+
+shop_comments_endpoint_prefix = "shop_comments_"
 
 
 urlpatterns = [
@@ -12,3 +14,6 @@ urlpatterns = [
     path('list/non-js/<str:status>/', views.load_comments, name='comments_list'),
     path('', views.IndexView.as_view(), name='comments_index'),
 ]
+
+for endpoint in urlpatterns:
+    endpoint.name = shop_comments_endpoint_prefix + endpoint.name
