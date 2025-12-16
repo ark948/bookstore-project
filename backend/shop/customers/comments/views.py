@@ -14,11 +14,9 @@ from shop.models import Book, Comment
 @require_POST
 @role_required('user')
 def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
-    print("CALLED")
     book = get_object_or_404(Book, id=book_id)
     form = AddCommentForm(request.POST)
     if form.is_valid():
-        print("FORM OK")
         try:
             Comment.objects.create(
                 title = form.cleaned_data['title'],
@@ -28,7 +26,6 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
                 anonymous = form.cleaned_data['anonymous']
             )
         except IntegrityError as unique_error:
-            print('EXCEPTION')
             return HttpResponse("شما قبلا برای این کتاب نظر ثبت کرده اید، لطفا در صورت نیاز آن را ویرایش کنید.")
         if request.htmx:
             return HttpResponse("نظر شما دریافت شد و پس از تایید نمایش داده خواهد شد.")
