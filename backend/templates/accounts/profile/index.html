@@ -137,7 +137,8 @@
                 <span>کاربر فعلی: {{ user.email }}</span>
             </div>
             <div>
-                <form action="{% url 'accounts:acc_auth_logout' %}">
+                <form action="{% url 'accounts:acc_auth_logout' %}" method="post">
+                    {% csrf_token %}
                     <button type="submit" class="btn btn-xs btn-outline btn-error w-32">خروج</button>
                 </form>
             </div>
