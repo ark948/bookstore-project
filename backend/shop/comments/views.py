@@ -47,7 +47,7 @@ def load_comments(request: HttpRequest, status: str) -> HttpResponse:
 def approve_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
     # if request.headers.get("HX-Request") == "true": # to check if request is htmx without django-htmx package
     if request.htmx:
-        if not services.update_comment(comment_id, 'A'):
+        if not services.approve_comment(comment_id):
             return HttpResponseServerError()
         return HttpResponse(status=HTTPStatus.OK)
     
@@ -56,7 +56,7 @@ def approve_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
 @role_required('employee')
 def reject_comment(request: HttpRequest, comment_id: int) -> HttpResponse:
     if request.htmx:
-        if not services.update_comment(comment_id, 'R'):
+        if not services.reject_comment(comment_id):
             return HttpResponseServerError()
         return HttpResponse(status=HTTPStatus.OK)
     
