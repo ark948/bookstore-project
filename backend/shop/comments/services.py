@@ -19,3 +19,25 @@ def update_comment(id: int, action: str) -> bool:
         print("\n-->[ Error in modifying Comment obj ]<--\n", error)
         return False
     return True
+
+
+def approve_comment(id: int) -> bool:
+    item: Comment = get_object_or_404(Comment, pk=id)
+    try:
+        item.status = Comment.STATUS_CHOICES['A']
+        item.save()
+    except Exception as error:
+        print("\n--> [ Error in approving comment ]<--\n", error)
+        return False
+    return True
+
+
+def reject_comment(id: int) -> bool:
+    item: Comment = get_object_or_404(Comment, pk=id)
+    try:
+        item.status = Comment.STATUS_CHOICES['R']
+        item.save()
+    except Exception as error:
+        print("\n--> [ Error in rejecting comment ]<--\n", error)
+        return False
+    return True
