@@ -65,7 +65,7 @@ def test_accounts_edit_user_comment(client: Client, user, comment_obj):
 
     assert response.status_code == 204
 
-    response = client.get(path=reverse('shop:get_comment', kwargs={'comment_id': comment_obj.pk}))
+    response = client.get(path=reverse('shop:shop_comments_get_comment', kwargs={'comment_id': comment_obj.pk}))
     data = response.json()
     assert data['body'] == "A new body."
 

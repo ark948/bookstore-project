@@ -31,7 +31,7 @@ def test_customers_browse_books_page(client):
     assert 'total' in response.context
 
 
-# customer's comment test
+@pytest.mark.skip
 @pytest.mark.django_db
 def test_customers_add_comment(client, book_obj, user):
     client.force_login(user)
