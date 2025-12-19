@@ -64,3 +64,17 @@ def upvote_comment(request: HttpRequest, comment_id: int) -> HttpResponse | Json
             print(error)
             return HttpResponse("شما قبلا رای ثبت کرده اید.")
         return HttpResponse("OK")
+    
+
+@role_required('user')
+def downvote_comment(request: HttpRequest, comment_id: int) -> HttpResponse | JsonResponse:
+    print("downvote_comment CALLED")
+    if request.method == "POST":
+        comment_obj = get_object_or_404(Comment, pk=comment_id)
+        downvote_obj = Vote(user=request.user, comment=comment_obj, value=-1)
+        try:
+            downvote_obj.save()
+        except Exception as error:
+            print(error)
+            return HttpResponse("شما قبلا رای ثبت کرده اید.")
+        return HttpResponse("OK")
