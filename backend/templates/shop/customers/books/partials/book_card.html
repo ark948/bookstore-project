@@ -57,7 +57,7 @@
                         {% if book.available %} 
                             {{ book.price|floatformat:"0g" }}&nbsp تومان 
                         {% else %} 
-                            {{ book.price }} (آخرین قیمت)
+                            {{ book.price|floatformat:"0g" }}&nbsp تومان (آخرین قیمت)
                         {% endif %}
                     </span>
                 </div>
