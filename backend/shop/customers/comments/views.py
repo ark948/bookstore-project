@@ -96,9 +96,9 @@ def vote(request: HttpRequest, comment_id: int, value):
             vote.value = value
             vote.save()
 
-    # Need to update Comment structure for this to work
-    # comment.upvotes = comment.votes.filter(value=1).count()
-    # comment.downvotes = comment.votes.filter(value=-1).count()
+    # These should be cached
+    comment.upvotes = comment.votes.filter(value=1).count()
+    comment.downvotes = comment.votes.filter(value=-1).count()
     comment.save()
     return JsonResponse({
         "upvotes": comment.upvotes,
