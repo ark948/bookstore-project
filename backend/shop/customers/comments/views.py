@@ -54,11 +54,13 @@ def load_book_comments(request: HttpRequest, book_id: int) -> HttpResponse:
 
 @role_required('user')
 def upvote_comment(request: HttpRequest, comment_id: int) -> HttpResponse | JsonResponse:
-    comment_obj = get_object_or_404(Comment, pk=comment_id)
-    upvote_obj = Vote(user=request.user, comment=comment_obj, value=1)
-    try:
-        upvote_obj.save()
-    except Exception as error:
-        print(error)
-        return JsonResponse({'error': str(error)})
-    return HttpResponse("OK")
+    print("upvote_comment CALLED")
+    if request.method == "POST":
+        comment_obj = get_object_or_404(Comment, pk=comment_id)
+        upvote_obj = Vote(user=request.user, comment=comment_obj, value=1)
+        try:
+            upvote_obj.save()
+        except Exception as error:
+            print(error)
+            return HttpResponse("شما قبلا رای ثبت کرده اید.")
+        return HttpResponse("OK")
