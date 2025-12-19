@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db import transaction
 from django.urls import reverse
 from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.views.decorators.http import require_POST
@@ -74,3 +75,36 @@ def downvote_comment(request: HttpRequest, comment_id: int) -> HttpResponse | Js
         except Exception as error:
             return HttpResponse("شما قبلا رای ثبت کرده اید.")
         return HttpResponse("OK")
+    
+# This is not used yet
+@transaction.atomic
+def vote(request: HttpRequest, comment_id: int, value):
+    comment = get_object_or_404(Comment, id=comment_id)
+    vote, created = Vote.objects.get_or_create(
+        user=request.user,
+        comment=comment,
+        defaults={'value': value}
+    )
+
+    # if vote already exists
+    if not created:
+        # User is removing their vote
+        if vote.value == value:
+            vote.delete()
+        else:
+            # User is changing their vote
+            vote.value = value
+            vote.save()
+
+    # Need to update Comment structure for this to work
+    # comment.upvotes = comment.votes.filter(value=1).count()
+    # comment.downvotes = comment.votes.filter(value=-1).count()
+    comment.save()
+    return JsonResponse({
+        "upvotes": comment.upvotes,
+        "downvotes": comment.downvotes,
+    })
+
+
+def get_comment_votes(request: HttpRequest, comment_id: int) -> JsonResponse:
+    pass

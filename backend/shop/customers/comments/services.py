@@ -13,4 +13,3 @@ def check_vote_exists(comment_id: int, user):
         else:
             return False
     return None
-
