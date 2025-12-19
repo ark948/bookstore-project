@@ -326,8 +326,8 @@ class Comment(TimeStampModel):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="comments") # <CustomUserObj>.comments.all()
     anonymous = models.BooleanField("َAnonymous Comment", default=False, null=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default="Pending")
-    positive_votes = models.IntegerField("Positive Votes", default=0)
-    negative_votes = models.IntegerField("Negative Votes", default=0)
+    upvotes = models.IntegerField("Positive Votes", default=0)
+    downvotes = models.IntegerField("Negative Votes", default=0)
 
     class Meta:
         constraints = [
