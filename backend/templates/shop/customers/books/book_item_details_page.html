@@ -97,7 +97,7 @@
   
             <div class="mt-4 flex items-end gap-4">
               <div>
-                <div class="text-3xl lg:text-4xl font-extrabold price-shadow">{{ item.price }}</div>
+                <div class="text-3xl lg:text-4xl font-extrabold price-shadow">{{ item.price|floatformat:"0g" }} تومان</div>
                 <div class="text-sm text-gray-400 line-through">{{ item.price }}</div>
                 <!-- <div class="text-sm text-green-600 font-medium mt-1">You save ₹30</div> -->
                 <!-- <div class="text-xs text-gray-400 mt-1">Inclusive of all taxes</div> -->
