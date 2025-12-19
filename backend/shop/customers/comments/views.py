@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 
 from accounts.decorators import role_required
 from shop.customers.forms import AddCommentForm
-from shop.models import Book, Comment
+from shop.models import Book, Comment, Vote
 
 
 @require_POST
@@ -50,3 +50,15 @@ def load_book_comments(request: HttpRequest, book_id: int) -> HttpResponse:
             "shop/customers/comments/partials/book_item_comments_partial.html", 
             context
         )
+    
+
+@role_required('user')
+def upvote_comment(request: HttpRequest, comment_id: int) -> HttpResponse | JsonResponse:
+    comment_obj = get_object_or_404(Comment, pk=comment_id)
+    upvote_obj = Vote(user=request.user, comment=comment_obj, value=1)
+    try:
+        upvote_obj.save()
+    except Exception as error:
+        print(error)
+        return JsonResponse({'error': str(error)})
+    return HttpResponse("OK")

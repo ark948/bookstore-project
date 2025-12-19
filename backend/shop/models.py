@@ -336,7 +336,8 @@ class Comment(TimeStampModel):
 
 
 class Vote(models.Model):
-    VOTE_CHOICES = (
+    # (actual_value_stored_in_db, human_readable_label)
+    VOTE_CHOICES = ( 
         (1, "Upvote"),
         (-1, "Downvote"),
     )
