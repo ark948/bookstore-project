@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib import admin
 from django.db.models import Q, CheckConstraint
+from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 import uuid
 import datetime
@@ -185,10 +186,6 @@ class Language(models.Model):
         return self.name
 
 
-# OriginalLanguage does not need a separate table
-
-# Format does not need a separate table
-
 class Size(models.Model):
     BOOK_SIZES = {
         'SM': "Small",
@@ -215,8 +212,6 @@ class Organization(models.Model):
     def __str__(self) -> str:
         return self.title
 
-
-# AgeRecommendation does not need a separate table
 
 def get_year_choices():
     current_year = datetime.date.today().year
@@ -337,6 +332,22 @@ class Comment(TimeStampModel):
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['book', 'user'], name='unique_book_user_comment')
+        ]
+
+
+class Vote(models.Model):
+    VOTE_CHOICES = (
+        (1, "Upvote"),
+        (-1, "Downvote"),
+    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='votes')
+    value = models.SmallIntegerField(choices=VOTE_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'comment'], name='unique_user_comment_vote')
         ]
 
 
