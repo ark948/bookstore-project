@@ -25,7 +25,7 @@
                   <span>0</span>
                 {% endif %}
                 <button class="btn btn-circle btn-sm btn-success btn-outline"
-                  hx-post="{% url 'shop:vote_comment' comment.id 'upvote' %}"
+                  hx-post="{% url 'shop:shop_comments_vote_comment' comment.id 'upvote' %}"
                   hx-swap="none"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -40,7 +40,7 @@
                   <span>0</span>
                 {% endif %}
                 <button class="btn btn-circle btn-sm btn-error btn-outline"
-                  hx-post="{% url 'shop:vote_comment' comment.id 'downvote' %}"
+                  hx-post="{% url 'shop:shop_comments_vote_comment' comment.id 'downvote' %}"
                   hx-swap="none"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
