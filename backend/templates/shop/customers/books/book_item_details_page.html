@@ -170,8 +170,12 @@
                 <dd class="mt-1">{{ item.original_language }}</dd>
               </div>
               <div>
-                <dt class="text-xs text-gray-500">Storage</dt>
-                <dd class="mt-1">Store in dry place</dd>
+                <dt class="text-xs text-gray-500">نویسندگان</dt>
+                <dd class="mt-1">
+                  {% for author in item.authors.all %}
+                    ,{{ author }}
+                  {% endfor %}
+                </dd>
               </div>
               <div>
                 <dt class="text-xs text-gray-500">ارسال</dt>
