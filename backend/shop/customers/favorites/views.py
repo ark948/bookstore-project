@@ -42,3 +42,21 @@ def check_favorite_exists(request: HttpRequest, book_id: int) -> HttpResponse:
             return render(request, "shop/customers/favorites/partials/is_favorite.html", {'book_id': book_id})
         return render(request, "shop/customers/favorites/partials/not_favorite.html", {'book_id': book_id})
     
+
+@role_required('user')
+def modify_favorite(request: HttpRequest, book_id: int, action: str) -> HttpResponse:
+    print("CALLED")
+    if request.htmx:
+        print("HTMX true")
+        if action.lower() == 'remove':
+            print('remove')
+            Favorite.objects.filter(user_id=request.user, book_id=book_id).delete()
+            return render(request, "shop/customers/favorites/partials/is_favorite.html", {'book_id': book_id})
+        elif action.lower() == 'add':
+            print('add')
+            book_obj = get_object_or_404(Book, pk=book_id)
+            Favorite.objects.create(user_id=request.user, book_id=book_obj)
+            return render(request, "shop/customers/favorites/partials/not_favorite.html", {'book_id': book_id})
+        else:
+            print("error")
+            return HttpResponse("خطایی رخ داده است.")
