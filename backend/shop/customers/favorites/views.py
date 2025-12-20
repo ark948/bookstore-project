@@ -30,8 +30,11 @@ def remove_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
 
 @role_required('user')
 def is_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
+    print("CALLED")
     if request.htmx:
+        print("HTMX True")
         favorite: QuerySet = Favorite.objects.filter( user_id=request.user, book_id=book_id ).first()
         if favorite:
-            return render(request, "shop/customers/partials/remove_from_favorite_partial.html", {'book_id': book_id})
-        return render(request, "shop/customers/partials/add_to_favorite_partial.html", {'book_id': book_id})
+            return render(request, "shop/customers/favorites/partials/remove_from_favorite_partial.html", {'book_id': book_id})
+        else:
+            return render(request, "shop/customers/favorites/partials/add_to_favorite_partial.html", {'book_id': book_id})
