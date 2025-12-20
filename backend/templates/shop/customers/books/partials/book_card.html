@@ -7,14 +7,13 @@
     
     <!-- Badge -->
     <div class="absolute top-4 left-4 bg-pink-600 text-white px-3 py-1.5 rounded text-xs font-bold uppercase tracking-wider">
-        <span x-text="product.badge">جدید</span>
+        <span>جدید</span>
     </div>
     
     <!-- Wishlist Button Badge -->
     <div
         id="favorite_section"
         hx-get="{% url 'shop:is_book_favorite' book.pk %}"
-        hx-target="this"
         hx-swap="innerHTML"
         hx-trigger="load"
     >
