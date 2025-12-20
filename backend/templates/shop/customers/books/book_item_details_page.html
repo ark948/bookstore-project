@@ -158,18 +158,18 @@
                       <button id="addToCart" class="btn btn-success btn-sm w-32 mb-1">افزودن</button>
                   </form>
               {% endif %}
-              <div
-              id="favorite_item"
-                  hx-get="{% url 'shop:is_book_favorite' item.pk %}"
-                  hx-target="this"
-                  hx-swap="innerHTML"
-                  hx-trigger="load"
-              >
-              </div>
               </div>
               <p class="text-xs text-gray-400 mt-2">حداکثر تعداد قابل سفارش<strong class="text-gray-700">5 عدد به ازای هر نفر</strong></p>
             </div>
   
+            <div
+              id="favorite_item"
+                  hx-get="{% url 'shop:check_favorite' item.pk %}"
+                  hx-target="this"
+                  hx-swap="innerHTML"
+                  hx-trigger="load"
+              >
+            </div>
             <hr class="my-6" />
   
             <dl class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-600">
