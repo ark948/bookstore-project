@@ -41,3 +41,4 @@ def check_favorite_exists(request: HttpRequest, book_id: int) -> HttpResponse:
         if Favorite.objects.filter(user_id=request.user, book_id=book_id).filter().exists():
             return render(request, "shop/customers/favorites/partials/is_favorite.html", {'book_id': book_id})
         return render(request, "shop/customers/favorites/partials/not_favorite.html", {'book_id': book_id})
+    
