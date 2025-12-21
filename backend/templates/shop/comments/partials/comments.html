@@ -3,17 +3,24 @@
   <div class="text-center">
     {% if status == 'approved' %}
       <div class="flex flex-col">
-        <span class="text-2xl">
+        <span class="text-2xl m-2">
           نظرات <span class="underline text-green-500">تایید شده</span>
         </span>
         <span>تعداد: {{ total }}</span>
       </div>
     {% elif status == 'pending' %}
       <div class="flex flex-col">
-        <span class="text-2xl">
+        <span class="text-2xl m-2">
           نظرات <span class="underline text-yellow-500">در انتظار بررسی</span>
         </span>
         <span>تعداد: {{ total }}</span>
+      </div>
+    {% elif status == 'rejected' %}
+      <div class="flex flex-col">
+        <span class="text-2xl m-2">
+          نظرات <span class="underline text-red-500">رد شده</span>
+        </span>
+        <span>تعداد {{ total }}</span>
       </div>
     {% endif %}
   </div>
