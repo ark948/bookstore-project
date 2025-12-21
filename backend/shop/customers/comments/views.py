@@ -45,7 +45,6 @@ def load_book_comments(request: HttpRequest, book_id: int) -> HttpResponse:
     comments = Comment.objects.filter(book=book_id, status="A")
     if comments.exists():
         context['items'] = comments
-        context['comment_form'] = form
         context['book_id'] = book_id
         if request.htmx:
             return render(request, "shop/customers/comments/partials/book_item_comments_partial.html", context)
