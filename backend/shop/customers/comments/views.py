@@ -47,12 +47,9 @@ def load_book_comments(request: HttpRequest, book_id: int) -> HttpResponse:
         context['items'] = comments
         context['comment_form'] = form
         context['book_id'] = book_id
-    if request.htmx:
-        return render(
-            request, 
-            "shop/customers/comments/partials/book_item_comments_partial.html", 
-            context
-        )
+        if request.htmx:
+            return render(request, "shop/customers/comments/partials/book_item_comments_partial.html", context)
+    return render(request, "shop/customers/comments/partials/empty.html")
     
 
 @role_required('user')
