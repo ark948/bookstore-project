@@ -27,7 +27,8 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
                 anonymous = form.cleaned_data['anonymous']
             )
         except IntegrityError as unique_error:
-            return HttpResponse("شما قبلا برای این کتاب نظر ثبت کرده اید، لطفا در صورت نیاز آن را ویرایش کنید.")
+            existing_comment_obj = Comment.objects.filter(book=book, user=request.user).first()
+            return render(request, "shop/customers/comments/errors/comment_already_exists.html", {'comment_id': existing_comment_obj.id})
         if request.htmx:
             return HttpResponse("نظر شما دریافت شد و پس از تایید نمایش داده خواهد شد.")
         messages.success(request, "نظر ثبت شد و بعد از بررسی نمایش داده خواهد شد.")
@@ -77,6 +78,7 @@ def downvote_comment(request: HttpRequest, comment_id: int) -> HttpResponse | Js
             return HttpResponse("شما قبلا رای ثبت کرده اید.")
         return HttpResponse("OK")
     
+
 # This is not used yet
 @transaction.atomic
 def vote(request: HttpRequest, comment_id: int, value):
