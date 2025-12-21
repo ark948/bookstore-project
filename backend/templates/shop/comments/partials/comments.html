@@ -35,21 +35,23 @@
                 <p>{{ item.body }}</p>
                 <h6>{{ item.user }}</h6>
               </div>
-              <div class="flex flex-col">
-                <button class="btn btn-square btn-ghost"
-                    hx-post="{% url 'shop:shop_comments_approve_comment' item.id %}"
-                    hx-target="#list_item"
-                    hx-swap="delete"
-                    >
-                    <span class="text-xl text-green-500">&#10003;</span>
-                </button>
-                <button class="btn btn-square btn-ghost"
-                    hx-post="{% url 'shop:shop_comments_reject_comment' item.id %}"
-                    hx-target="#list_item"
-                    hx-swap="delete"
-                    >
-                    <span class="text-xl text-red-600">&#10007;</span>
-                </button>
+              <div class="flex flex-col" id="actions">
+                {% if item.status == 'Pending' %}
+                  <button class="btn btn-square btn-ghost"
+                      hx-post="{% url 'shop:shop_comments_approve_comment' item.id %}"
+                      hx-target="#list_item"
+                      hx-swap="delete"
+                      >
+                      <span class="text-xl text-green-500">&#10003;</span>
+                  </button>
+                  <button class="btn btn-square btn-ghost"
+                      hx-post="{% url 'shop:shop_comments_reject_comment' item.id %}"
+                      hx-target="#list_item"
+                      hx-swap="delete"
+                      >
+                      <span class="text-xl text-red-600">&#10007;</span>
+                  </button>
+                {% endif %}
               </div>
             </div>
           </div>
