@@ -51,6 +51,22 @@
                       >
                       <span class="text-xl text-red-600">&#10007;</span>
                   </button>
+                {% elif item.status == 'Approved' %}
+                  <button class="btn btn-square btn-ghost"
+                    hx-post="{% url 'shop:shop_comments_reject_comment' item.id %}"
+                    hx-target="#list_item"
+                    hx-swap="delete"
+                    >
+                    <span class="text-xl text-red-600">&#10007;</span>
+                  </button>
+                {% elif item.status == 'Rejected' %}
+                  <button class="btn btn-square btn-ghost"
+                    hx-post="{% url 'shop:shop_comments_approve_comment' item.id %}"
+                    hx-target="#list_item"
+                    hx-swap="delete"
+                    >
+                    <span class="text-xl text-green-500">&#10003;</span>
+                  </button>
                 {% endif %}
               </div>
             </div>
