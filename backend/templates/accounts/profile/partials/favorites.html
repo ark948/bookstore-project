@@ -22,7 +22,7 @@
                 <h2 class="text-lg font-semibold text-gray-800">{{ item.book_id.title }}</h2>
                 <p class="mt-2 text-gray-600">{{ item.book_id.price|floatformat:"g" }} تومان</p>
                 <p class="mt-2 text-gray-600">
-                    <a class="btn btn-success btn-outline btn-xs" href="{% url 'shop:item_detail' id=item.book_id.id %}">مشاهده</a>
+                    <a class="btn btn-success btn-outline btn-xs" href="{% url 'shop:customers_book_details' item.book_id.id %}">مشاهده</a>
                 </p>
                 <p>
                     <a class="btn btn-error btn-outline btn-xs w-14 mt-2"
