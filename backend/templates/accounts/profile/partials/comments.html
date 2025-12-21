@@ -24,7 +24,7 @@
               <p>{{ item.body }}</p>
               <div>
                 مربوط به: {{ item.book.title }}
-                <a class="link link-info" href="{% url 'shop:item_detail' item.book.pk %}">link</a>
+                <a class="link link-info" href="{% url 'shop:customers_book_details' item.book.pk %}">link</a>
               </div>
             </div>
             <div class="flex flex-col">
