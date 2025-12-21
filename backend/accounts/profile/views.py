@@ -70,8 +70,8 @@ def comments_list(request: HttpRequest) -> HttpResponse:
     pending_items_count = total_user_comments.filter(status="Pending").count()
     context: Optional[Dict[str, Any]] = {}
     if total_user_comments.exists():
-        context['approved_items'] = approved_items
         if approved_items.exists():
+            context['approved_items'] = approved_items
             context['approved_items_count'] = approved_items.count()
         context['pending_items_count'] = pending_items_count
         context['total'] = total_user_comments.count()

@@ -2,32 +2,45 @@
 
 
 {% block content %}
-
-{% for item in approved_items %}
-<div id="list_item">
-  <ul class="list bg-base-100 rounded-box space-y-6 shadow-md m-2 p-4">
-    <li class="card card-compact bg-base-200 shadow">
-      <div class="card-body">
-        <div class="flex justify-between">
-          <div>
-            <h2 class="card-title">{{ item.title }}</h2>
-            <p>{{ item.body }}</p>
-            <h6>{{ item.user }}</h6>
+<a href="{% url 'accounts:acc_prf_comments_list' %}" class="btn btn-xs btn-neutral w-32">
+  <span>بروزرسانی</span>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+  </svg>  
+</a>
+  {% if approved_items %}
+    {% for item in approved_items %}
+    <div id="list_item">
+      <ul class="list bg-base-100 rounded-box space-y-6 shadow-md m-2 p-4">
+        <li class="card card-compact bg-base-200 shadow">
+          <div class="card-body">
+            <div class="flex justify-between">
+              <div>
+                <h2 class="card-title">{{ item.title }}</h2>
+                <p>{{ item.body }}</p>
+                <h6>{{ item.user }}</h6>
+              </div>
+              <div class="flex flex-col">
+                <a class="btn btn-sm btn-ghost" href="{% url 'accounts:acc_prf_edit_comment' item.pk %}">
+                  ویرایش
+                </a>
+                <a class="btn btn-sm btn-ghost">
+                    حذف
+                </a>
+              </div>
+            </div>
           </div>
-          <div class="flex flex-col">
-            <a class="btn btn-sm btn-ghost" href="{% url 'accounts:acc_prf_edit_comment' item.pk %}">
-              ویرایش
-            </a>
-            <a class="btn btn-sm btn-ghost">
-                حذف
-            </a>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
-{% endfor %}
-<a href="{% url 'accounts:acc_prf_profile' %}" class="btn btn-neutral btn-xs btn-outline w-32">بازگشت به پروفایل</a>
-
+        </li>
+      </ul>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div>
+      تعداد کل نظرات شما: {{ total }}
+    </div>
+    <div>
+      هنوز نظر تایید شده ای وجود ندارد.
+    </div>
+  {% endif %}
+  <a href="{% url 'accounts:acc_prf_profile' %}" class="btn btn-neutral btn-xs btn-outline w-32">بازگشت به پروفایل</a>
 {% endblock content %}
