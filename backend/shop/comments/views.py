@@ -37,9 +37,10 @@ def load_comments(request: HttpRequest, status: str) -> HttpResponse:
     comments: QuerySet = services.load_comments(status.capitalize())
     if not comments.exists():
         return HttpResponse("لیست خالی میباشد.")
+    total = comments.count()
     if request.htmx:
-        return render(request, "shop/comments/partials/comments.html", {'comments': comments})
-    return render(request, "shop/comments/pages/comments_list.html", {'comments': comments})
+        return render(request, "shop/comments/partials/comments.html", {'comments': comments, 'status': status, 'total': total})
+    return render(request, "shop/comments/pages/comments_list.html", {'comments': comments, 'status': status, 'total': total})
 
 
 @require_POST

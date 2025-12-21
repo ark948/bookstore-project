@@ -1,33 +1,56 @@
-{% for item in comments %}
-<div id="list_item">
-  <ul class="list bg-base-100 rounded-box space-y-6 shadow-md m-2 p-4">
-    <li class="card card-compact bg-base-200 shadow">
-      <div class="card-body">
-        <div class="flex justify-between">
-          <div>
-            <h2 class="card-title">{{ item.title }}</h2>
-            <p>{{ item.body }}</p>
-            <h6>{{ item.user }}</h6>
-          </div>
-          <div class="flex flex-col">
-            <button class="btn btn-square btn-ghost"
-                hx-post="{% url 'shop:shop_comments_approve_comment' item.id %}"
-                hx-target="#list_item"
-                hx-swap="delete"
-                >
-                <span class="text-xl text-green-500">&#10003;</span>
-            </button>
-            <button class="btn btn-square btn-ghost"
-                hx-post="{% url 'shop:shop_comments_reject_comment' item.id %}"
-                hx-target="#list_item"
-                hx-swap="delete"
-                >
-                <span class="text-xl text-red-600">&#10007;</span>
-            </button>
-          </div>
-        </div>
+<div>
+  {% if comments %}
+  <div class="text-center">
+    {% if status == 'approved' %}
+      <div class="flex flex-col">
+        <span class="text-2xl">
+          نظرات <span class="underline text-green-500">تایید شده</span>
+        </span>
+        <span>تعداد: {{ total }}</span>
       </div>
-    </li>
-  </ul>
+    {% elif status == 'pending' %}
+      <div class="flex flex-col">
+        <span class="text-2xl">
+          نظرات <span class="underline text-yellow-500">در انتظار بررسی</span>
+        </span>
+        <span>تعداد: {{ total }}</span>
+      </div>
+    {% endif %}
+  </div>
+    {% for item in comments %}
+    <div id="list_item">
+      <ul class="list bg-base-100 rounded-box space-y-6 shadow-md m-2 p-4">
+        <li class="card card-compact bg-base-200 shadow">
+          <div class="card-body">
+            <div class="flex justify-between">
+              <div>
+                <h2 class="card-title">{{ item.title }}</h2>
+                <p>{{ item.body }}</p>
+                <h6>{{ item.user }}</h6>
+              </div>
+              <div class="flex flex-col">
+                <button class="btn btn-square btn-ghost"
+                    hx-post="{% url 'shop:shop_comments_approve_comment' item.id %}"
+                    hx-target="#list_item"
+                    hx-swap="delete"
+                    >
+                    <span class="text-xl text-green-500">&#10003;</span>
+                </button>
+                <button class="btn btn-square btn-ghost"
+                    hx-post="{% url 'shop:shop_comments_reject_comment' item.id %}"
+                    hx-target="#list_item"
+                    hx-swap="delete"
+                    >
+                    <span class="text-xl text-red-600">&#10007;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    {% endfor %}
+  {% else %}
+    <h1>آیتمی وجود ندارد.</h1>
+  {% endif %}
 </div>
-{% endfor %}
