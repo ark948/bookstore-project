@@ -79,7 +79,7 @@ def comments_list(request: HttpRequest) -> HttpResponse:
         context['total'] = 0
     if request.htmx:
         return render(request, "accounts/profile/partials/comments.html", context)
-    return render(request, "accounts/pages/comments_list.html", context)
+    return render(request, "accounts/profile/pages/comments_list.html", context)
 
 
 @role_required('user')
