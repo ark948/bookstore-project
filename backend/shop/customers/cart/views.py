@@ -40,6 +40,15 @@ def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
     return redirect(reverse("shop:cart_detail"))
 
 
+def cart_add_quick(request: HttpRequest, book_id: int) -> HttpResponse:
+    cart = Cart(request)
+    if request.method == "POST":
+        if request.htmx:
+            book = get_object_or_404(Book, pk=book_id)
+            cart.add(book, 1)
+            return HttpResponse(status=204)
+
+
 @require_POST
 def cart_remove(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
     cart = Cart(request)
