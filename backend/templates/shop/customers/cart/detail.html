@@ -81,9 +81,9 @@
         <a href="{% url 'shop:checkout' %}" class="btn btn-secondary btn-xs">اتمام خرید</a>
     </div>
     <div>
-        <form action="{% url 'shop:cart_clear' %}" method="post">
+        <form action="{% url 'shop:cart_clear' %}" method="post" onsubmit="return confirm('آیا از حذف سبد فعلی اطمینان دارید؟')">
             {% csrf_token %}
-            <button class="btn btn-xs btn-outline btn-neutral m-4">Clear</button>
+            <button class="btn btn-xs btn-outline btn-neutral m-4">حذف سبد</button>
         </form>
     </div>
 
