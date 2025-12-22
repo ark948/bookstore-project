@@ -46,7 +46,7 @@ def cart_add_quick(request: HttpRequest, book_id: int) -> HttpResponse:
         if request.htmx:
             book = get_object_or_404(Book, pk=book_id)
             cart.add(book, 1)
-            return HttpResponse(status=204)
+            return render(request, "shop/customers/cart/partials/toast.html", {'message': "به سبد افزوده شد."})
 
 
 @require_POST
