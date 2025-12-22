@@ -7,9 +7,19 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>
-        سبد خرید
-    </h1>
+    <div class="text-3xl m-4">
+        جزئییات سبد خرید
+    </div>
+    <div class="m-8">
+        <ul class="steps steps-vertical lg:steps-horizontal w-full  ">
+            <li class="step step-primary">ورود</li>
+            <li class="step step-primary">انتخاب کتاب ها</li>
+            <li class="step">تایید</li>
+            <li class="step">انتخاب روش پرداخت</li>
+            <li class="step">تایید نهایی</li>
+            <li class="step">دریافت کالا ها</li>
+        </ul>
+    </div>
     <table class="table table-sm">
         <thead>
             <tr>
@@ -76,14 +86,6 @@
             <button class="btn btn-xs btn-outline btn-neutral m-4">Clear</button>
         </form>
     </div>
-    <div>
-        <ul class="steps steps-vertical lg:steps-horizontal">
-            <li class="step step-primary">ورود</li>
-            <li class="step step-primary">انتخاب کتاب ها</li>
-            <li class="step">تایید</li>
-            <li class="step">انتخاب روش پرداخت</li>
-            <li class="step">تایید نهایی</li>
-            <li class="step">دریافت کالا ها</li>
-        </ul>
-    </div>
+
+
 {% endblock content %}

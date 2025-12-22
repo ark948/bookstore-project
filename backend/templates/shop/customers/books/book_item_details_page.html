@@ -249,7 +249,7 @@
       toggleBtn.setAttribute('aria-expanded', String(!expanded));
       commentsDetailsPanel.classList.toggle('hidden');
       commentsChev.classList.toggle('rotate-180');
-    })
+    });
 
     const commentFormBtn = document.getElementById('commentFormToggler');
     const commentFormPanel = document.getElementById('commentFormPanel');
@@ -259,7 +259,7 @@
       commentFormBtn.setAttribute('aria-expanded', String(!expanded));
       commentFormPanel.classList.toggle('hidden');
       commentFormChev.classList.toggle('rotate-180');
-    })
+    });
 
   </script>
 {% endblock script %}
