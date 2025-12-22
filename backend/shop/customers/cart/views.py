@@ -76,6 +76,7 @@ def cart_update(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
 def cart_clear(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
     cart.clear()
+    messages.info(request, "سبد فعلی حذف شد.")
     return redirect(reverse("shop:cart_detail"))
 
 
