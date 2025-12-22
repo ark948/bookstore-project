@@ -51,7 +51,11 @@ def cart_remove(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
 def cart_detail(request):
     cart = Cart(request)
     quantity_form = ItemAddForm()
-    return render(request, "shop/customers/cart/detail.html", {'cart': cart, 'form': quantity_form})
+    total = len(cart)
+    count = 0
+    for _ in cart:
+        count += 1
+    return render(request, "shop/customers/cart/detail.html", {'cart': cart, 'form': quantity_form, 'count': count, 'total': total})
 
 
 @require_POST
