@@ -43,6 +43,9 @@ def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
 def cart_add_quick(request: HttpRequest, book_id: int) -> HttpResponse:
     cart = Cart(request)
     book = get_object_or_404(Book, pk=book_id)
+    quantity_check = cart.get_item_quantity(book.id)
+    if quantity_check >= 5:
+        return render(request, "shop/customers/cart/partials/toast.html", {'message': "No more than 5 counts of each item"})
     if request.method == "POST":
         if request.htmx:
             cart.add(book, 1)

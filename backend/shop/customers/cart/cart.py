@@ -85,4 +85,5 @@ class Cart:
     
     def get_item_quantity(self, product_id: int | str) -> int:
         if self.check_item_exists(product_id):
-            return self.cart[str(product_id)]['quantity']
+            return int(self.cart[str(product_id)]['quantity'])
+        return 0
