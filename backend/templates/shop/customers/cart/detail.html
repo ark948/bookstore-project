@@ -45,7 +45,7 @@
                             </a>
                         </td>
                         <td>{{ product.title }}</td>
-                        <td>{{ product.price }}</td>
+                        <td>{{ product.price|floatformat:"0g" }} تومان</td>
                         <td>
                             {{ item.quantity }}
                             <form method="post" action="{% url 'shop:cart_update' product.id %}">
@@ -59,7 +59,7 @@
                                 </button> -->
                             </form>
                         </td>
-                        <td>{{ item.total_price }}</td>
+                        <td>{{ item.total_price|floatformat:"0g" }} تومان</td>
                         <td>
                             <form action="{% url 'shop:cart_remove' product.id %}" method="post">
                                 {% csrf_token %}
@@ -72,7 +72,7 @@
             <tr>
                 <td>مجموع</td>
                 <td colspan="4"></td>
-                <td>{{ cart.get_total_price }}</td>
+                <td>{{ cart.get_total_price|floatformat:"0g" }} تومان</td>
             </tr>
         </tbody>
     </table>
