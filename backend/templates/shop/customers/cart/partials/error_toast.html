@@ -1,0 +1,11 @@
+<div class="toast toast-end" id="toastElement">
+    <div class="alert alert-error">
+      <span>{{ message }}</span>
+    </div>
+  </div>
+  <script>
+    setTimeout(() => {
+      const t = document.getElementById('toastElement');
+      t.remove();
+    }, 5000);
+  </script>
