@@ -44,13 +44,13 @@
                                 <img class="h-12 w-8" src="{% if product.cover_image %} {{ product.cover_image.url }} {% endif %}">
                             </a>
                         </td>
-                        <td>
+                        <td class="text-lg">
                             <a href="{% url 'shop:customers_book_details' product.id %}">
                                 {{ product.title }}
                             </a>
                         </td>
-                        <td>{{ product.price|floatformat:"0g" }} تومان</td>
-                        <td>
+                        <td class="text-lg">{{ product.price|floatformat:"0g" }} تومان</td>
+                        <td class="text-lg">
                             {{ item.quantity }}
                             <form method="post" action="{% url 'shop:cart_update' product.id %}">
                                 {% csrf_token %}
@@ -65,11 +65,11 @@
                                 </button> -->
                             </form>
                         </td>
-                        <td>{{ item.total_price|floatformat:"0g" }} تومان</td>
+                        <td class="text-lg">{{ item.total_price|floatformat:"0g" }} تومان</td>
                         <td>
                             <form action="{% url 'shop:cart_remove' product.id %}" method="post">
                                 {% csrf_token %}
-                                <input type="submit" class="btn btn-error btn-xs" value="حذف">
+                                <input type="submit" class="btn btn-error btn-dash btn-sm w-24" value="حذف">
                             </form>
                         </td>
                     </tr>
