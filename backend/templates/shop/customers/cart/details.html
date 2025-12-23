@@ -74,29 +74,30 @@
                 {% endwith %}
             {% endfor %}
             <tr>
-                <td>مجموع</td>
+                <td class="text-xl">مجموع</td>
                 <td colspan="4"></td>
-                <td>{{ cart.get_total_price|floatformat:"0g" }} تومان</td>
+                <td class="text-xl">{{ cart.get_total_price|floatformat:"0g" }} تومان</td>
             </tr>
         </tbody>
     </table>
-    <div>
-        <a href="{% url 'shop:browse_books' %}" class="btn btn-sm">ادامه خرید</a>
-        <a href="{% url 'shop:checkout' %}" class="btn btn-secondary btn-xs">اتمام خرید</a>
-    </div>
-    <div>
-        <form action="{% url 'shop:cart_clear' %}" method="post" onsubmit="return confirm('آیا از حذف سبد فعلی اطمینان دارید؟')">
-            {% csrf_token %}
-            <button class="btn btn-xs btn-outline btn-neutral m-4">حذف سبد</button>
-        </form>
-    </div>
 
-    <div>
+    <div class="flex flex-col">
         <div class="text-2xl">
             تعداد آیتم ها: {{ count }}
         </div>
         <div class="text-2xl">
             تعداد کل آیتم ها: {{ total }}
+        </div>
+    </div>
+
+    <div id="actions" class="flex">
+        <div class="m-4">
+            <a href="{% url 'shop:browse_books' %}" class="btn btn-sm">ادامه خرید</a>
+            <a href="{% url 'shop:checkout' %}" class="btn btn-secondary btn-outline btn-sm">اتمام خرید</a>
+            <form action="{% url 'shop:cart_clear' %}" method="post" onsubmit="return confirm('آیا از حذف سبد فعلی اطمینان دارید؟')">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-dash btn-neutral m-4" type="submit">حذف سبد</button>
+            </form>
         </div>
     </div>
 
