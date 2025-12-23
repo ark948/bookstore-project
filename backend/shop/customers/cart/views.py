@@ -41,7 +41,7 @@ def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
             quantity=cd['quantity'], 
             override_quantity=cd['override']
         )
-    return redirect(reverse("shop:cart_detail"))
+    return redirect(reverse("shop:cart_details"))
 
 
 def cart_add_quick(request: HttpRequest, book_id: int) -> HttpResponse:
@@ -61,7 +61,7 @@ def cart_remove(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
     cart = Cart(request)
     product = get_object_or_404(Book, id=product_id)
     cart.remove(product)
-    return redirect(reverse("shop:cart_detail"))
+    return redirect(reverse("shop:cart_details"))
 
 
 def cart_detail(request):
@@ -84,7 +84,7 @@ def cart_update(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
         quantity=new_quantity,
         override_quantity=True
     )
-    return redirect(reverse('shop:cart_detail'))
+    return redirect(reverse('shop:cart_details'))
 
 
 @require_POST
@@ -93,7 +93,7 @@ def cart_clear(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
     cart.clear()
     messages.info(request, "سبد فعلی حذف شد.")
-    return redirect(reverse("shop:cart_detail"))
+    return redirect(reverse("shop:browse_books"))
 
 
 @role_required('user')

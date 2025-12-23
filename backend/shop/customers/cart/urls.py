@@ -5,7 +5,7 @@ from shop.customers.cart import views
 urlpatterns = [
     path("quick-add/<int:book_id>/", views.cart_add_quick, name='quick_add'),
     path("update/<int:product_id>/", views.cart_update, name='cart_update'),
-    path("detail/", views.cart_detail, name='cart_detail'),
+    path("detail/", views.cart_detail, name='cart_details'),
     path("add/<int:product_id>/", views.cart_add, name='cart_add'),
     path("remove/<int:product_id>/", views.cart_remove, name='cart_remove'),
     path("clear/", views.cart_clear, name='cart_clear'),
