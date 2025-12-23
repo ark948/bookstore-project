@@ -77,3 +77,8 @@ class Cart:
             Decimal(item['price']) * item['quantity']
             for item in self.cart.values()
         )
+    
+    def check_item_exists(self, product_id: int | str) -> bool:
+        if str(product_id) in self.cart:
+            return True
+        return False
