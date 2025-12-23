@@ -15,6 +15,10 @@ from shop.customers.cart.forms import ItemAddForm
 def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
     product: Book = get_object_or_404(Book, id=product_id)
     cart = Cart(request)
+    if product in cart:
+        print("\nYES\n")
+    else:
+        print("\nNO\n")
     if request.htmx:
         cart.add(
             product=product,
@@ -42,9 +46,9 @@ def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
 
 def cart_add_quick(request: HttpRequest, book_id: int) -> HttpResponse:
     cart = Cart(request)
+    book = get_object_or_404(Book, pk=book_id)
     if request.method == "POST":
         if request.htmx:
-            book = get_object_or_404(Book, pk=book_id)
             cart.add(book, 1)
             return render(request, "shop/customers/cart/partials/toast.html", {'message': "به سبد افزوده شد."})
 
