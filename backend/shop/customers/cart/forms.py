@@ -9,7 +9,7 @@ class ItemAddForm(forms.Form):
         widget=forms.NumberInput(
             attrs={
                 'min': 1,
-                'max': 10,
+                'max': 5,
                 'value': 1,
             }
         )
