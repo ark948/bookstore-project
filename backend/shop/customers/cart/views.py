@@ -71,7 +71,7 @@ def cart_detail(request):
     count = 0
     for _ in cart:
         count += 1
-    return render(request, "shop/customers/cart/detail.html", {'cart': cart, 'form': quantity_form, 'count': count, 'total': total})
+    return render(request, "shop/customers/cart/details.html", {'cart': cart, 'form': quantity_form, 'count': count, 'total': total})
 
 
 @require_POST
