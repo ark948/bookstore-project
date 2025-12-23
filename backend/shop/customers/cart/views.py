@@ -91,6 +91,9 @@ def cart_update(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
 @role_required('user')
 def cart_clear(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
+    if len(cart) == 0:
+        messages.info(request, "سبد شما خالی میباشد.")
+        return redirect(reverse("shop:browse_books"))
     cart.clear()
     messages.info(request, "سبد فعلی حذف شد.")
     return redirect(reverse("shop:browse_books"))
