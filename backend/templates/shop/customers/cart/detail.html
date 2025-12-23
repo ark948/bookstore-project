@@ -40,11 +40,15 @@
                             {{ forloop.counter }}
                         </td>
                         <td>
-                            <a href="{{ product.get_absolute_url }}">
+                            <a href="{% url 'shop:customers_book_details' product.id %}">
                                 <img class="h-12 w-8" src="{% if product.cover_image %} {{ product.cover_image.url }} {% endif %}">
                             </a>
                         </td>
-                        <td>{{ product.title }}</td>
+                        <td>
+                            <a href="{% url 'shop:customers_book_details' product.id %}">
+                                {{ product.title }}
+                            </a>
+                        </td>
                         <td>{{ product.price|floatformat:"0g" }} تومان</td>
                         <td>
                             {{ item.quantity }}
