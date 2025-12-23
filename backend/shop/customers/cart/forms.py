@@ -23,5 +23,5 @@ class ItemAddForm(forms.Form):
         self.helper.layout = Layout(
             'quantity',
             'override',
-            Submit('submit', 'بروزرسانی', css_class='btn-accent btn-xs')
+            Submit('submit', 'بروزرسانی', css_class='btn-accent btn-xs m-4')
         )
