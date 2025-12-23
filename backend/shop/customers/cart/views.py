@@ -31,6 +31,10 @@ def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
         return redirect(reverse("shop:browse_books"))
     form = ItemAddForm(request.POST)
     if form.is_valid():
+        quantity_check = cart.get_item_quantity(product.id)
+        if quantity_check >= 5:
+            messages.error(request, "خرید بیش از 5 عدد از این آیتم امکان پذیر نمیاشد.")
+            return redirect(reverse("shop:browse_books"))
         cd = form.cleaned_data
         cart.add(
             product=product, 
