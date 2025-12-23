@@ -15,10 +15,6 @@ from shop.customers.cart.forms import ItemAddForm
 def cart_add(request: HttpRequest, product_id: int) -> HttpResponseRedirect:
     product: Book = get_object_or_404(Book, id=product_id)
     cart = Cart(request)
-    if product in cart:
-        print("\nYES\n")
-    else:
-        print("\nNO\n")
     if request.htmx:
         cart.add(
             product=product,
