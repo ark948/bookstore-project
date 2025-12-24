@@ -53,7 +53,9 @@ def cart_add_quick(request: HttpRequest, book_id: int) -> HttpResponse:
     if request.method == "POST":
         if request.htmx:
             cart.add(book, 1)
-            return render(request, "shop/customers/cart/partials/success_toast.html", {'message': "به سبد افزوده شد."})
+            response = render(request, "shop/customers/cart/partials/success_toast.html", {'message': "به سبد افزوده شد."})
+            response['HX-Trigger'] = 'quick_add_success'
+            return response
 
 
 @require_POST

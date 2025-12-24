@@ -178,5 +178,15 @@
   $('#id_authors').select2();
   $('#id_genres').select2();
   $('#id_tags').select2();
+  function update_cart_badge() {
+    console.log("Firing up");
+    $.ajax({
+      url: "{% url 'shop:cart_count' %}",
+      method: "GET",
+      success: function (result) {
+        $("#cart_count_badge").html(result);
+      }
+    });
+  }
 </script>
 {% endblock script %}
