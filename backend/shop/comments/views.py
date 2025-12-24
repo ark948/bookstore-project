@@ -33,8 +33,8 @@ class IndexView(TemplateView):
     
 
 @role_required('employee')
-def load_comments(request: HttpRequest, status: str) -> HttpResponse:
-    comments: QuerySet = services.load_comments(status.capitalize())
+def load_comments(request: HttpRequest, status: int) -> HttpResponse:
+    comments: QuerySet = services.load_comments(status)
     if not comments.exists():
         return HttpResponse("لیست خالی میباشد.")
     total = comments.count()

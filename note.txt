@@ -573,6 +573,10 @@ and books list for customers
 71. Since deliveries are done by other services such as post office or private delivery companies...
 i will move them out of shop app and into its own app
 
+72. custom path converter for loading comments
+Django urls do not accept negative integers as parameter.
+There are different ways to fix this: using str instead of int, using regex (old) or using custom path converter (recommended)
+
 Update current tailwind setup to django-vite
 
 WARNING:
