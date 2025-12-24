@@ -31,9 +31,14 @@
             </div>
           </div>
   
-          <div class="bg-white rounded-xl p-4 shadow-sm">
-            <h3 class="text-sm font-semibold text-gray-700 mb-2">درباره این محصول</h3>
-            <!-- <p class="text-sm text-gray-600 leading-relaxed">{{ item.description }} or {{ item.summary }}</p> -->
+          <!-- Collapsible card for 'About this product' -->
+          <div class="collapse collapse-arrow bg-base-100 border-base-300 border">
+            <input type="checkbox" />
+            <div class="collapse-title font-semibold">درباره این کتاب</div>
+            <div class="collapse-content text-sm">
+              <div>{{ item.summary }}</div>
+              <div>{{ item.description }}</div>
+            </div>
           </div>
 
           <!-- Collapsible card for comments -->
