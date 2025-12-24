@@ -10,8 +10,8 @@
         <div hx-boost="true">
             <span>تعداد نظرات در انتظار بررسی {{ total_waiting }}</span>
             <a class="link"
-                href="{% url 'shop:shop_comments_comments_list' 'pending' %}"
-                hx-get="{% url 'shop:shop_comments_load_comments' 'pending' %}"
+                href="{% url 'shop:shop_comments_comments_list' 0 %}"
+                hx-get="{% url 'shop:shop_comments_load_comments' 0 %}"
                 hx-target="#comments"
                 hx-trigger="click"
                 hx-swap="innerHTML"
@@ -23,8 +23,8 @@
         <div hx-boost="true">
             <span>تعداد نظرات تایید شده {{ total_approved }}</span>
             <a class="link"
-                href="{% url 'shop:shop_comments_comments_list' 'approved' %}"
-                hx-get="{% url 'shop:shop_comments_load_comments' 'approved' %}"
+                href="{% url 'shop:shop_comments_comments_list' 1 %}"
+                hx-get="{% url 'shop:shop_comments_load_comments' 1 %}"
                 hx-target="#comments"
                 hx-trigger="click"
                 hx-swap="innerHTML"
@@ -36,8 +36,8 @@
         <div hx-boost="true">
             <span>تعداد نظرات رد شده {{ total_rejected }}</span>
             <a class="link"
-                href="{% url 'shop:shop_comments_comments_list' 'rejected' %}"
-                hx-get="{% url 'shop:shop_comments_load_comments' 'rejected' %}"
+                href="{% url 'shop:shop_comments_comments_list' -1 %}"
+                hx-get="{% url 'shop:shop_comments_load_comments' -1 %}"
                 hx-target="#comments"
                 hx-trigger="click"
                 hx-swap="innerHTML"

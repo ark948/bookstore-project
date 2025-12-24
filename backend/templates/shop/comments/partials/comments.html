@@ -36,7 +36,8 @@
                 <h6>{{ item.user }}</h6>
               </div>
               <div class="flex flex-col" id="actions">
-                {% if item.status == 'Pending' %}
+                {% if item.status == 0 %}
+                <!-- Pending comments -->
                   <button class="btn btn-square btn-ghost"
                       hx-post="{% url 'shop:shop_comments_approve_comment' item.id %}"
                       hx-target="#list_item"
@@ -51,7 +52,8 @@
                       >
                       <span class="text-xl text-red-600">&#10007;</span>
                   </button>
-                {% elif item.status == 'Approved' %}
+                {% elif item.status == 1 %}
+                <!-- Approved comments -->
                   <button class="btn btn-square btn-ghost"
                     hx-post="{% url 'shop:shop_comments_reject_comment' item.id %}"
                     hx-target="#list_item"
@@ -59,7 +61,8 @@
                     >
                     <span class="text-xl text-red-600">&#10007;</span>
                   </button>
-                {% elif item.status == 'Rejected' %}
+                {% elif item.status == -1 %}
+                <!-- Rejected comments -->
                   <button class="btn btn-square btn-ghost"
                     hx-post="{% url 'shop:shop_comments_approve_comment' item.id %}"
                     hx-target="#list_item"

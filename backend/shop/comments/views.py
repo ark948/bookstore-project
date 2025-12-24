@@ -26,9 +26,9 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         all_comments = Comment.objects.all()
         context['total'] = all_comments.count()
-        context['total_waiting'] = all_comments.filter(status="Pending").count()
-        context['total_rejected'] = all_comments.filter(status="Rejected").count()
-        context['total_approved'] = all_comments.filter(status="Approved").count()
+        context['total_waiting'] = all_comments.filter(status=0).count()
+        context['total_rejected'] = all_comments.filter(status=-1).count()
+        context['total_approved'] = all_comments.filter(status=1).count()
         return context
     
 
