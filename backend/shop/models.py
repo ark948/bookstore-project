@@ -315,10 +315,13 @@ class Discount(TimeStampModel):
 
 
 class Comment(TimeStampModel):
+    PENDING = 0
+    APPROVED = 1
+    REJECTED = -1
     STATUS_CHOICES = {
-        "P": "Pending",
-        "A": "Approved",
-        "R": "Rejected"
+        PENDING: "Pending",
+        APPROVED: "Approved",
+        REJECTED: "Rejected"
     }
     title = models.CharField("Title", max_length=60, null=True, blank=True)
     body = models.CharField("Body", max_length=500)
