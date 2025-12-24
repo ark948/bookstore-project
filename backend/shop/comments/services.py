@@ -4,12 +4,12 @@ from django.shortcuts import get_object_or_404
 
 from shop.models import Comment
 
-def load_comments(status: str) -> QuerySet:
+def load_comments(status: int) -> QuerySet:
     return Comment.objects.filter(status=status).order_by('-created_at')
 
 
-def update_comment(id: int, action: str) -> bool:
-    if action not in ('A', 'R'):
+def update_comment(id: int, action: int) -> bool:
+    if action not in (1, -1):
         return False
     item: Comment = get_object_or_404(Comment, pk=id)
     try:
@@ -24,7 +24,7 @@ def update_comment(id: int, action: str) -> bool:
 def approve_comment(id: int) -> bool:
     item: Comment = get_object_or_404(Comment, pk=id)
     try:
-        item.status = Comment.STATUS_CHOICES['A']
+        item.status = 1
         item.save()
     except Exception as error:
         print("\n--> [ Error in approving comment ]<--\n", error)
@@ -35,7 +35,7 @@ def approve_comment(id: int) -> bool:
 def reject_comment(id: int) -> bool:
     item: Comment = get_object_or_404(Comment, pk=id)
     try:
-        item.status = Comment.STATUS_CHOICES['R']
+        item.status = -1
         item.save()
     except Exception as error:
         print("\n--> [ Error in rejecting comment ]<--\n", error)
