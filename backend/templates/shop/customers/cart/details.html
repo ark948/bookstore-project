@@ -9,6 +9,11 @@
 {% block content %}
     <div class="text-3xl m-4">
         جزئییات سبد خرید
+        <span class="text-base">
+            {% if count == 0 %}
+                (خالی)
+            {% endif %}
+        </span>
     </div>
     <div class="m-8">
         <ul class="steps steps-vertical lg:steps-horizontal w-full  ">
