@@ -42,7 +42,7 @@ def add_comment(request: HttpRequest, book_id: int) -> HttpResponse:
 def load_book_comments(request: HttpRequest, book_id: int) -> HttpResponse:
     context = {}
     form = AddCommentForm()
-    comments = Comment.objects.filter(book=book_id, status="A")
+    comments = Comment.objects.filter(book=book_id, status=1)
     if comments.exists():
         context['items'] = comments
         context['book_id'] = book_id
