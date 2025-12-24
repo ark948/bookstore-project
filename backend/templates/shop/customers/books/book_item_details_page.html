@@ -202,13 +202,11 @@
           </div>
   
           <!-- Collapsible Details Card -->
-          <div class="mt-6 bg-white rounded-xl p-4 shadow-sm">
-            <button aria-expanded="false" class="w-full flex items-center justify-between py-2 px-1" id="toggleDetails">
-              <span class="font-medium">جزئییات بشیتر</span>
-              <svg id="chev" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06-.02L10 10.88l3.71-3.69a.75.75 0 111.06 1.06l-4.24 4.22a.75.75 0 01-1.06 0L5.25 8.25a.75.75 0 01-.02-1.06z" clip-rule="evenodd"/></svg>
-            </button>
-            <div id="detailsPanel" class="mt-3 hidden text-sm text-gray-600">
-              <ul class="list-disc pl-5 space-y-1">
+          <div class="collapse collapse-arrow bg-base-100 border-base-300 border mt-6">
+            <input type="checkbox" />
+            <div class="collapse-title font-semibold">جزئییات بشیتر</div>
+            <div class="collapse-content text-sm">
+              <ul class="list-disc pl-5 space-y-1 m-6">
                 <li>نویسنده: {% for a in item.authors.all %}{{ a }},{% endfor %}</li>
                 <li>انتشارات: {{ item.publisher }}</li>
                 <li>زبان: {{ item.language }}</li>
@@ -227,19 +225,3 @@
       </section>
 </div>
 {% endblock content %}
-
-
-{% block script %}
-  <script>
-    const toggle = document.getElementById('toggleDetails');
-    const panel = document.getElementById('detailsPanel');
-    const chev = document.getElementById('chev');
-    toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      panel.classList.toggle('hidden');
-      chev.classList.toggle('rotate-180');
-    });
-
-  </script>
-{% endblock script %}
