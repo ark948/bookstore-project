@@ -94,14 +94,17 @@
         <aside class="sticky top-6">
           <div class="bg-white rounded-xl shadow p-6 lg:p-8">
             <div class="flex justify-between">
-              <h1 class="text-2xl lg:text-3xl font-extrabold leading-tight">{{ item.title }} <span class="text-base font-medium text-gray-500">ویرایش {{ item.edition }}</span></h1>
-              <div
-                id="favorite_section"
-                hx-get="{% url 'shop:check_favorite' item.pk %}"
-                hx-swap="innerHTML"
-                hx-trigger="load"
-                >
-              </div>
+              <h1 class="text-2xl lg:text-3xl font-extrabold leading-tight">
+                {{ item.title }} <span class="text-base font-medium text-gray-500">ویرایش {{ item.edition }}</span>
+              </h1>
+                <div
+                  id="favorite_section"
+                  hx-get="{% url 'shop:is_book_favorite' item.pk %}"
+                  hx-target="this"
+                  hx-swap="innerHTML"
+                  hx-trigger="load"
+                  >
+                </div>
             </div>
 
   
@@ -113,11 +116,11 @@
                 <!-- <div class="text-xs text-gray-400 mt-1">Inclusive of all taxes</div> -->
               </div>
   
-              <div class="ml-auto text-right">
+              <!-- <div class="ml-auto text-right">
                 <button aria-label="Add to wishlist" class="p-2 rounded-md border hover:bg-gray-50">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 18.656 3.172 11.83a4 4 0 010-5.656z"/></svg>
                 </button>
-              </div>
+              </div> -->
             </div>
   
             <!-- Delivery & Stock -->

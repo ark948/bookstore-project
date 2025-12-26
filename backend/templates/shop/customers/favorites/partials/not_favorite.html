@@ -4,7 +4,7 @@
     </div>
     <button
         hx-post="{% url 'shop:modify_favorite' book_id 'add' %}"
-        hx-target="closest div"
+        hx-target="#favorite_section"
         hx-trigger="click"
         hx-swap="innerHTML"
         class="bg-white bg-opacity-90 rounded-full w-10 h-10 flex items-center justify-center shadow-sm transition-colors duration-200 hover:bg-opacity-100 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
