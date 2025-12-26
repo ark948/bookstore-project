@@ -93,14 +93,17 @@
         <!-- RIGHT: Product Info -->
         <aside class="sticky top-6">
           <div class="bg-white rounded-xl shadow p-6 lg:p-8">
-            <h1 class="text-2xl lg:text-3xl font-extrabold leading-tight">{{ item.title }} <span class="text-base font-medium text-gray-500">ویرایش {{ item.edition }}</span></h1>
-            <div
-              id="favorite_section"
-              hx-get="{% url 'shop:check_favorite' item.pk %}"
-              hx-swap="innerHTML"
-              hx-trigger="load"
-              >
+            <div class="flex justify-between">
+              <h1 class="text-2xl lg:text-3xl font-extrabold leading-tight">{{ item.title }} <span class="text-base font-medium text-gray-500">ویرایش {{ item.edition }}</span></h1>
+              <div
+                id="favorite_section"
+                hx-get="{% url 'shop:check_favorite' item.pk %}"
+                hx-swap="innerHTML"
+                hx-trigger="load"
+                >
+              </div>
             </div>
+
   
             <div class="mt-4 flex items-end gap-4">
               <div>
