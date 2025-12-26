@@ -3,7 +3,7 @@
       <div class="animate-bounce text-red-400 text-2xl">حذف از لیست علاقه مندی ها</div>
     </div>
     <button
-        hx-post="{% url 'shop:remove_favorite' book_id %}"
+        hx-post="{% url 'shop:modify_favorite' book_id 'remove' %}"
         hx-target="closest div"
         hx-trigger="click"
         hx-swap="innerHTML"

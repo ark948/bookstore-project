@@ -3,7 +3,7 @@
       <div class="animate-bounce text-pink-400 text-2xl">افزودن به لیست علاقه مندی ها</div>
     </div>
     <button
-        hx-post="{% url 'shop:add_favorite' book_id %}"
+        hx-post="{% url 'shop:modify_favorite' book_id 'add' %}"
         hx-target="closest div"
         hx-trigger="click"
         hx-swap="innerHTML"
