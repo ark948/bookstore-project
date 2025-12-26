@@ -164,7 +164,7 @@
   
             <div
               id="favorite_section"
-              hx-get="{% url 'shop:is_book_favorite' item.pk %}"
+              hx-get="{% url 'shop:check_favorite' item.pk %}"
               hx-swap="innerHTML"
               hx-trigger="load"
               >

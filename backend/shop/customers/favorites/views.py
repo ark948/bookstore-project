@@ -12,6 +12,14 @@ def is_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
         if Favorite.objects.filter(user_id=request.user, book_id=book_id).exists():
             return render(request, "shop/customers/favorites/partials/remove_from_favorite_partial.html", {'book_id': book_id})
         return render(request, "shop/customers/favorites/partials/add_to_favorite_partial.html", {'book_id': book_id})
+        
+
+@role_required('user')
+def is_book_favorite_for_book_details_page(request: HttpRequest, book_id: int) -> HttpResponse:
+    if request.htmx:
+        if Favorite.objects.filter(user_id=request.user, book_id=book_id).exists():
+            return render(request, "shop/customers/favorites/partials/is_favorite.html", {'book_id': book_id})
+        return render(request, "shop/customers/favorites/partials/not_favorite.html", {'book_id': book_id})
 
 
 @role_required('user')
