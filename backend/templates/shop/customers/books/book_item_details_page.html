@@ -98,10 +98,10 @@
                 {{ item.title }} <span class="text-base font-medium text-gray-500">ویرایش {{ item.edition }}</span>
               </h1>
                 <div
+                class="m-8"
                   id="favorite_section"
                   hx-get="{% url 'shop:is_book_favorite' item.pk %}"
                   hx-target="this"
-                  hx-swap="innerHTML"
                   hx-trigger="load"
                   >
                 </div>
