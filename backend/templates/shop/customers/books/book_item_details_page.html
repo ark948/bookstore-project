@@ -97,14 +97,17 @@
               <h1 class="text-2xl lg:text-3xl font-extrabold leading-tight">
                 {{ item.title }} <span class="text-base font-medium text-gray-500">ویرایش {{ item.edition }}</span>
               </h1>
-                <div
-                class="m-8"
-                  id="favorite_section"
-                  hx-get="{% url 'shop:is_book_favorite' item.pk %}"
-                  hx-target="this"
+              <div id="wishlist"
+                  hx-get="{% url 'shop:check_favorite' item.id %}"
                   hx-trigger="load"
-                  >
+                  hx-target="#wishlist_wrapper"
+                  hx-swap="innerHTML"
+                >
+                <div id="wishlist_wrapper">
+                  
                 </div>
+              </div>
+
             </div>
 
   

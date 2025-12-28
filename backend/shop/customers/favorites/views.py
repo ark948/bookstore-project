@@ -20,6 +20,16 @@ def is_book_favorite_for_book_details_page(request: HttpRequest, book_id: int) -
         if Favorite.objects.filter(user_id=request.user, book_id=book_id).exists():
             return render(request, "shop/customers/favorites/partials/is_favorite.html", {'book_id': book_id})
         return render(request, "shop/customers/favorites/partials/not_favorite.html", {'book_id': book_id})
+    
+
+def add_book_favorite_details_page(request: HttpRequest, book_id: int) -> HttpResponse:
+    book_obj = get_object_or_404(Book, pk=book_id)
+    Favorite.objects.create(user_id=request.user, book_id=book_obj)
+    return render(request, "shop/customers/favorites/partials/is_favorite.html", {'book_id': book_id})
+
+def remove_book_favorite_details_page(request: HttpRequest, book_id: int) -> HttpResponse:
+    Favorite.objects.filter(user_id=request.user, book_id=book_id).delete()
+    return render(request, "shop/customers/favorites/partials/not_favorite.html", {'book_id': book_id})
 
 
 @role_required('user')
@@ -39,18 +49,3 @@ def remove_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
         book_obj = get_object_or_404(Book, pk=book_id)
         Favorite.objects.filter(user_id=request.user, book_id=book_obj).delete()
         return render(request, "shop/customers/favorites/partials/add_to_favorite_partial.html", {'book_id': book_id})
-        
-
-@role_required('user')
-def modify_favorite(request: HttpRequest, book_id: int, action: str) -> HttpResponse:
-    if action.lower() == 'remove':
-        Favorite.objects.filter(user_id=request.user, book_id=book_id).delete()
-        if request.htmx:
-            return render(request, "shop/customers/favorites/partials/is_favorite.html", {'book_id': book_id})
-    elif action.lower() == 'add':
-        book_obj = get_object_or_404(Book, pk=book_id)
-        Favorite.objects.create(user_id=request.user, book_id=book_obj)
-        if request.htmx:
-            return render(request, "shop/customers/favorites/partials/not_favorite.html", {'book_id': book_id})
-    else:
-        return HttpResponse("خطایی رخ داده است.")

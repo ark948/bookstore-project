@@ -3,7 +3,8 @@ from django.urls import path
 from shop.customers.favorites import views
 
 urlpatterns = [
-    path("modify-favorite/<int:book_id>/<str:action>/", views.modify_favorite, name='modify_favorite'),
+    path("remove-from-favorites/<int:book_id>/", views.remove_book_favorite_details_page, name='remove_favorite_details_page'),
+    path("add-to-favorite-details-page/<int:book_id>/", views.add_book_favorite_details_page, name='add_favorite_details_page'),
     path("check-favorite/<int:book_id>/", views.is_book_favorite_for_book_details_page, name='check_favorite'),
     path("remove-from-favorites/<int:book_id>/", views.remove_book_favorite, name='remove_favorite'),
     path("add-to-favorite/<int:book_id>/", views.add_book_favorite, name='add_favorite'),
