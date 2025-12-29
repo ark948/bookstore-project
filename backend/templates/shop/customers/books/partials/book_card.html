@@ -1,115 +1,119 @@
 {% load static %}
 
-<div class="card w-68 m-2 bg-white rounded shadow overflow-hidden transition-all duration-300 transform hover:shadow-xl hover:-translate-y-1">
+<div class="card w-68 h-110 m-2 bg-white rounded shadow overflow-hidden transition-all duration-300 transform hover:shadow-xl hover:-translate-y-1">
 <!-- Product Image Section -->
 
-<div class="relative h-64 overflow-hidden bg-gray-100">
-    <a href="{% url 'shop:customers_book_details' book.id %}">
-        <img src="{% if book.cover_image %}{{ book.cover_image.url }}{% else %}{% static 'img/no_cover.jpg' %}{% endif %}" alt="Book Cover Image" class="w-64 h-64 object-cover transition-transform duration-700 ease-in-out transform hover:scale-110">
-    </a>
+    <div class="relative h-60 overflow-hidden bg-gray-100">
+        <a href="{% url 'shop:customers_book_details' book.id %}">
+            <img src="{% if book.cover_image %}{{ book.cover_image.url }}{% else %}{% static 'img/no_cover.jpg' %}{% endif %}" alt="Book Cover Image" class="w-64 h-64 object-cover transition-transform duration-700 ease-in-out transform hover:scale-110">
+        </a>
 
-    <!-- Badge -->
-    <div class="absolute top-4 left-4 bg-pink-600 text-white px-3 py-1.5 rounded text-xs font-bold uppercase tracking-wider">
-        <span>جدید</span>
-    </div>
-    
-    <!-- Wishlist Button Badge -->
-    <div
-        id="favorite_section"
-        hx-get="{% url 'shop:is_book_favorite' book.pk %}"
-        hx-swap="innerHTML"
-        hx-trigger="load"
-    >
-    </div>
-</div>
-
-<!-- Product Details Section -->
-<div class="p-6">
-    <!-- Category -->
-    <div class="text-indigo-600 text-sm font-semibold uppercase tracking-wide mb-2">
-        {% for g in book.genres.all %}
-            <span>{{ g.title }}</span>
-        {% endfor %}
-    </div>
-    
-    <!-- Title -->
-    <h2 class="text-md font-bold text-gray-900 leading-tight mb-2">{{ book.title }}</h2>
-    
-    <!-- Rating -->
-    <div class="flex items-center">
-        <div class="flex text-amber-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
+        <!-- Badge -->
+        {% if book.available %}
+        <div class="absolute top-4 left-4 bg-pink-600 text-white px-3 py-1.5 rounded text-xs font-bold uppercase tracking-wider">
+            <span>جدید</span>
         </div>
-        <span class="text-gray-500 text-sm ml-2">{{ book.rating }}</span>
+        {% endif %}
+        
+        <!-- Wishlist Button Badge -->
+        <div
+            id="favorite_section"
+            hx-get="{% url 'shop:is_book_favorite' book.pk %}"
+            hx-swap="innerHTML"
+            hx-trigger="load"
+        >
+        </div>
     </div>
-    
-    <!-- Description with truncation -->
-    <div class="mb-2">
-        <p class="text-gray-600 leading-relaxed line-clamp-3">{{ book.description }}</p>
-    </div>
-    
-    <!-- Features -->
-    <!-- Removed -->
-    
-    <!-- Price and CTA -->
-    <div class="flex flex-wrap lg:flex-nowrap items-center justify-between">
-        <div class="price-container">
-            <div class="flex items-center">
-                <div class="text-xl font-extrabold text-gray-900">
-                    <span>
-                        {% if book.available %} 
-                            {{ book.price|floatformat:"0g" }}&nbsp تومان 
-                        {% else %} 
-                            {{ book.price|floatformat:"0g" }}&nbsp تومان (آخرین قیمت)
-                        {% endif %}
-                    </span>
-                </div>
-                <div class="ml-3 px-2 py-1 bg-pink-100 text-pink-700 rounded-md font-semibold text-sm">
-                    -<span>10</span>%
+
+    <!-- Product Details Section -->
+    <div class="p-6">
+        <!-- Category -->
+        <div class="text-indigo-600 text-sm font-semibold uppercase tracking-wide mb-2">
+            {% for g in book.genres.all %}
+                <span>{{ g.title }}</span>
+            {% endfor %}
+        </div>
+        
+        <!-- Title -->
+        <h2 class="text-md font-bold text-gray-900 leading-tight mb-2">{{ book.title }}</h2>
+        
+        <!-- Rating -->
+        <div class="flex items-center">
+            <div class="flex text-amber-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+            </div>
+            <span class="text-gray-500 text-sm ml-2">{{ book.rating }}</span>
+        </div>
+        
+        <!-- Description with truncation -->
+        <div class="mb-2">
+            <p class="text-gray-600 leading-relaxed line-clamp-3">{{ book.description }}</p>
+        </div>
+        
+        <!-- Features -->
+        <!-- Removed -->
+        
+        <!-- Price and CTA -->
+        <div class="flex flex-wrap lg:flex-nowrap items-center justify-between">
+            <div class="price-container">
+                <div class="flex items-center">
+                    <div class="font-bold text-gray-900">
+                            {% if book.available %} 
+                                <span class="text-lg">
+                                    {{ book.price|floatformat:"0g" }}&nbsp تومان 
+                                </span>
+                            {% else %}
+                                <span class="text-sm">
+                                    {{ book.price|floatformat:"0g" }}&nbsp تومان (آخرین قیمت - ناموجود)
+                                </span>
+                            {% endif %}
+                    </div>
+                    <!-- <div class="ml-3 px-2 py-1 bg-pink-100 text-pink-700 rounded-md font-semibold text-sm">
+                        -<span>10</span>%
+                    </div> -->
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Card actions -->
-    <div class="flex">
-        {% if book.available %}
-            <button class="btn btn-info btn-xs m-1"
-                hx-post="{% url 'shop:quick_add' book.id %}"
-                hx-trigger="click"
-                hx-target="#quick_add_result"
-                hx-swap="innerHTML"
-                hx-on:quick_add_success="update_cart_badge();"
-                >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3z" />
-                    <path d="M16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+        <!-- Card actions -->
+        <div class="flex">
+            {% if book.available %}
+                <button class="btn btn-info btn-xs m-1"
+                    hx-post="{% url 'shop:quick_add' book.id %}"
+                    hx-trigger="click"
+                    hx-target="#quick_add_result"
+                    hx-swap="innerHTML"
+                    hx-on:quick_add_success="update_cart_badge();"
+                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3z" />
+                        <path d="M16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                    </svg>
+                    افزودن به سبد
+                </button>
+            {% else %}
+                <button class="btn btn-info btn-disabled btn-xs m-1"
+                    hx-post="{% url 'shop:quick_add' book.id %}"
+                    hx-trigger="click"
+                    hx-target="#quick_add_result"
+                    hx-swap="innerHTML"
+                    hx-on:quick_add_success="update_cart_badge();"
+                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3z" />
+                        <path d="M16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                    </svg>
+                    افزودن به سبد
+                </button>
+            {% endif %}
+            <a href="{% url 'shop:customers_book_details' book_id=book.pk %}" class="btn btn-primary btn-outline btn-xs w-27 m-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
                 </svg>
-                افزودن به سبد
-            </button>
-        {% else %}
-            <button class="btn btn-info btn-disabled btn-xs m-1"
-                hx-post="{% url 'shop:quick_add' book.id %}"
-                hx-trigger="click"
-                hx-target="#quick_add_result"
-                hx-swap="innerHTML"
-                hx-on:quick_add_success="update_cart_badge();"
-                >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3z" />
-                    <path d="M16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-                </svg>
-                افزودن به سبد
-            </button>
-        {% endif %}
-        <a href="{% url 'shop:customers_book_details' book_id=book.pk %}" class="btn btn-primary btn-outline btn-xs w-27 m-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
-            </svg>
-            جزئییات
-        </a>
+                جزئییات
+            </a>
+        </div>
     </div>
-</div>
 </div>
