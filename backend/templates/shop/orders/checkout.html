@@ -43,9 +43,7 @@
                                 <td class="py-4">{{ item.product.price }}</td>
                                 <td class="py-4">
                                     <div>
-                                        <button class="border rounded-md py-2 px-4 m-1">-</button>
                                         <span class="text-center w-8">{{ item.quantity }}</span>
-                                        <button class="border rounded-md py-2 px-4 m-1">+</button>
                                     </div>
                                 </td>
                                 <td class="py-4">{{ item.total_price }}</td>
@@ -78,7 +76,7 @@
                     </div>
                     <form action="{% url 'shop:checkout' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-info btn-md w-full mt-4">
+                        <button type="submit" class="btn btn-info btn-md btn-outline w-full mt-4">
                             ثبت
                         </button>
                     </form>
