@@ -100,7 +100,7 @@
     <div id="actions" class="flex">
         <div class="m-4">
             <a href="{% url 'shop:browse_books' %}" class="btn btn-sm">ادامه خرید</a>
-            <a href="{% url 'shop:checkout' %}" class="btn btn-secondary btn-outline btn-sm">اتمام خرید</a>
+            <a href="{% url 'shop:checkout' %}" class="btn btn-secondary btn-outline btn-sm">تایید</a>
             <form action="{% url 'shop:cart_clear' %}" method="post" onsubmit="return confirm('آیا از حذف سبد فعلی اطمینان دارید؟')">
                 {% csrf_token %}
                 <button class="btn btn-sm btn-dash btn-neutral m-4" type="submit">حذف سبد</button>
