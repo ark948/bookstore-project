@@ -165,7 +165,7 @@
                   </button> -->
               </div>
   
-              {% if item_form %}
+              {% if item_form and item.available %}
                   <form action="{% url 'shop:cart_add' item.id %}" method="post">
                       {% csrf_token %}
                       <div class="form-control m-2">
