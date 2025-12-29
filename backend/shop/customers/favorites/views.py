@@ -47,12 +47,9 @@ def add_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
 
 @role_required('user')
 def remove_book_favorite(request: HttpRequest, book_id: int) -> HttpResponse:
-    print("remove_book_favorite called")
     if request.htmx:
-        print("request is htmx")
         book_obj = get_object_or_404(Book, pk=book_id)
         item = Favorite.objects.filter(user_id=request.user, book_id=book_obj).first()
         if item:
-            print("item exists, deleting it...")
             item.delete()
         return render(request, "shop/customers/favorites/partials/add_to_favorite_partial.html", {'book_id': book_id})
