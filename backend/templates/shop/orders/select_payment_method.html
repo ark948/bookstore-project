@@ -23,7 +23,10 @@
                       <h2 class="card-title">درگاه بانکی</h2>
                       <p>پرداخت با استفاده از تمامی کارت های متصل به شبکه شتاب</p>
                       <div class="justify-end card-actions">
-                        <button class="btn btn-primary btn-sm btn-outline btn-dash">انتقال به درگاه</button>
+                        <form action="{% url 'shop:select_payment' %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-primary btn-sm btn-outline btn-dash">انتقال به درگاه</button>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -35,7 +38,10 @@
                       <h2 class="card-title">نقدی</h2>
                       <p>پرداخت با استفاده از دستگاه pos درب منزل</p>
                       <div class="justify-end card-actions">
-                        <button class="btn btn-primary btn-sm btn-outline btn-dash">ثبت</button>
+                        <form action="{% url 'shop:select_payment' %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-primary btn-sm btn-outline btn-dash">ثبت</button>
+                        </form>
                       </div>
                     </div>
                   </div>
