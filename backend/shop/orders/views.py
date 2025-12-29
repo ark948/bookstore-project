@@ -62,14 +62,20 @@ def checkout(request: HttpRequest) -> HttpResponse:
             order = order,
         )
         cart.clear()
-        return render(request, "shop/orders/order_placed.html", {
-            'order': order, 
-            'payment': payment
-        })
+        # return render(request, "shop/orders/order_placed.html", {
+        #     'order': order, 
+        #     'payment': payment
+        # })
+        return redirect(reverse('shop:select_payment'))
     return render(request, "shop/orders/checkout.html", {
         'total_price': total_price,
         'items': items,
     })
+
+
+@role_required('user')
+def select_payment_method(request: HttpRequest) -> HttpResponse:
+    return render(request, "shop/orders/select_payment_method.html", {})
 
 
 @require_POST
