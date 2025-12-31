@@ -33,7 +33,41 @@
             <a class="btn btn-ghost text-white hover:text-black-400" href="{% url 'accounts:acc_auth_login' %}">ورود</a>
           {% endif %}
         </li>
-        <li><a href="{% url 'accounts:acc_prf_profile' %}" class="btn btn-ghost text-white hover:text-black-400">حساب کاربری</a></li>
+        {% if user.is_authenticated %}
+        <li class="w-full">
+            <details class="dropdown w-full">
+              <summary class="btn btn-sm w-36 m-1">
+                {% if user.is_authenticated %}
+                  <span>{{ user.first_name }} {{ user.last_name }}</span>
+                {% endif %}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>                
+              </summary>
+              <ul class="menu dropdown-content text-black bg-base-100 rounded-box z-1 w-full p-2 shadow-sm">
+                <li>
+                  <a href="{% url 'accounts:acc_prf_profile' %}" class="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                    حساب کاربری
+                  </a>
+                </li>
+                <li>
+                  <form action="{% url 'accounts:acc_auth_logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="flex">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                      </svg>
+                      <span class="mr-2">خروج</span>
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </details>
+        </li>
+        {% endif %}
       </ul>
     </div>
 </nav>
