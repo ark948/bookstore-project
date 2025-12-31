@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, HttpResponseForbidden, HttpResponseServerError, FileResponse
 from django.contrib import messages
-from icecream import ic
+from django.core.paginator import Paginator
 from reportlab.pdfgen import canvas
 
 from . import services
@@ -156,8 +156,11 @@ def cancel_order(request: HttpRequest, order_number: str) -> HttpResponse:
 @role_required('employee')
 def orders_list(request: HttpRequest) -> HttpResponse:
     orders = Order.objects.all()
+    paginator = Paginator(orders, 20)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     total = orders.count()
-    return render(request, "shop/orders/orders_list.html", {'items': orders, 'total': total})
+    return render(request, "shop/orders/orders_list.html", {'page_obj': page_obj, 'total': total})
 
 
 @role_required('employee')
