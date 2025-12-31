@@ -49,11 +49,19 @@ def cart_add_quick(request: HttpRequest, book_id: int) -> HttpResponse:
     book = get_object_or_404(Book, pk=book_id)
     quantity_check = cart.get_item_quantity(book.id)
     if quantity_check >= 5:
-        return render(request, "shop/customers/cart/partials/error_toast.html", {'message': "خرید بشیتر از 5 عدد امکان پذیر نمیباشد."})
+        return render(
+            request, 
+            "shop/customers/cart/partials/error_toast.html", 
+            {'message': "خرید بشیتر از 5 عدد امکان پذیر نمیباشد."}
+        )
     if request.method == "POST":
         if request.htmx:
             cart.add(book, 1)
-            response = render(request, "shop/customers/cart/partials/success_toast.html", {'message': "به سبد افزوده شد."})
+            response = render(
+                request, 
+                "shop/customers/cart/partials/success_toast.html", 
+                {'message': "به سبد افزوده شد."}
+            )
             response['HX-Trigger'] = 'quick_add_success'
             return response
 
@@ -73,7 +81,11 @@ def cart_detail(request):
     count = 0
     for _ in cart:
         count += 1
-    return render(request, "shop/customers/cart/details.html", {'cart': cart, 'form': quantity_form, 'count': count, 'total': total})
+    return render(
+        request, 
+        "shop/customers/cart/details.html", 
+        {'cart': cart, 'form': quantity_form, 'count': count, 'total': total}
+    )
 
 
 @require_POST

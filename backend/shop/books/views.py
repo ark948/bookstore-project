@@ -34,9 +34,9 @@ def secret_view_v2(request):
 @role_required("employee")
 def books_list(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
-    books_filter = BookFilter( request.GET, queryset=Book.objects.all().order_by('created_at') )
+    books_filter = BookFilter(request.GET, queryset=Book.objects.all().order_by('created_at'))
     total = books_filter.qs.count()
-    paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
+    paginator = Paginator(books_filter.qs, settings.PAGE_SIZE)
     page_obj = paginator.page(page)
     context = {
         'total': total,
@@ -44,7 +44,6 @@ def books_list(request: HttpRequest) -> HttpResponse:
         'filter': books_filter
     }
     if request.htmx:
-        print("\nRequest is htmx\n")
         return render(request, "shop/books/partials/books-list-container.html", context)
     return render(request, "shop/books/books-list.html", context)
 
@@ -53,12 +52,9 @@ def books_list(request: HttpRequest) -> HttpResponse:
 def load_filtered_books(request: HttpRequest) -> HttpResponse:
     if request.htmx:
         page = request.GET.get('page', 1)
-        books_filter = BookFilter(
-            request.GET,
-            queryset=Book.objects.all()
-        )
+        books_filter = BookFilter(request.GET, queryset=Book.objects.all())
         results_count = books_filter.qs.count()
-        paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
+        paginator = Paginator(books_filter.qs, settings.PAGE_SIZE)
         page_obj = paginator.page(page)
         context = {
             'total': results_count,
@@ -70,9 +66,9 @@ def load_filtered_books(request: HttpRequest) -> HttpResponse:
 @role_required("employee")
 def get_books(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
-    books_filter = BookFilter( data=request.GET, queryset=Book.objects.all().order_by('created_at') )
+    books_filter = BookFilter(data=request.GET, queryset=Book.objects.all().order_by('created_at'))
     total = books_filter.qs.count()
-    paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
+    paginator = Paginator(books_filter.qs, settings.PAGE_SIZE)
     page_obj = paginator.page(page)
     context = {
         'total': total,
@@ -86,11 +82,11 @@ def get_books(request: HttpRequest) -> HttpResponse:
 @role_required('employee')
 def get_books_only(request: HttpRequest) -> HttpResponse:
     page = request.GET.get('page', 1)
-    books_filter = BookFilter( data=request.GET, queryset=Book.objects.all().order_by('created_at') )
+    books_filter = BookFilter(data=request.GET, queryset=Book.objects.all().order_by('created_at'))
     total = books_filter.qs.count()
-    paginator = Paginator( books_filter.qs, settings.PAGE_SIZE )
+    paginator = Paginator(books_filter.qs, settings.PAGE_SIZE)
     page_obj = paginator.page(page)
-    context = { 'total': total, 'page_obj': page_obj }
+    context = {'total': total, 'page_obj': page_obj}
     return render(request, "shop/books/partials/books_list_only.html", context)
 
 
