@@ -24,21 +24,25 @@
             <td>{{ item.customer }}</td>
             <td>{{ item.created_at }}</td>
             <td>
-                <a href="#" class="mr-1 ml-1 btn btn-xs btn-outline btn-neutral">جزئییات</a>
+                <a href="#" class="mr-1 ml-1 btn btn-xs btn-outline btn-neutral">
+                    جزئییات
+                </a>
                 <button class="mr-1 ml-1 btn btn-xs btn-outline btn-warn" onclick="order_details_modals.showModal()"
                     hx-get="{% url 'shop:load_order_details' item.pk %}"
                     hx-target="#order_details_response_holder"
                     hx-swap="innerHTML"
                     hx-trigger="click"
-                    >تغییر وضعیت
+                    >
+                    تغییر وضعیت
                 </button>
                 <button class="mr-1 ml-1 btn btn-xs btn-outline btn-error"
                     hx-post="{% url 'shop:delete_order_record' item.pk %}"
                     hx-target="closest tr"
                     hx-swap="delete"
                     hx-trigger="click"
-                    hx-confirm="Are you sure?"
-                    >حذف رکورد
+                    hx-confirm="از حذف این رکورد اطمینان دارید؟"
+                    >
+                    حذف رکورد
                 </button>
             </td>
         </tr>
