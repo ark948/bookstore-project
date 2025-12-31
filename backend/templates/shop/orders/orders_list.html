@@ -50,10 +50,10 @@
     </tbody>
 </table>
 <div class="pagination">
-    <span class="step-links">
+    <div class="step-links">
         {% if page_obj.has_previous %}
-            <a class="btn btn-xs" href="?page=1">&laquo; اول</a>
-            <a class="btn btn-xs" href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+            <a class="btn btn-xs w-32 btn-dash" href="?page=1">&laquo; اول</a>
+            <a class="btn btn-xs w-32 btn-dash" href="?page={{ page_obj.previous_page_number }}">قبلی</a>
         {% endif %}
 
         <span class="current">
@@ -61,13 +61,13 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a class="btn btn-xs" href="?page={{ page_obj.next_page_number }}">بعدی</a>
-            <a class="btn btn-xs" href="?page={{ page_obj.paginator.num_pages }}">آخر &raquo;</a>
+            <a class="btn btn-xs w-32 btn-dash" href="?page={{ page_obj.next_page_number }}">بعدی</a>
+            <a class="btn btn-xs w-32 btn-dash" href="?page={{ page_obj.paginator.num_pages }}">آخر &raquo;</a>
         {% endif %}
-    </span>
+    </div>
 </div>
-<div>
-    <span>total: {{ total }}</span>
+<div class="m-8">
+    <span>مجموع: {{ total }}</span>
 </div>
 
 {% endblock content %}

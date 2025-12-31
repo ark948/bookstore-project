@@ -1,10 +1,12 @@
-<div>
+<div class="flex flex-col">
     <div class="m-2">
-        <span>{{ item.order_number }}</span>
+        <span>شماره سفارش: {{ item.order_number }}</span>
+        <span>وضعیت فعلی: {{ item.status }}</span>
     </div>
-    <form action="{% url 'shop:update_order' item.pk %}" method="post">
+    <form action="{% url 'shop:update_order' item.pk %}" method="post" class="flex flex-col items-center justify-center">
       {% csrf_token %}
-        <select class="select m-2" name="selected_status">
+        <label for="selected_status">تغییر وضعیت به:</label>
+        <select class="select m-2" name="selected_status" id="selected_status">
             <option disabled selected>{{ item.status }}</option>
             <option value="PENDING">Pending Payment</option>
             <option value="CONFIRM">Confirmed</option>
@@ -12,8 +14,8 @@
             <option value="SHIPPED">Shipped</option>
             <option value="CANCELLED">Cancelled</option>
           </select>
-          <button type="submit" class="m-2 btn btn-neutral btn-xs btn-outline w-32">
-            Done
+          <button type="submit" class="m-4 btn btn-neutral btn-xs btn-outline w-32">
+            تایید
           </button>
     </form>
 </div>
