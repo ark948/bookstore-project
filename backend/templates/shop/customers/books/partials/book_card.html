@@ -16,6 +16,7 @@
         {% endif %}
         
         <!-- Wishlist Button Badge -->
+        {% if user.is_authenticated and user.role == 'user' %}
         <div
             id="favorite_section"
             hx-get="{% url 'shop:is_book_favorite' book.pk %}"
@@ -23,6 +24,7 @@
             hx-trigger="load"
         >
         </div>
+        {% endif %}
     </div>
 
     <!-- Product Details Section -->
