@@ -105,7 +105,7 @@ def delete_book(request: HttpRequest, pk: int) -> HttpResponse:
 @role_required("employee")
 def book_details(request: HttpRequest, pk: int) -> HttpResponse:
     book: Book = get_object_or_404(Book, pk=pk)
-    return render(request, "shop/books/book-details.html", { 'item': book })
+    return render(request, "shop/books/book-details.html", {'item': book})
 
 
 @role_required("employee")
@@ -117,9 +117,9 @@ def add_book(request: HttpRequest) -> HttpRequest:
             messages.success(request, "کتاب با موفقیت افزوده شد.")
             return redirect(reverse("shop:books_list"))
         else:
-            return render(request, "shop/books/add_book.html", { 'form': form })
+            return render(request, "shop/books/add_book.html", {'form': form})
     form = forms.BookForm()
-    return render(request, "shop/books/add_book.html", { 'form': form })
+    return render(request, "shop/books/add_book.html", {'form': form})
 
 
 @role_required("employee")
@@ -132,9 +132,9 @@ def edit_book(request: HttpRequest, pk: int) -> HttpResponse:
             messages.success(request, "ویرایش موفقیت آمیز بود.")
             return redirect(reverse('shop:books_list'))
         else:
-            return render(request, "shop/books/edit_book.html", { 'form': form, 'item_id': pk })
+            return render(request, "shop/books/edit_book.html", {'form': form, 'item_id': pk})
     form = forms.BookForm(instance=book)
-    return render(request, "shop/books/edit_book.html", { 'form': form, 'item_id': pk })
+    return render(request, "shop/books/edit_book.html", {'form': form, 'item_id': pk})
 
 
 # This is not used, replaced by django-autocomplete-light
