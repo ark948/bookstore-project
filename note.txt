@@ -650,6 +650,7 @@ Need update tailwindCSS setup to django-vite
     - Removed htmx static link from _base.html
     - Removed static link to static/dist/output.css and dist folder along with output.css from _base.html
     - Made jquery globally available in static/js/main.js (similar manner to htmx)
+    - Removed static/js/daisyui.js (daisyui js files will be provided from node_modules since it was installed)
     
 
 --------------------------------------------------
