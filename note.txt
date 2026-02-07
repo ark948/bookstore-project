@@ -648,6 +648,7 @@ Need update tailwindCSS setup to django-vite
     - Removing outer node_modules folder, package.json, package-lock.json (OK)
     - Removing backend/static/src/input.css and src folder itself
     - Removed htmx static link from _base.html
+    - Removed static link to static/dist/output.css and dist folder along with output.css from _base.html
     
 
 --------------------------------------------------
