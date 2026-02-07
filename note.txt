@@ -645,7 +645,9 @@ Need update tailwindCSS setup to django-vite
     another problem: vite server says jquery (imported by select2js)
     > npm i jquery
     Update: Seems ok, still needs heavy cleaning, removing static links to assets, jquery links
-    - Removing outer node_modules folder, package.json, package-lock.json
+    - Removing outer node_modules folder, package.json, package-lock.json (OK)
+    - Removing backend/static/src/input.css and src folder itself
+    
 
 --------------------------------------------------
 add hx-boost and fallback behavior
