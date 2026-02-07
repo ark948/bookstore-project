@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     "template_partials",
     "django_browser_reload",
+    'django_vite',
 
     'accounts',
     'home',
@@ -144,6 +145,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [ BASE_DIR / "static" ]
+STATIC_ROOT = BASE_DIR / "assets"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -167,3 +169,9 @@ MEDIA_URL = '/media/'
 CART_SESSION_ID = "cart"
 
 PAGE_SIZE = 10
+
+DJANGO_VITE = {
+  "default": {
+    "dev_mode": DEBUG
+  }
+}

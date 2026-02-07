@@ -1,3 +1,4 @@
+{% load django_vite %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
@@ -15,6 +16,8 @@
     <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
     <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
     <script src="{% static 'js/select2.min.js' %}"></script>
+    {% vite_hmr_client %}
+    {% vite_asset 'static/js/main.js' %}
 </head>
 <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}' class="bg-gray-50">
   

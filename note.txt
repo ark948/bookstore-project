@@ -600,6 +600,52 @@ browse-container-section.html
 filters.html
 --------------
 
+Need update tailwindCSS setup to django-vite
+> pip install django-vite
+- add to installed_apps
+- we'll need a main.js in static/js folder
+(npm stuff needs to be in the same directory as manage.py)
+(since we already have a project structure, just add vite.config.js and fill it properly)
+- in same dir as manage.py, run: npm init -y
+> npm i -D vite
+- Update package.json scripts to include vite and vite build
+- specify assetsDir in vite.config.js (optional)
+- configure django to point to these bundled static files (STATICFILES_DIRS, where vite will compile the frontend assets)
+(STATICFILES_DIRS was pointing to BASE_DIR/'static', updated to BASE_DIR/'assets')
+- add DJANGO_VITE to settings.py
+- add template tags to base.html (and possibly remove the old links to tailwind files)
+- add hmr tag to base template
+- add the vite_asset template tag (it needs to point to something, for now i pointed it to static/js/main.js)
+Install tailwindcss (using vite):
+> npm install tailwindcss @tailwindcss/vite
+- create a css directory in static
+- add tailwind import statement to static/css/main.css
+- add tailwind plugin to vite.config.js
+- import main.css into static/js/main.js
+(vite.config.js may need to be renamed to vite.config.mjs)
+- add aliases to vite.config.js (optional, i added one for static dir as @)
+- update static/js/main.js to use the alias
+Adding Daisyui and HTMX:
+> npm i -D daisyui@latest
+- add daisyui plugin directive into static/css/main.css
+> npm install htmx.org@2.0.8
+- add htmx.org import to main.js (we'll modify it a bit)
+- make it globally available by setting window.htmx = htmx
+
+> npm run build
+> npm run dev
+
+(in production):
+all static assets needs to be compiled (into static_root directory) and debug must be turned off:
+> python manage.py collectstatic
+(specify STATIC_ROOT = BASE_DIR/'staticfiles')
+(django will no longer use vite server in production)
+
+had to add STATIC_ROOT (server would not run without it)
+another problem: vite server says jquery (imported by select2js)
+> npm i jquery
+Update: Seems ok, still needs heavy cleaning, removing static links to assets, jquery links
+
 add hx-boost and fallback behavior
 - Added hx-boost to coments list review by employees shop:comments_list
 consider transition api
