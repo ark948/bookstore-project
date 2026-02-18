@@ -651,7 +651,18 @@ Need update tailwindCSS setup to django-vite
     - Removed static link to static/dist/output.css and dist folder along with output.css from _base.html
     - Made jquery globally available in static/js/main.js (similar manner to htmx)
     - Removed static/js/daisyui.js (daisyui js files will be provided from node_modules since it was installed)
+    - Removed static/css/daisyui@5.css and its related link in _base.html
     
+
+also orders list has a problem in profile
+TODO: add sorting feature to orders list in profile
+TODO: divide settings.py into dev, production and base in settings folder
+TODO: add a better font
+TODO: update to django 6 maybe
+TODO: optimize queries
+TODO: searching items in users orders
+TODO: invoice for users (simple table)
+xlsx exporting
 
 --------------------------------------------------
 add hx-boost and fallback behavior

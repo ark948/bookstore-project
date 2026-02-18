@@ -5,7 +5,7 @@
 
 {% block content %}
     {% if form %}
-        <form action="{% url 'shop:edit_book' pk=item_id %}" method="post">
+        <form action="{% url 'shop:edit_book' pk=item_id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             
             {% for field in form %}

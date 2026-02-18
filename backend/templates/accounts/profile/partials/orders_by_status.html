@@ -1,6 +1,10 @@
 {% load ir_date %}
 <div>
     {% if items %}
+    <div class="tabs tabs-border">
+        <input type="radio" name="sort_newest" class="tab" aria-label="Tab 1" />
+        <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 1</div>
+    </div>
         {% for item in items %}
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 m-4">
                     <!-- Order Summary -->
