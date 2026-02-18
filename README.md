@@ -4,12 +4,12 @@
 
 ### Contents:
 * [Description](#description)
-* Screenshots
 * [Tech Stack](#tech-stack)
 * [Features](#features)
 * Project structure
 * [Testing](#testing)
 * How to run?
+* [Screenshots](#screenshots)
 
 
 ### Description:
@@ -54,3 +54,11 @@ pip install -r requirements.txt
 cd backend
 pytest
 ```
+
+### Screenshots
+###### Books List (Also known as Catalogue or Browse page)
+![books-list](screenshots/books-list.png)
+###### Books details page (Product details page)
+![book-details-01](screenshots/book-details-01.png)
+###### Books details page with comments and info cards open
+![book-details-02](screenshots/book-details-02.png)
