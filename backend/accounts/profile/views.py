@@ -175,6 +175,9 @@ def load_orders_by_status(request: HttpRequest, status: str) -> HttpResponse:
         context['total'] = items.count()
         context['status'] = status
         if request.htmx:
+            sort = request.GET.get('sort')
+            if sort and sort.lower() == 'new':
+                context['items'] = items.order_by('-created_at')
             return render(request, "accounts/profile/partials/orders_by_status.html", context)
     context['status'] = status
     return render(request, "accounts/profile/partials/orders_by_status.html", context)

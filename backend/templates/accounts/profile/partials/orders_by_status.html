@@ -2,9 +2,26 @@
 <div>
     {% if items %}
     <div class="tabs tabs-border">
-        <input type="radio" name="sort_newest" class="tab" aria-label="Tab 1" />
-        <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 1</div>
+        <input type="radio" name="sort_newest" class="tab text-red-800" aria-label="جدیدترین"
+            hx-get="{% url 'accounts:acc_prf_load_orders_with_status' status %}"
+            hx-vals='{"sort": "new"}'
+            hx-trigger="click"
+            hx-target="#orders_with_status_response_holder"
+            hx-swap="innerHTML"
+         />
+        <input type="radio" name="sort_newest" class="tab text-red-800" aria-label="قدیمی ترین" 
+            hx-get="{% url 'accounts:acc_prf_load_orders_with_status' status %}"
+            hx-vals='{"sort": "old"}'
+            hx-trigger="click"
+            hx-target="#orders_with_status_response_holder"
+            hx-swap="innerHTML"
+        />
     </div>
+
+    <div>
+        <span>تعداد آیتم ها: {{ total }}</span>
+    </div>
+
         {% for item in items %}
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 m-4">
                     <!-- Order Summary -->

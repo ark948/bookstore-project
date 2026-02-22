@@ -655,7 +655,7 @@ Need update tailwindCSS setup to django-vite
     
 
 also orders list has a problem in profile
-TODO: add sorting feature to orders list in profile
+TODO: add sorting feature to orders list in profile [DONE]
 TODO: divide settings.py into dev, production and base in settings folder
 TODO: add a better font
 TODO: update to django 6 maybe
