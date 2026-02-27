@@ -657,6 +657,17 @@ Need update tailwindCSS setup to django-vite
 also orders list has a problem in profile
 TODO: add sorting feature to orders list in profile [DONE]
 TODO: divide settings.py into dev, production and base in settings folder
+    (from django styleguide with very minor modifications)
+    settings.py: where things like jwt.py and celery.py go
+    configs: settings.py devided to base and prod
+    What to modify?
+        debug,
+        Allowed_hosts
+        secret_key
+        database config
+        static_root
+        static_url
+TODO: Custom 404 and 500 error handlers
 TODO: add a better font
 TODO: update to django 6 maybe
 TODO: optimize queries

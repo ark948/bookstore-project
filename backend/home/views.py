@@ -20,6 +20,13 @@ def about(request):
     return render(request, "home/about.html")
 
 
+def error_404(request: HttpRequest, exception) -> HttpResponse:
+    return render(request, "home/errors/404.html", status=404)
+
+def error_500(request: HttpRequest) -> HttpResponse:
+    return render(request, "home/errors/500.html", status=500)
+
+
 def contact_us(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = PublicMessageForm(request.POST)
